@@ -1,0 +1,14 @@
+/* =============================================================================
+   BHAGYA COMMERCE — GLOBAL STYLESHEET
+   Import order matters:
+     1. Tailwind engine
+     2. tw-animate-css  (Radix state animations used by ui/* primitives)
+     3. tokens          (raw design values)
+     4. theme           (token → Tailwind bridge + base layer + utilities)
+     5. animations      (keyframes)
+   ============================================================================= */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../styles/tokens.css";
+@import "../styles/theme.css";
+@import "../styles/animations.css";

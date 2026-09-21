@@ -1,0 +1,193 @@
+/* =============================================================================
+   MOTION PRIMITIVES
+   The CSS half of the motion system: entrance animations (scroll reveal, route
+   transition), loading states and the Radix open/close transitions. The
+   JavaScript half — interaction-driven motion — lives in `src/lib/motion.ts`
+   and is deliberately small.
+   Every animation is disabled under `prefers-reduced-motion` (see theme.css).
+   ============================================================================= */
+
+@keyframes bhagya-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bhagya-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes bhagya-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bhagya-slide-in-right {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes bhagya-slide-in-up {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Botanical slow breathe — used on hero ambience only. */
+@keyframes bhagya-breathe {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.06) rotate(2deg);
+    opacity: 0.8;
+  }
+}
+
+/* Shimmer sweep for skeleton placeholders. */
+@keyframes bhagya-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Register the animations so they are available as Tailwind utilities. */
+@theme {
+  --animate-fade-in: bhagya-fade-in var(--duration-base) var(--ease-brand) both;
+  --animate-fade-up: bhagya-fade-up var(--duration-slow) var(--ease-brand) both;
+  --animate-scale-in: bhagya-scale-in var(--duration-base) var(--ease-brand) both;
+  --animate-breathe: bhagya-breathe 12s var(--ease-brand-in-out) infinite;
+  --animate-shimmer: bhagya-shimmer 1.8s var(--ease-brand-in-out) infinite;
+
+  /* Radix data-state helpers */
+  --animate-overlay-in: bhagya-fade-in var(--duration-base) var(--ease-brand) both;
+  --animate-overlay-out: bhagya-fade-in var(--duration-fast) var(--ease-brand)
+    reverse both;
+  --animate-content-in: bhagya-fade-up var(--duration-base) var(--ease-brand) both;
+  --animate-content-out: bhagya-fade-up var(--duration-fast) var(--ease-brand)
+    reverse both;
+  --animate-drawer-in: bhagya-slide-in-right var(--duration-slow)
+    var(--ease-out-soft) both;
+  --animate-drawer-out: bhagya-slide-in-right var(--duration-base)
+    var(--ease-out-soft) reverse both;
+  --animate-sheet-in: bhagya-slide-in-up var(--duration-slow) var(--ease-out-soft)
+    both;
+  --animate-sheet-out: bhagya-slide-in-up var(--duration-base)
+    var(--ease-out-soft) reverse both;
+}
+
+/* =============================================================================
+   ENTRANCE — scroll reveal and route transition
+   Driven by CSS so content is never hidden behind JavaScript. The hidden state
+   is scoped to `html.js` (set by an inline script in the document head, before
+   first paint), so a no-JS or failed-hydration visitor sees the whole page.
+   ============================================================================= */
+
+/* -- Scroll reveal ---------------------------------------------------------- */
+
+.js [data-reveal],
+.js [data-reveal-group] > * {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+}
+
+[data-reveal],
+[data-reveal-group] > * {
+  transition:
+    opacity var(--duration-slow) var(--ease-brand),
+    transform var(--duration-slow) var(--ease-brand);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.js [data-reveal][data-reveal-state="visible"],
+.js [data-reveal-group][data-reveal-state="visible"] > * {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Stagger inside a group: the index comes from position, so children stay dumb
+   markup and `RevealItem` needs no props. Twelve is comfortably more than any
+   group on the site holds; beyond that children arrive together, which is fine. */
+[data-reveal-group] > *:nth-child(1)  { --reveal-index: 0; }
+[data-reveal-group] > *:nth-child(2)  { --reveal-index: 1; }
+[data-reveal-group] > *:nth-child(3)  { --reveal-index: 2; }
+[data-reveal-group] > *:nth-child(4)  { --reveal-index: 3; }
+[data-reveal-group] > *:nth-child(5)  { --reveal-index: 4; }
+[data-reveal-group] > *:nth-child(6)  { --reveal-index: 5; }
+[data-reveal-group] > *:nth-child(7)  { --reveal-index: 6; }
+[data-reveal-group] > *:nth-child(8)  { --reveal-index: 7; }
+[data-reveal-group] > *:nth-child(9)  { --reveal-index: 8; }
+[data-reveal-group] > *:nth-child(10) { --reveal-index: 9; }
+[data-reveal-group] > *:nth-child(11) { --reveal-index: 10; }
+[data-reveal-group] > *:nth-child(12) { --reveal-index: 11; }
+
+.js [data-reveal-group][data-reveal-state="visible"] > * {
+  transition-delay: calc(var(--reveal-stagger, 0.06s) * var(--reveal-index, 0));
+}
+
+/* Reduced motion: skip the entrance entirely. The reveal still works via the
+   observer, but a visitor who asked for less motion should not have content
+   withheld from them while it waits to be revealed. */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-reveal-group] > *,
+  .js [data-page-transition] {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+    animation: none;
+  }
+}
+
+/* Printing never animates: a reveal that has not fired must not leave a gap. */
+@media print {
+  .js [data-reveal],
+  .js [data-reveal-group] > *,
+  .js [data-page-transition] {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* -- Route transition ------------------------------------------------------- */
+
+@keyframes bhagya-page-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.js [data-page-transition] {
+  animation: bhagya-page-enter var(--duration-slow) var(--ease-brand) both;
+}

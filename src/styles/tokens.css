@@ -1,0 +1,198 @@
+/* =============================================================================
+   BHAGYA COMMERCE — DESIGN TOKENS
+   Single source of truth. Raw values live here; Tailwind mappings live in
+   `theme.css`. Nothing in the app should hardcode a colour, size or shadow.
+
+   Naming:  --bhagya-*  = raw primitive (never used directly in components)
+            --color-*   = semantic alias exposed to Tailwind (theme.css)
+   ============================================================================= */
+
+:root {
+  /* ---------------------------------------------------------------------------
+     BRAND GREENS
+     Used deliberately: brand marks, primary actions, active states, highlights.
+     Greens are NEVER the page background of the whole product.
+     --------------------------------------------------------------------------- */
+  --bhagya-primary: #0b4d36; /* 9.8:1 on white — safe for text + fills */
+  --bhagya-primary-hover: #093f2c;
+  --bhagya-primary-active: #07311f;
+  --bhagya-primary-disabled: #9db3a9;
+  --bhagya-deep: #063b2a;
+  --bhagya-deep-hover: #042e20;
+  --bhagya-botanical: #2f7d4a; /* 5.1:1 on white */
+  --bhagya-soft-green: #eaf3ec;
+  --bhagya-soft-green-strong: #d8e8dd;
+  --bhagya-botanical-soft: #68c788;
+
+  /* ---------------------------------------------------------------------------
+     WARM NEUTRAL SURFACES
+     The majority of the interface. Ivory pages, white cards, sand accents.
+     --------------------------------------------------------------------------- */
+  --bhagya-white: #ffffff;
+  --bhagya-ivory: #f7f4ea;
+  --bhagya-ivory-deep: #f1ecdd;
+  --bhagya-sand: #e8ddc8;
+  --bhagya-sand-strong: #dccfb4;
+
+  /* ---------------------------------------------------------------------------
+     ACCENT — muted gold. Decorative + small-caps accents only; gold as body
+     text fails contrast, so `gold-deep` exists for that case.
+     --------------------------------------------------------------------------- */
+  --bhagya-gold: #b89552;
+  --bhagya-gold-deep: #8a6d2f; /* 4.9:1 on white */
+  --bhagya-gold-soft: #f3ead7;
+
+  /* ---------------------------------------------------------------------------
+     INK — text ramp. Every value is contrast-checked against --bhagya-white
+     and --bhagya-ivory (WCAG AA body text = 4.5:1).
+     --------------------------------------------------------------------------- */
+  --bhagya-ink: #16221c; /* 15.9:1 */
+  --bhagya-ink-soft: #5f6b64; /* 5.6:1  — secondary text */
+  --bhagya-ink-subtle: #6b756e; /* 4.8:1  — tertiary text, still AA */
+  --bhagya-ink-faint: #87918b; /* 3.3:1  — decorative / placeholder / disabled */
+  --bhagya-ink-inverse: #f7f4ea;
+  --bhagya-ink-inverse-soft: #c9d6cd;
+
+  /* ---------------------------------------------------------------------------
+     LINES
+     --------------------------------------------------------------------------- */
+  --bhagya-line: #e4dfd1; /* hairline on ivory */
+  --bhagya-line-strong: #cdc6b3;
+  --bhagya-line-inverse: rgb(247 244 234 / 0.16);
+
+  /* ---------------------------------------------------------------------------
+     FEEDBACK — each pair is (surface, foreground) with AA foregrounds.
+     Status is always paired with an icon or label, never colour alone.
+     --------------------------------------------------------------------------- */
+  --bhagya-success: #2f7d4a;
+  --bhagya-success-surface: #eaf3ec;
+  --bhagya-warning: #8a6d2f;
+  --bhagya-warning-surface: #f7efdd;
+  --bhagya-danger: #a32323; /* 7.4:1 */
+  --bhagya-danger-surface: #fbeceb;
+  --bhagya-info: #27527d;
+  --bhagya-info-surface: #eaf0f7;
+
+  /* ---------------------------------------------------------------------------
+     FOCUS
+     Brand green ring. `-inverse` is used on dark/green surfaces by setting
+     `data-surface="inverse"` on the container.
+     --------------------------------------------------------------------------- */
+  --focus-ring: var(--bhagya-primary);
+  --focus-ring-inverse: #d8e8dd;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+
+  /* ===========================================================================
+     TYPOGRAPHY
+     Fluid where it matters (display + heading), fixed for UI/body so line
+     lengths and rhythm stay predictable inside components.
+     =========================================================================== */
+  --bhagya-font-display-token: "Cormorant Garamond", "Iowan Old Style",
+    "Palatino Linotype", "Times New Roman", serif;
+  --bhagya-font-sans-token: "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Marcellus-style small caps for labels */
+  --tracking-label: 0.09em;
+  --tracking-display: -0.015em;
+  --tracking-heading: -0.012em;
+
+  /* ===========================================================================
+     SPACING — 8px base grid.
+     4 / 8 / 16 / 24 / 32 / 48 / 64 / 96 / 128
+     Tailwind's 4px base scale (p-1 = 4px) already maps to this grid; the
+     semantic tokens below are for layout rhythm, not component internals.
+     =========================================================================== */
+  --spacing-unit: 0.25rem; /* 4px base step  */
+  --space-2xs: 0.25rem; /*  4px */
+  --space-xs: 0.5rem; /*  8px */
+  --space-sm: 0.75rem; /* 12px */
+  --space-md: 1rem; /* 16px */
+  --space-lg: 1.5rem; /* 24px */
+  --space-xl: 2rem; /* 32px */
+  --space-2xl: 3rem; /* 48px */
+  --space-3xl: 4rem; /* 64px */
+  --space-4xl: 6rem; /* 96px */
+  --space-5xl: 8rem; /* 128px */
+
+  /* Layout rhythm */
+  --gutter: clamp(1.25rem, 5vw, 2.5rem); /* page side padding      */
+  --section-y: clamp(3.5rem, 8vw, 7rem); /* vertical section rhythm */
+  --section-y-sm: clamp(2.5rem, 5vw, 4rem);
+  --header-h: 4.5rem; /* 72px desktop header */
+  --header-h-sm: 3.75rem; /* 60px mobile header  */
+  --tabbar-h: 4rem; /* 64px mobile tab bar  */
+
+  /* ===========================================================================
+     RADIUS
+     Restrained: cards are 16px, not pills. Surfaces stay architectural.
+     =========================================================================== */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* ===========================================================================
+     SHADOWS — warm-tinted, low spread. Elevation is a whisper, not a shout.
+     =========================================================================== */
+  --shadow-color: 22 34 28;
+  --shadow-xs: 0 1px 2px rgb(var(--shadow-color) / 0.06);
+  --shadow-sm: 0 1px 3px rgb(var(--shadow-color) / 0.07),
+    0 1px 2px rgb(var(--shadow-color) / 0.04);
+  --shadow-md: 0 4px 12px -2px rgb(var(--shadow-color) / 0.08),
+    0 2px 6px -2px rgb(var(--shadow-color) / 0.05);
+  --shadow-lg: 0 12px 32px -8px rgb(var(--shadow-color) / 0.12),
+    0 4px 12px -4px rgb(var(--shadow-color) / 0.06);
+  --shadow-xl: 0 24px 64px -16px rgb(var(--shadow-color) / 0.16),
+    0 8px 24px -12px rgb(var(--shadow-color) / 0.08);
+  --shadow-inset: inset 0 1px 0 rgb(255 255 255 / 0.6);
+
+  /* ===========================================================================
+     MOTION — one easing family, four durations.
+     =========================================================================== */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-brand-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-instant: 90ms;
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 400ms;
+  --duration-slower: 640ms;
+
+  /* ===========================================================================
+     Z-INDEX — one ladder, no magic numbers in components.
+     =========================================================================== */
+  --z-below: -1;
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-header: 200;
+  --z-dropdown: 300;
+  --z-overlay: 400;
+  --z-drawer: 500;
+  --z-modal: 600;
+  --z-toast: 700;
+  --z-tooltip: 800;
+
+  /* ===========================================================================
+     CONTAINER WIDTHS
+     =========================================================================== */
+  --container-narrow: 40rem; /*  640px — prose, auth, forms */
+  --container-content: 72rem; /* 1152px — default page container */
+  --container-wide: 82rem; /* 1312px — merchandising grids */
+  /* Named `edge`, not `full`: Tailwind v4 generates `w-*` and `max-w-*` from
+     the `--container-*` namespace, so a token called `full` would overwrite
+     `.w-full` and `.max-w-full`. Never name a container token after a built-in
+     width keyword (full, screen, min, max, fit, auto). */
+  --container-edge: 90rem; /* 1440px — editorial edge-to-edge */
+}
+
+/* Dark botanical surfaces (hero bands, footer, merchant rail).
+   Any subtree can opt in and every semantic token flips with it. */
+[data-surface="inverse"] {
+  --focus-ring: var(--focus-ring-inverse);
+  --bhagya-line: var(--bhagya-line-inverse);
+}

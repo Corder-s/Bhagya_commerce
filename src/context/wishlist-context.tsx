@@ -2,46 +2,41 @@
 
 import * as React from "react";
 
+import { products as allProducts } from "@/data/products";
+import { wishlistStorage } from "@/lib/storage/wishlist-storage";
 import { toast } from "@/lib/toast";
-import type { ProductSummary } from "@/types/catalogue";
+import type { ProductDetail, ProductSummary } from "@/types/catalogue";
 
-interface WishlistContextType {
+export interface WishlistContextValue {
   wishlistIds: string[];
   wishlistCount: number;
+  wishlistProducts: ProductDetail[];
   isWishlisted: (productId: string) => boolean;
+  addToWishlist: (product: ProductSummary) => void;
+  removeFromWishlist: (productId: string) => void;
   toggleWishlist: (product: ProductSummary) => void;
+  clearWishlist: () => void;
 }
 
-const WishlistContext = React.createContext<WishlistContextType | null>(null);
-
-const STORAGE_KEY = "bhagya_wishlist_v1";
+const WishlistContext = React.createContext<WishlistContextValue | null>(null);
 
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const [wishlistIds, setWishlistIds] = React.useState<string[]>([]);
   const [initialized, setInitialized] = React.useState(false);
 
-  // Load from localStorage on mount
+  // Hydrate from storage on mount
   React.useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        setWishlistIds(JSON.parse(stored));
-      }
-    } catch {
-      // Ignore storage errors
-    } finally {
-      setInitialized(true);
+    const stored = wishlistStorage.getWishlist();
+    if (stored.length > 0) {
+      setWishlistIds(stored);
     }
+    setInitialized(true);
   }, []);
 
-  // Save to localStorage on changes
+  // Save on changes
   React.useEffect(() => {
     if (!initialized) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(wishlistIds));
-    } catch {
-      // Ignore storage errors
-    }
+    wishlistStorage.saveWishlist(wishlistIds);
   }, [wishlistIds, initialized]);
 
   const isWishlisted = React.useCallback(
@@ -49,27 +44,75 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     [wishlistIds],
   );
 
-  const toggleWishlist = React.useCallback((product: ProductSummary) => {
-    setWishlistIds((prev) => {
-      const exists = prev.includes(product.id);
-      if (exists) {
-        toast.info("Removed from wishlist", `${product.name} removed from saved items.`);
-        return prev.filter((id) => id !== product.id);
-      } else {
-        toast.success("Saved to wishlist", `${product.name} saved for later.`);
+  const addToWishlist = React.useCallback(
+    (product: ProductSummary) => {
+      setWishlistIds((prev) => {
+        if (prev.includes(product.id)) return prev;
+        toast.success("Saved to Wishlist", `${product.name} saved for later.`);
         return [...prev, product.id];
-      }
-    });
+      });
+    },
+    [],
+  );
+
+  const removeFromWishlist = React.useCallback(
+    (productId: string) => {
+      setWishlistIds((prev) => {
+        const product = allProducts.find((p) => p.id === productId);
+        const title = product ? product.name : "Product";
+        toast.info("Removed from Wishlist", `${title} removed from saved items.`);
+        return prev.filter((id) => id !== productId);
+      });
+    },
+    [],
+  );
+
+  const toggleWishlist = React.useCallback(
+    (product: ProductSummary) => {
+      setWishlistIds((prev) => {
+        const exists = prev.includes(product.id);
+        if (exists) {
+          toast.info("Removed from Wishlist", `${product.name} removed from saved items.`);
+          return prev.filter((id) => id !== product.id);
+        } else {
+          toast.success("Saved to Wishlist", `${product.name} saved for later.`);
+          return [...prev, product.id];
+        }
+      });
+    },
+    [],
+  );
+
+  const clearWishlist = React.useCallback(() => {
+    setWishlistIds([]);
+    toast.info("Wishlist Cleared", "All saved items removed.");
   }, []);
 
-  const value = React.useMemo(
+  const wishlistProducts = React.useMemo(() => {
+    const idSet = new Set(wishlistIds);
+    return allProducts.filter((p) => idSet.has(p.id));
+  }, [wishlistIds]);
+
+  const value = React.useMemo<WishlistContextValue>(
     () => ({
       wishlistIds,
       wishlistCount: wishlistIds.length,
+      wishlistProducts,
       isWishlisted,
+      addToWishlist,
+      removeFromWishlist,
       toggleWishlist,
+      clearWishlist,
     }),
-    [wishlistIds, isWishlisted, toggleWishlist],
+    [
+      wishlistIds,
+      wishlistProducts,
+      isWishlisted,
+      addToWishlist,
+      removeFromWishlist,
+      toggleWishlist,
+      clearWishlist,
+    ],
   );
 
   return <WishlistContext.Provider value={value}>{children}</WishlistContext.Provider>;

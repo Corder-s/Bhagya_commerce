@@ -9,6 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { baseMetadata, baseViewport } from "@/config/seo";
 import { siteConfig } from "@/config/site";
 
+import { CartDrawer } from "@/features/cart/cart-drawer";
 import { CartProvider } from "@/context/cart-context";
 import { WishlistProvider } from "@/context/wishlist-context";
 
@@ -97,6 +98,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <CartProvider>
               <WishlistProvider>
                 {children}
+                <CartDrawer />
                 <Toaster />
               </WishlistProvider>
             </CartProvider>

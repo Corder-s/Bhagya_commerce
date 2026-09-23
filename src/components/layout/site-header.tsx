@@ -16,6 +16,7 @@ import { layoutConstants } from "@/config/breakpoints";
 import { primaryNav } from "@/config/navigation";
 import { accountRoutes, commerceRoutes, marketingRoutes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
+import { useCart } from "@/context/cart-context";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { cn } from "@/lib/utils";
 
@@ -47,6 +48,7 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const scrolled = useScrolled(layoutConstants.headerCondenseAt);
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const { openCartDrawer } = useCart();
 
   return (
     <header
@@ -91,7 +93,7 @@ export function SiteHeader({
 
             <span className="relative hidden sm:inline-flex">
               <IconButton label="Wishlist" asChild>
-                <Link href={accountRoutes.wishlist}>
+                <Link href="/wishlist">
                   <Heart aria-hidden="true" />
                 </Link>
               </IconButton>
@@ -101,10 +103,12 @@ export function SiteHeader({
             </span>
 
             <span className="relative inline-flex">
-              <IconButton label="Cart" asChild>
-                <Link href={commerceRoutes.cart}>
-                  <ShoppingBag aria-hidden="true" />
-                </Link>
+              <IconButton
+                label="Shopping Bag"
+                onClick={() => openCartDrawer()}
+                aria-haspopup="dialog"
+              >
+                <ShoppingBag aria-hidden="true" />
               </IconButton>
               {cartCount > 0 ? (
                 <CountBubble count={cartCount} label="items in cart" />

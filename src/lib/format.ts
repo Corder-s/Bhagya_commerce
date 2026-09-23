@@ -25,6 +25,35 @@ export function formatPrice(
   return precise ? inrFormatterPrecise.format(value) : inrFormatter.format(value);
 }
 
+/** Standard currency formatter with fallback currency code */
+export function formatCurrency(
+  value: number | null | undefined,
+  currency = "INR",
+  { precise = false }: { precise?: boolean } = {},
+): string {
+  if (value === null || value === undefined || Number.isNaN(value)) return "—";
+  try {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency,
+      maximumFractionDigits: precise ? 2 : 0,
+      minimumFractionDigits: precise ? 2 : 0,
+    }).format(value);
+  } catch {
+    return formatPrice(value, { precise });
+  }
+}
+
+/** Calculate percentage savings: (mrp - price) / mrp * 100 */
+export function calculateDiscountPercentage(
+  price: number | null | undefined,
+  mrp: number | null | undefined,
+): number | null {
+  if (!price || !mrp || mrp <= price) return null;
+  return Math.round(((mrp - price) / mrp) * 100);
+}
+
+
 /** 1,23,456 — plain Indian-grouped number. */
 export function formatNumber(value: number | null | undefined): string {
   if (value === null || value === undefined || Number.isNaN(value)) return "—";

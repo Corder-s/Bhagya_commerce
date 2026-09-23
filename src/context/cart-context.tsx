@@ -2,129 +2,171 @@
 
 import * as React from "react";
 
+import {
+  cartReducer,
+  initialCartState,
+} from "@/features/cart/cart-reducer";
+import type { CartItem, CartState } from "@/features/cart/cart-types";
+import { cartStorage } from "@/lib/storage/cart-storage";
 import { toast } from "@/lib/toast";
 import type { ProductSummary } from "@/types/catalogue";
 
-export interface CartItem {
-  id: string;
-  slug: string;
-  name: string;
-  brandName: string;
-  priceInr: number;
-  mrpInr: number | null;
-  imageSrc: string;
-  imageAlt: string;
-  quantity: number;
-}
-
-interface CartContextType {
-  items: CartItem[];
+export interface CartContextValue extends CartState {
+  addItem: (
+    product: ProductSummary,
+    variant?: { id: string; name: string; priceInr?: number; mrpInr?: number | null },
+    quantity?: number,
+  ) => void;
+  // Legacy alias for compatibility with existing components
+  addToCart: (product: ProductSummary, quantity?: number) => void;
+  removeItem: (id: string) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
+  clearCart: () => void;
+  getItemQuantity: (productId: string, variantId?: string) => number;
+  isInCart: (productId: string, variantId?: string) => boolean;
+  openCartDrawer: () => void;
+  closeCartDrawer: () => void;
+  toggleCartDrawer: () => void;
   cartCount: number;
   cartSubtotal: number;
-  addToCart: (product: ProductSummary, quantity?: number) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
-  clearCart: () => void;
 }
 
-const CartContext = React.createContext<CartContextType | null>(null);
-
-const STORAGE_KEY = "bhagya_cart_v1";
+const CartContext = React.createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = React.useState<CartItem[]>([]);
+  const [state, dispatch] = React.useReducer(cartReducer, initialCartState);
   const [initialized, setInitialized] = React.useState(false);
 
-  // Load cart from localStorage on mount
+  // Initialize from storage on mount
   React.useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        setItems(JSON.parse(stored));
-      }
-    } catch {
-      // Ignore storage errors
-    } finally {
-      setInitialized(true);
+    const savedItems = cartStorage.getCart();
+    if (savedItems.length > 0) {
+      dispatch({ type: "INITIALIZE", payload: savedItems });
     }
+    setInitialized(true);
   }, []);
 
-  // Save cart to localStorage on changes
+  // Save to storage on updates
   React.useEffect(() => {
     if (!initialized) return;
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    } catch {
-      // Ignore storage errors
-    }
-  }, [items, initialized]);
+    cartStorage.saveCart(state.items);
+  }, [state.items, initialized]);
 
-  const addToCart = React.useCallback((product: ProductSummary, quantity = 1) => {
-    setItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item,
-        );
+  const addItem = React.useCallback(
+    (
+      product: ProductSummary,
+      variant?: { id: string; name: string; priceInr?: number; mrpInr?: number | null },
+      quantity = 1,
+    ) => {
+      dispatch({
+        type: "ADD_ITEM",
+        payload: { product, variant, quantity },
+      });
+
+      const variantLabel = variant ? ` (${variant.name})` : "";
+      toast.success(
+        "Added to Bag",
+        `${product.name}${variantLabel} added to your shopping bag.`,
+      );
+    },
+    [],
+  );
+
+  const addToCart = React.useCallback(
+    (product: ProductSummary, quantity = 1) => {
+      addItem(product, undefined, quantity);
+    },
+    [addItem],
+  );
+
+  const removeItem = React.useCallback((id: string) => {
+    dispatch({ type: "REMOVE_ITEM", payload: { id } });
+    toast.info("Item Removed", "Product removed from your shopping bag.");
+  }, []);
+
+  const removeFromCart = React.useCallback(
+    (productId: string) => {
+      const match = state.items.find(
+        (item) => item.productId === productId || item.id === productId,
+      );
+      if (match) {
+        removeItem(match.id);
       }
-      const newItem: CartItem = {
-        id: product.id,
-        slug: product.slug,
-        name: product.name,
-        brandName: product.brand.name,
-        priceInr: product.priceInr,
-        mrpInr: product.mrpInr,
-        imageSrc: product.image?.src || "/images/categories/organic-food.jpg",
-        imageAlt: product.image?.alt || product.name,
-        quantity,
-      };
-      return [...prev, newItem];
-    });
+    },
+    [state.items, removeItem],
+  );
 
-    toast.success("Added to cart", `${product.name} has been added to your shopping bag.`);
-  }, []);
-
-  const removeFromCart = React.useCallback((productId: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== productId));
-  }, []);
-
-  const updateQuantity = React.useCallback((productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      setItems((prev) => prev.filter((item) => item.id !== productId));
-      return;
-    }
-    setItems((prev) =>
-      prev.map((item) => (item.id === productId ? { ...item, quantity } : item)),
-    );
+  const updateQuantity = React.useCallback((id: string, quantity: number) => {
+    dispatch({ type: "UPDATE_QUANTITY", payload: { id, quantity } });
   }, []);
 
   const clearCart = React.useCallback(() => {
-    setItems([]);
+    dispatch({ type: "CLEAR_CART" });
+    toast.info("Bag Cleared", "All items have been removed.");
   }, []);
 
-  const cartCount = React.useMemo(
-    () => items.reduce((total, item) => total + item.quantity, 0),
-    [items],
+  const getItemQuantity = React.useCallback(
+    (productId: string, variantId?: string) => {
+      const targetId = `${productId}-${variantId || "default"}`;
+      const found = state.items.find(
+        (item) => item.id === targetId || (item.productId === productId && !variantId),
+      );
+      return found?.quantity ?? 0;
+    },
+    [state.items],
   );
 
-  const cartSubtotal = React.useMemo(
-    () => items.reduce((total, item) => total + item.priceInr * item.quantity, 0),
-    [items],
+  const isInCart = React.useCallback(
+    (productId: string, variantId?: string) => {
+      return getItemQuantity(productId, variantId) > 0;
+    },
+    [getItemQuantity],
   );
 
-  const value = React.useMemo(
+  const openCartDrawer = React.useCallback(() => {
+    dispatch({ type: "OPEN_DRAWER" });
+  }, []);
+
+  const closeCartDrawer = React.useCallback(() => {
+    dispatch({ type: "CLOSE_DRAWER" });
+  }, []);
+
+  const toggleCartDrawer = React.useCallback(() => {
+    dispatch({ type: "TOGGLE_DRAWER" });
+  }, []);
+
+  const value = React.useMemo<CartContextValue>(
     () => ({
-      items,
-      cartCount,
-      cartSubtotal,
+      ...state,
+      cartCount: state.itemCount,
+      cartSubtotal: state.subtotal,
+      addItem,
       addToCart,
+      removeItem,
       removeFromCart,
       updateQuantity,
       clearCart,
+      getItemQuantity,
+      isInCart,
+      openCartDrawer,
+      closeCartDrawer,
+      toggleCartDrawer,
     }),
-    [items, cartCount, cartSubtotal, addToCart, removeFromCart, updateQuantity, clearCart],
+    [
+      state,
+      addItem,
+      addToCart,
+      removeItem,
+      removeFromCart,
+      updateQuantity,
+      clearCart,
+      getItemQuantity,
+      isInCart,
+      openCartDrawer,
+      closeCartDrawer,
+      toggleCartDrawer,
+    ],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

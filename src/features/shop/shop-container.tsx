@@ -163,10 +163,10 @@ export function ShopContainer() {
             type="button"
             onClick={() => setFilters((f) => ({ ...f, category: "all" }))}
             className={cn(
-              "shrink-0 rounded-pill border px-4 py-2 text-body-sm font-medium transition-colors duration-fast",
+              "shrink-0 rounded-pill border px-4 py-2 text-body-sm font-semibold transition-all duration-fast shadow-xs",
               filters.category === "all"
-                ? "border-primary bg-primary text-white"
-                : "border-line bg-surface text-ink-soft hover:border-line-strong hover:text-ink",
+                ? "border-emerald-400/30 bg-gradient-to-r from-[#0b4d36] via-[#167a50] to-[#0b4d36] text-white shadow-sm"
+                : "border-line-strong/70 bg-surface text-ink-soft hover:border-primary/40 hover:text-primary",
             )}
           >
             All
@@ -182,10 +182,10 @@ export function ShopContainer() {
                 }))
               }
               className={cn(
-                "shrink-0 rounded-pill border px-4 py-2 text-body-sm font-medium transition-colors duration-fast",
+                "shrink-0 rounded-pill border px-4 py-2 text-body-sm font-semibold transition-all duration-fast shadow-xs",
                 filters.category === cat.slug
-                  ? "border-primary bg-primary text-white"
-                  : "border-line bg-surface text-ink-soft hover:border-line-strong hover:text-ink",
+                  ? "border-emerald-400/30 bg-gradient-to-r from-[#0b4d36] via-[#167a50] to-[#0b4d36] text-white shadow-sm"
+                  : "border-line-strong/70 bg-surface text-ink-soft hover:border-primary/40 hover:text-primary",
               )}
             >
               {cat.name}

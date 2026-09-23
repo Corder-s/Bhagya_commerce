@@ -229,9 +229,10 @@ export function ProductDetailClient({ product }: { product: ProductDetail }) {
               type="button"
               onClick={handleAddToCart}
               className={cn(
-                "flex-1 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl",
-                "bg-primary px-6 text-body-md font-semibold text-white",
-                "transition-all duration-base hover:bg-primary/90 active:scale-[0.98]",
+                "flex-1 inline-flex min-h-12 items-center justify-center gap-2.5 rounded-xl",
+                "bg-gradient-to-r from-[#0b4d36] via-[#167a50] to-[#0b4d36] px-6 text-body-md font-semibold text-white",
+                "border border-emerald-400/25 shadow-md shadow-[#0b4d36]/25",
+                "transition-all duration-base hover:from-[#0d5c41] hover:via-[#1e8f5e] hover:to-[#0d5c41] hover:shadow-lg hover:shadow-[#0b4d36]/35 hover:brightness-105 active:scale-[0.98]",
                 "focus-visible:outline-2 focus-visible:outline-offset-2",
               )}
             >
@@ -249,10 +250,10 @@ export function ProductDetailClient({ product }: { product: ProductDetail }) {
               initial="rest"
               animate={saved ? "popped" : "rest"}
               className={cn(
-                "grid size-12 shrink-0 place-items-center rounded-xl border transition-colors",
+                "grid size-12 shrink-0 place-items-center rounded-xl border-2 transition-all shadow-xs active:scale-95",
                 saved
-                  ? "border-danger/30 bg-danger-surface text-danger"
-                  : "border-line bg-surface text-ink-soft hover:text-danger",
+                  ? "border-danger/40 bg-danger-surface text-danger shadow-danger/10"
+                  : "border-line-strong bg-surface text-ink-soft hover:border-danger hover:text-danger hover:bg-danger-surface/40",
               )}
             >
               <Heart className={cn("size-5", saved && "fill-current")} aria-hidden="true" />

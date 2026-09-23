@@ -129,14 +129,14 @@ export function AccountMenu({
               </p>
               <Link
                 href={authRoutes.login}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-sm bg-primary px-4 text-body-sm font-medium text-primary-foreground transition-colors duration-fast hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#0b4d36] via-[#167a50] to-[#0b4d36] px-4 text-body-sm font-semibold text-white shadow-sm border border-emerald-400/20 transition-all duration-fast hover:brightness-110 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 <LogIn className="size-4" aria-hidden="true" />
                 Log in
               </Link>
               <Link
                 href={authRoutes.register}
-                className="inline-flex min-h-10 items-center justify-center rounded-sm border border-line-strong px-4 text-body-sm font-medium text-ink transition-colors duration-fast hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="inline-flex min-h-10 items-center justify-center rounded-md border-2 border-primary/40 bg-surface/90 px-4 text-body-sm font-semibold text-primary transition-all duration-fast hover:border-primary hover:bg-primary hover:text-white hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Create account
               </Link>

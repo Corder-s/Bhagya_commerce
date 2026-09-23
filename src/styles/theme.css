@@ -382,3 +382,31 @@
     #032619 100%
   );
 }
+
+/* Button & Action Gradients */
+@utility bg-gradient-btn-primary {
+  background-image: linear-gradient(
+    135deg,
+    var(--bhagya-primary) 0%,
+    #167a50 50%,
+    var(--bhagya-primary) 100%
+  );
+}
+
+@utility bg-gradient-btn-gold {
+  background-image: linear-gradient(
+    135deg,
+    var(--bhagya-gold-deep) 0%,
+    #c59e4e 50%,
+    var(--bhagya-gold) 100%
+  );
+}
+
+@utility shadow-button-primary {
+  box-shadow: 0 4px 14px -2px rgb(11 77 54 / 0.3), 0 2px 6px -1px rgb(11 77 54 / 0.15);
+}
+
+@utility shadow-button-hover {
+  box-shadow: 0 6px 20px -2px rgb(11 77 54 / 0.4), 0 4px 10px -2px rgb(11 77 54 / 0.2);
+}
+

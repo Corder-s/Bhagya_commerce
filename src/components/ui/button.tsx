@@ -20,12 +20,12 @@ import { cn } from "@/lib/utils";
 const buttonVariants = cva(
   [
     "relative inline-flex select-none items-center justify-center gap-2",
-    "font-sans font-medium whitespace-nowrap",
+    "font-sans font-semibold whitespace-nowrap",
     "border border-transparent",
-    "transition-[background-color,border-color,color,box-shadow,transform] duration-base ease-brand",
+    "transition-all duration-base ease-brand",
     "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring)]",
     "disabled:pointer-events-none disabled:cursor-not-allowed",
-    "active:translate-y-px",
+    "active:scale-[0.98]",
     "[&_svg]:pointer-events-none [&_svg]:shrink-0",
     "[&_svg:not([class*='size-'])]:size-4",
   ],
@@ -33,34 +33,40 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "bg-primary text-primary-foreground shadow-xs",
-          "hover:bg-primary-hover hover:shadow-sm",
-          "active:bg-primary-active",
-          "disabled:bg-primary-disabled disabled:text-primary-foreground/80",
+          "bg-gradient-to-r from-[#0b4d36] via-[#167a50] to-[#0b4d36] text-white shadow-md shadow-[#0b4d36]/25 border border-emerald-400/25",
+          "hover:from-[#0d5c41] hover:via-[#1e8f5e] hover:to-[#0d5c41] hover:shadow-lg hover:shadow-[#0b4d36]/35 hover:brightness-105",
+          "active:brightness-95",
+          "disabled:bg-none disabled:bg-primary-disabled disabled:text-primary-foreground/80 disabled:shadow-none disabled:border-transparent",
         ],
         secondary: [
-          "bg-soft-green text-primary border-soft-green-strong",
-          "hover:bg-soft-green-strong hover:text-deep",
+          "bg-gradient-to-r from-soft-green via-[#e3efe6] to-soft-green text-primary border border-primary/25 shadow-xs",
+          "hover:border-primary/50 hover:bg-soft-green-strong hover:text-deep hover:shadow-sm",
           "active:bg-soft-green-strong active:text-primary-active",
-          "disabled:bg-canvas-deep disabled:text-ink-faint disabled:border-line",
+          "disabled:bg-none disabled:bg-canvas-deep disabled:text-ink-faint disabled:border-line disabled:shadow-none",
         ],
         outline: [
-          "border-line-strong bg-transparent text-ink",
-          "hover:border-ink hover:bg-surface/70",
-          "active:bg-canvas-deep",
-          "disabled:border-line disabled:text-ink-faint",
+          "border-2 border-primary/45 bg-surface/90 text-primary backdrop-blur-xs shadow-xs",
+          "hover:border-primary hover:bg-primary hover:text-white hover:shadow-md",
+          "active:bg-primary-active active:text-white",
+          "disabled:border-line disabled:bg-transparent disabled:text-ink-faint disabled:shadow-none",
         ],
         ghost: [
-          "bg-transparent text-ink-soft",
-          "hover:bg-soft-green/70 hover:text-primary",
-          "active:bg-soft-green-strong",
+          "bg-transparent text-ink",
+          "hover:bg-soft-green/80 hover:text-primary",
+          "active:bg-soft-green-strong active:text-primary-active",
           "disabled:text-ink-faint",
         ],
+        gold: [
+          "bg-gradient-to-r from-[#8a6d2f] via-[#c59e4e] to-[#8a6d2f] text-white font-semibold shadow-md shadow-gold/25 border border-amber-300/30",
+          "hover:brightness-110 hover:shadow-lg hover:shadow-gold/35",
+          "active:brightness-95",
+          "disabled:bg-none disabled:bg-gold-soft disabled:text-ink-faint disabled:shadow-none disabled:border-transparent",
+        ],
         destructive: [
-          "bg-danger text-white shadow-xs",
-          "hover:bg-[#8f1e1e] hover:shadow-sm",
-          "active:bg-[#7a1a1a]",
-          "disabled:bg-danger/45",
+          "bg-gradient-to-r from-[#991b1b] via-[#bd2929] to-[#991b1b] text-white shadow-sm border border-red-400/25",
+          "hover:from-[#ab1f1f] hover:via-[#cf3333] hover:to-[#ab1f1f] hover:shadow-md hover:brightness-105",
+          "active:brightness-95",
+          "disabled:bg-none disabled:bg-danger/45 disabled:shadow-none disabled:border-transparent",
         ],
         link: [
           "h-auto p-0 text-primary underline-offset-4",
@@ -87,19 +93,26 @@ const buttonVariants = cva(
       {
         variant: "primary",
         tone: "inverse",
-        class: "bg-canvas text-primary hover:bg-soft-green active:bg-soft-green-strong",
+        class:
+          "bg-gradient-to-r from-white via-[#fbf9f2] to-white text-primary border border-white/50 shadow-md hover:bg-soft-green hover:text-deep hover:shadow-lg active:bg-soft-green-strong",
+      },
+      {
+        variant: "secondary",
+        tone: "inverse",
+        class:
+          "bg-white/15 text-white border border-white/35 backdrop-blur-sm hover:bg-white/25 hover:border-white/60 hover:text-white hover:shadow-sm active:bg-white/30",
       },
       {
         variant: "outline",
         tone: "inverse",
         class:
-          "border-line-inverse text-ink-inverse hover:border-ink-inverse hover:bg-ink-inverse/10 active:bg-ink-inverse/15",
+          "border-2 border-white/80 bg-white/10 text-white backdrop-blur-sm hover:border-white hover:bg-white hover:text-primary hover:shadow-md active:bg-white/90",
       },
       {
         variant: "ghost",
         tone: "inverse",
         class:
-          "text-ink-inverse-soft hover:bg-ink-inverse/10 hover:text-ink-inverse active:bg-ink-inverse/15",
+          "text-white/90 hover:bg-white/15 hover:text-white active:bg-white/25",
       },
     ],
     defaultVariants: {

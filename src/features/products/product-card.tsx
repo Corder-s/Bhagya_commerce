@@ -86,11 +86,11 @@ export function ProductCard({
           aria-pressed={saved}
           aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
           className={cn(
-            "absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-pill border backdrop-blur-sm",
-            "transition-colors duration-fast ease-brand focus-visible:outline-2 focus-visible:outline-offset-2",
+            "absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-pill border-2 backdrop-blur-sm shadow-xs",
+            "transition-all duration-fast ease-brand focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-95",
             saved
-              ? "border-danger/30 bg-danger-surface text-danger"
-              : "border-line bg-surface/90 text-ink-soft hover:border-line-strong hover:text-danger",
+              ? "border-danger/40 bg-danger-surface text-danger shadow-danger/10"
+              : "border-line-strong/80 bg-surface/95 text-ink-soft hover:border-danger hover:text-danger hover:bg-danger-surface/40",
           )}
         >
           <m.span
@@ -111,9 +111,10 @@ export function ProductCard({
           type="button"
           onClick={onQuickAdd}
           className={cn(
-            "absolute inset-x-3 bottom-3 z-10 inline-flex min-h-11 items-center justify-center gap-2 rounded-md",
-            "bg-surface/95 px-4 text-body-sm font-medium text-primary backdrop-blur-sm",
-            "transition-[opacity,transform] duration-base ease-brand hover:bg-surface",
+            "absolute inset-x-3 bottom-3 z-10 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg",
+            "bg-gradient-to-r from-[#0b4d36] via-[#167a50] to-[#0b4d36] px-4 text-body-sm font-semibold text-white",
+            "border border-emerald-400/25 shadow-md shadow-[#0b4d36]/30",
+            "transition-all duration-base ease-brand hover:brightness-110 hover:shadow-lg active:scale-[0.98]",
             "focus-visible:outline-2 focus-visible:outline-offset-2",
             "pointer-coarse:translate-y-0 pointer-coarse:opacity-100",
             "sm:translate-y-2 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-within:translate-y-0 sm:group-focus-within:opacity-100",

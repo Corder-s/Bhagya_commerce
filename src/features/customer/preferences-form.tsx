@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupOption } from "@/components/ui/radio-group";
@@ -139,18 +140,19 @@ export function PreferencesForm() {
           </fieldset>
 
           <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
-            <button
+            <Button
               type="button"
+              variant="primary"
+              size="md"
               onClick={() =>
                 toast.info(
                   "Preferences are not saved yet",
                   "The profile service arrives in Phase 2 — nothing was stored.",
                 )
               }
-              className="inline-flex h-11 items-center rounded-md bg-primary px-5 text-body-sm font-medium text-primary-foreground transition-colors duration-fast hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               Save preferences
-            </button>
+            </Button>
             <p className="text-caption text-ink-soft">
               Stored against your account once profiles exist.
             </p>

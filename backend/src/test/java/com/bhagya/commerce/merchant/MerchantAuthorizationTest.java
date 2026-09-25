@@ -35,7 +35,8 @@ public class MerchantAuthorizationTest {
         organizationRepository = new InMemoryOrganizationRepository();
         storeRepository = new InMemoryStoreRepository();
         storeService = new StoreService(storeRepository, organizationRepository);
-        productService = new ProductService(new InMemoryProductRepository(), new InMemoryCategoryRepository(), storeService);
+        com.bhagya.commerce.common.redis.CacheService cacheService = new com.bhagya.commerce.common.redis.CacheService(null);
+        productService = new ProductService(new InMemoryProductRepository(), storeRepository, organizationRepository, cacheService);
         orderService = new OrderService(new InMemoryOrderRepository(), new InventoryService());
         merchantService = new MerchantService(organizationRepository, storeRepository, storeService, productService, orderService);
     }

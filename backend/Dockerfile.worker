@@ -1,0 +1,19 @@
+# -------------------------------------------------------------
+# Bhagya Commerce — Production Background Worker Dockerfile
+# Standalone execution for notification queue, outbox & scheduled tasks
+# -------------------------------------------------------------
+
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+RUN addgroup -S bhagya && adduser -S bhagya -G bhagya
+
+COPY target/*.jar /app/app.jar
+
+ENV SPRING_PROFILES_ACTIVE=prod \
+    JAVA_OPTS="-XX:+UseG1GC -XX:MaxRAMPercentage=75.0 -Dspring.main.web-application-type=none"
+
+USER bhagya
+
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app/app.jar"]

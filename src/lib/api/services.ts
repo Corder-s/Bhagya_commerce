@@ -1,4 +1,4 @@
-import { apiClient, ApiResponse } from './client';
+import { apiClient } from './client';
 
 export interface BackendUser {
   id: string;
@@ -93,6 +93,27 @@ export interface BackendOrder {
   createdAt: string;
 }
 
+export interface BackendUploadUrlResponse {
+  uploadUrl: string;
+  objectKey: string;
+  publicUrl: string;
+  expiresAt: string;
+}
+
+export interface BackendMediaResponse {
+  id: string;
+  entityType: string;
+  entityId: string;
+  objectKey: string;
+  publicUrl: string;
+  mimeType: string;
+  sizeBytes: number;
+  altText?: string;
+  sortOrder: number;
+  isPrimary: boolean;
+  createdAt: string;
+}
+
 export const authApiService = {
   login: (credentials: { emailOrPhone?: string; email?: string; password?: string }) =>
     apiClient.post<BackendAuthResponse>('/api/v1/auth/login', credentials),
@@ -155,6 +176,15 @@ export const merchantApiService = {
   getStore: () => apiClient.get<unknown>('/api/v1/merchant/store'),
   getOnboardingStatus: () => apiClient.get<unknown>('/api/v1/merchant/onboarding'),
   submitOnboarding: (data: unknown) => apiClient.post<unknown>('/api/v1/merchant/onboarding', data),
+};
+
+export const mediaApiService = {
+  getUploadUrl: (data: { filename: string; contentType: string; sizeBytes: number; entityType: string; entityId: string }) =>
+    apiClient.post<BackendUploadUrlResponse>('/api/v1/media/upload-url', data),
+  completeUpload: (data: { objectKey: string; entityType: string; entityId: string; sizeBytes: number; mimeType: string; altText?: string; sortOrder?: number; isPrimary?: boolean }) =>
+    apiClient.post<BackendMediaResponse>('/api/v1/media/complete', data),
+  deleteMedia: (mediaId: string) =>
+    apiClient.delete<void>(`/api/v1/media/${mediaId}`),
 };
 
 export const aiApiService = {

@@ -23,11 +23,14 @@ public class ProductStoreIsolationTest {
 
     @BeforeEach
     void setUp() {
-        StoreService storeService = new StoreService(new InMemoryStoreRepository(), new InMemoryOrganizationRepository());
+        InMemoryStoreRepository storeRepo = new InMemoryStoreRepository();
+        InMemoryOrganizationRepository orgRepo = new InMemoryOrganizationRepository();
+        com.bhagya.commerce.common.redis.CacheService cacheService = new com.bhagya.commerce.common.redis.CacheService(null);
         productService = new ProductService(
             new InMemoryProductRepository(),
-            new InMemoryCategoryRepository(),
-            storeService
+            storeRepo,
+            orgRepo,
+            cacheService
         );
     }
 

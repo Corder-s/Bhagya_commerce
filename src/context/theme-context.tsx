@@ -21,6 +21,20 @@ function getSystemTheme(): ResolvedTheme {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
+function applyThemeToDocument(resolved: ResolvedTheme) {
+  if (typeof document === "undefined") return;
+  const root = document.documentElement;
+  if (resolved === "dark") {
+    root.classList.add("dark");
+    root.setAttribute("data-theme", "dark");
+    root.style.colorScheme = "dark";
+  } else {
+    root.classList.remove("dark");
+    root.setAttribute("data-theme", "light");
+    root.style.colorScheme = "light";
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = React.useState<Theme>("system");
   const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>("light");
@@ -59,19 +73,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, [theme, mounted]);
-
-  const applyThemeToDocument = (resolved: ResolvedTheme) => {
-    const root = document.documentElement;
-    if (resolved === "dark") {
-      root.classList.add("dark");
-      root.setAttribute("data-theme", "dark");
-      root.style.colorScheme = "dark";
-    } else {
-      root.classList.remove("dark");
-      root.setAttribute("data-theme", "light");
-      root.style.colorScheme = "light";
-    }
-  };
 
   const setTheme = React.useCallback((nextTheme: Theme) => {
     setThemeState(nextTheme);

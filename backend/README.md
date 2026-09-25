@@ -1,139 +1,140 @@
-# Bhagya Commerce — Backend Service (Step 11 Architecture)
+# Bhagya Commerce — Backend Infrastructure & API (Step 12)
 
-Production-grade modular monolith backend for Bhagya Commerce built with **Java 21**, **Spring Boot 3.4.3**, **Spring Security**, **Spring Data JPA**, **Flyway**, **Actuator**, and **OpenAPI (Swagger)**.
-
----
-
-## 🏛 Architecture Overview
-
-```
-Next.js Frontend (Port 3000)
-       ↓ (REST JSON + JWT / Bearer + X-Request-Id)
-Spring Boot Modular Monolith (Port 8080)
-       ├── com.bhagya.commerce.config
-       ├── com.bhagya.commerce.common (api, error, security, logging, util)
-       ├── com.bhagya.commerce.auth
-       ├── com.bhagya.commerce.user
-       ├── com.bhagya.commerce.organization
-       ├── com.bhagya.commerce.store
-       ├── com.bhagya.commerce.catalog (product, category)
-       ├── com.bhagya.commerce.inventory
-       ├── com.bhagya.commerce.cart
-       ├── com.bhagya.commerce.checkout
-       ├── com.bhagya.commerce.order
-       ├── com.bhagya.commerce.payment
-       ├── com.bhagya.commerce.shipping
-       ├── com.bhagya.commerce.notification
-       ├── com.bhagya.commerce.merchant
-       ├── com.bhagya.commerce.ai
-       ├── com.bhagya.commerce.admin
-       └── com.bhagya.commerce.audit
-       ↓
-Persistence Abstraction (Step 11 Development Adapters → Step 12 PostgreSQL)
-```
+Production-grade modular monolith backend for Bhagya Commerce built with **Java 21**, **Spring Boot 3.4.3**, **PostgreSQL 16**, **Redis 7**, and **Cloudflare R2** (S3-Compatible API).
 
 ---
 
-## 🚀 Quick Start
+## 🏛 The Golden Architectural Rule
 
-### Requirements
-- **Java 21** or higher (tested with OpenJDK 21 / 25)
-- **Maven 3.9+** (or use included wrappers)
+| Layer | Responsibility | Technology | Storage Type |
+|---|---|---|---|
+| **Business Truth** | Permanent, transactional, ACID-compliant business data (Orders, Users, Stores, Products, Inventory, Payments) | **PostgreSQL 16** (Spring Data JPA + Hibernate) | Relational Database |
+| **Cache & Temporary** | Fast read cache, background job queue, sliding-window rate limiting, and idempotency deduplication | **Redis 7** (Lettuce + Jackson JSON) | In-Memory Key-Value Store |
+| **Media & Files** | Product photos, artisan videos, store branding logos, banners, invoices, and documents | **Cloudflare R2** (S3-Compatible API) | Distributed Object Storage |
 
-### Running Locally
+> [!IMPORTANT]
+> - **PostgreSQL** is the sole source of truth. Redis is NOT the source of truth for business data.
+> - **Cloudflare R2** stores binary objects directly via browser presigned URLs; PostgreSQL stores object metadata (`object_key`, `mime_type`, `size_bytes`, `public_url`).
+> - **No Bytea**: Image binaries are never stored in PostgreSQL.
+
+---
+
+## 🚀 Quick Start (Local Development)
+
+### 1. Requirements
+- **Java 21** or higher
+- **Docker** and **Docker Compose**
+- **Maven 3.9+**
+
+### 2. Start PostgreSQL & Redis via Docker
+```bash
+cd backend
+docker compose -f docker-compose.dev.yml up -d
+```
+This provisions:
+- **PostgreSQL 16** on `localhost:5432` (`db: bhagya_commerce`, `user: bhagya_user`)
+- **Redis 7** on `localhost:6379` (protected with password)
+
+### 3. Configure Environment
+Copy `.env.example` to `.env` or set environment variables:
+```bash
+DATABASE_URL=jdbc:postgresql://localhost:5432/bhagya_commerce
+DATABASE_USERNAME=bhagya_user
+DATABASE_PASSWORD=bhagya_secret_pass_2026
+
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=bhagya_redis_pass_2026
+
+R2_ACCOUNT_ID=your_cloudflare_account_id
+R2_ACCESS_KEY_ID=your_r2_access_key
+R2_SECRET_ACCESS_KEY=your_r2_secret_key
+R2_BUCKET=bhagya-commerce-media
+R2_PUBLIC_BASE_URL=https://media.bhagya.commerce
+```
+
+### 4. Run Spring Boot Backend
 ```bash
 cd backend
 mvn spring-boot:run
 ```
+Flyway automatically executes all ordered migrations:
+- `V1__init_schema.sql` (Core Users, Stores, Products, Orders, Payments, Notifications)
+- `V2__complete_step12_schema.sql` (Variants, R2 Media Metadata, Collections, Inventory `@Version`, Coupons, Reviews, Subscriptions, Audit Logs)
 
-The server starts on `http://localhost:8080`.
+---
 
-### Running Tests
+## 📦 Cloudflare R2 Presigned Upload Flow
+
+```
+Browser (Next.js)
+   │
+   │  1. POST /api/v1/media/upload-url (filename, contentType, sizeBytes, entityType, entityId)
+   ▼
+Spring Boot API (R2StorageService)
+   │
+   │  2. Validates merchant authorization & MIME/size constraints
+   │  3. Generates presigned PUT URL with 15-minute expiration
+   │
+   ▼  Returns { uploadUrl, objectKey, publicUrl }
+Browser (Next.js)
+   │
+   │  4. Direct PUT binary payload to Cloudflare R2 uploadUrl
+   ▼
+Cloudflare R2 Object Storage
+   │
+   │  5. Browser notifies API: POST /api/v1/media/complete
+   ▼
+Spring Boot API → Saves metadata in PostgreSQL (product_media / store_media)
+```
+
+### Object Key Structure
+- Products: `stores/{storeId}/products/{productId}/original/{uuid}-{filename}`
+- Store Logo: `stores/{storeId}/branding/logo/{uuid}-{filename}`
+- Store Banner: `stores/{storeId}/branding/banner/{uuid}-{filename}`
+- Documents: `stores/{storeId}/documents/{uuid}-{filename}`
+
+---
+
+## ⚡ Redis Caching & Queue Specifications
+
+1. **CacheService**:
+   - `product:{idOrSlug}` (TTL: 24h)
+   - `store:{storeId}` (TTL: 12h)
+   - `category:{slug}` (TTL: 24h)
+   - `catalog:search:*` (TTL: 15m)
+   - Automatic prefix invalidation on product/store updates (`deleteByPrefix("catalog:search")`).
+2. **JobQueue**:
+   - Asynchronous background job queue (`bhagya:job_queue`) supporting retries and execution metadata for notifications, image optimization, reports, and AI tasks.
+3. **IdempotencyService**:
+   - Stores request fingerprints and results for payment session creation, order placement, and webhook handlers (`idempotency:{key}`).
+4. **RateLimitService**:
+   - Sliding-window Redis counters for authentication, OTP generation, AI chats, and public searches.
+
+---
+
+## 🔒 Inventory Concurrency & Anti-Overselling
+
+- `inventory` table uses `@Version private Long version;` for optimistic locking.
+- Stock reservation (`reserveInventory`), commit (`commitInventory`), and release (`releaseInventory`) are executed within database transactions.
+- Zero overselling under simultaneous checkouts.
+
+---
+
+## 🧪 Test Suite
+
+Run unit and integration tests:
 ```bash
 cd backend
 mvn test
 ```
 
----
-
-## 📚 API Endpoints Summary
-
-All public API routes are prefixed with `/api/v1/`:
-
-| Domain | Method & Path | Description | Access |
-|---|---|---|---|
-| **Auth** | `POST /api/v1/auth/login` | Email/Password login | Public |
-| | `POST /api/v1/auth/register` | Customer account registration | Public |
-| | `POST /api/v1/auth/otp/send` | Send SMS OTP | Public |
-| | `POST /api/v1/auth/otp/verify` | Verify OTP and authenticate | Public |
-| **User** | `GET /api/v1/users/me` | Current authenticated user profile | Authenticated |
-| | `PATCH /api/v1/users/me` | Update customer profile | Authenticated |
-| | `GET /api/v1/users/me/preferences` | User theme & locale preferences | Authenticated |
-| **Catalog** | `GET /api/v1/products` | Search & filter products (pagination) | Public |
-| | `GET /api/v1/products/{id}` | Product details by ID or slug | Public |
-| | `GET /api/v1/categories` | Browse category hierarchy | Public |
-| **Cart** | `GET /api/v1/cart` | Active shopping cart for session/user | Public / Auth |
-| | `POST /api/v1/cart/items` | Add item to cart | Public / Auth |
-| | `PATCH /api/v1/cart/items/{id}`| Update cart item quantity | Public / Auth |
-| | `DELETE /api/v1/cart/items/{id}`| Remove cart item | Public / Auth |
-| **Checkout** | `POST /api/v1/checkout/validate` | Authoritative cart & pricing validation | Authenticated |
-| | `POST /api/v1/checkout/session` | Create checkout session | Authenticated |
-| **Orders** | `GET /api/v1/orders` | Customer's order history | Authenticated |
-| | `GET /api/v1/orders/{id}` | Single order details (with ownership check)| Authenticated |
-| | `POST /api/v1/orders` | Place new order (authoritative ID: `BG-YYYYMMDD-XXXXXX`) | Authenticated |
-| | `POST /api/v1/orders/{id}/cancel` | Cancel order | Authenticated |
-| **Payments** | `POST /api/v1/payments/session` | Create gateway session (Razorpay/Cashfree) | Authenticated |
-| | `POST /api/v1/payments/verify` | Authoritative signature verification | Authenticated |
-| | `POST /api/v1/payments/webhook` | Asynchronous gateway webhook listener | Gateway |
-| **Shipping** | `GET /api/v1/orders/{id}/tracking` | Real-time tracking timeline | Authenticated |
-| | `GET /api/v1/orders/{id}/shipment` | Shipment courier details | Authenticated |
-| **Notifications** | `GET /api/v1/notifications` | User alerts & updates | Authenticated |
-| | `GET /api/v1/notifications/unread-count` | Notification badge count | Authenticated |
-| | `POST /api/v1/notifications/read-all` | Mark all notifications read | Authenticated |
-| **Merchant** | `GET /api/v1/merchant/dashboard/overview` | Merchant KPIs & live sales analytics | Merchant / Admin |
-| | `GET /api/v1/merchant/orders` | Store orders | Merchant / Admin |
-| | `GET /api/v1/merchant/products` | Store products | Merchant / Admin |
-| | `GET /api/v1/merchant/inventory`| Inventory stock & low-stock alerts | Merchant / Admin |
-| | `GET /api/v1/merchant/store` | Merchant store settings | Merchant / Admin |
-| | `POST /api/v1/merchant/onboarding` | Merchant business onboarding & verification | Authenticated |
-| **AI** | `POST /api/v1/ai/chat` | Safe natural language assistant & tool runner | Public / Auth |
-| | `GET /api/v1/ai/conversations` | Conversation history threads | Authenticated |
-| **Actuator** | `GET /actuator/health` | Health & readiness probe | Public |
-| | `GET /actuator/info` | Application metadata | Public |
-| **OpenAPI** | `GET /v3/api-docs` | OpenAPI 3.0 specification | Public |
-| | `GET /swagger-ui.html` | Interactive Swagger documentation | Public |
-
----
-
-## 🔒 Security & Authorization
-
-- **Stateless JWT**: Standard Bearer token authentication via `JwtAuthenticationFilter`.
-- **RBAC & Hierarchy**: Roles include `ROLE_CUSTOMER`, `ROLE_MERCHANT`, `ROLE_ADMIN`.
-- **Strict Data Isolation**:
-  - Customer A cannot access Customer B's orders or addresses.
-  - Merchant Store A cannot view or modify products/orders of Store B.
-  - Store identity is verified strictly via `OrganizationMember` context, never from client-supplied `storeId` alone.
-- **Request Correlation**: MDC-backed `X-Request-Id` attached to every request and response.
-
----
-
-## ⚙️ Configuration Profiles
-
-- `application.yml`: Base defaults & actuator configuration.
-- `application-dev.yml`: Local development with CORS enabled for `http://localhost:3000`.
-- `application-prod.yml`: Strict CORS and production environment variable bindings (`DATABASE_URL`, `JWT_SECRET`, etc.).
-- `application-test.yml`: In-memory isolated test configuration.
-
----
-
-## 📦 What is Implemented in Step 11 vs Step 12
-
-| Feature | Step 11 (This Step) | Step 12 (Next Step) |
-|---|---|---|
-| **API Architecture** | Complete `/api/v1` REST Monolith | Unchanged |
-| **DTO / Domain Layer** | Full Separation & Validations | Unchanged |
-| **Persistence** | Flyway V1 DDL + Development Repositories | Live PostgreSQL 16 Instance |
-| **Caching / Sessions** | Concurrent In-Memory Stores | Redis Cache & Distributed Lock |
-| **Media Assets** | `ObjectStorageService` Abstraction | Cloudflare R2 S3-Compatible Storage |
-| **Payment Gateways** | `PaymentProvider` SPI + Session Contract | Live Razorpay / Cashfree SDKs |
-| **AI Backend** | Safe Tool Orchestrator & Rule Parser | Google Gemini Pro Live API |
+Includes:
+- `CacheServiceTest`: Caching, TTLs, and prefix invalidation.
+- `JobQueueTest`: Enqueueing, dequeueing, and retry attempt tracking.
+- `R2StorageServiceTest`: Presigned PUT URL generation and MIME/size validation.
+- `InventoryConcurrencyTest`: Stock availability, reservation, and oversell prevention.
+- `IdempotencyServiceTest`: Deduplication and result replay.
+- `OrderOwnershipTest`: Order authorization isolation.
+- `MerchantAuthorizationTest`: Store membership checks.
+- `AuthenticationTest`: JWT issuance and OTP validation.

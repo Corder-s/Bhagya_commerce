@@ -9,29 +9,41 @@ import com.bhagya.commerce.catalog.product.repository.ProductRepository;
 import com.bhagya.commerce.common.api.PageResponse;
 import com.bhagya.commerce.common.error.ForbiddenException;
 import com.bhagya.commerce.common.error.ResourceNotFoundException;
+import com.bhagya.commerce.common.redis.CacheService;
 import com.bhagya.commerce.organization.repository.OrganizationRepository;
 import com.bhagya.commerce.store.domain.Store;
 import com.bhagya.commerce.store.repository.StoreRepository;
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService {
 
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
+    private static final Duration PRODUCT_CACHE_TTL = Duration.ofHours(24);
+    private static final Duration SEARCH_CACHE_TTL = Duration.ofMinutes(15);
+
     private final ProductRepository productRepository;
     private final StoreRepository storeRepository;
     private final OrganizationRepository organizationRepository;
+    private final CacheService cacheService;
 
     public ProductService(
         ProductRepository productRepository,
         StoreRepository storeRepository,
-        OrganizationRepository organizationRepository
+        OrganizationRepository organizationRepository,
+        CacheService cacheService
     ) {
         this.productRepository = productRepository;
         this.storeRepository = storeRepository;
         this.organizationRepository = organizationRepository;
+        this.cacheService = cacheService;
     }
 
     public PageResponse<ProductResponse> searchProducts(
@@ -69,6 +81,12 @@ public class ProductService {
     }
 
     public ProductResponse getProductByIdOrSlug(String idOrSlug) {
+        String cacheKey = "product:" + idOrSlug;
+        Optional<ProductResponse> cached = cacheService.get(cacheKey, ProductResponse.class);
+        if (cached.isPresent()) {
+            return cached.get();
+        }
+
         Product product;
         if (idOrSlug.startsWith("prod_")) {
             product = productRepository.findById(idOrSlug)
@@ -77,7 +95,12 @@ public class ProductService {
             product = productRepository.findBySlug(idOrSlug)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with slug: " + idOrSlug));
         }
-        return toResponse(product);
+
+        ProductResponse response = toResponse(product);
+        cacheService.set(cacheKey, response, PRODUCT_CACHE_TTL);
+        cacheService.set("product:" + product.getId(), response, PRODUCT_CACHE_TTL);
+        cacheService.set("product:" + product.getSlug(), response, PRODUCT_CACHE_TTL);
+        return response;
     }
 
     public List<ProductResponse> getStoreProducts(String storeId) {
@@ -114,6 +137,10 @@ public class ProductService {
         product.setCareInstructions(request.careInstructions());
 
         productRepository.save(product);
+
+        // Invalidate catalog search caches
+        cacheService.deleteByPrefix("catalog:search");
+
         return toResponse(product);
     }
 
@@ -144,6 +171,12 @@ public class ProductService {
         product.setUpdatedAt(Instant.now());
 
         productRepository.save(product);
+
+        // Explicit cache invalidation
+        cacheService.delete("product:" + product.getId());
+        cacheService.delete("product:" + product.getSlug());
+        cacheService.deleteByPrefix("catalog:search");
+
         return toResponse(product);
     }
 
@@ -158,6 +191,11 @@ public class ProductService {
         }
 
         productRepository.deleteById(productId);
+
+        // Invalidate caches
+        cacheService.delete("product:" + product.getId());
+        cacheService.delete("product:" + product.getSlug());
+        cacheService.deleteByPrefix("catalog:search");
     }
 
     private void verifyStoreOwnership(String storeId, String userId) {

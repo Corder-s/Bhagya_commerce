@@ -1,0 +1,122 @@
+services:
+  # -------------------------------------------------------------
+  # 1. Spring Boot Modular Monolith API
+  # -------------------------------------------------------------
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bhagya-api-prod
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SERVER_PORT: 8080
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-bhagya_commerce}
+      DATABASE_USERNAME: ${POSTGRES_USER:-bhagya_user}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      R2_ACCOUNT_ID: ${R2_ACCOUNT_ID}
+      R2_ACCESS_KEY_ID: ${R2_ACCESS_KEY_ID}
+      R2_SECRET_ACCESS_KEY: ${R2_SECRET_ACCESS_KEY}
+      R2_BUCKET: ${R2_BUCKET:-bhagya-commerce-media-prod}
+      R2_PUBLIC_BASE_URL: ${R2_PUBLIC_BASE_URL:-https://media.bhagya.commerce}
+      PAYMENT_PROVIDER: ${PAYMENT_PROVIDER:-razorpay}
+      PAYMENT_KEY_ID: ${PAYMENT_KEY_ID}
+      PAYMENT_KEY_SECRET: ${PAYMENT_KEY_SECRET}
+      PAYMENT_WEBHOOK_SECRET: ${PAYMENT_WEBHOOK_SECRET}
+      FRONTEND_URL: ${FRONTEND_URL:-https://bhagya.commerce}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - bhagya-internal-net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep UP || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # -------------------------------------------------------------
+  # 2. Asynchronous Multi-Channel Worker
+  # -------------------------------------------------------------
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bhagya-worker-prod
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DATABASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-bhagya_commerce}
+      DATABASE_USERNAME: ${POSTGRES_USER:-bhagya_user}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      EMAIL_API_KEY: ${EMAIL_API_KEY}
+      WHATSAPP_API_KEY: ${WHATSAPP_API_KEY}
+      SMS_API_KEY: ${SMS_API_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - bhagya-internal-net
+
+  # -------------------------------------------------------------
+  # 3. PostgreSQL 16 (Authoritative Database)
+  # -------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: bhagya-postgres-prod
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-bhagya_commerce}
+      POSTGRES_USER: ${POSTGRES_USER:-bhagya_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - bhagya_pg_prod_data:/var/lib/postgresql/data
+    networks:
+      - bhagya-internal-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bhagya_user} -d ${POSTGRES_DB:-bhagya_commerce}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # -------------------------------------------------------------
+  # 4. Redis 7 (Cache, Queue, Idempotency & Rate Limiting)
+  # -------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: bhagya-redis-prod
+    restart: always
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - bhagya_redis_prod_data:/data
+    networks:
+      - bhagya-internal-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  bhagya_pg_prod_data:
+    driver: local
+  bhagya_redis_prod_data:
+    driver: local
+
+networks:
+  bhagya-internal-net:
+    driver: bridge

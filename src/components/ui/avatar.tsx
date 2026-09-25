@@ -57,7 +57,6 @@ function Avatar({
       {...props}
     >
       {src ? (
-        // eslint-disable-next-line @next/next/no-img-element -- avatars are user-supplied remote URLs; configured in Phase 2
         <img
           src={src}
           alt={alt ?? name}

@@ -1,0 +1,45 @@
+services:
+  # -------------------------------------------------------------
+  # PostgreSQL 16 (Authoritative Source of Truth)
+  # -------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: bhagya-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-bhagya_commerce}
+      POSTGRES_USER: ${POSTGRES_USER:-bhagya_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bhagya_secret_pass_2026}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - bhagya_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bhagya_user} -d ${POSTGRES_DB:-bhagya_commerce}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # -------------------------------------------------------------
+  # Redis 7 (Cache, Queue, Idempotency & Rate Limiting)
+  # -------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: bhagya-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-bhagya_redis_pass_2026}
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - bhagya_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-bhagya_redis_pass_2026}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  bhagya_pg_data:
+    driver: local
+  bhagya_redis_data:
+    driver: local

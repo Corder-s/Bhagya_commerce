@@ -1,11 +1,60 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  # PostgreSQL Data Source (HikariCP)
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/bhagya_commerce}
+    username: ${DATABASE_USERNAME:bhagya_user}
+    password: ${DATABASE_PASSWORD:bhagya_secret_pass_2026}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+      pool-name: BhagyaHikariCP
+
+  # Hibernate & JPA
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate # Do not alter schema automatically; Flyway is authoritative
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+
+  # Flyway Migrations
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+
+  # Redis Configuration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:bhagya_redis_pass_2026}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
 logging:
   level:
     root: INFO
     com.bhagya.commerce: DEBUG
-    org.springframework.web: INFO
     org.springframework.security: INFO
-
-bhagya:
-  environment: development
-  persistence:
-    mode: in-memory # Development adapter mode prior to Step 12 PostgreSQL container wiring
+    org.hibernate.SQL: INFO

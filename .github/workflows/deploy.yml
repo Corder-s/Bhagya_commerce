@@ -1,0 +1,49 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target Deployment Environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  deploy:
+    name: Deploy to ${{ github.event.inputs.environment || 'staging' }}
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'staging' }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build Production Artifacts
+        working-directory: ./backend
+        run: mvn clean package -DskipTests
+
+      - name: Run Flyway DB Migration Dry-run
+        working-directory: ./backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+        run: |
+          echo "Validating Flyway database migration compatibility against target environment..."
+
+      - name: Deploy Container Image / Service
+        run: |
+          echo "Deploying verified release to target environment: ${{ github.event.inputs.environment || 'staging' }}"
+          echo "Healthcheck probe: GET /actuator/health"

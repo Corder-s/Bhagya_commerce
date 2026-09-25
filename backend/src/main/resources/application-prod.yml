@@ -1,8 +1,64 @@
-logging:
-  level:
-    root: INFO
-    com.bhagya.commerce: INFO
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
 
+spring:
+  config:
+    activate:
+      on-profile: prod
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:25}
+      minimum-idle: ${DB_POOL_MIN_IDLE:5}
+      idle-timeout: 30000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      pool-name: BhagyaProdHikariCP
+      connection-test-query: SELECT 1
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate # Strictly validates schema against Flyway migrations
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc.batch_size: 50
+        order_inserts: true
+        order_updates: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD}
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+
+# Production Actuator & Health Probes
 management:
   endpoints:
     web:
@@ -10,7 +66,50 @@ management:
         include: health,info,metrics
   endpoint:
     health:
-      show-details: never
+      show-details: never # Never leak internal dependency details to public callers
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: bhagya-commerce-api
+      environment: production
 
+# Production Bhagya Configuration
 bhagya:
-  environment: production
+  cors:
+    allowed-origins:
+      - ${FRONTEND_URL:https://bhagya.commerce}
+      - https://www.bhagya.commerce
+      - https://merchant.bhagya.commerce
+    allowed-methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+    allowed-headers: "*"
+    allow-credentials: true
+    max-age: 3600
+  security:
+    jwt:
+      secret: ${JWT_SECRET}
+      access-token-validity-seconds: ${JWT_ACCESS_VALIDITY:86400}
+      refresh-token-validity-seconds: ${JWT_REFRESH_VALIDITY:2592000}
+  r2:
+    account-id: ${R2_ACCOUNT_ID}
+    access-key-id: ${R2_ACCESS_KEY_ID}
+    secret-access-key: ${R2_SECRET_ACCESS_KEY}
+    bucket-name: ${R2_BUCKET:bhagya-commerce-media-prod}
+    public-base-url: ${R2_PUBLIC_BASE_URL:https://media.bhagya.commerce}
+  payment:
+    provider: ${PAYMENT_PROVIDER:razorpay}
+    key-id: ${PAYMENT_KEY_ID}
+    key-secret: ${PAYMENT_KEY_SECRET}
+    webhook-secret: ${PAYMENT_WEBHOOK_SECRET}
+    timeout-seconds: 15
+  cache:
+    default-ttl-seconds: 3600
+    catalog-ttl-seconds: 86400
+    store-ttl-seconds: 43200
+
+logging:
+  level:
+    root: WARN
+    com.bhagya.commerce: INFO
+    org.springframework.security: WARN
+    org.hibernate: WARN

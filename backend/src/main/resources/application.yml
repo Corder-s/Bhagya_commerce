@@ -42,8 +42,7 @@ bhagya:
   cors:
     allowed-origins:
       - ${FRONTEND_URL:http://localhost:3000}
-      - https://bhagya.in
-      - https://www.bhagya.in
+      - https://bhagya.commerce
     allowed-methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
     allowed-headers: "*"
     allow-credentials: true
@@ -53,6 +52,16 @@ bhagya:
       secret: ${JWT_SECRET:bhagya-commerce-super-secure-production-jwt-signing-key-2026-xyz-32bytes-long}
       access-token-validity-seconds: ${JWT_ACCESS_VALIDITY:86400} # 24 hours
       refresh-token-validity-seconds: ${JWT_REFRESH_VALIDITY:2592000} # 30 days
+  r2:
+    account-id: ${R2_ACCOUNT_ID:sample-r2-account-id}
+    access-key-id: ${R2_ACCESS_KEY_ID:sample-r2-access-key}
+    secret-access-key: ${R2_SECRET_ACCESS_KEY:sample-r2-secret-key}
+    bucket-name: ${R2_BUCKET:bhagya-commerce-media}
+    public-base-url: ${R2_PUBLIC_BASE_URL:https://media.bhagya.commerce}
+  cache:
+    default-ttl-seconds: 3600
+    catalog-ttl-seconds: 86400
+    store-ttl-seconds: 43200
   api:
     version: v1
     prefix: /api/v1

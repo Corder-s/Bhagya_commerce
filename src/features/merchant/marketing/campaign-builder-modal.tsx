@@ -152,23 +152,24 @@ export function CampaignBuilderModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
-      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col rounded-2xl border border-border bg-surface shadow-2xl animate-in fade-in zoom-in-95">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs overflow-y-auto">
+      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col rounded-2xl border border-border bg-surface shadow-2xl animate-in fade-in zoom-in-95 my-auto">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-border p-5">
+        <div className="flex shrink-0 items-center justify-between border-b border-border p-5 bg-surface rounded-t-2xl">
           <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <Megaphone className="size-5" />
             </div>
             <div>
-              <h2 className="text-heading-md font-serif text-ink">Marketing Campaign Builder</h2>
-              <p className="text-caption text-ink-soft">Create, target, preview and dispatch audience promotions</p>
+              <h2 className="text-heading-md font-serif text-charcoal">Marketing Campaign Builder</h2>
+              <p className="text-caption text-charcoal-muted">Create, target, preview and dispatch audience promotions</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-ink-soft hover:bg-surface-raised hover:text-ink transition-colors"
+            className="rounded-lg p-1.5 text-charcoal-muted hover:bg-surface-elevated hover:text-charcoal transition-colors"
+            title="Close modal"
           >
             <X className="size-5" />
           </button>
@@ -481,7 +482,7 @@ export function CampaignBuilderModal({
         </div>
 
         {/* Footer Navigation */}
-        <div className="flex items-center justify-between border-t border-border p-5">
+        <div className="flex shrink-0 items-center justify-between border-t border-border p-5 bg-surface rounded-b-2xl">
           <Button
             variant="outline"
             type="button"

@@ -819,7 +819,7 @@ export const marketingApiService = {
     } catch {
       const product = data.productName || 'Authentic GI-Tagged Handlooms';
       const offer = data.discountDetails || 'Exclusive Festive Privileges';
-      let subject = `Celebrate Heritage Craftsmanship: ${offer} ✨`;
+      const subject = `Celebrate Heritage Craftsmanship: ${offer} ✨`;
       let headline = `Handcrafted for You: ${product}`;
       let body = `Namaste! Celebrate India's living artisan traditions with ${product}. Enjoy ${offer} on your next order. Explore authentic handlooms verified by master guilds: https://bhagya.commerce/shop`;
       let cta = 'Shop the Collection';

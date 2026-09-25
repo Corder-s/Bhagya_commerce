@@ -45,19 +45,20 @@ export function MerchantSidebar({
             <li key={item.href}>
               <Link
                 href={item.href}
+                scroll={false}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "group relative flex min-h-11 items-center gap-3 whitespace-nowrap rounded-md px-3 text-body-sm",
-                  "transition-colors duration-fast ease-brand",
+                  "group relative flex min-h-10 items-center gap-3 whitespace-nowrap rounded-lg px-3 text-sm font-medium",
+                  "transition-all duration-150 ease-out",
                   active
-                    ? "bg-gold-soft font-semibold text-[#7A5416]"
-                    : "font-medium text-ink-soft hover:bg-canvas-deep hover:text-ink",
+                    ? "bg-gold/15 font-semibold text-gold border border-gold/30 shadow-xs"
+                    : "text-zinc-300 hover:bg-white/10 hover:text-white",
                 )}
               >
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "absolute inset-y-1.5 left-0 w-0.5 rounded-pill bg-gold-dark transition-opacity duration-fast",
+                    "absolute inset-y-2 left-0 w-1 rounded-r-full bg-gold transition-opacity duration-150",
                     active ? "opacity-100" : "opacity-0",
                   )}
                 />
@@ -65,8 +66,8 @@ export function MerchantSidebar({
                   <NavIcon
                     name={item.icon}
                     className={cn(
-                      "size-[1.125rem]",
-                      active ? "text-gold-dark" : "text-ink-faint group-hover:text-ink-soft",
+                      "size-[1.125rem] shrink-0 transition-colors",
+                      active ? "text-gold" : "text-zinc-400 group-hover:text-gold",
                     )}
                   />
                 ) : null}

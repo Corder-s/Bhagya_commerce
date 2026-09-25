@@ -50,7 +50,7 @@ export function MerchantShell({
       {/* Workspace rail — charcoal sidebar matching site header */}
       <aside
         data-surface="inverse"
-        className="border-b border-charcoal-border bg-charcoal lg:sticky lg:top-0 lg:h-dvh lg:w-72 lg:shrink-0 lg:border-b-0 lg:border-r"
+        className="border-b border-charcoal-border bg-charcoal lg:sticky lg:top-0 lg:h-dvh lg:w-72 lg:shrink-0 lg:border-b-0 lg:border-r lg:overflow-y-auto"
         style={{ background: "linear-gradient(180deg, #1e1e1c 0%, #151515 100%)" }}
       >
         <div className="flex h-full flex-col gap-5 p-4 lg:p-5">

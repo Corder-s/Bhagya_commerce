@@ -21,14 +21,16 @@ import {
   Clock,
   ShieldCheck,
   ArrowRight,
+  BarChart2,
 } from 'lucide-react';
 import { CampaignList } from './campaign-list';
 import { PromotionList } from './promotion-list';
 import { CreatePromotionModal } from './create-promotion-modal';
 import { CampaignBuilderModal } from './campaign-builder-modal';
+import { MarketingAnalyticsCharts } from './marketing-analytics-charts';
 
 export function MarketingDashboardView() {
-  const [activeTab, setActiveTab] = useState<'campaigns' | 'promotions' | 'audiences'>('campaigns');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'campaigns' | 'promotions' | 'audiences'>('analytics');
   const [overview, setOverview] = useState<BackendMarketingOverview | null>(null);
   const [campaigns, setCampaigns] = useState<BackendCampaign[]>([]);
   const [promotions, setPromotions] = useState<BackendPromotion[]>([]);
@@ -79,16 +81,16 @@ export function MarketingDashboardView() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Header & Quick Action Buttons */}
+    <div className="space-y-6 sm:space-y-8">
+      {/* Header & Quick Action Buttons - Fully Responsive for Mobile, Tablet & Desktop */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="font-serif text-2xl font-bold text-charcoal sm:text-3xl">Marketing & Promotions</h1>
-          <p className="mt-1 text-sm text-charcoal-muted">
+          <p className="mt-1 text-xs sm:text-sm text-charcoal-muted">
             Launch artisan campaigns, manage coupon codes, and measure real revenue attribution.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Button
             variant="outline"
             size="sm"
@@ -120,14 +122,14 @@ export function MarketingDashboardView() {
         </div>
       </div>
 
-      {/* KPI Stat Cards */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      {/* KPI Stat Cards — Adaptive 2-col (Phone), 3-col (Tablet), 5-col (Desktop) */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 sm:gap-4">
         <div className="rounded-2xl border border-border bg-surface p-4 shadow-xs">
           <div className="flex items-center gap-2 text-charcoal-muted">
             <Megaphone className="h-4 w-4 text-primary" />
             <span className="text-xs font-medium">Active Campaigns</span>
           </div>
-          <div className="mt-2 text-2xl font-bold text-charcoal">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-charcoal">
             {isLoading ? '—' : overview?.activeCampaignsCount ?? campaigns.filter((c) => c.status === 'RUNNING').length}
           </div>
           <div className="mt-1 text-[11px] text-charcoal-muted">Currently dispatching</div>
@@ -138,7 +140,7 @@ export function MarketingDashboardView() {
             <Clock className="h-4 w-4 text-amber-600" />
             <span className="text-xs font-medium">Scheduled</span>
           </div>
-          <div className="mt-2 text-2xl font-bold text-charcoal">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-charcoal">
             {isLoading ? '—' : overview?.scheduledCampaignsCount ?? campaigns.filter((c) => c.status === 'SCHEDULED').length}
           </div>
           <div className="mt-1 text-[11px] text-charcoal-muted">Upcoming launches</div>
@@ -149,7 +151,7 @@ export function MarketingDashboardView() {
             <Tag className="h-4 w-4 text-emerald-600" />
             <span className="text-xs font-medium">Active Promotions</span>
           </div>
-          <div className="mt-2 text-2xl font-bold text-charcoal">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-charcoal">
             {isLoading ? '—' : overview?.activePromotionsCount ?? promotions.filter((p) => p.status === 'ACTIVE').length}
           </div>
           <div className="mt-1 text-[11px] text-charcoal-muted">Redeemable at checkout</div>
@@ -160,10 +162,10 @@ export function MarketingDashboardView() {
             <ShoppingBag className="h-4 w-4 text-indigo-600" />
             <span className="text-xs font-medium">Attributed Orders</span>
           </div>
-          <div className="mt-2 text-2xl font-bold text-charcoal">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-charcoal">
             {isLoading ? '—' : overview?.totalAttributedOrders ?? campaigns.reduce((acc, c) => acc + (c.attributedOrders || 0), 0)}
           </div>
-          <div className="mt-1 text-[11px] text-charcoal-muted">Coupon & campaign checkouts</div>
+          <div className="mt-1 text-[11px] text-charcoal-muted">Campaign & coupon sales</div>
         </div>
 
         <div className="col-span-2 sm:col-span-1 rounded-2xl border border-border bg-surface p-4 shadow-xs bg-linear-to-br from-surface to-ivory/60">
@@ -171,7 +173,7 @@ export function MarketingDashboardView() {
             <TrendingUp className="h-4 w-4 text-emerald-600" />
             <span className="text-xs font-medium">Attributed Sales</span>
           </div>
-          <div className="mt-2 text-2xl font-bold text-charcoal">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-charcoal">
             {isLoading
               ? '—'
               : formatPrice(
@@ -183,12 +185,25 @@ export function MarketingDashboardView() {
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="flex items-center border-b border-border">
+      {/* Navigation Tabs - Horizontal Scrollable on Mobile, Inline on Desktop */}
+      <div className="flex items-center border-b border-border overflow-x-auto no-scrollbar">
+        <button
+          type="button"
+          onClick={() => setActiveTab('analytics')}
+          className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+            activeTab === 'analytics'
+              ? 'border-primary text-primary font-semibold'
+              : 'border-transparent text-charcoal-muted hover:text-charcoal'
+          }`}
+        >
+          <BarChart2 className="h-4 w-4" />
+          Analytics & Performance
+        </button>
+
         <button
           type="button"
           onClick={() => setActiveTab('campaigns')}
-          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+          className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             activeTab === 'campaigns'
               ? 'border-primary text-primary font-semibold'
               : 'border-transparent text-charcoal-muted hover:text-charcoal'
@@ -204,7 +219,7 @@ export function MarketingDashboardView() {
         <button
           type="button"
           onClick={() => setActiveTab('promotions')}
-          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+          className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             activeTab === 'promotions'
               ? 'border-primary text-primary font-semibold'
               : 'border-transparent text-charcoal-muted hover:text-charcoal'
@@ -220,7 +235,7 @@ export function MarketingDashboardView() {
         <button
           type="button"
           onClick={() => setActiveTab('audiences')}
-          className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
+          className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${
             activeTab === 'audiences'
               ? 'border-primary text-primary font-semibold'
               : 'border-transparent text-charcoal-muted hover:text-charcoal'
@@ -235,6 +250,20 @@ export function MarketingDashboardView() {
       </div>
 
       {/* Tab Panels */}
+      {activeTab === 'analytics' && (
+        <div className="space-y-6">
+          <MarketingAnalyticsCharts campaigns={campaigns} promotions={promotions} />
+          <div className="pt-2">
+            <h3 className="font-serif text-lg font-semibold text-charcoal mb-4">Recent Campaign Results</h3>
+            <CampaignList
+              campaigns={campaigns}
+              onRefresh={fetchData}
+              onOpenCreate={() => setIsCampaignModalOpen(true)}
+            />
+          </div>
+        </div>
+      )}
+
       {activeTab === 'campaigns' && (
         <CampaignList
           campaigns={campaigns}
@@ -253,15 +282,17 @@ export function MarketingDashboardView() {
 
       {activeTab === 'audiences' && (
         <div className="space-y-4">
-          <div className="rounded-2xl border border-border bg-surface p-6 shadow-xs">
-            <div className="flex items-center justify-between pb-4 border-b border-border">
+          <div className="rounded-2xl border border-border bg-surface p-5 sm:p-6 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-border gap-2">
               <div>
-                <h3 className="font-serif text-lg font-semibold text-charcoal">Configured Customer Segments</h3>
+                <h3 className="font-serif text-base sm:text-lg font-semibold text-charcoal">
+                  Configured Customer Segments
+                </h3>
                 <p className="text-xs text-charcoal-muted mt-0.5">
                   Privacy-safe audience calculations respecting notification consent preferences.
                 </p>
               </div>
-              <Badge tone="success" className="text-xs">
+              <Badge tone="success" className="text-xs w-fit">
                 <ShieldCheck className="mr-1 h-3.5 w-3.5 text-emerald-600" /> Store-Scoped & Consent-Aware
               </Badge>
             </div>

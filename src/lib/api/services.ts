@@ -348,3 +348,152 @@ export const analyticsApiService = {
     apiClient.get<BackendAdminAnalyticsOverview>(`/api/v1/admin/analytics/overview?period=${period}`),
 };
 
+export interface BackendPromotion {
+  id: string;
+  storeId: string;
+  name: string;
+  description?: string;
+  type: string;
+  status: string;
+  value: number;
+  currency: string;
+  minimumOrderValue?: number;
+  maximumDiscount?: number;
+  couponCode?: string;
+  startsAt?: string;
+  endsAt?: string;
+  usageLimit?: number;
+  perCustomerLimit: number;
+  usageCount: number;
+  eligibleCategoryIds: string[];
+  eligibleProductIds: string[];
+  createdAt: string;
+}
+
+export interface BackendPromotionCreateRequest {
+  name: string;
+  description?: string;
+  type: string;
+  value: number;
+  minimumOrderValue?: number;
+  maximumDiscount?: number;
+  couponCode?: string;
+  startsAt?: string;
+  endsAt?: string;
+  usageLimit?: number;
+  perCustomerLimit?: number;
+  eligibleCategoryIds?: string[];
+  eligibleProductIds?: string[];
+}
+
+export interface BackendCampaign {
+  id: string;
+  storeId: string;
+  name: string;
+  description?: string;
+  channel: 'EMAIL' | 'WHATSAPP' | 'SMS';
+  status: 'DRAFT' | 'SCHEDULED' | 'RUNNING' | 'PAUSED' | 'COMPLETED' | 'CANCELLED' | 'FAILED';
+  audienceId?: string;
+  audienceName?: string;
+  promotionId?: string;
+  subject?: string;
+  messageBody: string;
+  scheduledAt?: string;
+  startedAt?: string;
+  completedAt?: string;
+  totalRecipients: number;
+  sentCount: number;
+  deliveredCount: number;
+  failedCount: number;
+  attributedOrders: number;
+  attributedSales: number;
+  createdAt: string;
+}
+
+export interface BackendCampaignCreateRequest {
+  name: string;
+  description?: string;
+  channel: 'EMAIL' | 'WHATSAPP' | 'SMS';
+  audienceId?: string;
+  audienceName?: string;
+  promotionId?: string;
+  subject?: string;
+  messageBody: string;
+  scheduledAt?: string;
+}
+
+export interface BackendCustomerSegment {
+  id: string;
+  storeId: string;
+  name: string;
+  description?: string;
+  criteria?: Record<string, unknown>;
+  estimatedCount: number;
+  status: string;
+  createdAt: string;
+}
+
+export interface BackendMarketingOverview {
+  storeId: string;
+  activePromotionsCount: number;
+  scheduledCampaignsCount: number;
+  activeCampaignsCount: number;
+  totalAttributedOrders: number;
+  totalAttributedSales: number;
+  recentCampaigns: BackendCampaign[];
+  activePromotions: BackendPromotion[];
+}
+
+export interface BackendAICopyResponse {
+  subject: string;
+  headline: string;
+  body: string;
+  callToAction: string;
+}
+
+export const marketingApiService = {
+  getOverview: () =>
+    apiClient.get<BackendMarketingOverview>('/api/v1/merchant/marketing/analytics'),
+
+  getPromotions: () =>
+    apiClient.get<BackendPromotion[]>('/api/v1/merchant/promotions'),
+
+  createPromotion: (data: BackendPromotionCreateRequest) =>
+    apiClient.post<BackendPromotion>('/api/v1/merchant/promotions', data),
+
+  pausePromotion: (id: string) =>
+    apiClient.post<BackendPromotion>(`/api/v1/merchant/promotions/${id}/pause`),
+
+  activatePromotion: (id: string) =>
+    apiClient.post<BackendPromotion>(`/api/v1/merchant/promotions/${id}/activate`),
+
+  getCampaigns: () =>
+    apiClient.get<BackendCampaign[]>('/api/v1/merchant/campaigns'),
+
+  createCampaign: (data: BackendCampaignCreateRequest) =>
+    apiClient.post<BackendCampaign>('/api/v1/merchant/campaigns', data),
+
+  launchCampaign: (id: string) =>
+    apiClient.post<{ campaignId: string; status: string; queuedRecipients: number; message: string }>(
+      `/api/v1/merchant/campaigns/${id}/launch`
+    ),
+
+  pauseCampaign: (id: string) =>
+    apiClient.post<BackendCampaign>(`/api/v1/merchant/campaigns/${id}/pause`),
+
+  cancelCampaign: (id: string) =>
+    apiClient.post<BackendCampaign>(`/api/v1/merchant/campaigns/${id}/cancel`),
+
+  getSegments: () =>
+    apiClient.get<BackendCustomerSegment[]>('/api/v1/merchant/segments'),
+
+  generateAICopy: (data: {
+    purpose: string;
+    channel: string;
+    productName?: string;
+    discountDetails?: string;
+    tone?: string;
+  }) => apiClient.post<BackendAICopyResponse>('/api/v1/merchant/marketing/ai-copy', data),
+};
+
+

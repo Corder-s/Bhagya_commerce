@@ -19,10 +19,15 @@ import org.springframework.stereotype.Service;
 public class AIService {
 
     private final ProductService productService;
+    private final com.bhagya.commerce.analytics.service.AnalyticsAggregationService analyticsService;
     private final Map<String, AIConversationRecord> conversations = new ConcurrentHashMap<>();
 
-    public AIService(ProductService productService) {
+    public AIService(
+        ProductService productService,
+        com.bhagya.commerce.analytics.service.AnalyticsAggregationService analyticsService
+    ) {
         this.productService = productService;
+        this.analyticsService = analyticsService;
         seedSampleConversation();
     }
 
@@ -89,10 +94,17 @@ public class AIService {
             intent = "ORDER_INQUIRY";
             reply = "I found your active order BG-20260925-884102. It has been dispatched via Delhivery Express and is currently out for delivery.";
             suggestedActions.add(Map.of("label", "Track Order", "action", "/orders/ord_101/tracking"));
-        } else if (lower.contains("sales") || lower.contains("inventory") || lower.contains("merchant") || lower.contains("revenue")) {
+        } else if (lower.contains("sales") || lower.contains("inventory") || lower.contains("merchant") || lower.contains("revenue") || lower.contains("analytics")) {
             intent = "MERCHANT_ANALYTICS";
-            reply = "Your store Varanasi Handloom Guild has achieved ₹1,24,999 in gross sales today across 42 orders. 1 product is running low on stock.";
-            suggestedActions.add(Map.of("label", "Open Dashboard", "action", "/merchant"));
+            var sales = analyticsService.calculateSalesSummary("store_varanasi_silk", "30d", null, null);
+            reply = String.format("Your store has recorded ₹%s in gross sales (₹%s net) across %d verified orders in the last 30 days. Average Order Value is ₹%s.",
+                sales.grossSales().toPlainString(),
+                sales.netSales().toPlainString(),
+                sales.totalOrders(),
+                sales.averageOrderValue().toPlainString()
+            );
+            suggestedActions.add(Map.of("label", "Open Analytics", "action", "/merchant/analytics"));
+            suggestedActions.add(Map.of("label", "Open Dashboard", "action", "/merchant/dashboard"));
             suggestedActions.add(Map.of("label", "Restock Inventory", "action", "/merchant/inventory"));
         } else {
             intent = "GENERAL_ASSIST";

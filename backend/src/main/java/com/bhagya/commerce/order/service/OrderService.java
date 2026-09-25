@@ -52,6 +52,18 @@ public class OrderService {
             .toList();
     }
 
+    public List<OrderResponse> getOrdersForStore(String storeId) {
+        return orderRepository.findByStoreId(storeId).stream()
+            .map(this::toResponse)
+            .toList();
+    }
+
+    public List<OrderResponse> getAllOrders() {
+        return orderRepository.findAll().stream()
+            .map(this::toResponse)
+            .toList();
+    }
+
     public OrderResponse getCustomerOrderById(String orderIdOrNumber, String userId) {
         Order order = findOrder(orderIdOrNumber);
 

@@ -194,3 +194,157 @@ export const aiApiService = {
   createConversation: (title?: string, mode?: string) =>
     apiClient.post<unknown>('/api/v1/ai/conversations', { title, mode }),
 };
+
+export interface BackendSalesSummary {
+  period: string;
+  currency: string;
+  grossSales: number;
+  discounts: number;
+  refunds: number;
+  netSales: number;
+  totalOrders: number;
+  paidOrders: number;
+  averageOrderValue: number;
+  startTime: string;
+  endTime: string;
+}
+
+export interface BackendOrderSummary {
+  totalOrders: number;
+  confirmedOrders: number;
+  processingOrders: number;
+  shippedOrders: number;
+  deliveredOrders: number;
+  cancelledOrders: number;
+  refundedOrders: number;
+  cancellationRate: number;
+  refundRate: number;
+}
+
+export interface BackendProductPerformance {
+  productId: string;
+  productName: string;
+  productImageUrl: string;
+  unitsSold: number;
+  grossRevenue: number;
+  viewsCount: number;
+  addToCartCount: number;
+  conversionRate: number;
+  currentStock: number;
+}
+
+export interface BackendCustomerSummary {
+  totalCustomers: number;
+  newCustomers: number;
+  returningCustomers: number;
+  repeatCustomerRate: number;
+  averageCustomerValue: number;
+}
+
+export interface BackendFunnelStep {
+  stepName: string;
+  count: number;
+  conversionRateFromPrevious: number;
+  dropoffRate: number;
+}
+
+export interface BackendFunnelSummary {
+  steps: BackendFunnelStep[];
+  overallConversionRate: number;
+}
+
+export interface BackendSalesTrendPoint {
+  date: string;
+  grossSales: number;
+  netSales: number;
+  orderCount: number;
+}
+
+export interface BackendSalesTrend {
+  period: string;
+  trendPoints: BackendSalesTrendPoint[];
+}
+
+export interface BackendTrafficSourcePoint {
+  source: string;
+  medium: string;
+  campaign: string;
+  sessions: number;
+  orders: number;
+  revenue: number;
+}
+
+export interface BackendMerchantAnalyticsOverview {
+  storeId: string;
+  storeName: string;
+  period: string;
+  sales: BackendSalesSummary;
+  orders: BackendOrderSummary;
+  customers: BackendCustomerSummary;
+  funnel: BackendFunnelSummary;
+  topProducts: BackendProductPerformance[];
+  salesTrend: BackendSalesTrend;
+  trafficSources: {
+    sources: BackendTrafficSourcePoint[];
+  };
+}
+
+export interface BackendAdminAnalyticsOverview {
+  platformGmv: number;
+  platformNetSales: number;
+  totalStores: number;
+  activeStores: number;
+  totalOrders: number;
+  totalCustomers: number;
+  totalProducts: number;
+  payments: {
+    totalVolumeProcessed: number;
+    totalRefunded: number;
+    successfulPayments: number;
+    failedPayments: number;
+    methodDistribution: Record<string, number>;
+  };
+  topStores: Array<{
+    storeId: string;
+    storeName: string;
+    totalOrders: number;
+    gmv: number;
+    totalProducts: number;
+    status: string;
+  }>;
+  salesTrend: BackendSalesTrend;
+}
+
+export const analyticsApiService = {
+  ingestEvent: (data: {
+    eventId?: string;
+    eventType: string;
+    storeId?: string;
+    sessionId?: string;
+    entityType?: string;
+    entityId?: string;
+    properties?: Record<string, unknown>;
+  }) => apiClient.post<{ eventId: string; status: string }>('/api/v1/analytics/events', data),
+
+  getMerchantOverview: (period: string = '30d') =>
+    apiClient.get<BackendMerchantAnalyticsOverview>(`/api/v1/merchant/analytics/overview?period=${period}`),
+
+  getMerchantSales: (period: string = '30d') =>
+    apiClient.get<BackendSalesSummary>(`/api/v1/merchant/analytics/sales?period=${period}`),
+
+  getMerchantOrders: () =>
+    apiClient.get<BackendOrderSummary>('/api/v1/merchant/analytics/orders'),
+
+  getMerchantProducts: (limit: number = 10) =>
+    apiClient.get<BackendProductPerformance[]>(`/api/v1/merchant/analytics/products?limit=${limit}`),
+
+  getMerchantCustomers: () =>
+    apiClient.get<BackendCustomerSummary>('/api/v1/merchant/analytics/customers'),
+
+  getMerchantFunnel: () =>
+    apiClient.get<BackendFunnelSummary>('/api/v1/merchant/analytics/funnel'),
+
+  getAdminOverview: (period: string = '30d') =>
+    apiClient.get<BackendAdminAnalyticsOverview>(`/api/v1/admin/analytics/overview?period=${period}`),
+};
+

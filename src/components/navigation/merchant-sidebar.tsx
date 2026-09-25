@@ -50,14 +50,14 @@ export function MerchantSidebar({
                   "group relative flex min-h-11 items-center gap-3 whitespace-nowrap rounded-md px-3 text-body-sm",
                   "transition-colors duration-fast ease-brand",
                   active
-                    ? "bg-soft-green font-semibold text-primary"
+                    ? "bg-gold-soft font-semibold text-[#7A5416]"
                     : "font-medium text-ink-soft hover:bg-canvas-deep hover:text-ink",
                 )}
               >
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "absolute inset-y-1.5 left-0 w-0.5 rounded-pill bg-primary transition-opacity duration-fast",
+                    "absolute inset-y-1.5 left-0 w-0.5 rounded-pill bg-gold-dark transition-opacity duration-fast",
                     active ? "opacity-100" : "opacity-0",
                   )}
                 />
@@ -66,7 +66,7 @@ export function MerchantSidebar({
                     name={item.icon}
                     className={cn(
                       "size-[1.125rem]",
-                      active ? "text-primary" : "text-ink-faint group-hover:text-ink-soft",
+                      active ? "text-gold-dark" : "text-ink-faint group-hover:text-ink-soft",
                     )}
                   />
                 ) : null}

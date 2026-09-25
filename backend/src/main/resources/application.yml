@@ -1,0 +1,58 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+
+spring:
+  application:
+    name: bhagya-commerce-api
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+# Management & Health Actuators
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when_authorized
+      probes:
+        enabled: true
+
+# OpenAPI / Swagger
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+# Bhagya Commerce Application Properties
+bhagya:
+  cors:
+    allowed-origins:
+      - ${FRONTEND_URL:http://localhost:3000}
+      - https://bhagya.in
+      - https://www.bhagya.in
+    allowed-methods: GET,POST,PUT,PATCH,DELETE,OPTIONS
+    allowed-headers: "*"
+    allow-credentials: true
+    max-age: 3600
+  security:
+    jwt:
+      secret: ${JWT_SECRET:bhagya-commerce-super-secure-production-jwt-signing-key-2026-xyz-32bytes-long}
+      access-token-validity-seconds: ${JWT_ACCESS_VALIDITY:86400} # 24 hours
+      refresh-token-validity-seconds: ${JWT_REFRESH_VALIDITY:2592000} # 30 days
+  api:
+    version: v1
+    prefix: /api/v1

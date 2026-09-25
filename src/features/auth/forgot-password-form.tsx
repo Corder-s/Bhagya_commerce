@@ -1,120 +1,118 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { CheckCircle2, Mail } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
-import { AuthNotice } from "@/features/auth/auth-notice";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { SuccessState } from "@/components/ui/success-state";
 import { authRoutes } from "@/config/routes";
-import { toast } from "@/lib/toast";
+import { useAuth } from "@/hooks/use-auth";
 
-/**
- * ForgotPasswordForm.
- *
- * Two states in one route: request, then a confirmation that the email was sent.
- * The confirmation is deliberately neutral about whether the address exists —
- * that is the correct behaviour for account enumeration, and it is why the copy
- * says "if an account exists" rather than "we emailed you".
- */
 export function ForgotPasswordForm() {
-  const [email, setEmail] = React.useState("");
+  const { forgotPassword } = useAuth();
+  const [emailOrPhone, setEmailOrPhone] = React.useState("");
   const [error, setError] = React.useState<string>();
   const [sent, setSent] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!email.trim()) {
-      setError("Enter your email address");
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError("That does not look like an email address");
+    const input = emailOrPhone.trim();
+
+    if (!input) {
+      setError("Please enter your registered email address or phone number");
       return;
     }
 
     setError(undefined);
     setSubmitting(true);
-    // Phase 2: POST /auth/password/forgot
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    setSubmitting(false);
-    setSent(true);
-    toast.info(
-      "Reset emails are not sent yet",
-      "Password recovery is part of Phase 2.",
-    );
+
+    try {
+      await forgotPassword(input);
+      setSent(true);
+    } catch {
+      setError("Unable to process request. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (sent) {
     return (
-      <SuccessState
-        title="Check your inbox"
-        description={`If an account exists for ${email}, a reset link is on its way. The link stays valid for 30 minutes.`}
-        details={[
-          { label: "Sent to", value: email },
-          { label: "Next step", value: "Open the link to set a new password" },
-        ]}
-        actions={
-          <>
-            <Button asChild variant="outline" size="md">
-              <Link href={authRoutes.login}>Back to sign in</Link>
-            </Button>
-            <Button
-              variant="ghost"
-              size="md"
-              onClick={() => {
-                setSent(false);
-                setEmail("");
-              }}
-            >
-              Use a different email
-            </Button>
-          </>
-        }
-      />
+      <div className="flex flex-col gap-6 rounded-xl border border-line bg-surface p-6 sm:p-8 shadow-card animate-fade-in text-center">
+        <div className="mx-auto grid size-14 place-items-center rounded-pill bg-success-surface text-success">
+          <CheckCircle2 className="size-8" />
+        </div>
+        <div className="flex flex-col gap-2">
+          <h2 className="text-heading-lg font-semibold text-ink">Instructions Sent</h2>
+          <p className="text-body-sm text-ink-soft max-w-sm mx-auto">
+            If an account exists for <strong className="text-ink font-medium">{emailOrPhone}</strong>, you will receive password reset instructions shortly.
+          </p>
+        </div>
+        <div className="flex flex-col gap-3 pt-2">
+          <Button asChild variant="primary" size="lg" fullWidth>
+            <Link href={authRoutes.login}>Back to Sign In</Link>
+          </Button>
+          <button
+            type="button"
+            onClick={() => {
+              setSent(false);
+              setEmailOrPhone("");
+            }}
+            className="text-body-sm text-ink-soft hover:text-ink font-medium"
+          >
+            Try another email or phone
+          </button>
+        </div>
+      </div>
     );
   }
 
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
-      <AuthNotice>
-        Password recovery requires the email service, which arrives in Phase 2.
-        The flow below is the real interaction; no email is actually sent.
-      </AuthNotice>
-
       <Field
-        label="Email"
+        label="Email or registered phone"
         required
         error={error}
-        description="We will send a reset link to this address."
+        description="We will send a password reset link or SMS code."
       >
         <Input
-          type="email"
-          name="email"
-          autoComplete="email"
+          type="text"
+          name="emailOrPhone"
+          autoComplete="username"
           inputSize="lg"
           leadingIcon={<Mail aria-hidden="true" />}
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          placeholder="name@example.com or 9876543210"
+          value={emailOrPhone}
+          onChange={(event) => {
+            setEmailOrPhone(event.target.value);
+            if (error) setError(undefined);
+          }}
           aria-required
         />
       </Field>
 
-      <Button type="submit" size="lg" fullWidth loading={submitting} loadingLabel="Sending link">
-        Send reset link
+      <Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        fullWidth
+        disabled={submitting}
+        loading={submitting}
+        loadingLabel="Sending reset link…"
+      >
+        Send reset instructions
       </Button>
 
       <p className="text-center text-body-sm text-ink-soft">
-        Remembered it?{" "}
+        Remembered your password?{" "}
         <Link
           href={authRoutes.login}
-          className="font-medium text-primary underline-offset-4 hover:underline"
+          className="font-medium text-gold-dark dark:text-gold underline-offset-4 hover:underline"
         >
-          Back to sign in
+          Sign in
         </Link>
       </p>
     </form>

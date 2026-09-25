@@ -1,31 +1,38 @@
 "use client";
 
-import { LockKeyhole, Mail, Phone, UserRound } from "lucide-react";
+import { Check, Eye, EyeOff, LockKeyhole, Mail, Phone, UserRound } from "lucide-react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 
-import { AuthNotice } from "@/features/auth/auth-notice";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupOption } from "@/components/ui/radio-group";
 import { authRoutes } from "@/config/routes";
-import { toast } from "@/lib/toast";
+import { useAuth } from "@/hooks/use-auth";
+import { cn } from "@/lib/utils";
 
-/**
- * RegisterForm.
- *
- * The brief's rule, encoded in the UI: a new user is a **customer first**.
- * "I want to sell" is an optional intent captured for later, never a forced
- * branch that turns this into a merchant sign-up. One identity, and a store can
- * be added to it later from the account area.
- */
+const passwordRules = [
+  { id: "length", label: "At least 8 characters", test: (v: string) => v.length >= 8 },
+  { id: "mixed", label: "Upper & lowercase letters", test: (v: string) => /[a-z]/.test(v) && /[A-Z]/.test(v) },
+  { id: "number", label: "At least one number", test: (v: string) => /\d/.test(v) },
+] as const;
+
 export function RegisterForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { register } = useAuth();
+
+  const redirectUrl = searchParams.get("redirect") || "/account";
+
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
   const [intent, setIntent] = React.useState<"shop" | "sell-later">("shop");
   const [accepted, setAccepted] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string | undefined>>({});
@@ -33,38 +40,79 @@ export function RegisterForm() {
 
   function validate() {
     const next: Record<string, string | undefined> = {};
-    if (!name.trim()) next.name = "Tell us what to call you";
-    if (!email.trim()) next.email = "An email address is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      next.email = "That does not look like an email address";
-    if (phone && !/^[+]?[\d\s-]{10,15}$/.test(phone))
-      next.phone = "Enter a valid phone number";
-    if (password.length < 8) next.password = "Use at least 8 characters";
-    if (!accepted) next.accepted = "Please accept the terms to continue";
+    if (!name.trim()) next.name = "Please enter your full name";
+    if (!email.trim()) {
+      next.email = "Please enter your email address";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      next.email = "Please enter a valid email address";
+    }
+
+    if (phone.trim()) {
+      const cleanPhone = phone.replace(/[\s\-+()]/g, "");
+      if (cleanPhone.length < 10) {
+        next.phone = "Please enter a valid 10-digit phone number";
+      }
+    }
+
+    const passedRules = passwordRules.filter((r) => r.test(password)).length;
+    if (passedRules < passwordRules.length) {
+      next.password = "Password does not satisfy the security requirements";
+    }
+
+    if (password !== confirmPassword) {
+      next.confirmPassword = "Passwords do not match";
+    }
+
+    if (!accepted) {
+      next.accepted = "Please accept the terms of use and privacy policy";
+    }
+
     setErrors(next);
     return Object.keys(next).length === 0;
   }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!validate()) return;
+    if (!validate() || submitting) return;
 
     setSubmitting(true);
-    // Phase 2: POST /auth/register → create the user, then send an OTP.
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    setSubmitting(false);
-    toast.info(
-      "Registration is not live yet",
-      "Accounts and OTP verification arrive in Phase 2. Nothing was submitted.",
-    );
+    setErrors({});
+
+    try {
+      const success = await register({
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim() || undefined,
+        password,
+        intent,
+      });
+
+      if (success) {
+        router.push(`${authRoutes.verifyOtp}?redirect=${encodeURIComponent(redirectUrl)}` as any);
+      } else {
+        setErrors({
+          general: "An account with this email already exists or registration could not be completed.",
+        });
+      }
+    } catch {
+      setErrors({
+        general: "Something went wrong while creating your account. Please try again.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
-      <AuthNotice>
-        One account is all you need. Selling can be switched on later from your
-        account — you are never asked to choose a “seller account” up front.
-      </AuthNotice>
+      {errors.general ? (
+        <div
+          role="alert"
+          className="rounded-md border border-danger/30 bg-danger-surface px-3.5 py-2.5 text-caption text-danger"
+        >
+          {errors.general}
+        </div>
+      ) : null}
 
       <Field label="Full name" required error={errors.name}>
         <Input
@@ -72,30 +120,38 @@ export function RegisterForm() {
           autoComplete="name"
           inputSize="lg"
           leadingIcon={<UserRound aria-hidden="true" />}
+          placeholder="e.g. Aarav Sharma"
           value={name}
-          onChange={(event) => setName(event.target.value)}
+          onChange={(event) => {
+            setName(event.target.value);
+            if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }));
+          }}
           aria-required
         />
       </Field>
 
-      <Field label="Email" required error={errors.email}>
+      <Field label="Email address" required error={errors.email}>
         <Input
           type="email"
           name="email"
           autoComplete="email"
           inputSize="lg"
           leadingIcon={<Mail aria-hidden="true" />}
+          placeholder="aarav@example.com"
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={(event) => {
+            setEmail(event.target.value);
+            if (errors.email) setErrors((prev) => ({ ...prev, email: undefined }));
+          }}
           aria-required
         />
       </Field>
 
       <Field
-        label="Phone"
+        label="Phone number"
         hint="Optional"
         error={errors.phone}
-        description="Used for delivery updates and OTP verification."
+        description="Used for order tracking updates and SMS OTP verification."
       >
         <Input
           type="tel"
@@ -103,9 +159,12 @@ export function RegisterForm() {
           autoComplete="tel"
           inputSize="lg"
           leadingIcon={<Phone aria-hidden="true" />}
-          placeholder="+91 90000 00000"
+          placeholder="+91 98765 43210"
           value={phone}
-          onChange={(event) => setPhone(event.target.value)}
+          onChange={(event) => {
+            setPhone(event.target.value);
+            if (errors.phone) setErrors((prev) => ({ ...prev, phone: undefined }));
+          }}
         />
       </Field>
 
@@ -113,23 +172,88 @@ export function RegisterForm() {
         label="Password"
         required
         error={errors.password}
-        description="At least 8 characters. Long beats complicated."
+        description="Create a secure password with at least 8 characters."
       >
         <Input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           autoComplete="new-password"
           inputSize="lg"
           leadingIcon={<LockKeyhole aria-hidden="true" />}
+          trailingIcon={
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
+              className="grid size-9 place-items-center rounded-sm text-ink-soft transition-colors duration-fast hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              {showPassword ? (
+                <EyeOff className="size-4" aria-hidden="true" />
+              ) : (
+                <Eye className="size-4" aria-hidden="true" />
+              )}
+            </button>
+          }
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event) => {
+            setPassword(event.target.value);
+            if (errors.password) setErrors((prev) => ({ ...prev, password: undefined }));
+          }}
+          aria-required
+        />
+      </Field>
+
+      {/* Live rule checklist */}
+      <ul className="flex flex-col gap-1.5 rounded-md border border-line bg-surface-raised px-3.5 py-2.5">
+        {passwordRules.map((rule) => {
+          const ok = rule.test(password);
+          return (
+            <li
+              key={rule.id}
+              className={cn(
+                "flex items-center gap-2 text-caption transition-colors duration-fast",
+                ok ? "text-success" : "text-ink-soft",
+              )}
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "grid size-4 shrink-0 place-items-center rounded-pill border",
+                  ok ? "border-success/40 bg-success-surface" : "border-line",
+                )}
+              >
+                {ok ? <Check className="size-3" strokeWidth={3} /> : null}
+              </span>
+              {rule.label}
+              <span className="sr-only">{ok ? " — met" : " — not met yet"}</span>
+            </li>
+          );
+        })}
+      </ul>
+
+      <Field label="Confirm password" required error={errors.confirmPassword}>
+        <Input
+          type="password"
+          name="confirmPassword"
+          autoComplete="new-password"
+          inputSize="lg"
+          leadingIcon={<LockKeyhole aria-hidden="true" />}
+          placeholder="Repeat your password"
+          value={confirmPassword}
+          onChange={(event) => {
+            setConfirmPassword(event.target.value);
+            if (errors.confirmPassword) {
+              setErrors((prev) => ({ ...prev, confirmPassword: undefined }));
+            }
+          }}
           aria-required
         />
       </Field>
 
       <fieldset className="flex flex-col gap-3">
         <legend className="mb-1 text-body-sm font-medium text-ink">
-          What brings you here?
+          One unified identity:
         </legend>
         <RadioGroup
           value={intent}
@@ -139,13 +263,13 @@ export function RegisterForm() {
             id="intent-shop"
             value="shop"
             label="I want to shop"
-            description="Browse and buy. You can start selling any time later."
+            description="Browse artisanal collections, checkout quickly and track deliveries."
           />
           <RadioGroupOption
             id="intent-sell"
             value="sell-later"
             label="I plan to sell, eventually"
-            description="Same account — we will nudge you when your store is worth setting up."
+            description="Same single account — unlock store & seller onboarding whenever you are ready."
           />
         </RadioGroup>
       </fieldset>
@@ -156,17 +280,22 @@ export function RegisterForm() {
             name="terms"
             className="mt-0.5"
             checked={accepted}
-            onCheckedChange={(value) => setAccepted(value === true)}
+            onCheckedChange={(value) => {
+              setAccepted(value === true);
+              if (errors.accepted) {
+                setErrors((prev) => ({ ...prev, accepted: undefined }));
+              }
+            }}
             aria-invalid={errors.accepted ? true : undefined}
             aria-required
           />
           <span>
             I agree to the{" "}
-            <Link href="/help#terms" className="text-primary underline-offset-4 hover:underline">
+            <Link href="/help#terms" className="text-gold-dark dark:text-gold underline-offset-4 hover:underline">
               terms of use
             </Link>{" "}
             and{" "}
-            <Link href="/help#privacy" className="text-primary underline-offset-4 hover:underline">
+            <Link href="/help#privacy" className="text-gold-dark dark:text-gold underline-offset-4 hover:underline">
               privacy policy
             </Link>
             .
@@ -179,15 +308,23 @@ export function RegisterForm() {
         ) : null}
       </div>
 
-      <Button type="submit" size="lg" fullWidth loading={submitting} loadingLabel="Creating account">
-        Create account
+      <Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        fullWidth
+        disabled={submitting}
+        loading={submitting}
+        loadingLabel="Creating account…"
+      >
+        Create your account
       </Button>
 
       <p className="text-center text-body-sm text-ink-soft">
         Already have an account?{" "}
         <Link
-          href={authRoutes.login}
-          className="font-medium text-primary underline-offset-4 hover:underline"
+          href={(`${authRoutes.login}${redirectUrl !== "/account" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`) as any}
+          className="font-medium text-gold-dark dark:text-gold underline-offset-4 hover:underline"
         >
           Sign in
         </Link>

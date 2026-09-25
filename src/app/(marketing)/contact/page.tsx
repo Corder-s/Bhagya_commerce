@@ -30,7 +30,7 @@ export default function ContactPage() {
           <CardContent className="flex flex-col gap-1.5">
             <span
               aria-hidden="true"
-              className="grid size-10 place-items-center rounded-md bg-soft-green text-primary"
+              className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
             >
               <Mail className="size-4" />
             </span>
@@ -49,7 +49,7 @@ export default function ContactPage() {
           <CardContent className="flex flex-col gap-1.5">
             <span
               aria-hidden="true"
-              className="grid size-10 place-items-center rounded-md bg-soft-green text-primary"
+              className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
             >
               <Phone className="size-4" />
             </span>
@@ -68,7 +68,7 @@ export default function ContactPage() {
           <CardContent className="flex flex-col gap-1.5">
             <span
               aria-hidden="true"
-              className="grid size-10 place-items-center rounded-md bg-soft-green text-primary"
+              className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
             >
               <MessageCircle className="size-4" />
             </span>
@@ -84,7 +84,7 @@ export default function ContactPage() {
           <CardContent className="flex flex-col gap-1.5">
             <span
               aria-hidden="true"
-              className="grid size-10 place-items-center rounded-md bg-soft-green text-primary"
+              className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
             >
               <MapPin className="size-4" />
             </span>

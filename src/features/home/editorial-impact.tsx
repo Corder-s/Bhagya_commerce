@@ -79,7 +79,7 @@ export function EditorialImpact() {
               >
                 <span
                   aria-hidden="true"
-                  className="grid size-10 shrink-0 place-items-center rounded-md bg-soft-green text-primary"
+                  className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold"
                 >
                   <Icon className="size-4.5" />
                 </span>

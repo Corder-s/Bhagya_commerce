@@ -1,87 +1,71 @@
 import * as React from "react";
+import { ShoppingBag } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 /**
- * The Bhagya botanical mark.
- *
- * A single leaf formed from two mirrored strokes around a centre vein, with a
- * seed dot at the base — origami-plain, drawn on a 32-unit grid so it stays
- * crisp from favicon (16px) to hero (96px). No gradients, no thin strokes below
- * 1.5 units: it must survive being printed small.
- *
- * Colour comes from `currentColor` so the same geometry works on ivory, on deep
- * green and in a single-colour favicon.
+ * The Bhagya signature gold shopping bag & leaf logo mark.
  */
-function BhagyaLeaf({
+function BhagyaLogoIcon({
   className,
-  strokeWidth = 2,
   ...props
-}: Omit<React.ComponentProps<"svg">, "strokeWidth"> & { strokeWidth?: number }) {
+}: React.ComponentProps<"svg">) {
   return (
     <svg
-      viewBox="0 0 32 32"
+      viewBox="0 0 36 36"
       role="img"
       aria-hidden="true"
       focusable="false"
-      className={cn("size-8", className)}
+      className={cn("size-8 shrink-0 text-[#C99A3D]", className)}
       {...props}
     >
-      {/* Leaf body — asymmetric for a hand-drawn feel */}
+      {/* Shopping bag outline */}
       <path
-        d="M16 29.2c0-6.4.9-11.4 3.9-15.3C22.7 10.4 25.6 8.6 29 7.6c1 5.4.4 10.2-2 13.8-2.4 3.6-6.3 5.6-11 5.7Z"
-        fill="currentColor"
-        opacity="0.92"
-      />
-      <path
-        d="M16 29.2c0-6.4-.9-11.4-3.9-15.3C9.3 10.4 6.4 8.6 3 7.6c-1 5.4-.4 10.2 2 13.8 2.4 3.6 6.3 5.6 11 5.7Z"
-        fill="currentColor"
-        opacity="0.62"
-      />
-      {/* Centre vein */}
-      <path
-        d="M16 29.2V12.6"
+        d="M9 11C9 9.89543 9.89543 9 11 9H25C26.1046 9 27 9.89543 27 11L28.8 30C28.8 31.1046 27.9046 32 26.8 32H9.2C8.09543 32 7.2 31.1046 7.2 30L9 11Z"
+        fill="none"
         stroke="currentColor"
-        strokeWidth={strokeWidth}
+        strokeWidth="2"
         strokeLinecap="round"
-        className="text-[var(--bhagya-ivory)]"
-        opacity="0.85"
+        strokeLinejoin="round"
       />
-      {/* Seed */}
-      <circle cx="16" cy="30.2" r="1.5" fill="currentColor" />
+      {/* Bag handles */}
+      <path
+        d="M13 11V7C13 4.79086 14.7909 3 17 3H19C21.2091 3 23 4.79086 23 7V11"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* Centre organic botanical leaf */}
+      <path
+        d="M18 25C18 20.5 19.5 17 22.5 14C20.5 15.5 19 18 18 25Z"
+        fill="currentColor"
+        opacity="0.9"
+      />
+      <path
+        d="M18 25C18 20.5 16.5 17 13.5 14C15.5 15.5 17 18 18 25Z"
+        fill="currentColor"
+        opacity="0.65"
+      />
+      <circle cx="18" cy="26" r="1.2" fill="currentColor" />
     </svg>
   );
 }
 
 export interface BrandMarkProps extends React.ComponentProps<"span"> {
-  /**
-   *  full     leaf + wordmark + tagline — header and footer
-   *  compact  leaf + wordmark — tight horizontal space
-   *  mobile   leaf + short wordmark — small screens
-   *  mark     leaf only — favicon, app icon, collapsed rails
-   */
   variant?: "full" | "compact" | "mobile" | "mark";
   size?: "sm" | "md" | "lg";
-  /** Set when the mark sits on a dark surface. */
   tone?: "default" | "inverse";
-  /** Renders the tagline under the wordmark (full variant only). */
   showTagline?: boolean;
 }
 
 const sizeStyles = {
-  sm: { leaf: "size-6", word: "text-body-sm tracking-[0.16em]", tag: "text-[0.5625rem]" },
-  md: { leaf: "size-8", word: "text-[1.0625rem] tracking-[0.15em]", tag: "text-[0.625rem]" },
-  lg: { leaf: "size-10", word: "text-heading-md tracking-[0.14em]", tag: "text-caption" },
+  sm: { icon: "size-6", word: "text-[0.95rem] tracking-[0.08em]", tag: "text-[0.5625rem]" },
+  md: { icon: "size-8", word: "text-[1.15rem] tracking-[0.06em]", tag: "text-[0.625rem]" },
+  lg: { icon: "size-10", word: "text-[1.35rem] tracking-[0.05em]", tag: "text-[0.7rem]" },
 } as const;
 
-/**
- * BrandMark — the logo lockup.
- *
- * Wordmark is set in the UI sans with wide, deliberate letter-spacing: the
- * editorial serif is reserved for storytelling headings, so the brand stays
- * legible next to navigation. Renders as text, not an image, so it scales
- * without an asset request and remains selectable/readable to crawlers.
- */
 function BrandMark({
   className,
   variant = "full",
@@ -97,34 +81,28 @@ function BrandMark({
     <span
       data-slot="brand-mark"
       data-variant={variant}
-      className={cn(
-        "inline-flex items-center gap-2.5",
-        tone === "inverse" ? "text-ink-inverse" : "text-primary",
-        className,
-      )}
+      className={cn("inline-flex items-center gap-2.5 select-none", className)}
       {...props}
     >
-      <BhagyaLeaf className={cn(styles.leaf, "shrink-0")} />
+      <BhagyaLogoIcon className={cn(styles.icon, "text-[#C99A3D]")} />
       {!isMarkOnly ? (
-        <span className="flex min-w-0 flex-col leading-none">
+        <span className="flex min-w-0 flex-col leading-tight">
           <span
             className={cn(
-              "font-sans font-semibold uppercase",
+              "font-serif font-bold text-[#C99A3D] tracking-wide",
               styles.word,
-              tone === "inverse" ? "text-ink-inverse" : "text-primary",
             )}
           >
-            {variant === "mobile" ? "Bhagya" : "Bhagya Commerce"}
+            Bhagya
           </span>
           {showTagline && variant === "full" ? (
             <span
               className={cn(
-                "mt-1 truncate font-display italic",
+                "truncate font-sans font-medium text-[10px] tracking-wider text-[#A89F91]",
                 styles.tag,
-                tone === "inverse" ? "text-ink-inverse-soft" : "text-ink-soft",
               )}
             >
-              Good for People. Great for Tomorrow.
+              Shop · Sell · Grow Together
             </span>
           ) : null}
         </span>
@@ -133,12 +111,11 @@ function BrandMark({
   );
 }
 
-/** Bare leaf for icons, favicons and decorative uses. */
 function BhagyaGlyph({
   className,
   ...props
-}: Omit<React.ComponentProps<"svg">, "strokeWidth"> & { strokeWidth?: number }) {
-  return <BhagyaLeaf className={cn("size-5", className)} {...props} />;
+}: React.ComponentProps<"svg">) {
+  return <BhagyaLogoIcon className={cn("size-5", className)} {...props} />;
 }
 
 export { BhagyaGlyph, BrandMark };

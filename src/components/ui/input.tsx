@@ -6,22 +6,19 @@ import { useFieldControl } from "@/components/ui/field";
 import { cn } from "@/lib/utils";
 
 export interface InputProps extends Omit<React.ComponentProps<"input">, "size"> {
-  /** Decorative adornment rendered inside the field, start side. */
   leadingIcon?: React.ReactNode;
-  /** Interactive adornment (e.g. a clear or reveal button), end side. */
   trailingIcon?: React.ReactNode;
   inputSize?: "sm" | "md" | "lg";
 }
 
 const sizeStyles: Record<NonNullable<InputProps["inputSize"]>, string> = {
-  sm: "h-10 text-body-sm",
-  md: "h-11 text-body-sm",
-  lg: "h-12 text-body-md",
+  sm: "h-10 text-xs rounded-xl",
+  md: "h-11 text-sm rounded-xl",
+  lg: "h-12 text-sm sm:text-base rounded-xl",
 };
 
 /**
- * Input — text, email, number, search, tel and password entry.
- * Inherits id / aria-describedby / aria-invalid from a surrounding `Field`.
+ * Input — standardized text and search entry for Bhagya Commerce.
  */
 function Input({
   className,
@@ -43,16 +40,14 @@ function Input({
       aria-invalid={field["aria-invalid"]}
       aria-required={field["aria-required"]}
       className={cn(
-        "w-full rounded-md border border-line-strong bg-surface text-ink",
+        "w-full border border-line bg-surface text-ink",
         "transition-[border-color,box-shadow] duration-fast ease-brand",
-        "placeholder:text-ink-faint",
-        "hover:border-ink-subtle",
-        "focus:border-primary focus:outline-none",
-        "focus-visible:outline-2 focus-visible:outline-offset-2",
-        "disabled:cursor-not-allowed disabled:border-line disabled:bg-canvas-deep disabled:text-ink-faint",
+        "placeholder:text-ink-subtle",
+        "hover:border-primary/50",
+        "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20",
+        "disabled:cursor-not-allowed disabled:border-line disabled:bg-canvas-deep disabled:text-ink-subtle",
         "read-only:bg-canvas-deep",
-        "aria-invalid:border-danger",
-        // Hide the native search clear/decoration; we supply our own.
+        "aria-invalid:border-danger aria-invalid:ring-danger/20",
         "[&::-webkit-search-cancel-button]:appearance-none",
         sizeStyles[inputSize],
         leadingIcon ? "pl-11" : "px-3.5",
@@ -71,14 +66,14 @@ function Input({
       {leadingIcon ? (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 flex w-11 items-center justify-center text-ink-faint [&_svg]:size-4"
+          className="pointer-events-none absolute inset-y-0 left-0 flex w-11 items-center justify-center text-ink-subtle [&_svg]:size-4"
         >
           {leadingIcon}
         </span>
       ) : null}
       {control}
       {trailingIcon ? (
-        <span className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-ink-faint [&_svg]:size-4">
+        <span className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-ink-subtle [&_svg]:size-4">
           {trailingIcon}
         </span>
       ) : null}

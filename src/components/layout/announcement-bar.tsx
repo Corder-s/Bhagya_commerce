@@ -41,7 +41,7 @@ export function AnnouncementBar() {
   return (
     <div
       data-surface="inverse"
-      className="relative bg-gradient-to-r from-deep via-[#0a4833] to-deep text-ink-inverse print:hidden"
+      className="relative bg-[#151515] border-b border-[#26241F] text-[#FFFDF8] print:hidden"
     >
       <div className="container-wide flex min-h-9 items-center justify-center gap-3 py-1.5">
         <p

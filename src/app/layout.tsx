@@ -12,6 +12,11 @@ import { siteConfig } from "@/config/site";
 import { CartDrawer } from "@/features/cart/cart-drawer";
 import { CartProvider } from "@/context/cart-context";
 import { WishlistProvider } from "@/context/wishlist-context";
+import { ThemeProvider } from "@/context/theme-context";
+import { AuthProvider } from "@/context/auth-context";
+import { NotificationProvider } from "@/context/notification-context";
+import { AIProvider } from "@/context/ai-context";
+import { CustomerAIFloatingWidget } from "@/features/ai/components/customer-ai-floating-widget";
 
 import "./globals.css";
 
@@ -52,20 +57,30 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
-        {/*
-          Marks the document as JavaScript-capable before the first paint, so
-          scroll-reveal can start hidden without ever hiding content from a
-          visitor whose scripts did not run. Must stay inline and blocking:
-          a deferred version would let revealed content flash first.
-        */}
+        {/* Blocking theme & JS initializer to prevent FOUC / theme flash */}
         <script
           dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add(\"js\")",
+            __html: `(function(){
+              try {
+                document.documentElement.classList.add("js");
+                var theme = localStorage.getItem("bhagya-theme");
+                var dark = theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+                if (dark) {
+                  document.documentElement.classList.add("dark");
+                  document.documentElement.setAttribute("data-theme", "dark");
+                  document.documentElement.style.colorScheme = "dark";
+                } else {
+                  document.documentElement.classList.remove("dark");
+                  document.documentElement.setAttribute("data-theme", "light");
+                  document.documentElement.style.colorScheme = "light";
+                }
+              } catch(e) {}
+            })();`,
           }}
         />
       </head>
 
-      <body className="min-h-full bg-canvas font-sans text-ink">
+      <body className="min-h-full bg-canvas font-sans text-ink transition-colors duration-base">
         {/* Organisation-level structured data lives once, at the root. */}
         <script
           type="application/ld+json"
@@ -92,18 +107,27 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SkipLink />
         <RevealObserver />
 
-        <MotionProvider>
-          {/* One tooltip provider for the tree — tooltips are cheap, providers are not. */}
-          <TooltipProvider>
-            <CartProvider>
-              <WishlistProvider>
-                {children}
-                <CartDrawer />
-                <Toaster />
-              </WishlistProvider>
-            </CartProvider>
-          </TooltipProvider>
-        </MotionProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <MotionProvider>
+              {/* One tooltip provider for the tree — tooltips are cheap, providers are not. */}
+              <TooltipProvider>
+                <CartProvider>
+                  <WishlistProvider>
+                    <NotificationProvider>
+                      <AIProvider>
+                        {children}
+                        <CustomerAIFloatingWidget />
+                        <CartDrawer />
+                        <Toaster />
+                      </AIProvider>
+                    </NotificationProvider>
+                  </WishlistProvider>
+                </CartProvider>
+              </TooltipProvider>
+            </MotionProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

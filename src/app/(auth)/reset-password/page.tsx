@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import * as React from "react";
 
 import { ResetPasswordForm } from "@/features/auth/reset-password-form";
 import { constructMetadata } from "@/config/seo";
@@ -14,12 +15,14 @@ export default function ResetPasswordPage() {
   return (
     <>
       <header className="mb-7 flex flex-col gap-2">
-        <h1 className="text-heading-xl text-ink">Set a new password</h1>
+        <h1 className="text-heading-xl text-ink font-display">Set a new password</h1>
         <p className="text-body-sm text-ink-soft">
-          Pick something you have not used on Bhagya before.
+          Pick a secure password you have not used on Bhagya before.
         </p>
       </header>
-      <ResetPasswordForm />
+      <React.Suspense fallback={<div className="h-64 animate-pulse rounded-lg bg-surface-raised" />}>
+        <ResetPasswordForm />
+      </React.Suspense>
     </>
   );
 }

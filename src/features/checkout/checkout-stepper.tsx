@@ -9,14 +9,6 @@ export type CheckoutStep = {
   description?: string;
 };
 
-/**
- * CheckoutStepper — where the buyer is in the checkout flow.
- *
- * Rendered as an ordered list so the sequence is conveyed structurally, not by
- * horizontal position alone (which breaks down at 320px and in screen readers).
- * Completed steps get a tick *and* the word "completed" for assistive tech;
- * the current step is marked `aria-current="step"`.
- */
 export function CheckoutStepper({
   steps,
   currentStepId,
@@ -32,45 +24,39 @@ export function CheckoutStepper({
   );
 
   return (
-    <nav aria-label="Checkout progress" className={className}>
-      <ol className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-2">
+    <nav aria-label="Checkout progress" className={cn("w-full max-w-4xl mx-auto py-2", className)}>
+      <ol className="flex items-center justify-between gap-1 sm:gap-2">
         {steps.map((step, index) => {
           const isComplete = index < currentIndex;
           const isCurrent = index === currentIndex;
 
           return (
-            <li
-              key={step.id}
-              aria-current={isCurrent ? "step" : undefined}
-              className="flex min-w-0 flex-1 items-center gap-3"
-            >
-              <span
-                aria-hidden="true"
-                className={cn(
-                  "grid size-8 shrink-0 place-items-center rounded-pill border text-caption font-semibold tabular-nums",
-                  isComplete && "border-primary bg-primary text-primary-foreground",
-                  isCurrent && "border-primary bg-soft-green text-primary",
-                  !isComplete && !isCurrent && "border-line bg-surface text-ink-faint",
-                )}
+            <React.Fragment key={step.id}>
+              <li
+                aria-current={isCurrent ? "step" : undefined}
+                className="flex flex-col items-center gap-1.5 shrink-0"
               >
-                {isComplete ? <Check className="size-4" strokeWidth={3} /> : index + 1}
-              </span>
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "grid size-7 sm:size-8 shrink-0 place-items-center rounded-full text-xs font-bold transition-all",
+                    isComplete && "bg-primary text-[#151515] font-extrabold shadow-xs",
+                    isCurrent && "border-2 border-primary bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold shadow-xs font-extrabold",
+                    !isComplete && !isCurrent && "border border-line bg-surface text-ink-subtle",
+                  )}
+                >
+                  {isComplete ? <Check className="size-3.5 sm:size-4" strokeWidth={3} /> : index + 1}
+                </span>
 
-              <span className="flex min-w-0 flex-col">
                 <span
                   className={cn(
-                    "truncate text-body-sm font-medium",
-                    isCurrent ? "text-primary" : "text-ink",
-                    !isComplete && !isCurrent && "text-ink-soft",
+                    "text-[11px] sm:text-xs font-medium tracking-tight whitespace-nowrap",
+                    isCurrent ? "text-ink font-bold" : "text-ink-soft",
+                    !isComplete && !isCurrent && "text-ink-subtle",
                   )}
                 >
                   {step.label}
                 </span>
-                {step.description ? (
-                  <span className="truncate text-caption text-ink-soft">
-                    {step.description}
-                  </span>
-                ) : null}
                 <span className="sr-only">
                   {isComplete
                     ? " — completed"
@@ -78,18 +64,18 @@ export function CheckoutStepper({
                       ? " — current step"
                       : " — not started"}
                 </span>
-              </span>
+              </li>
 
-              {index < steps.length - 1 ? (
-                <span
+              {index < steps.length - 1 && (
+                <div
                   aria-hidden="true"
                   className={cn(
-                    "hidden h-px flex-1 sm:block",
-                    isComplete ? "bg-primary" : "bg-line",
+                    "h-0.5 flex-1 min-w-4 sm:min-w-8 mx-1 -mt-5 transition-colors",
+                    index < currentIndex ? "bg-primary" : "bg-line",
                   )}
                 />
-              ) : null}
-            </li>
+              )}
+            </React.Fragment>
           );
         })}
       </ol>

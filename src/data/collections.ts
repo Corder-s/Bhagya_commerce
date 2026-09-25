@@ -19,7 +19,7 @@ export const collections: readonly CollectionSummary[] = [
       width: 1100,
       height: 1375,
     },
-    tone: "soft-green",
+    tone: "canvas",
   },
   {
     slug: "handloom-at-home",

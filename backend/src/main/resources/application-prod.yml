@@ -1,0 +1,16 @@
+logging:
+  level:
+    root: INFO
+    com.bhagya.commerce: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: never
+
+bhagya:
+  environment: production

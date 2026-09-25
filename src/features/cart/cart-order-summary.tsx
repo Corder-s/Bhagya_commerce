@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Lock, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { ArrowRight, Lock, ShieldCheck, Truck } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -47,22 +47,22 @@ export function CartOrderSummary({
       </h3>
 
       {/* Free Delivery Meter */}
-      <div className="mt-4 rounded-xl border border-emerald-500/20 bg-soft-green/60 p-3.5">
-        <div className="flex items-center gap-2 text-body-sm font-semibold text-primary">
+      <div className="mt-4 rounded-xl border border-line bg-gold-surface dark:bg-surface-elevated p-3.5">
+        <div className="flex items-center gap-2 text-body-sm font-semibold text-gold-dark dark:text-gold">
           <Truck className="size-4 shrink-0" aria-hidden="true" />
           {isFreeShippingEligible ? (
             <span>You unlocked Free Delivery across India!</span>
           ) : (
             <span>
-              Add <strong className="text-deep">{formatPrice(amountNeededForFreeShipping)}</strong> for Free Delivery
+              Add <strong className="text-ink">{formatPrice(amountNeededForFreeShipping)}</strong> for Free Delivery
             </span>
           )}
         </div>
 
         {/* Progress Bar */}
-        <div className="mt-2.5 h-2 w-full overflow-hidden rounded-pill bg-soft-green-strong">
+        <div className="mt-2.5 h-2 w-full overflow-hidden rounded-pill bg-canvas-deep">
           <div
-            className="h-full bg-gradient-to-r from-primary to-botanical transition-all duration-base ease-brand"
+            className="h-full bg-gradient-btn-gold transition-all duration-base ease-brand"
             style={{ width: `${freeShippingProgress}%` }}
           />
         </div>
@@ -81,7 +81,7 @@ export function CartOrderSummary({
           </dt>
           <dd className="font-medium tabular-nums">
             {estimatedDeliveryFee === 0 ? (
-              <span className="font-semibold text-success">FREE</span>
+              <span className="font-semibold text-emerald-700 dark:text-emerald-400">FREE</span>
             ) : (
               <span className="text-ink">{formatPrice(estimatedDeliveryFee)}</span>
             )}
@@ -90,12 +90,12 @@ export function CartOrderSummary({
 
         <div className="flex justify-between text-ink-soft">
           <dt>Taxes & GST</dt>
-          <dd className="font-medium text-ink-faint">Included in price</dd>
+          <dd className="font-medium text-ink-subtle">Included in price</dd>
         </div>
 
         <div className="border-t border-line pt-3 flex justify-between text-body-md font-bold text-ink">
           <dt>Grand Total</dt>
-          <dd className="text-heading-md font-bold text-primary tabular-nums">
+          <dd className="text-heading-md font-bold text-gold-dark dark:text-gold tabular-nums">
             {formatPrice(total)}
           </dd>
         </div>
@@ -127,11 +127,11 @@ export function CartOrderSummary({
       {/* Trust reassurance */}
       <div className="mt-6 border-t border-line pt-4 space-y-2 text-caption text-ink-soft">
         <div className="flex items-center gap-2">
-          <Lock className="size-3.5 text-primary" aria-hidden="true" />
+          <Lock className="size-3.5 text-gold-dark dark:text-gold" aria-hidden="true" />
           <span>Encrypted 256-bit secure checkout</span>
         </div>
         <div className="flex items-center gap-2">
-          <ShieldCheck className="size-3.5 text-primary" aria-hidden="true" />
+          <ShieldCheck className="size-3.5 text-gold-dark dark:text-gold" aria-hidden="true" />
           <span>100% authentic handcrafted items directly from makers</span>
         </div>
       </div>

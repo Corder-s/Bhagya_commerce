@@ -52,10 +52,10 @@ function DropdownMenuItem({
       className={cn(
         "relative flex min-h-10 cursor-pointer select-none items-center gap-2.5 rounded-sm px-2.5 py-2 text-body-sm outline-none",
         "transition-colors duration-fast ease-brand",
-        "data-[highlighted]:bg-soft-green data-[highlighted]:text-primary",
+        "data-[highlighted]:bg-gold-soft/60 data-[highlighted]:text-gold-dark",
         "data-[disabled]:pointer-events-none data-[disabled]:text-ink-faint",
         "[&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-ink-faint",
-        "data-[highlighted]:[&_svg]:text-primary",
+        "data-[highlighted]:[&_svg]:text-gold-dark",
         "data-[variant=destructive]:text-danger data-[variant=destructive]:data-[highlighted]:bg-danger-surface data-[variant=destructive]:[&_svg]:text-danger",
         className,
       )}
@@ -74,7 +74,7 @@ function DropdownMenuCheckboxItem({
       data-slot="dropdown-checkbox-item"
       className={cn(
         "relative flex min-h-10 cursor-pointer select-none items-center gap-2.5 rounded-sm py-2 pl-9 pr-2.5 text-body-sm outline-none",
-        "data-[highlighted]:bg-soft-green data-[highlighted]:text-primary",
+        "data-[highlighted]:bg-gold-soft/60 data-[highlighted]:text-gold-dark",
         "data-[disabled]:pointer-events-none data-[disabled]:text-ink-faint",
         className,
       )}
@@ -82,7 +82,7 @@ function DropdownMenuCheckboxItem({
     >
       <span className="absolute left-3 flex size-4 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
-          <Check className="size-4 text-primary" aria-hidden="true" />
+          <Check className="size-4 text-gold-dark" aria-hidden="true" />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}

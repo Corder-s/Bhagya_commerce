@@ -48,7 +48,7 @@ export const journalPosts: readonly JournalPost[] = [
     readingTimeMinutes: 7,
     publishedAt: "2026-07-21",
     image: null,
-    tone: "soft-green",
+    tone: "sand",
   },
 ] as const;
 

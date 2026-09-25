@@ -1,4 +1,5 @@
 import {
+  Bell,
   Boxes,
   ChartLine,
   Compass,
@@ -49,6 +50,7 @@ const navIcons: NavIconMap = {
   Settings,
   Settings2,
   MapPin,
+  Bell,
 };
 
 export function getNavIcon(name: NavIconName): LucideIcon {

@@ -1,3 +1,4 @@
+export { AuthGuard } from "./auth-guard";
 export { AuthNotice } from "./auth-notice";
 export { ForgotPasswordForm } from "./forgot-password-form";
 export { LoginForm } from "./login-form";

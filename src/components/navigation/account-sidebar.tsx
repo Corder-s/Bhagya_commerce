@@ -32,14 +32,14 @@ export function AccountSidebar({ className }: { className?: string }) {
                   "flex min-h-11 items-center gap-3 rounded-md px-3 text-body-sm",
                   "transition-colors duration-fast ease-brand",
                   active
-                    ? "bg-soft-green font-semibold text-primary"
+                    ? "bg-gold-soft font-semibold text-[#7A5416]"
                     : "font-medium text-ink-soft hover:bg-canvas-deep hover:text-ink",
                 )}
               >
                 {item.icon ? (
                   <NavIcon
                     name={item.icon}
-                    className={cn("size-[1.125rem]", active ? "text-primary" : "text-ink-faint")}
+                    className={cn("size-[1.125rem]", active ? "text-gold-dark" : "text-ink-faint")}
                   />
                 ) : null}
                 {item.label}

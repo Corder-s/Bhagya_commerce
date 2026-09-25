@@ -46,7 +46,7 @@ export default function MerchantSettingsPage() {
             <CardContent className="flex gap-4">
               <span
                 aria-hidden="true"
-                className="grid size-10 shrink-0 place-items-center rounded-md bg-soft-green text-primary"
+                className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
               >
                 <group.Icon className="size-4" />
               </span>
@@ -63,7 +63,7 @@ export default function MerchantSettingsPage() {
             <div className="flex items-center gap-3">
               <span
                 aria-hidden="true"
-                className="grid size-10 place-items-center rounded-md bg-soft-green text-primary"
+                className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
               >
                 <Bell className="size-4" />
               </span>

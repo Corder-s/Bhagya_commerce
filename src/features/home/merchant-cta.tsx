@@ -41,7 +41,7 @@ const reasons = [
 
 export function MerchantCTA() {
   return (
-    <Section surface="soft-green" label="Sell on Bhagya Commerce">
+    <Section surface="ivory" label="Sell on Bhagya Commerce">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16">
         <div className="flex flex-col items-start gap-5">
           <Reveal>
@@ -90,7 +90,7 @@ export function MerchantCTA() {
                 <CardContent className="flex flex-col gap-2.5">
                   <span
                     aria-hidden="true"
-                    className="grid size-10 place-items-center rounded-md bg-soft-green text-primary"
+                    className="grid size-10 place-items-center rounded-xl bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold"
                   >
                     <Icon className="size-4.5" />
                   </span>

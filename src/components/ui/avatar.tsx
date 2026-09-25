@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 const avatarVariants = cva(
   [
     "relative inline-flex shrink-0 items-center justify-center overflow-hidden",
-    "bg-soft-green text-primary font-sans font-semibold select-none",
-    "border border-soft-green-strong",
+    "bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold font-sans font-semibold select-none",
+    "border border-line",
   ],
   {
     variants: {
@@ -40,9 +40,6 @@ export interface AvatarProps
 
 /**
  * Avatar — customer, merchant or brand identity.
- * Falls back to initials (never an empty box) and always carries an accessible
- * name. Phase 1 renders with a plain `<img>`: remote image optimisation is a
- * Phase 2 concern once real assets and `remotePatterns` exist.
  */
 function Avatar({
   className,

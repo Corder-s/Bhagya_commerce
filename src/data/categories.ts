@@ -12,7 +12,7 @@ export const categories: readonly Category[] = [
     slug: "organic-food",
     name: "Organic Food",
     descriptor: "Millets, cold-pressed oils and pantry staples",
-    tone: "soft-green",
+    tone: "sand",
     image: {
       src: "/images/categories/organic-food.jpg",
       alt: "Unpolished millet grain in a small brass bowl beside a folded cotton pouch",
@@ -48,7 +48,7 @@ export const categories: readonly Category[] = [
     slug: "home-living",
     name: "Home & Living",
     descriptor: "Handloom, stoneware and honest materials",
-    tone: "soft-green",
+    tone: "canvas",
     image: {
       src: "/images/categories/home-living.jpg",
       alt: "Handwoven cotton throw folded over a stoneware vase holding dried grasses",
@@ -72,7 +72,7 @@ export const categories: readonly Category[] = [
     slug: "eco-friendly",
     name: "Eco-Friendly",
     descriptor: "Low-waste swaps for daily routines",
-    tone: "soft-green",
+    tone: "sand",
     image: {
       src: "/images/categories/eco-friendly.jpg",
       alt: "Bamboo toothbrush, wooden comb and a small jute tote bag on ivory linen",

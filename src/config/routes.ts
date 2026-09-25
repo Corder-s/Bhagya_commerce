@@ -41,6 +41,7 @@ export const authRoutes = {
 export const accountRoutes = {
   root: "/account",
   orders: "/account/orders",
+  notifications: "/notifications",
   wishlist: "/account/wishlist",
   addresses: "/account/addresses",
   preferences: "/account/preferences",
@@ -53,6 +54,7 @@ export const commerceRoutes = {
   payment: "/payment",
   orderSuccess: "/order-success",
   orders: "/account/orders",
+  notifications: "/notifications",
   order: (id: string) => `/orders/${id}` as Route,
   orderTracking: (id: string) => `/orders/${id}/tracking` as Route,
 } as const;
@@ -105,7 +107,7 @@ export function resolveRouteGroup(pathname: string): RouteGroup {
   ) {
     return routeGroups.auth;
   }
-  if (path.startsWith("/account") || path.startsWith("/orders")) {
+  if (path.startsWith("/account") || path.startsWith("/orders") || path.startsWith("/notifications")) {
     return routeGroups.customer;
   }
   if (path.startsWith("/cart") || path.startsWith("/checkout")) {
@@ -135,6 +137,7 @@ export const publicRoutes: readonly string[] = [
 export const privateRoutePrefixes: readonly string[] = [
   "/account",
   "/orders",
+  "/notifications",
   "/cart",
   "/checkout",
   "/payment",

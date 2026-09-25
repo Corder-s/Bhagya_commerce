@@ -54,12 +54,30 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
       <aside
         data-surface="inverse"
         aria-hidden="true"
-        className="relative hidden overflow-hidden bg-deep p-10 text-ink-inverse lg:flex lg:flex-col lg:justify-between"
+        className="relative hidden overflow-hidden bg-charcoal p-10 text-ink-inverse lg:flex lg:flex-col lg:justify-between"
+        style={{ background: "linear-gradient(160deg, #1e1e1c 0%, #151515 60%, #1a160d 100%)" }}
       >
+        {/* Gold glow orb */}
         <div
-          className="pointer-events-none absolute -right-24 -top-24 size-96 rounded-pill bg-botanical/30 blur-3xl animate-breathe"
+          className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-pill blur-3xl animate-breathe"
+          style={{ background: "radial-gradient(circle, rgba(201,154,61,0.20) 0%, transparent 70%)" }}
           aria-hidden="true"
         />
+        <div
+          className="pointer-events-none absolute -bottom-24 -left-16 size-64 rounded-pill blur-3xl"
+          style={{ background: "radial-gradient(circle, rgba(201,154,61,0.12) 0%, transparent 70%)" }}
+          aria-hidden="true"
+        />
+
+        {/* Logo top-left */}
+        <div className="relative">
+          <span
+            className="font-display text-lg font-semibold tracking-wide"
+            style={{ color: "#c99a3d" }}
+          >
+            Bhagya Commerce
+          </span>
+        </div>
 
         <p className="relative font-display text-display-md font-medium text-ink-inverse">
           Good for People.
@@ -86,7 +104,10 @@ export function AuthShell({ children }: { children: React.ReactNode }) {
             },
           ].map(({ Icon, title, body }) => (
             <li key={title} className="flex gap-3.5">
-              <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-md border border-line-inverse text-ink-inverse">
+              <span
+                className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-md"
+                style={{ border: "1px solid rgba(201,154,61,0.35)", background: "rgba(201,154,61,0.10)", color: "#c99a3d" }}
+              >
                 <Icon className="size-4" aria-hidden="true" />
               </span>
               <div className="flex flex-col gap-0.5">

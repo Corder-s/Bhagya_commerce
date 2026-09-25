@@ -1,157 +1,178 @@
 /* =============================================================================
-   BHAGYA COMMERCE — DESIGN TOKENS
-   Single source of truth. Raw values live here; Tailwind mappings live in
-   `theme.css`. Nothing in the app should hardcode a colour, size or shadow.
-
-   Naming:  --bhagya-*  = raw primitive (never used directly in components)
-            --color-*   = semantic alias exposed to Tailwind (theme.css)
+   BHAGYA COMMERCE — GLOBAL DESIGN TOKENS
+   Single source of truth for the locked Bhagya Commerce design system.
+   Palette: Black/Charcoal Header + Warm Ivory Canvas + Warm White Cards +
+            Rich Gold Accents + Subtle Beige Borders + Dark Ink Text.
    ============================================================================= */
 
 :root {
   /* ---------------------------------------------------------------------------
-     BRAND GREENS
-     Used deliberately: brand marks, primary actions, active states, highlights.
-     Greens are NEVER the page background of the whole product.
+     DARK BRAND (Charcoals & Blacks)
+     Used for header, main navigation, footer, important headings, brand areas.
      --------------------------------------------------------------------------- */
-  --bhagya-primary: #0b4d36; /* 9.8:1 on white — safe for text + fills */
-  --bhagya-primary-hover: #093f2c;
-  --bhagya-primary-active: #07311f;
-  --bhagya-primary-disabled: #9db3a9;
-  --bhagya-deep: #063b2a;
-  --bhagya-deep-hover: #042e20;
-  --bhagya-botanical: #2f7d4a; /* 5.1:1 on white */
-  --bhagya-soft-green: #eaf3ec;
-  --bhagya-soft-green-strong: #d8e8dd;
-  --bhagya-botanical-soft: #68c788;
+  --bhagya-black: #151515;
+  --bhagya-charcoal: #1D1C19;
+  --bhagya-charcoal-soft: #26241F;
+  --bhagya-charcoal-light: #26241F;
+  --bhagya-charcoal-border: #33302A;
 
   /* ---------------------------------------------------------------------------
-     WARM NEUTRAL SURFACES
-     The majority of the interface. Ivory pages, white cards, sand accents.
+     GOLD
+     Primary CTA, active state, selected state, accents, progress, prices.
      --------------------------------------------------------------------------- */
-  --bhagya-white: #ffffff;
-  --bhagya-ivory: #f7f4ea;
-  --bhagya-ivory-deep: #f1ecdd;
-  --bhagya-sand: #e8ddc8;
-  --bhagya-sand-strong: #dccfb4;
+  --bhagya-gold: #C49A45;
+  --bhagya-gold-dark: #9A6A20;
+  --bhagya-gold-light: #DDBB72;
+  --bhagya-gold-soft: #F3E6C8;
+  --bhagya-gold-surface: #FAF5EA;
 
   /* ---------------------------------------------------------------------------
-     ACCENT — muted gold. Decorative + small-caps accents only; gold as body
-     text fails contrast, so `gold-deep` exists for that case.
+     WARM BACKGROUNDS
+     Bright, warm and spacious feel across the entire application.
      --------------------------------------------------------------------------- */
-  --bhagya-gold: #b89552;
-  --bhagya-gold-deep: #8a6d2f; /* 4.9:1 on white */
-  --bhagya-gold-soft: #f3ead7;
+  --bhagya-ivory: #F8F4EC;       /* Global page canvas */
+  --bhagya-cream: #F3EBDD;       /* Secondary warm surface */
+  --bhagya-warm-white: #FFFDF8;  /* Primary card & panel surface */
+  --bhagya-white: #FFFFFF;
+  --bhagya-sand: #EDE3D1;
+  --bhagya-sand-light: #F6F0E6;
+  --bhagya-sand-deep: #E2D5BE;
 
   /* ---------------------------------------------------------------------------
-     INK — text ramp. Every value is contrast-checked against --bhagya-white
-     and --bhagya-ivory (WCAG AA body text = 4.5:1).
+     BORDERS
      --------------------------------------------------------------------------- */
-  --bhagya-ink: #16221c; /* 15.9:1 */
-  --bhagya-ink-soft: #5f6b64; /* 5.6:1  — secondary text */
-  --bhagya-ink-subtle: #6b756e; /* 4.8:1  — tertiary text, still AA */
-  --bhagya-ink-faint: #87918b; /* 3.3:1  — decorative / placeholder / disabled */
-  --bhagya-ink-inverse: #f7f4ea;
-  --bhagya-ink-inverse-soft: #c9d6cd;
+  --bhagya-border: #E5D9C5;
+  --bhagya-border-soft: #EDE4D5;
+  --bhagya-border-strong: #D7C6A8;
+  --bhagya-border-light: #EDE4D5;
+  --bhagya-line-inverse: rgb(255 253 248 / 0.14);
 
   /* ---------------------------------------------------------------------------
-     LINES
+     TEXT
      --------------------------------------------------------------------------- */
-  --bhagya-line: #e4dfd1; /* hairline on ivory */
-  --bhagya-line-strong: #cdc6b3;
-  --bhagya-line-inverse: rgb(247 244 234 / 0.16);
+  --bhagya-text: #181818;              /* Primary dark text */
+  --bhagya-text-secondary: #5E5A52;    /* Secondary text */
+  --bhagya-text-muted: #858078;        /* Muted / placeholder */
+  --bhagya-text-disabled: #A6A098;     /* Disabled / subtle */
+  --bhagya-text-faint: #A6A098;
+  --bhagya-text-inverse: #FFFDF8;      /* On dark/charcoal surfaces */
+  --bhagya-text-inverse-muted: #BDB6AA; /* Secondary on dark surfaces */
 
   /* ---------------------------------------------------------------------------
-     FEEDBACK — each pair is (surface, foreground) with AA foregrounds.
-     Status is always paired with an icon or label, never colour alone.
+     SUCCESS (Green ONLY for success, savings, completed, available)
      --------------------------------------------------------------------------- */
-  --bhagya-success: #2f7d4a;
-  --bhagya-success-surface: #eaf3ec;
-  --bhagya-warning: #8a6d2f;
-  --bhagya-warning-surface: #f7efdd;
-  --bhagya-danger: #a32323; /* 7.4:1 */
-  --bhagya-danger-surface: #fbeceb;
-  --bhagya-info: #27527d;
-  --bhagya-info-surface: #eaf0f7;
+  --bhagya-success: #2F7A4A;
+  --bhagya-success-soft: #E9F3EB;
+  --bhagya-success-bg: #E9F3EB;
+  --bhagya-success-dark: #236039;
 
   /* ---------------------------------------------------------------------------
-     FOCUS
-     Brand green ring. `-inverse` is used on dark/green surfaces by setting
-     `data-surface="inverse"` on the container.
+     ERROR (Red ONLY for errors, destructive actions, critical states)
      --------------------------------------------------------------------------- */
-  --focus-ring: var(--bhagya-primary);
-  --focus-ring-inverse: #d8e8dd;
+  --bhagya-error: #B74438;
+  --bhagya-error-soft: #F9ECE9;
+  --bhagya-error-bg: #F9ECE9;
+
+  /* ---------------------------------------------------------------------------
+     WARNING
+     --------------------------------------------------------------------------- */
+  --bhagya-warning: #B87922;
+  --bhagya-warning-soft: #FBF1DC;
+  --bhagya-warning-bg: #FBF1DC;
+
+  /* Info */
+  --bhagya-info: #2A6496;
+  --bhagya-info-bg: #EBF3FB;
+
+  /* ---------------------------------------------------------------------------
+     SYSTEM ALIASES (Consolidated to standard tokens)
+     --------------------------------------------------------------------------- */
+  --bhagya-primary: var(--bhagya-gold);
+  --bhagya-primary-hover: var(--bhagya-gold-dark);
+  --bhagya-primary-active: #825712;
+  --bhagya-primary-disabled: #D9C59C;
+  --bhagya-deep: var(--bhagya-charcoal);
+  --bhagya-deep-hover: var(--bhagya-black);
+  --bhagya-botanical: var(--bhagya-success);
+  --bhagya-soft-green: var(--bhagya-success-bg);
+  --bhagya-soft-green-strong: #D4EBD8;
+  --bhagya-botanical-soft: #4E9A68;
+
+  --bhagya-ink: var(--bhagya-text);
+  --bhagya-ink-soft: var(--bhagya-text-secondary);
+  --bhagya-ink-subtle: var(--bhagya-text-muted);
+  --bhagya-ink-faint: var(--bhagya-text-disabled);
+  --bhagya-ink-inverse: var(--bhagya-text-inverse);
+  --bhagya-ink-inverse-soft: var(--bhagya-text-inverse-muted);
+
+  --bhagya-line: var(--bhagya-border);
+  --bhagya-line-strong: var(--bhagya-border-strong);
+  --bhagya-gold-deep: var(--bhagya-gold-dark);
+
+  /* ---------------------------------------------------------------------------
+     FOCUS RING
+     --------------------------------------------------------------------------- */
+  --focus-ring: var(--bhagya-gold);
+  --focus-ring-inverse: var(--bhagya-gold-light);
   --focus-ring-width: 2px;
   --focus-ring-offset: 2px;
 
   /* ===========================================================================
      TYPOGRAPHY
-     Fluid where it matters (display + heading), fixed for UI/body so line
-     lengths and rhythm stay predictable inside components.
      =========================================================================== */
   --bhagya-font-display-token: "Cormorant Garamond", "Iowan Old Style",
     "Palatino Linotype", "Times New Roman", serif;
-  --bhagya-font-sans-token: "Inter", ui-sans-serif, system-ui, -apple-system,
+  --bhagya-font-sans-token: "Inter", "Manrope", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  /* Marcellus-style small caps for labels */
-  --tracking-label: 0.09em;
+  --tracking-label: 0.08em;
   --tracking-display: -0.015em;
   --tracking-heading: -0.012em;
 
   /* ===========================================================================
-     SPACING — 8px base grid.
-     4 / 8 / 16 / 24 / 32 / 48 / 64 / 96 / 128
-     Tailwind's 4px base scale (p-1 = 4px) already maps to this grid; the
-     semantic tokens below are for layout rhythm, not component internals.
+     SPACING & LAYOUT
      =========================================================================== */
-  --spacing-unit: 0.25rem; /* 4px base step  */
-  --space-2xs: 0.25rem; /*  4px */
-  --space-xs: 0.5rem; /*  8px */
-  --space-sm: 0.75rem; /* 12px */
-  --space-md: 1rem; /* 16px */
-  --space-lg: 1.5rem; /* 24px */
-  --space-xl: 2rem; /* 32px */
-  --space-2xl: 3rem; /* 48px */
-  --space-3xl: 4rem; /* 64px */
-  --space-4xl: 6rem; /* 96px */
-  --space-5xl: 8rem; /* 128px */
+  --spacing-unit: 0.25rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-5xl: 8rem;
 
-  /* Layout rhythm */
-  --gutter: clamp(1.25rem, 5vw, 2.5rem); /* page side padding      */
-  --section-y: clamp(3.5rem, 8vw, 7rem); /* vertical section rhythm */
-  --section-y-sm: clamp(2.5rem, 5vw, 4rem);
-  --header-h: 4.5rem; /* 72px desktop header */
-  --header-h-sm: 3.75rem; /* 60px mobile header  */
-  --tabbar-h: 4rem; /* 64px mobile tab bar  */
+  --gutter: clamp(1.25rem, 5vw, 2.5rem);
+  --section-y: clamp(3rem, 7vw, 6rem);
+  --section-y-sm: clamp(2rem, 4vw, 3.5rem);
+  --header-h: 4.75rem;       /* ~76px desktop header */
+  --header-h-sm: 4rem;        /* 64px mobile header */
+  --tabbar-h: 4rem;
 
   /* ===========================================================================
-     RADIUS
-     Restrained: cards are 16px, not pills. Surfaces stay architectural.
+     RADIUS & SHADOWS
      =========================================================================== */
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-xl: 20px;
   --radius-pill: 9999px;
 
-  /* ===========================================================================
-     SHADOWS — warm-tinted, low spread. Elevation is a whisper, not a shout.
-     =========================================================================== */
-  --shadow-color: 22 34 28;
-  --shadow-xs: 0 1px 2px rgb(var(--shadow-color) / 0.06);
-  --shadow-sm: 0 1px 3px rgb(var(--shadow-color) / 0.07),
-    0 1px 2px rgb(var(--shadow-color) / 0.04);
-  --shadow-md: 0 4px 12px -2px rgb(var(--shadow-color) / 0.08),
-    0 2px 6px -2px rgb(var(--shadow-color) / 0.05);
-  --shadow-lg: 0 12px 32px -8px rgb(var(--shadow-color) / 0.12),
-    0 4px 12px -4px rgb(var(--shadow-color) / 0.06);
-  --shadow-xl: 0 24px 64px -16px rgb(var(--shadow-color) / 0.16),
-    0 8px 24px -12px rgb(var(--shadow-color) / 0.08);
-  --shadow-inset: inset 0 1px 0 rgb(255 255 255 / 0.6);
+  --shadow-color: 23 23 23;
+  --shadow-xs: 0 1px 2px rgb(var(--shadow-color) / 0.04);
+  --shadow-sm: 0 2px 4px rgb(var(--shadow-color) / 0.05),
+    0 1px 2px rgb(var(--shadow-color) / 0.03);
+  --shadow-md: 0 4px 14px -2px rgb(var(--shadow-color) / 0.07),
+    0 2px 6px -2px rgb(var(--shadow-color) / 0.04);
+  --shadow-lg: 0 12px 28px -6px rgb(var(--shadow-color) / 0.09),
+    0 4px 10px -3px rgb(var(--shadow-color) / 0.05);
+  --shadow-xl: 0 20px 48px -12px rgb(var(--shadow-color) / 0.12);
 
   /* ===========================================================================
-     MOTION — one easing family, four durations.
+     MOTION
      =========================================================================== */
   --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-brand-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -159,11 +180,11 @@
   --duration-instant: 90ms;
   --duration-fast: 150ms;
   --duration-base: 220ms;
-  --duration-slow: 400ms;
-  --duration-slower: 640ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
 
   /* ===========================================================================
-     Z-INDEX — one ladder, no magic numbers in components.
+     Z-INDEX
      =========================================================================== */
   --z-below: -1;
   --z-base: 0;
@@ -178,21 +199,109 @@
   --z-tooltip: 800;
 
   /* ===========================================================================
-     CONTAINER WIDTHS
+     CONTAINERS
      =========================================================================== */
-  --container-narrow: 40rem; /*  640px — prose, auth, forms */
-  --container-content: 72rem; /* 1152px — default page container */
-  --container-wide: 82rem; /* 1312px — merchandising grids */
-  /* Named `edge`, not `full`: Tailwind v4 generates `w-*` and `max-w-*` from
-     the `--container-*` namespace, so a token called `full` would overwrite
-     `.w-full` and `.max-w-full`. Never name a container token after a built-in
-     width keyword (full, screen, min, max, fit, auto). */
-  --container-edge: 90rem; /* 1440px — editorial edge-to-edge */
+  --container-narrow: 42rem;
+  --container-content: 74rem;
+  --container-wide: 84rem;
+  --container-edge: 92rem;
 }
 
-/* Dark botanical surfaces (hero bands, footer, merchant rail).
-   Any subtree can opt in and every semantic token flips with it. */
+/* =============================================================================
+   DARK THEME TOKENS
+   Activated via html.dark or [data-theme="dark"]
+   Preserves Bhagya brand DNA with warm obsidian charcoals and radiant gold.
+   ============================================================================= */
+html.dark,
+[data-theme="dark"],
+.dark {
+  /* Dark Brand Surfaces */
+  --bhagya-black: #0C0B0A;
+  --bhagya-charcoal: #141311;
+  --bhagya-charcoal-soft: #1E1D19;
+  --bhagya-charcoal-light: #25241F;
+  --bhagya-charcoal-border: #333028;
+
+  /* Radiant Gold in Dark Mode */
+  --bhagya-gold: #D4A84B;
+  --bhagya-gold-dark: #B18332;
+  --bhagya-gold-light: #EAC97D;
+  --bhagya-gold-soft: #2E2514;
+  --bhagya-gold-surface: #221B0F;
+
+  /* Dark Canvas & Card Surfaces */
+  --bhagya-ivory: #121110;          /* Dark canvas */
+  --bhagya-cream: #181714;          /* Secondary dark surface */
+  --bhagya-warm-white: #1C1B17;     /* Dark card background */
+  --bhagya-white: #23221C;          /* Raised dark card surface */
+  --bhagya-sand: #1E1C18;
+  --bhagya-sand-light: #181714;
+  --bhagya-sand-deep: #282620;
+
+  /* Dark Borders */
+  --bhagya-border: #2B2923;
+  --bhagya-border-soft: #22201B;
+  --bhagya-border-strong: #3D3930;
+  --bhagya-border-light: #22201B;
+  --bhagya-line-inverse: rgb(255 253 248 / 0.16);
+
+  /* High Contrast Typography */
+  --bhagya-text: #F6F2E9;           /* Primary text on dark surfaces */
+  --bhagya-text-secondary: #C2BCB0; /* Secondary text */
+  --bhagya-text-muted: #8E877B;     /* Muted / placeholder */
+  --bhagya-text-disabled: #5E5951;  /* Disabled */
+  --bhagya-text-faint: #5E5951;
+  --bhagya-text-inverse: #FFFDF8;
+  --bhagya-text-inverse-muted: #BDB6AA;
+
+  /* Feedback Colors in Dark Mode */
+  --bhagya-success: #3EB868;
+  --bhagya-success-soft: #14281B;
+  --bhagya-success-bg: #14281B;
+  --bhagya-success-dark: #2F7A4A;
+
+  --bhagya-error: #E05648;
+  --bhagya-error-soft: #2D1714;
+  --bhagya-error-bg: #2D1714;
+
+  --bhagya-warning: #DDA245;
+  --bhagya-warning-soft: #2B2111;
+  --bhagya-warning-bg: #2B2111;
+
+  --bhagya-info: #4A96D8;
+  --bhagya-info-bg: #132230;
+
+  /* Aliases */
+  --bhagya-primary: var(--bhagya-gold);
+  --bhagya-primary-hover: var(--bhagya-gold-light);
+  --bhagya-primary-active: #C49A45;
+  --bhagya-primary-disabled: #473B23;
+  --bhagya-deep: #0C0B0A;
+  --bhagya-deep-hover: #141311;
+  --bhagya-botanical: var(--bhagya-success);
+  --bhagya-soft-green: var(--bhagya-success-bg);
+  --bhagya-soft-green-strong: #1D3B27;
+
+  --bhagya-ink: var(--bhagya-text);
+  --bhagya-ink-soft: var(--bhagya-text-secondary);
+  --bhagya-ink-subtle: var(--bhagya-text-muted);
+  --bhagya-ink-faint: var(--bhagya-text-disabled);
+  --bhagya-ink-inverse: var(--bhagya-text-inverse);
+  --bhagya-ink-inverse-soft: var(--bhagya-text-inverse-muted);
+
+  --bhagya-line: var(--bhagya-border);
+  --bhagya-line-strong: var(--bhagya-border-strong);
+  --bhagya-gold-deep: var(--bhagya-gold);
+
+  --focus-ring: var(--bhagya-gold);
+  --focus-ring-inverse: var(--bhagya-gold-light);
+
+  --shadow-color: 0 0 0;
+}
+
 [data-surface="inverse"] {
   --focus-ring: var(--focus-ring-inverse);
+  --bhagya-border: var(--bhagya-charcoal-border);
   --bhagya-line: var(--bhagya-line-inverse);
 }
+

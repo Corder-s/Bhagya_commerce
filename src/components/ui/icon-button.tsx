@@ -35,7 +35,7 @@ function IconButton({
       size={size}
       className={cn(
         "rounded-md text-ink-soft hover:text-primary",
-        "data-[state=open]:bg-soft-green data-[state=open]:text-primary",
+        "data-[state=open]:bg-gold-soft/60 data-[state=open]:text-gold-dark",
         className,
       )}
       {...props}

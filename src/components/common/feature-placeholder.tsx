@@ -60,7 +60,7 @@ export function FeaturePlaceholder({
                   <svg
                     aria-hidden="true"
                     viewBox="0 0 16 16"
-                    className="mt-1 size-3.5 shrink-0 text-botanical"
+                    className="mt-1 size-3.5 shrink-0 text-[#C49A45]"
                   >
                     <path
                       d="M2.5 8.5 6 12l7.5-8"

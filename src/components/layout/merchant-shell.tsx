@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowUpRight, Bell, HelpCircle, Store } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -8,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { IconButton } from "@/components/ui/icon-button";
 import { marketingRoutes, merchantRoutes } from "@/config/routes";
+import { useAuth } from "@/context/auth-context";
 
 /**
  * MerchantShell — the selling workspace.
@@ -22,23 +25,34 @@ import { marketingRoutes, merchantRoutes } from "@/config/routes";
  */
 export function MerchantShell({
   children,
-  storeName = "Your store",
-  storeStatus = "not-live",
+  storeName,
+  storeStatus,
 }: {
   children: React.ReactNode;
   storeName?: string;
   /** Drives the context badge; real values come from the store service. */
   storeStatus?: "not-live" | "live" | "paused";
 }) {
+  const { user } = useAuth();
+
+  const activeStoreName =
+    storeName || user?.organizationMembership?.storeName || "Your store";
+  const activeStoreStatus =
+    storeStatus || (user?.organizationMembership?.storeId ? "live" : "not-live");
+
   const statusTone =
-    storeStatus === "live" ? "success" : storeStatus === "paused" ? "warning" : "outline";
+    activeStoreStatus === "live" ? "success" : activeStoreStatus === "paused" ? "warning" : "outline";
   const statusLabel =
-    storeStatus === "live" ? "Live" : storeStatus === "paused" ? "Paused" : "Not live yet";
+    activeStoreStatus === "live" ? "Live" : activeStoreStatus === "paused" ? "Paused" : "Not live yet";
 
   return (
-    <div className="flex min-h-dvh flex-col bg-canvas-deep lg:flex-row">
-      {/* Workspace rail */}
-      <aside className="border-b border-line bg-surface lg:sticky lg:top-0 lg:h-dvh lg:w-72 lg:shrink-0 lg:border-b-0 lg:border-r">
+    <div className="flex min-h-dvh flex-col bg-canvas lg:flex-row">
+      {/* Workspace rail — charcoal sidebar matching site header */}
+      <aside
+        data-surface="inverse"
+        className="border-b border-charcoal-border bg-charcoal lg:sticky lg:top-0 lg:h-dvh lg:w-72 lg:shrink-0 lg:border-b-0 lg:border-r"
+        style={{ background: "linear-gradient(180deg, #1e1e1c 0%, #151515 100%)" }}
+      >
         <div className="flex h-full flex-col gap-5 p-4 lg:p-5">
           <div className="flex items-center justify-between gap-3">
             <Link
@@ -48,7 +62,7 @@ export function MerchantShell({
             >
               <BrandMark variant="compact" size="sm" />
             </Link>
-            <Button asChild variant="ghost" size="sm" className="lg:hidden">
+            <Button asChild variant="ghost" size="sm" className="lg:hidden text-ink-inverse-soft hover:text-gold">
               <Link href={marketingRoutes.home}>
                 Shop
                 <ArrowUpRight aria-hidden="true" />
@@ -56,13 +70,20 @@ export function MerchantShell({
             </Button>
           </div>
 
-          <div className="flex items-center gap-3 rounded-md border border-line bg-canvas px-3 py-2.5">
-            <span className="grid size-9 shrink-0 place-items-center rounded-sm bg-soft-green text-primary">
+          {/* Store context block */}
+          <div
+            className="flex items-center gap-3 rounded-md px-3 py-2.5"
+            style={{ background: "rgba(255,253,248,0.06)", border: "1px solid rgba(255,253,248,0.10)" }}
+          >
+            <span
+              className="grid size-9 shrink-0 place-items-center rounded-sm"
+              style={{ background: "rgba(201,154,61,0.15)", color: "#c99a3d" }}
+            >
               <Store className="size-4" aria-hidden="true" />
             </span>
             <div className="flex min-w-0 flex-col">
-              <span className="truncate text-body-sm font-semibold text-ink">
-                {storeName}
+              <span className="truncate text-body-sm font-semibold text-ink-inverse">
+                {activeStoreName}
               </span>
               <Badge tone={statusTone} size="sm" className="mt-0.5 w-fit">
                 {statusLabel}
@@ -80,17 +101,17 @@ export function MerchantShell({
             </div>
           </div>
 
-          <div className="mt-auto hidden flex-col gap-2 border-t border-line pt-4 lg:flex">
+          <div className="mt-auto hidden flex-col gap-2 border-t pt-4 lg:flex" style={{ borderColor: "rgba(255,253,248,0.10)" }}>
             <Link
               href={marketingRoutes.home}
-              className="flex min-h-10 items-center gap-2.5 rounded-md px-3 text-body-sm font-medium text-ink-soft transition-colors duration-fast hover:bg-canvas-deep hover:text-primary"
+              className="flex min-h-10 items-center gap-2.5 rounded-md px-3 text-body-sm font-medium text-ink-inverse-soft transition-colors duration-fast hover:bg-white/5 hover:text-gold"
             >
               <ArrowUpRight className="size-4" aria-hidden="true" />
               Back to shop
             </Link>
             <Link
               href={marketingRoutes.help}
-              className="flex min-h-10 items-center gap-2.5 rounded-md px-3 text-body-sm font-medium text-ink-soft transition-colors duration-fast hover:bg-canvas-deep hover:text-primary"
+              className="flex min-h-10 items-center gap-2.5 rounded-md px-3 text-body-sm font-medium text-ink-inverse-soft transition-colors duration-fast hover:bg-white/5 hover:text-gold"
             >
               <HelpCircle className="size-4" aria-hidden="true" />
               Seller help
@@ -101,17 +122,17 @@ export function MerchantShell({
 
       {/* Workspace content */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-header border-b border-line bg-surface/90 backdrop-blur-md">
+        <header className="sticky top-0 z-header border-b bg-charcoal/95 backdrop-blur-md" style={{ borderColor: "rgba(255,253,248,0.10)" }}>
           <div className="flex h-[60px] items-center justify-between gap-4 px-4 sm:px-6">
-            <p className="truncate text-body-sm font-medium text-ink-soft">
+            <p className="truncate text-body-sm font-medium text-ink-inverse-soft">
               Merchant workspace
             </p>
             <div className="flex items-center gap-1">
-              <IconButton label="Notifications" tooltip="Notifications">
+              <IconButton label="Notifications" tooltip="Notifications" className="text-ink-inverse-soft hover:text-gold hover:bg-white/5">
                 <Bell aria-hidden="true" />
               </IconButton>
               <span className="ml-1.5 hidden sm:block">
-                <Button asChild variant="outline" size="sm">
+                <Button asChild variant="outline" tone="inverse" size="sm">
                   <Link href={merchantRoutes.store}>View store</Link>
                 </Button>
               </span>

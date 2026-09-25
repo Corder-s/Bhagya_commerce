@@ -1,77 +1,143 @@
 "use client";
 
-import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole, Mail, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 
-import { AuthNotice } from "@/features/auth/auth-notice";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Divider } from "@/components/ui/divider";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authRoutes } from "@/config/routes";
-import { toast } from "@/lib/toast";
+import { useAuth } from "@/hooks/use-auth";
 
-/**
- * LoginForm.
- *
- * Presentational and client-side only: it owns real field state, validation and
- * error/focus behaviour, and stops short of authentication. Submitting surfaces a
- * toast explaining that sessions land in Phase 2 — no fake redirect, no fake
- * "welcome back".
- */
 export function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { login } = useAuth();
+
+  const redirectUrl = searchParams.get("redirect") || "/account";
+
   const [showPassword, setShowPassword] = React.useState(false);
-  const [email, setEmail] = React.useState("");
+  const [emailOrPhone, setEmailOrPhone] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [errors, setErrors] = React.useState<{ email?: string; password?: string }>(
-    {},
-  );
+  const [rememberMe, setRememberMe] = React.useState(true);
+  const [errors, setErrors] = React.useState<{
+    emailOrPhone?: string;
+    password?: string;
+    general?: string;
+  }>({});
   const [submitting, setSubmitting] = React.useState(false);
 
   function validate() {
-    const next: { email?: string; password?: string } = {};
-    if (!email.trim()) next.email = "Enter your email address";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      next.email = "That does not look like an email address";
-    if (!password) next.password = "Enter your password";
+    const next: { emailOrPhone?: string; password?: string; general?: string } = {};
+    const input = emailOrPhone.trim();
+
+    if (!input) {
+      next.emailOrPhone = "Please enter your email or phone number";
+    } else if (input.includes("@")) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input)) {
+        next.emailOrPhone = "Please enter a valid email address";
+      }
+    } else {
+      const cleanPhone = input.replace(/[\s\-+()]/g, "");
+      if (cleanPhone.length < 10) {
+        next.emailOrPhone = "Please enter a valid 10-digit phone number";
+      }
+    }
+
+    if (!password) {
+      next.password = "Please enter your password";
+    }
+
     setErrors(next);
     return Object.keys(next).length === 0;
   }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!validate()) return;
+    if (!validate() || submitting) return;
 
     setSubmitting(true);
-    // Phase 2: POST /auth/login, then redirect to the intended route.
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    setSubmitting(false);
-    toast.info(
-      "Sign-in is not live yet",
-      "Authentication is part of Phase 2. Your input was not sent anywhere.",
-    );
+    setErrors({});
+
+    try {
+      const success = await login({
+        emailOrPhone: emailOrPhone.trim(),
+        password,
+        rememberMe,
+      });
+
+      if (success) {
+        router.push(redirectUrl as any);
+      } else {
+        setErrors({
+          general: "Incorrect email, phone, or password. Please try again.",
+        });
+      }
+    } catch {
+      setErrors({
+        general: "Something went wrong during sign-in. Please try again.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  function fillDemoCredentials() {
+    setEmailOrPhone("aarav.sharma@example.com");
+    setPassword("Password123!");
+    setErrors({});
   }
 
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-col gap-5">
-      <AuthNotice />
+      {/* Demo Credentials Quick-Fill helper */}
+      <div className="flex items-center justify-between rounded-md border border-line bg-surface-raised px-3.5 py-2.5 text-caption">
+        <div className="flex items-center gap-2 text-ink-soft">
+          <Sparkles className="size-3.5 text-gold-dark dark:text-gold" aria-hidden="true" />
+          <span>Demo Account available</span>
+        </div>
+        <button
+          type="button"
+          onClick={fillDemoCredentials}
+          className="rounded-xs font-medium text-gold-dark dark:text-gold underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+        >
+          Quick Fill
+        </button>
+      </div>
+
+      {errors.general ? (
+        <div
+          role="alert"
+          className="rounded-md border border-danger/30 bg-danger-surface px-3.5 py-2.5 text-caption text-danger"
+        >
+          {errors.general}
+        </div>
+      ) : null}
 
       <Field
-        label="Email"
+        label="Email or mobile phone"
         required
-        error={errors.email}
-        description="Use the email you shop with."
+        error={errors.emailOrPhone}
+        description="Use the email or phone number you shop with."
       >
         <Input
-          type="email"
-          name="email"
-          autoComplete="email"
+          type="text"
+          name="emailOrPhone"
+          autoComplete="username"
           inputSize="lg"
           leadingIcon={<Mail aria-hidden="true" />}
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          placeholder="name@example.com or 9876543210"
+          value={emailOrPhone}
+          onChange={(event) => {
+            setEmailOrPhone(event.target.value);
+            if (errors.emailOrPhone) {
+              setErrors((prev) => ({ ...prev, emailOrPhone: undefined }));
+            }
+          }}
           aria-required
         />
       </Field>
@@ -99,32 +165,51 @@ export function LoginForm() {
             </button>
           }
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event) => {
+            setPassword(event.target.value);
+            if (errors.password) {
+              setErrors((prev) => ({ ...prev, password: undefined }));
+            }
+          }}
           aria-required
         />
       </Field>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <label className="flex cursor-pointer items-center gap-2.5 text-body-sm text-ink-soft">
-          <Checkbox name="remember" defaultChecked />
+          <Checkbox
+            name="remember"
+            checked={rememberMe}
+            onCheckedChange={(checked) => setRememberMe(checked === true)}
+          />
           Keep me signed in
         </label>
         <Link
           href={authRoutes.forgotPassword}
-          className="rounded-xs text-body-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
+          className="rounded-xs text-body-sm font-medium text-gold-dark dark:text-gold underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2"
         >
           Forgot password?
         </Link>
       </div>
 
-      <Button type="submit" size="lg" fullWidth loading={submitting} loadingLabel="Signing in">
+      <Button
+        type="submit"
+        variant="primary"
+        size="lg"
+        fullWidth
+        disabled={submitting}
+        loading={submitting}
+        loadingLabel="Signing in…"
+      >
         Sign in
       </Button>
 
-      <Divider label="New to Bhagya Commerce?" spacing="sm" />
+      <Divider label="New to Bhagya?" spacing="sm" />
 
       <Button asChild variant="outline" size="lg" fullWidth>
-        <Link href={authRoutes.register}>Create an account</Link>
+        <Link href={(`${authRoutes.register}${redirectUrl !== "/account" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`) as any}>
+          Create your Bhagya account
+        </Link>
       </Button>
     </form>
   );

@@ -16,17 +16,16 @@ import { cn } from "@/lib/utils";
  */
 export function StorefrontShell({
   children,
-  user = null,
   className,
 }: {
   children: React.ReactNode;
-  user?: { name: string; email?: string; avatarUrl?: string | null } | null;
+  user?: unknown;
   className?: string;
 }) {
   return (
     <div className={cn("flex min-h-dvh flex-col bg-canvas", className)}>
       <AnnouncementBar />
-      <HeaderWithCounts user={user} />
+      <HeaderWithCounts />
 
       <main
         id="main"

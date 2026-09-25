@@ -1,0 +1,11 @@
+logging:
+  level:
+    root: INFO
+    com.bhagya.commerce: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+
+bhagya:
+  environment: development
+  persistence:
+    mode: in-memory # Development adapter mode prior to Step 12 PostgreSQL container wiring

@@ -43,7 +43,7 @@ export function SearchCommand({ className }: { className?: string }) {
       <IconButton
         label="Search products"
         className={cn(
-          "aria-expanded:bg-soft-green aria-expanded:text-primary",
+          "aria-expanded:bg-[#F3E6C8] aria-expanded:text-[#9A6A20]",
           className,
         )}
         onClick={() => setOpen(true)}

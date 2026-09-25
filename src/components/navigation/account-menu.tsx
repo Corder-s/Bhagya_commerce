@@ -1,7 +1,9 @@
 "use client";
 
 import {
+  Bell,
   Heart,
+  LayoutDashboard,
   LogIn,
   LogOut,
   MapPin,
@@ -25,27 +27,26 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { accountRoutes, authRoutes, merchantRoutes } from "@/config/routes";
+import { useAuth } from "@/context/auth-context";
+import { useNotifications } from "@/hooks/use-notifications";
+import type { User } from "@/types/auth";
 
-/**
- * AccountMenu — the single identity surface.
- *
- * Bhagya has exactly one user identity. This menu never asks a customer to
- * "become a merchant": it offers *selling* as an additional capability on the
- * same account ("Start selling"), which is the product rule from the brief.
- * Phase 1 renders the signed-out state; Phase 2 swaps it for the session user.
- */
-export function AccountMenu({
-  user = null,
-}: {
-  user?: { name: string; email?: string; avatarUrl?: string | null } | null;
-}) {
+export interface AccountMenuProps {
+  user?: User | null;
+}
+
+export function AccountMenu({ user: propUser }: AccountMenuProps) {
+  const { user: ctxUser, logout } = useAuth();
+  const { unreadCount } = useNotifications();
+  const user = propUser !== undefined ? propUser : ctxUser;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <IconButton
           label={user ? `Account menu for ${user.name}` : "Account"}
           variant="ghost"
-          className="aria-expanded:bg-soft-green aria-expanded:text-primary"
+          className="text-zinc-300 hover:text-white hover:bg-white/10 aria-expanded:bg-white/10 aria-expanded:text-gold"
         >
           {user ? (
             <Avatar name={user.name} src={user.avatarUrl} size="sm" />
@@ -85,6 +86,19 @@ export function AccountMenu({
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
+              <Link href={"/notifications" as any} className="justify-between">
+                <span className="flex items-center gap-2">
+                  <Bell aria-hidden="true" />
+                  Notifications
+                </span>
+                {unreadCount > 0 && (
+                  <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-[#151515] text-[10px] font-bold flex items-center justify-center">
+                    {unreadCount}
+                  </span>
+                )}
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Link href={accountRoutes.wishlist}>
                 <Heart aria-hidden="true" />
                 Wishlist
@@ -103,19 +117,47 @@ export function AccountMenu({
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href={merchantRoutes.root} className="justify-between">
-                <span className="flex items-center gap-2.5">
-                  <Store aria-hidden="true" />
-                  Start selling
-                </span>
-                <Badge tone="botanical" size="sm">
-                  New
-                </Badge>
-              </Link>
-            </DropdownMenuItem>
+            {user.organizationMembership?.storeId ? (
+              <>
+                <DropdownMenuItem asChild>
+                  <Link href={merchantRoutes.dashboard} className="justify-between">
+                    <span className="flex items-center gap-2.5">
+                      <Store aria-hidden="true" className="text-[#C49A45]" />
+                      <span className="font-medium text-ink">
+                        {user.organizationMembership.storeName || "My Store"}
+                      </span>
+                    </span>
+                    <Badge tone="gold" size="sm">
+                      Merchant
+                    </Badge>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={merchantRoutes.dashboard}>
+                    <LayoutDashboard aria-hidden="true" />
+                    Merchant Workspace
+                  </Link>
+                </DropdownMenuItem>
+              </>
+            ) : (
+              <DropdownMenuItem asChild>
+                <Link href={"/start-selling" as any} className="justify-between">
+                  <span className="flex items-center gap-2.5">
+                    <Store aria-hidden="true" className="text-[#C49A45]" />
+                    Start selling
+                  </span>
+                  <Badge tone="outline" size="sm">
+                    Open Store
+                  </Badge>
+                </Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem
+              variant="destructive"
+              onClick={() => logout()}
+              className="cursor-pointer"
+            >
               <LogOut aria-hidden="true" />
               Sign out
             </DropdownMenuItem>
@@ -129,14 +171,14 @@ export function AccountMenu({
               </p>
               <Link
                 href={authRoutes.login}
-                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-gradient-to-r from-[#0b4d36] via-[#167a50] to-[#0b4d36] px-4 text-body-sm font-semibold text-white shadow-sm border border-emerald-400/20 transition-all duration-fast hover:brightness-110 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-gradient-btn-gold px-4 text-body-sm font-bold text-[#151515] shadow-sm shadow-primary/20 transition-all duration-fast hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 <LogIn className="size-4" aria-hidden="true" />
                 Log in
               </Link>
               <Link
                 href={authRoutes.register}
-                className="inline-flex min-h-10 items-center justify-center rounded-md border-2 border-primary/40 bg-surface/90 px-4 text-body-sm font-semibold text-primary transition-all duration-fast hover:border-primary hover:bg-primary hover:text-white hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="inline-flex min-h-10 items-center justify-center rounded-xl border border-line bg-surface px-4 text-body-sm font-semibold text-ink transition-all duration-fast hover:border-primary hover:bg-gold-soft/20 dark:hover:bg-gold/10 hover:text-gold-dark dark:hover:text-gold hover:shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Create account
               </Link>

@@ -125,7 +125,7 @@ export function PreferencesForm() {
               ].map((interest) => (
                 <label
                   key={interest.id}
-                  className="flex cursor-pointer items-center gap-3 rounded-md border border-line px-3.5 py-3 text-body-sm text-ink transition-colors duration-fast hover:border-soft-green-strong hover:bg-soft-green/50"
+                  className="flex cursor-pointer items-center gap-3 rounded-md border border-line px-3.5 py-3 text-body-sm text-ink transition-colors duration-fast hover:border-primary/40 hover:bg-gold-surface"
                 >
                   <Checkbox
                     checked={interests.includes(interest.id)}

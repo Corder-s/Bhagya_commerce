@@ -84,7 +84,7 @@ export function QuantitySelector({
         aria-label={`Decrease ${label}`}
         className={cn(
           "grid place-items-center text-ink-soft transition-colors",
-          "hover:bg-soft-green hover:text-primary active:bg-soft-green-strong",
+          "hover:bg-canvas-deep hover:text-gold-dark dark:hover:text-gold active:bg-gold-soft/20",
           "disabled:opacity-30 disabled:pointer-events-none",
           "focus-visible:outline-2 focus-visible:outline-offset-1",
           sizeClasses.btn,
@@ -107,7 +107,7 @@ export function QuantitySelector({
         aria-label={`Increase ${label}`}
         className={cn(
           "grid place-items-center text-ink-soft transition-colors",
-          "hover:bg-soft-green hover:text-primary active:bg-soft-green-strong",
+          "hover:bg-canvas-deep hover:text-gold-dark dark:hover:text-gold active:bg-gold-soft/20",
           "disabled:opacity-30 disabled:pointer-events-none",
           "focus-visible:outline-2 focus-visible:outline-offset-1",
           sizeClasses.btn,

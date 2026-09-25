@@ -46,7 +46,7 @@ export function OrderTimeline({
                 aria-hidden="true"
                 className={cn(
                   "absolute left-[0.9375rem] top-8 h-[calc(100%-2rem)] w-px",
-                  stage.state === "complete" ? "bg-primary" : "bg-line",
+                  stage.state === "complete" ? "bg-emerald-600 dark:bg-emerald-500" : "bg-line",
                 )}
               />
             ) : null}
@@ -55,9 +55,9 @@ export function OrderTimeline({
               aria-hidden="true"
               className={cn(
                 "grid size-8 shrink-0 place-items-center rounded-pill border",
-                stage.state === "complete" && "border-primary bg-primary text-primary-foreground",
-                stage.state === "current" && "border-primary bg-soft-green text-primary",
-                stage.state === "upcoming" && "border-line bg-surface text-ink-faint",
+                stage.state === "complete" && "border-emerald-600 bg-emerald-600 dark:border-emerald-500 dark:bg-emerald-500 text-white",
+                stage.state === "current" && "border-primary bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold",
+                stage.state === "upcoming" && "border-line bg-surface text-ink-subtle",
               )}
             >
               <Icon className="size-4" />

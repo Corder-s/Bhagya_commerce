@@ -4,35 +4,32 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Badge — compact status or taxonomy label.
- *
- * Tone maps to meaning, and every *status* badge is expected to ship with an
- * icon or an explicit word so nothing depends on colour alone.
+ * Badge — compact status or taxonomy label for Bhagya Commerce.
  */
 const badgeVariants = cva(
   [
-    "inline-flex w-fit shrink-0 items-center gap-1.5 rounded-pill border",
-    "text-label font-semibold uppercase tracking-[0.09em]",
+    "inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border",
+    "text-[10px] font-semibold uppercase tracking-wider",
     "[&_svg]:size-3 [&_svg]:shrink-0",
   ],
   {
     variants: {
       tone: {
         neutral: "border-line bg-canvas-deep text-ink-soft",
-        primary: "border-transparent bg-primary text-primary-foreground",
-        botanical: "border-soft-green-strong bg-soft-green text-primary",
-        gold: "border-gold/40 bg-gold-soft text-gold-deep",
-        sand: "border-sand-strong bg-sand/60 text-ink",
-        outline: "border-line-strong bg-transparent text-ink-soft",
-        success: "border-success/25 bg-success-surface text-success",
-        warning: "border-warning/25 bg-warning-surface text-warning",
-        danger: "border-danger/25 bg-danger-surface text-danger",
-        info: "border-info/25 bg-info-surface text-info",
+        primary: "border-primary/40 bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold",
+        gold: "border-primary/40 bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold",
+        botanical: "border-primary/30 bg-gold-surface dark:bg-surface-elevated text-gold-dark dark:text-gold",
+        sand: "border-line bg-canvas-deep text-ink",
+        outline: "border-line bg-transparent text-ink-soft",
+        success: "border-emerald-500/20 bg-emerald-500/15 text-emerald-700 dark:text-emerald-400",
+        warning: "border-amber-500/20 bg-amber-500/15 text-amber-800 dark:text-amber-400",
+        danger: "border-red-500/20 bg-red-500/15 text-red-700 dark:text-red-400",
+        info: "border-sky-500/20 bg-sky-500/15 text-sky-700 dark:text-sky-400",
       },
       size: {
-        sm: "px-2 py-0.5 text-[0.625rem]",
-        md: "px-2.5 py-1 text-label",
-        lg: "px-3 py-1.5 text-caption normal-case tracking-normal",
+        sm: "px-2 py-0.5 text-[9px]",
+        md: "px-2.5 py-0.5 text-[10px]",
+        lg: "px-3 py-1 text-xs normal-case tracking-normal",
       },
     },
     defaultVariants: { tone: "neutral", size: "md" },

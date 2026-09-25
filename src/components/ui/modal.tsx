@@ -104,7 +104,7 @@ function ModalContent({
                 className={cn(
                   "-mr-1 -mt-1 grid size-9 shrink-0 place-items-center rounded-md text-ink-soft",
                   "transition-colors duration-fast ease-brand",
-                  "hover:bg-soft-green hover:text-primary",
+                  "hover:bg-canvas-deep hover:text-ink",
                   "focus-visible:outline-2 focus-visible:outline-offset-2",
                 )}
               >

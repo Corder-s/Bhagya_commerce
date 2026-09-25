@@ -112,10 +112,10 @@ export function ProductCard({
           onClick={onQuickAdd}
           className={cn(
             "absolute inset-x-3 bottom-3 z-10 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg",
-            "bg-gradient-to-r from-[#0b4d36] via-[#167a50] to-[#0b4d36] px-4 text-body-sm font-semibold text-white",
-            "border border-emerald-400/25 shadow-md shadow-[#0b4d36]/30",
-            "transition-all duration-base ease-brand hover:brightness-110 hover:shadow-lg active:scale-[0.98]",
-            "focus-visible:outline-2 focus-visible:outline-offset-2",
+            "bg-gradient-to-r from-[#C49A45] to-[#B18332] px-4 text-body-sm font-bold text-[#151515]",
+            "border border-[#DDBB72]/40 shadow-md shadow-[#C49A45]/25",
+            "transition-all duration-base ease-brand hover:from-[#DDBB72] hover:to-[#C49A45] hover:shadow-lg hover:brightness-105 active:scale-[0.98]",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C49A45]",
             "pointer-coarse:translate-y-0 pointer-coarse:opacity-100",
             "sm:translate-y-2 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-within:translate-y-0 sm:group-focus-within:opacity-100",
           )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { ArrowRight, ShoppingBag, X } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -42,7 +42,7 @@ export function CartDrawer() {
       {isDrawerOpen && (
         <>
           {/* Backdrop Overlay */}
-          <motion.div
+          <m.div
             key="cart-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -54,7 +54,7 @@ export function CartDrawer() {
           />
 
           {/* Drawer Panel */}
-          <motion.div
+          <m.div
             key="cart-panel"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -71,11 +71,11 @@ export function CartDrawer() {
             {/* Header */}
             <div className="flex items-center justify-between border-b border-line px-5 py-4 sm:px-6">
               <div className="flex items-center gap-2">
-                <ShoppingBag className="size-5 text-primary" aria-hidden="true" />
+                <ShoppingBag className="size-5 text-gold-dark dark:text-gold" aria-hidden="true" />
                 <h2 id="cart-drawer-title" className="text-heading-md font-semibold text-ink">
                   Shopping Bag
                 </h2>
-                <span className="rounded-pill bg-soft-green px-2 py-0.5 text-caption font-bold text-primary">
+                <span className="rounded-pill bg-gold-soft/40 dark:bg-gold/20 px-2 py-0.5 text-caption font-bold text-gold-dark dark:text-gold">
                   {itemCount}
                 </span>
               </div>
@@ -84,7 +84,7 @@ export function CartDrawer() {
                 type="button"
                 onClick={closeCartDrawer}
                 aria-label="Close shopping bag"
-                className="grid size-9 place-items-center rounded-lg text-ink-soft hover:bg-canvas-deep hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="grid size-9 place-items-center rounded-lg text-ink-soft hover:bg-canvas-deep hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer"
               >
                 <X className="size-5" aria-hidden="true" />
               </button>
@@ -93,7 +93,7 @@ export function CartDrawer() {
             {/* Content / Items List */}
             {items.length === 0 ? (
               <div className="flex flex-1 flex-col items-center justify-center p-6 text-center">
-                <div className="grid size-16 place-items-center rounded-2xl bg-soft-green text-primary">
+                <div className="grid size-16 place-items-center rounded-2xl bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold border border-line">
                   <ShoppingBag className="size-8" aria-hidden="true" />
                 </div>
                 <h3 className="mt-4 text-heading-md font-semibold text-ink">
@@ -121,7 +121,7 @@ export function CartDrawer() {
                 </div>
 
                 {/* Drawer Footer */}
-                <div className="border-t border-line bg-canvas/60 p-5 sm:p-6">
+                <div className="border-t border-line bg-canvas-deep/40 p-5 sm:p-6">
                   <div className="mb-4 flex items-baseline justify-between">
                     <span className="text-body-md font-medium text-ink-soft">
                       Subtotal
@@ -156,13 +156,13 @@ export function CartDrawer() {
                     </Button>
                   </div>
 
-                  <p className="mt-3 text-center text-caption text-ink-faint">
+                  <p className="mt-3 text-center text-caption text-ink-subtle">
                     Shipping & taxes calculated during checkout
                   </p>
                 </div>
               </>
             )}
-          </motion.div>
+          </m.div>
         </>
       )}
     </AnimatePresence>

@@ -103,7 +103,7 @@ function SelectItem({
       data-slot="select-item"
       className={cn(
         "relative flex min-h-10 w-full cursor-pointer select-none items-center gap-2 rounded-sm py-2 pl-8 pr-3 text-body-sm outline-none",
-        "data-[highlighted]:bg-soft-green data-[highlighted]:text-primary",
+        "data-[highlighted]:bg-gold-soft/60 data-[highlighted]:text-gold-dark",
         "data-[disabled]:pointer-events-none data-[disabled]:text-ink-faint",
         className,
       )}
@@ -111,7 +111,7 @@ function SelectItem({
     >
       <span className="absolute left-2.5 flex size-4 items-center justify-center">
         <SelectPrimitive.ItemIndicator>
-          <Check className="size-4 text-primary" aria-hidden="true" />
+          <Check className="size-4 text-gold-dark" aria-hidden="true" />
         </SelectPrimitive.ItemIndicator>
       </span>
       <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

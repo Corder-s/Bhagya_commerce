@@ -56,7 +56,7 @@ export default function SustainabilityPage() {
             <CardContent className="flex flex-col gap-2">
               <span
                 aria-hidden="true"
-                className="grid size-10 place-items-center rounded-md bg-soft-green text-primary"
+                className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
               >
                 <metric.Icon className="size-4" />
               </span>

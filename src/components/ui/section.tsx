@@ -27,9 +27,9 @@ const surfaceStyles = {
   none: "",
   ivory: "bg-canvas text-ink",
   canvas: "canvas-atmosphere text-ink",
-  "soft-green": "bg-soft-green text-ink",
+  "soft-green": "bg-gold-surface text-ink",
   deep: "bg-deep text-ink-inverse",
-  sand: "bg-sand text-ink",
+  sand: "bg-canvas-deep text-ink",
 } as const;
 
 /**

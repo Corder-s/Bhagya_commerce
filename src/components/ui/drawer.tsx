@@ -115,7 +115,7 @@ function DrawerContent({
             className={cn(
               "grid size-10 shrink-0 place-items-center rounded-md text-ink-soft",
               "transition-colors duration-fast ease-brand",
-              "hover:bg-soft-green hover:text-primary",
+              "hover:bg-canvas-deep hover:text-ink",
               "focus-visible:outline-2 focus-visible:outline-offset-2",
               hideTitle && "pointer-events-auto absolute right-4 top-4",
             )}

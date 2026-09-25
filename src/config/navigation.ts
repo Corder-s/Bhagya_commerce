@@ -1,4 +1,4 @@
-import { marketingRoutes } from "@/config/routes";
+import { accountRoutes, marketingRoutes } from "@/config/routes";
 import type { NavItem } from "@/types/navigation";
 
 /**
@@ -66,6 +66,7 @@ export const merchantNav: readonly NavItem[] = [
 export const accountNav: readonly NavItem[] = [
   { label: "Overview", href: "/account", icon: "LayoutDashboard" },
   { label: "Orders", href: "/account/orders", icon: "Package" },
+  { label: "Notifications", href: accountRoutes.notifications as any, icon: "Bell" },
   { label: "Wishlist", href: "/account/wishlist", icon: "Heart" },
   { label: "Addresses", href: "/account/addresses", icon: "MapPin" },
   { label: "Preferences", href: "/account/preferences", icon: "Settings2" },

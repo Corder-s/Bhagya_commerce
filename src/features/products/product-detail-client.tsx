@@ -1,6 +1,6 @@
 "use client";
 
-import { motion as m } from "framer-motion";
+import { m } from "framer-motion";
 import {
   ArrowRight,
   Bot,
@@ -28,7 +28,7 @@ import { QuantitySelector } from "@/components/ui/quantity-selector";
 import { marketingRoutes } from "@/config/routes";
 import { useCart } from "@/context/cart-context";
 import { useWishlist } from "@/context/wishlist-context";
-import { ProductAiAssistant } from "@/features/products/product-ai-assistant";
+import { useAI } from "@/context/ai-context";
 import { calculateDiscountPercentage, formatPrice } from "@/lib/format";
 import { toast } from "@/lib/toast";
 import { cn } from "@/lib/utils";
@@ -50,11 +50,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const router = useRouter();
   const { addItem, openCartDrawer } = useCart();
   const { isWishlisted, toggleWishlist } = useWishlist();
+  const { openWithContext } = useAI();
 
   const [activeImage, setActiveImage] = React.useState(0);
   const [qty, setQty] = React.useState(1);
   const [activeTab, setActiveTab] = React.useState<"details" | "specs" | "shipping" | "reviews">("details");
-  const [isAiOpen, setIsAiOpen] = React.useState(false);
 
   // Variant support: Generate demo variant options if not provided
   const variants = React.useMemo(() => {
@@ -212,19 +212,19 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           )}
 
           {/* Maker Provenance Banner */}
-          <div className="mt-2 rounded-2xl border border-line bg-soft-green/50 p-4 flex items-center justify-between gap-4">
+          <div className="mt-2 rounded-2xl border border-line bg-gold-surface p-4 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <span className="grid size-10 place-items-center rounded-xl bg-surface border border-line font-display text-heading-sm font-bold text-primary">
+              <span className="grid size-10 place-items-center rounded-xl bg-surface border border-line font-display text-heading-sm font-bold text-gold-dark dark:text-gold">
                 {product.brand.name.slice(0, 2).toUpperCase()}
               </span>
               <div>
-                <p className="text-caption font-semibold text-primary">Authentic Artisan Partner</p>
+                <p className="text-caption font-semibold text-gold-dark dark:text-gold">Authentic Artisan Partner</p>
                 <p className="text-body-sm font-medium text-ink">{product.brand.name}</p>
               </div>
             </div>
             <Link
               href={`/brands`}
-              className="text-body-sm font-semibold text-primary hover:text-deep transition-colors inline-flex items-center gap-1"
+              className="text-body-sm font-semibold text-gold-dark dark:text-gold hover:text-ink transition-colors inline-flex items-center gap-1"
             >
               Meet maker
               <ArrowRight className="size-3.5" aria-hidden="true" />
@@ -317,7 +317,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     className={cn(
                       "rounded-xl border-2 p-3 text-left transition-all",
                       isSelected
-                        ? "border-primary bg-soft-green/60 shadow-xs ring-1 ring-primary"
+                        ? "border-primary bg-gold-soft/30 dark:bg-gold/15 shadow-xs ring-1 ring-primary"
                         : "border-line bg-surface hover:border-line-strong",
                     )}
                   >
@@ -374,15 +374,15 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           <div className="mt-6">
             <button
               type="button"
-              onClick={() => setIsAiOpen(true)}
-              className="group w-full flex items-center justify-between rounded-2xl border border-emerald-500/30 bg-gradient-to-r from-soft-green via-surface to-soft-green p-4 transition-all hover:border-primary hover:shadow-sm text-left"
+              onClick={() => openWithContext({ productId: product.id, productName: product.name })}
+              className="group w-full flex items-center justify-between rounded-2xl border border-primary/40 bg-gold-surface p-4 transition-all hover:border-primary hover:shadow-sm text-left cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <span className="grid size-9 place-items-center rounded-xl bg-gradient-to-r from-primary to-botanical text-white shadow-xs">
+                <span className="grid size-9 place-items-center rounded-xl bg-gradient-btn-gold text-[#151515] shadow-xs">
                   <Sparkles className="size-4.5" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="text-body-sm font-bold text-ink group-hover:text-primary flex items-center gap-1.5">
+                  <p className="text-body-sm font-bold text-ink group-hover:text-gold-dark dark:group-hover:text-gold flex items-center gap-1.5">
                     Have questions about this piece?
                     <Badge tone="gold" size="sm">Ask AI</Badge>
                   </p>
@@ -391,7 +391,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                   </p>
                 </div>
               </div>
-              <ArrowRight className="size-4 text-primary transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              <ArrowRight className="size-4 text-gold-dark dark:text-gold transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </button>
           </div>
 
@@ -531,7 +531,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                       <span className="w-6 text-ink-soft tabular-nums font-medium">{row.stars} ★</span>
                       <div className="h-2 flex-1 rounded-pill bg-line overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-primary to-botanical"
+                          className="h-full bg-gradient-to-r from-[#C49A45] to-[#B18332]"
                           style={{ width: `${row.pct}%` }}
                         />
                       </div>
@@ -619,13 +619,6 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </Button>
         </div>
       </div>
-
-      {/* ── AI Assistant Panel Modal ────────────────────────────────────── */}
-      <ProductAiAssistant
-        product={product}
-        isOpen={isAiOpen}
-        onClose={() => setIsAiOpen(false)}
-      />
     </div>
   );
 }

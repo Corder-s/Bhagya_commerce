@@ -5,6 +5,7 @@ import Link from "next/link";
 import * as React from "react";
 
 import { BrandMark } from "@/components/common/brand-mark";
+import { ThemeToggle } from "@/components/common/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerClose, DrawerContent } from "@/components/ui/drawer";
 import { footerNav, primaryNav } from "@/config/navigation";
@@ -67,7 +68,15 @@ export function MobileMenuPanel({
         }
       >
         <div className="flex flex-col gap-6">
-          <BrandMark variant="compact" size="sm" />
+          <div className="flex items-center justify-between">
+            <BrandMark variant="compact" size="sm" />
+            <ThemeToggle />
+          </div>
+
+          <div className="flex flex-col gap-2 rounded-xl bg-canvas-deep/40 p-3 border border-line/60">
+            <span className="text-caption font-medium text-ink-soft">Theme appearance</span>
+            <ThemeToggle variant="segmented" className="w-full justify-between" />
+          </div>
 
           <nav aria-label="Mobile primary">
             <ul className="flex flex-col">
@@ -76,7 +85,7 @@ export function MobileMenuPanel({
                   <DrawerClose asChild>
                     <Link
                       href={item.href}
-                      className="flex min-h-12 items-center justify-between gap-4 rounded-md px-2 text-heading-md text-ink transition-colors duration-fast hover:bg-soft-green hover:text-primary"
+                      className="flex min-h-12 items-center justify-between gap-4 rounded-md px-2 text-heading-md text-ink transition-colors duration-fast hover:bg-gold-soft/50 hover:text-gold-dark"
                     >
                       {item.label}
                       <span aria-hidden="true" className="text-ink-faint">
@@ -102,7 +111,7 @@ export function MobileMenuPanel({
                         pathname: marketingRoutes.shop,
                         query: { category: category.slug },
                       }}
-                      className="flex min-h-12 items-center rounded-md border border-line px-3 text-body-sm font-medium text-ink-soft transition-colors duration-fast hover:border-soft-green-strong hover:bg-soft-green hover:text-primary"
+                      className="flex min-h-12 items-center rounded-md border border-line px-3 text-body-sm font-medium text-ink-soft transition-colors duration-fast hover:border-gold hover:bg-gold-soft/40 hover:text-gold-dark"
                     >
                       {category.name}
                     </Link>

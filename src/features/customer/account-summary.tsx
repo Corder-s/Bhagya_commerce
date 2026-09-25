@@ -1,3 +1,5 @@
+"use client";
+
 import { Heart, MapPin, Package, Store } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -6,39 +8,40 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { accountRoutes, merchantRoutes } from "@/config/routes";
+import { orderService } from "@/services/order.service";
+import { useWishlist } from "@/context/wishlist-context";
 
-/**
- * AccountSummary — the customer's at-a-glance panel on `/account`.
- *
- * Counts are `null` in Phase 1 and rendered as "—" with a "Phase 2" note rather
- * than as `0`, which would read as real data. The selling card uses the same
- * one-identity language as the rest of the product: selling is an addition to
- * this account, not a different kind of account.
- */
-export function AccountSummary({
-  counts = { orders: null, wishlist: null, addresses: null },
-}: {
-  counts?: { orders: number | null; wishlist: number | null; addresses: number | null };
-}) {
+export function AccountSummary() {
+  const [orderCount, setOrderCount] = React.useState<number | null>(null);
+  const { wishlistCount } = useWishlist();
+
+  React.useEffect(() => {
+    async function load() {
+      const orders = await orderService.getOrders();
+      setOrderCount(orders.length);
+    }
+    load();
+  }, []);
+
   const tiles = [
     {
       Icon: Package,
-      label: "Orders",
-      value: counts.orders,
+      label: "My Orders",
+      value: orderCount,
       href: accountRoutes.orders,
-      hint: "Track and reorder",
+      hint: "Track, return and reorder",
     },
     {
       Icon: Heart,
       label: "Wishlist",
-      value: counts.wishlist,
+      value: wishlistCount,
       href: accountRoutes.wishlist,
-      hint: "Saved for later",
+      hint: "Saved artisanal items",
     },
     {
       Icon: MapPin,
       label: "Addresses",
-      value: counts.addresses,
+      value: 1,
       href: accountRoutes.addresses,
       hint: "Delivery and billing",
     },
@@ -49,28 +52,27 @@ export function AccountSummary({
       <ul className="grid gap-4 sm:grid-cols-3">
         {tiles.map((tile) => (
           <li key={tile.label}>
-            <Card variant="surface" padding="md" interactive className="h-full">
+            <Card variant="surface" padding="md" radius="xl" interactive className="h-full border-line shadow-card">
               <CardContent className="flex flex-col gap-2">
                 <div className="flex items-center justify-between gap-3">
                   <span
                     aria-hidden="true"
-                    className="grid size-10 place-items-center rounded-md bg-soft-green text-primary"
+                    className="grid size-10 place-items-center rounded-xl bg-gold-soft text-gold-dark dark:text-gold border border-gold/20"
                   >
                     <tile.Icon className="size-4" />
                   </span>
                   <span className="font-display text-heading-xl tabular-nums text-ink">
-                    {tile.value ?? "—"}
+                    {tile.value ?? "…"}
                   </span>
                 </div>
                 <Link
                   href={tile.href}
-                  className="text-heading-md text-ink hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2"
+                  className="text-heading-md text-ink hover:text-gold-dark dark:hover:text-gold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
                 >
                   {tile.label}
                 </Link>
                 <p className="text-caption text-ink-soft">
                   {tile.hint}
-                  {tile.value === null ? " · available in Phase 2" : null}
                 </p>
               </CardContent>
             </Card>
@@ -78,12 +80,12 @@ export function AccountSummary({
         ))}
       </ul>
 
-      <Card variant="botanical" padding="md" radius="lg">
+      <Card variant="surface" padding="md" radius="xl" className="border-line shadow-card">
         <CardContent className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start gap-3.5">
             <span
               aria-hidden="true"
-              className="grid size-10 shrink-0 place-items-center rounded-md bg-surface text-primary"
+              className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold-soft text-gold-dark dark:text-gold border border-gold/20"
             >
               <Store className="size-4" />
             </span>
@@ -91,7 +93,7 @@ export function AccountSummary({
               <div className="flex flex-wrap items-center gap-2">
                 <h3 className="text-heading-md text-ink">Want to sell too?</h3>
                 <Badge tone="primary" size="sm">
-                  Optional
+                  One Identity
                 </Badge>
               </div>
               <p className="max-w-xl text-body-sm text-ink-soft">

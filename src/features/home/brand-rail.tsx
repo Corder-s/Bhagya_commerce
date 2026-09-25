@@ -23,7 +23,7 @@ import { brands } from "@/data/brands";
  */
 export function BrandRail() {
   return (
-    <Section id="brands" surface="soft-green" label="Featured brands" className="scroll-mt-24">
+    <Section id="brands" surface="ivory" label="Featured brands" className="scroll-mt-24">
       <SectionHeading
         eyebrow="Independent makers"
         title="Brands worth discovering"

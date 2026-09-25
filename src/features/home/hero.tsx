@@ -28,11 +28,11 @@ export function Hero() {
       {/* Luminous atmosphere wash across hero */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-gradient-hero opacity-80"
+        className="pointer-events-none absolute inset-0 bg-gradient-hero-warm opacity-90"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-soft-green-strong/40 via-soft-green/20 to-transparent"
+        className="pointer-events-none absolute inset-y-0 right-0 w-3/5 bg-gradient-to-l from-canvas/80 via-primary/5 to-transparent"
       />
 
       <div className="container-wide relative py-10 sm:py-14 lg:py-20">

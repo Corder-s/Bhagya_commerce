@@ -24,7 +24,8 @@ export type NavIconName =
   | "Store"
   | "Settings"
   | "Settings2"
-  | "MapPin";
+  | "MapPin"
+  | "Bell";
 
 export interface NavItem {
   label: string;

@@ -4,40 +4,39 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 /**
- * Card — a surface primitive, not a container to over-decorate.
- * Elevation is deliberately restrained: borders first, shadows only when a
- * card needs to lift off a busy background.
+ * Card — surface primitive for Bhagya Commerce
+ * All cards adapt seamlessly to light and dark themes using semantic design tokens.
  */
 const cardVariants = cva("relative flex flex-col", {
   variants: {
     variant: {
-      /** Ivory/white surface with a hairline — the default in most UI. */
-      surface: "bg-surface border border-line",
-      /** No border or fill: for grouping inside dense layouts. */
+      /** Primary surface with soft adaptive border */
+      surface: "bg-surface border border-line shadow-xs",
+      /** Plain grouping container without borders */
       plain: "bg-transparent",
-      /** Sits on ivory with a soft shadow instead of a border. */
-      raised: "bg-surface shadow-sm",
-      /** Botanical fill for editorial emphasis. */
-      botanical: "bg-soft-green border border-soft-green-strong",
-      /** Deep green — use sparingly, invert text inside. */
-      inverse: "bg-deep text-ink-inverse border border-transparent",
+      /** Raised card with subtle elevation */
+      raised: "bg-surface border border-line shadow-sm",
+      /** Secondary canvas / accent surface */
+      botanical: "bg-canvas-deep border border-line",
+      /** Dark charcoal surface */
+      inverse: "bg-charcoal text-ink-inverse border border-line-strong",
     },
     padding: {
       none: "p-0",
-      sm: "p-4",
+      sm: "p-3.5 sm:p-4",
       md: "p-5 sm:p-6",
       lg: "p-6 sm:p-8",
     },
     radius: {
-      md: "rounded-md",
-      lg: "rounded-lg",
-      xl: "rounded-xl",
+      md: "rounded-xl",
+      lg: "rounded-2xl",
+      xl: "rounded-3xl",
     },
     interactive: {
       true: [
-        "transition-[border-color,box-shadow,transform] duration-base ease-brand",
-        "hover:border-line-strong hover:shadow-md hover:-translate-y-0.5",
-        "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2",
+        "transition-[border-color,box-shadow,transform] duration-base ease-brand cursor-pointer",
+        "hover:border-primary/70 hover:shadow-md hover:-translate-y-0.5",
+        "has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary",
       ],
       false: "",
     },
@@ -88,7 +87,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
   return (
     <h3
       data-slot="card-title"
-      className={cn("text-heading-md text-ink", className)}
+      className={cn("text-base sm:text-lg font-bold text-ink", className)}
       {...props}
     />
   );
@@ -98,7 +97,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
       data-slot="card-description"
-      className={cn("text-body-sm text-ink-soft", className)}
+      className={cn("text-xs sm:text-sm text-ink-soft", className)}
       {...props}
     />
   );
@@ -112,7 +111,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-footer"
-      className={cn("flex items-center gap-3 pt-4", className)}
+      className={cn("flex items-center gap-3 pt-4 border-t border-line/60", className)}
       {...props}
     />
   );

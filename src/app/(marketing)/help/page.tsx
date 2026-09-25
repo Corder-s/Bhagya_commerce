@@ -36,7 +36,7 @@ export default function HelpPage() {
             <li key={section.id}>
               <a
                 href={`#${section.id}`}
-                className="flex min-h-12 items-center justify-between gap-4 rounded-md border border-line bg-surface px-4 text-body-sm font-medium text-ink transition-colors duration-fast hover:border-soft-green-strong hover:bg-soft-green hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex min-h-12 items-center justify-between gap-4 rounded-md border border-line bg-surface px-4 text-body-sm font-medium text-ink transition-colors duration-fast hover:border-[#C49A45]/40 hover:bg-[#FAF5EA] hover:text-[#9A6A20] focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 {section.title}
                 <span aria-hidden="true" className="text-ink-faint">

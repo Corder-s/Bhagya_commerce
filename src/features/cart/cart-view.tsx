@@ -15,7 +15,7 @@ export function CartView() {
   if (items.length === 0) {
     return (
       <div className="mx-auto max-w-2xl py-16 text-center sm:py-24">
-        <div className="mx-auto grid size-20 place-items-center rounded-3xl bg-soft-green text-primary shadow-inner">
+        <div className="mx-auto grid size-20 place-items-center rounded-3xl bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold shadow-inner border border-line">
           <ShoppingBag className="size-10" aria-hidden="true" />
         </div>
 
@@ -47,8 +47,8 @@ export function CartView() {
       {/* Header */}
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-line pb-6">
         <div>
-          <nav aria-label="Breadcrumb" className="mb-2 flex items-center gap-2 text-body-sm text-ink-faint">
-            <Link href="/" className="hover:text-ink">Home</Link>
+          <nav aria-label="Breadcrumb" className="mb-2 flex items-center gap-2 text-body-sm text-ink-subtle">
+            <Link href="/" className="hover:text-ink transition-colors">Home</Link>
             <span>/</span>
             <span className="text-ink">Shopping Bag</span>
           </nav>
@@ -63,7 +63,7 @@ export function CartView() {
         <button
           type="button"
           onClick={clearCart}
-          className="inline-flex items-center gap-1.5 text-body-sm font-medium text-ink-faint hover:text-danger transition-colors"
+          className="inline-flex items-center gap-1.5 text-body-sm font-medium text-ink-subtle hover:text-danger transition-colors cursor-pointer"
         >
           <Trash2 className="size-4" aria-hidden="true" />
           Clear all items
@@ -83,7 +83,7 @@ export function CartView() {
           <div className="mt-6 border-t border-line pt-6">
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2 text-body-sm font-semibold text-primary hover:text-deep transition-colors"
+              className="inline-flex items-center gap-2 text-body-sm font-semibold text-gold-dark dark:text-gold hover:underline transition-colors"
             >
               <ArrowLeft className="size-4" aria-hidden="true" />
               Continue shopping for handcrafted items

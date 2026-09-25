@@ -51,7 +51,7 @@ export function CartItemRow({ item, compact = false, className }: CartItemRowPro
       <div className="flex flex-1 flex-col justify-between min-w-0">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <p className="text-caption font-medium uppercase tracking-[0.08em] text-ink-faint">
+            <p className="text-caption font-medium uppercase tracking-[0.08em] text-ink-subtle">
               {item.brandName}
             </p>
             <h4 className="mt-0.5 truncate text-body-sm sm:text-body-md font-semibold text-ink hover:text-primary">
@@ -59,7 +59,7 @@ export function CartItemRow({ item, compact = false, className }: CartItemRowPro
             </h4>
 
             {item.variantName && (
-              <span className="mt-1 inline-flex items-center rounded-pill bg-soft-green/80 px-2 py-0.5 text-caption font-medium text-primary">
+              <span className="mt-1 inline-flex items-center rounded-pill bg-gold-soft/30 dark:bg-gold/15 px-2 py-0.5 text-caption font-medium text-gold-dark dark:text-gold">
                 {item.variantName}
               </span>
             )}
@@ -70,7 +70,7 @@ export function CartItemRow({ item, compact = false, className }: CartItemRowPro
             type="button"
             onClick={() => removeItem(item.id)}
             aria-label={`Remove ${item.name} from bag`}
-            className="grid size-8 place-items-center rounded-lg text-ink-faint transition-colors hover:bg-danger-surface hover:text-danger focus-visible:outline-2 focus-visible:outline-offset-2"
+            className="grid size-8 place-items-center rounded-lg text-ink-subtle transition-colors hover:bg-danger-surface hover:text-danger focus-visible:outline-2 focus-visible:outline-offset-2 cursor-pointer"
           >
             <Trash2 className="size-4" aria-hidden="true" />
           </button>
@@ -91,14 +91,14 @@ export function CartItemRow({ item, compact = false, className }: CartItemRowPro
                 {formatPrice(itemTotal)}
               </span>
               {item.quantity > 1 && (
-                <span className="text-caption text-ink-faint tabular-nums hidden sm:inline">
+                <span className="text-caption text-ink-subtle tabular-nums hidden sm:inline">
                   ({formatPrice(item.unitPrice)} each)
                 </span>
               )}
             </div>
 
             {item.mrpInr && discount && (
-              <p className="text-caption text-success font-medium">
+              <p className="text-caption text-emerald-700 dark:text-emerald-400 font-medium">
                 Save {discount}%
               </p>
             )}

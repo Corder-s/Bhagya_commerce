@@ -41,7 +41,7 @@ function Toaster() {
           title: "text-body-sm font-semibold text-ink",
           description: "mt-1 text-caption text-ink-soft",
           actionButton:
-            "ml-auto shrink-0 rounded-sm px-2.5 py-1.5 text-caption font-semibold text-primary hover:bg-soft-green focus-visible:outline-2 focus-visible:outline-offset-2",
+            "ml-auto shrink-0 rounded-sm px-2.5 py-1.5 text-caption font-semibold text-[#9A6A20] hover:bg-[#FAF5EA] focus-visible:outline-2 focus-visible:outline-offset-2",
           cancelButton:
             "ml-auto shrink-0 rounded-sm px-2.5 py-1.5 text-caption font-medium text-ink-soft hover:bg-canvas-deep focus-visible:outline-2 focus-visible:outline-offset-2",
           closeButton:
@@ -51,7 +51,7 @@ function Toaster() {
           error: "[&_[data-icon]]:text-danger",
           warning: "[&_[data-icon]]:text-warning",
           info: "[&_[data-icon]]:text-info",
-          loading: "[&_[data-icon]]:text-primary",
+          loading: "[&_[data-icon]]:text-[#C49A45]",
         },
       }}
       style={

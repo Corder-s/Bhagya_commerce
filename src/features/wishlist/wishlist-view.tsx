@@ -18,7 +18,7 @@ export function WishlistView() {
   if (wishlistCount === 0 || wishlistProducts.length === 0) {
     return (
       <div className="mx-auto max-w-2xl py-16 text-center sm:py-24">
-        <div className="mx-auto grid size-20 place-items-center rounded-3xl bg-soft-green text-primary shadow-inner">
+        <div className="mx-auto grid size-20 place-items-center rounded-3xl bg-gold-soft text-gold-dark dark:text-gold shadow-inner border border-gold-light/20">
           <Heart className="size-10" aria-hidden="true" />
         </div>
 

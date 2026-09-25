@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { Bot, Send, Sparkles, X } from "lucide-react";
 import * as React from "react";
 
@@ -94,7 +94,7 @@ export function ProductAiAssistant({
       {isOpen && (
         <>
           {/* Backdrop */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -104,7 +104,7 @@ export function ProductAiAssistant({
           />
 
           {/* Assistant Modal / Bottom Sheet */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -112,12 +112,12 @@ export function ProductAiAssistant({
             role="dialog"
             aria-modal="true"
             aria-labelledby="ai-assistant-title"
-            className="fixed inset-x-4 bottom-4 top-auto sm:inset-auto sm:right-6 sm:bottom-6 z-modal flex max-h-[85vh] w-auto sm:w-[440px] flex-col rounded-3xl border border-emerald-500/30 bg-surface shadow-2xl overflow-hidden"
+            className="fixed inset-x-4 bottom-4 top-auto sm:inset-auto sm:right-6 sm:bottom-6 z-modal flex max-h-[85vh] w-auto sm:w-[440px] flex-col rounded-3xl border border-line bg-surface shadow-2xl overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-line bg-gradient-to-r from-soft-green via-surface to-soft-green px-5 py-4">
+            <div className="flex items-center justify-between border-b border-line bg-gold-surface px-5 py-4">
               <div className="flex items-center gap-2.5">
-                <span className="grid size-8 place-items-center rounded-pill bg-gradient-to-r from-primary to-botanical text-white shadow-xs">
+                <span className="grid size-8 place-items-center rounded-pill bg-gradient-btn-gold text-[#151515] shadow-xs">
                   <Sparkles className="size-4" aria-hidden="true" />
                 </span>
                 <div>
@@ -142,7 +142,7 @@ export function ProductAiAssistant({
             </div>
 
             {/* Chat conversation area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3.5 max-h-[380px] bg-canvas/40">
+            <div className="flex-1 overflow-y-auto p-4 space-y-3.5 max-h-[380px] bg-canvas/60">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -151,7 +151,7 @@ export function ProductAiAssistant({
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-body-sm leading-relaxed ${
                       msg.sender === "user"
-                        ? "bg-primary text-white rounded-br-xs shadow-xs"
+                        ? "bg-primary text-[#151515] font-medium rounded-br-xs shadow-xs"
                         : "bg-surface border border-line text-ink rounded-bl-xs shadow-xs"
                     }`}
                   >
@@ -183,7 +183,7 @@ export function ProductAiAssistant({
                     key={prompt}
                     type="button"
                     onClick={() => handleAsk(prompt)}
-                    className="rounded-pill border border-line bg-soft-green/50 px-2.5 py-1 text-caption text-primary hover:bg-soft-green hover:border-primary/40 transition-colors text-left"
+                    className="rounded-pill border border-line bg-gold-soft px-2.5 py-1 text-caption text-gold-dark dark:text-gold hover:border-primary/50 transition-colors text-left"
                   >
                     {prompt}
                   </button>
@@ -210,7 +210,7 @@ export function ProductAiAssistant({
                 <Send className="size-3.5" aria-hidden="true" />
               </Button>
             </form>
-          </motion.div>
+          </m.div>
         </>
       )}
     </AnimatePresence>

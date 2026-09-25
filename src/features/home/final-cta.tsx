@@ -21,13 +21,13 @@ export function FinalCTA() {
     <section
       data-surface="inverse"
       aria-labelledby="final-cta-heading"
-      className="relative overflow-hidden bg-gradient-deep-brand text-ink-inverse"
+      className="relative overflow-hidden bg-[#151515] bg-gradient-deep-brand text-ink-inverse"
     >
       <BhagyaGlyph
-        className="pointer-events-none absolute -right-16 -top-20 size-[26rem] text-emerald-400/20 sm:-right-10 sm:size-[30rem]"
+        className="pointer-events-none absolute -right-16 -top-20 size-[26rem] text-[#C49A45]/15 sm:-right-10 sm:size-[30rem]"
       />
       <BhagyaGlyph
-        className="pointer-events-none absolute -bottom-24 -left-20 size-[22rem] text-amber-300/15"
+        className="pointer-events-none absolute -bottom-24 -left-20 size-[22rem] text-[#DDBB72]/10"
       />
 
       <div className="container-page relative py-[var(--section-y)]">
@@ -35,7 +35,7 @@ export function FinalCTA() {
           <Reveal>
             <h2
               id="final-cta-heading"
-              className="font-display text-display-lg font-medium text-ink-inverse text-balance sm:text-display-xl"
+              className="font-display text-display-lg font-medium text-white text-balance sm:text-display-xl"
             >
               Choose better.
               <br />
@@ -46,7 +46,7 @@ export function FinalCTA() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <p className="max-w-md text-body-lg text-ink-inverse-soft">
+            <p className="max-w-md text-body-lg text-[#D5CEBF]">
               One account for both sides of Bhagya — shop today, open your store
               when you are ready.
             </p>
@@ -54,7 +54,7 @@ export function FinalCTA() {
 
           <Reveal delay={0.14}>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" variant="secondary" tone="inverse">
+              <Button asChild size="lg" variant="primary">
                 <Link href={marketingRoutes.shop}>
                   Explore Products
                   <ArrowRight aria-hidden="true" />
@@ -70,7 +70,7 @@ export function FinalCTA() {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="label-text text-ink-inverse-soft">{siteConfig.tagline}</p>
+            <p className="label-text text-[#8E877B] text-[11px] tracking-widest uppercase">{siteConfig.tagline}</p>
           </Reveal>
         </div>
       </div>

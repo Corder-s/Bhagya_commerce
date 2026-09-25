@@ -63,7 +63,7 @@ function EmptyState({
           className={cn(
             "grid place-items-center rounded-pill border",
             tone === "botanical"
-              ? "border-soft-green-strong bg-soft-green text-primary"
+              ? "border-line bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold"
               : "border-line bg-canvas-deep text-ink-soft",
             styles.frame,
             "[&_svg]:size-5",

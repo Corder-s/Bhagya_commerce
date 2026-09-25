@@ -1,0 +1,13 @@
+package com.bhagya.commerce.cart.dto;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+public record CartResponse(
+    String cartId,
+    List<CartItemResponse> items,
+    int totalItems,
+    BigDecimal subtotalInr,
+    BigDecimal deliveryFeeInr,
+    BigDecimal estimatedTotalInr
+) {}

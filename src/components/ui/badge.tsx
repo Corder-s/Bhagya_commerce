@@ -17,15 +17,15 @@ const badgeVariants = cva(
     variants: {
       tone: {
         neutral: "border-line bg-surface-sunken text-ink-soft",
-        primary: "border-primary/40 bg-gold-soft/30 dark:bg-gold-soft/40 text-gold-dark dark:text-gold-light",
-        gold: "border-primary/40 bg-gold-soft/30 dark:bg-gold-soft/40 text-gold-dark dark:text-gold-light",
-        botanical: "border-primary/30 bg-gold-surface dark:bg-surface-elevated text-gold-dark dark:text-gold-light",
+        primary: "border-[#71877B]/40 bg-[#EEF3EF] text-[#53695F] dark:bg-[#46584F] dark:text-[#E9E2D5] dark:border-[#9BAFA3]/40",
+        gold: "border-[#71877B]/40 bg-[#EEF3EF] text-[#53695F] dark:bg-[#46584F] dark:text-[#E9E2D5] dark:border-[#9BAFA3]/40",
+        botanical: "border-[#5F8068]/30 bg-[#E3ECE6] text-[#5F8068] dark:bg-[#263B2D] dark:text-[#78A383]",
         sand: "border-line bg-surface-sunken text-ink",
         outline: "border-line bg-transparent text-ink-soft",
-        success: "border-success/30 bg-success-surface text-success dark:bg-success-surface dark:text-[#73D393]",
-        warning: "border-warning/30 bg-warning-surface text-warning dark:bg-warning-surface dark:text-[#DDBB72]",
-        danger: "border-danger/30 bg-danger-surface text-danger dark:bg-danger-surface dark:text-[#F09284]",
-        info: "border-info/30 bg-info-surface text-info dark:bg-info-surface dark:text-[#9DA99F]",
+        success: "border-[#5F8068]/30 bg-[#E3ECE6] text-[#5F8068] dark:bg-[#263B2D] dark:text-[#78A383] dark:border-[#5F8068]/40",
+        warning: "border-[#9A7B4E]/30 bg-[#F2EADB] text-[#9A7B4E] dark:bg-[#3D3323] dark:text-[#BA9964] dark:border-[#9A7B4E]/40",
+        danger: "border-[#A85D55]/30 bg-[#F3E5E2] text-[#A85D55] dark:bg-[#3D2725] dark:text-[#C4746B] dark:border-[#A85D55]/40",
+        info: "border-[#687A72]/30 bg-[#E5ECE8] text-[#687A72] dark:bg-[#25342D] dark:text-[#93A89F] dark:border-[#687A72]/40",
       },
       size: {
         sm: "px-2 py-0.5 text-[9px]",

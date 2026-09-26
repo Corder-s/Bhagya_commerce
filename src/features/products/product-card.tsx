@@ -21,8 +21,8 @@ import type { ProductSummary } from "@/types/catalogue";
  * ProductCard — the catalogue unit, used on the home page and in the
  * shop grid.
  *
- * Wishlist and cart are wired to real context providers that persist to
- * localStorage. Quick Add adds immediately; the full PDP handles quantity.
+ * Light mode: warm white card, light cream image background, dark natural text, sage CTA.
+ * Dark mode: charcoal-green surface, soft sage accents.
  */
 export function ProductCard({
   product,
@@ -57,7 +57,7 @@ export function ProductCard({
         className,
       )}
     >
-      <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-canvas-deep">
+      <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-[#F8F5ED] dark:bg-[#27312D] border border-line">
         {product.image ? (
           <Image
             src={product.image.src}
@@ -73,7 +73,7 @@ export function ProductCard({
 
         {product.badge ? (
           <span className="absolute left-3 top-3">
-            <Badge tone="botanical" size="sm">
+            <Badge tone="primary" size="sm">
               {product.badge}
             </Badge>
           </span>
@@ -86,11 +86,11 @@ export function ProductCard({
           aria-pressed={saved}
           aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
           className={cn(
-            "absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-pill border-2 backdrop-blur-sm shadow-xs",
-            "transition-all duration-fast ease-brand focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-95",
+            "absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-pill border backdrop-blur-sm shadow-xs",
+            "transition-all duration-fast ease-brand focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-95 cursor-pointer",
             saved
               ? "border-danger/40 bg-danger-surface text-danger shadow-danger/10"
-              : "border-line-strong/80 bg-surface/95 text-ink-soft hover:border-danger hover:text-danger hover:bg-danger-surface/40",
+              : "border-line bg-surface/90 text-ink-soft hover:border-danger hover:text-danger hover:bg-danger-surface/40",
           )}
         >
           <m.span
@@ -111,11 +111,11 @@ export function ProductCard({
           type="button"
           onClick={onQuickAdd}
           className={cn(
-            "absolute inset-x-3 bottom-3 z-10 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg",
-            "bg-gradient-to-r from-[#C49A45] to-[#B18332] px-4 text-body-sm font-bold text-[#151515]",
-            "border border-[#DDBB72]/40 shadow-md shadow-[#C49A45]/25",
-            "transition-all duration-base ease-brand hover:from-[#DDBB72] hover:to-[#C49A45] hover:shadow-lg hover:brightness-105 active:scale-[0.98]",
-            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C49A45]",
+            "absolute inset-x-3 bottom-3 z-10 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg cursor-pointer",
+            "bg-[#71877B] hover:bg-[#53695F] text-[#FCFBF7] font-semibold border border-[#53695F] shadow-sm",
+            "dark:bg-[#9BAFA3] dark:hover:bg-[#71877B] dark:text-[#1D2522] dark:border-[#71877B]",
+            "transition-all duration-base ease-brand active:scale-[0.98]",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#71877B] dark:focus-visible:outline-[#9BAFA3]",
             "pointer-coarse:translate-y-0 pointer-coarse:opacity-100",
             "sm:translate-y-2 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-within:translate-y-0 sm:group-focus-within:opacity-100",
           )}
@@ -134,7 +134,7 @@ export function ProductCard({
           {/* Stretched link: the whole card is the target, the title is the label. */}
           <Link
             href={href}
-            className="after:absolute after:inset-0 after:rounded-lg focus-visible:outline-none"
+            className="after:absolute after:inset-0 after:rounded-lg focus-visible:outline-none hover:text-primary transition-colors"
           >
             {product.name}
           </Link>
@@ -144,7 +144,7 @@ export function ProductCard({
         {product.rating ? (
           <p className="flex items-center gap-1.5 text-caption text-ink-soft">
             <Star
-              className="size-3.5 fill-gold text-gold"
+              className="size-3.5 fill-[#9A7B4E] text-[#9A7B4E]"
               aria-hidden="true"
             />
             <span className="tabular-nums font-medium text-ink">

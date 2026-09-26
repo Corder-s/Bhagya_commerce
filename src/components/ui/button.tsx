@@ -7,7 +7,10 @@ import { cn } from "@/lib/utils";
 /**
  * Button — Global Bhagya Commerce Button System
  *
- * Variants adapt seamlessly to Light and Dark modes using design tokens.
+ * Primary Light: bg #71877B text #FFFFFF (Hover #53695F)
+ * Primary Dark: bg #9BAFA3 text #1D2522 (Hover #71877B)
+ * Secondary Light: cream bg, sage border, dark sage text
+ * Secondary Dark: dark sage surface, soft sage border, cream text
  */
 const buttonVariants = cva(
   [
@@ -25,41 +28,44 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "bg-gradient-btn-gold text-[#151515] font-bold shadow-sm shadow-primary/20 border border-gold-light/40",
-          "hover:brightness-105 hover:shadow-md hover:shadow-primary/30",
+          "bg-[#71877B] text-[#FCFBF7] font-semibold shadow-xs border border-[#53695F]",
+          "hover:bg-[#53695F] hover:shadow-sm",
+          "dark:bg-[#9BAFA3] dark:text-[#1D2522] dark:border-[#71877B] dark:hover:bg-[#71877B] dark:hover:text-[#FCFBF7]",
           "active:brightness-95",
         ],
         secondary: [
-          "bg-surface text-ink border border-primary/70 shadow-xs",
-          "hover:border-primary hover:bg-gold-soft/20 dark:hover:bg-gold/10 hover:text-gold-dark dark:hover:text-gold hover:shadow-sm",
+          "bg-[#F8F5ED] text-[#53695F] border border-[#71877B]/50 shadow-xs",
+          "hover:border-[#71877B] hover:bg-[#EEF3EF] hover:text-[#3E4F47]",
+          "dark:bg-[#27312D] dark:text-[#F3F1E8] dark:border-[#9BAFA3]/60 dark:hover:bg-[#34403A] dark:hover:border-[#9BAFA3]",
           "active:bg-canvas-deep",
         ],
         outline: [
           "border border-line bg-surface text-ink shadow-xs",
-          "hover:border-primary hover:bg-canvas-deep hover:text-gold-dark dark:hover:text-gold",
+          "hover:border-primary hover:bg-[#EEF3EF] dark:hover:bg-[#27312D] hover:text-ink",
           "active:bg-canvas-deep",
         ],
         dark: [
-          "bg-charcoal text-white border border-line-strong shadow-md",
-          "hover:shadow-lg hover:border-primary/50 hover:bg-charcoal-soft",
-          "active:bg-black",
+          "bg-[#27312D] text-[#FCFBF7] border border-[#48534D] shadow-sm",
+          "hover:bg-[#34403A] hover:border-[#71877B]",
+          "active:bg-[#1D2522]",
         ],
         ghost: [
           "bg-transparent text-ink-soft",
-          "hover:bg-canvas-deep hover:text-ink",
-          "active:bg-canvas-deep",
+          "hover:bg-[#EEF3EF] dark:hover:bg-[#27312D] hover:text-ink",
+          "active:bg-[#EEF3EF] dark:active:bg-[#27312D]",
         ],
         gold: [
-          "bg-gradient-btn-gold text-[#151515] font-bold shadow-md shadow-primary/20 border border-gold-light/40",
-          "hover:shadow-lg hover:brightness-105",
+          "bg-[#71877B] text-[#FCFBF7] font-semibold shadow-xs border border-[#53695F]",
+          "hover:bg-[#53695F]",
+          "dark:bg-[#9BAFA3] dark:text-[#1D2522] dark:border-[#71877B] dark:hover:bg-[#71877B] dark:hover:text-[#FCFBF7]",
           "active:brightness-95",
         ],
         destructive: [
-          "bg-danger text-white shadow-sm border border-danger/20 hover:opacity-90",
+          "bg-danger text-white shadow-xs border border-danger/20 hover:opacity-90",
           "active:brightness-95",
         ],
         link: [
-          "h-auto p-0 text-gold-dark dark:text-gold underline-offset-4 font-medium",
+          "h-auto p-0 text-[#71877B] dark:text-[#9BAFA3] underline-offset-4 font-medium",
           "hover:underline hover:opacity-90",
           "active:opacity-80",
         ],
@@ -82,25 +88,24 @@ const buttonVariants = cva(
         variant: "primary",
         tone: "inverse",
         class:
-          "bg-gradient-btn-gold text-[#151515] border border-gold-light/50 shadow-md hover:brightness-105",
+          "bg-[#9BAFA3] text-[#1D2522] border border-[#71877B] shadow-xs hover:bg-[#71877B] hover:text-[#FCFBF7]",
       },
       {
         variant: "secondary",
         tone: "inverse",
         class:
-          "bg-charcoal-soft text-white border border-line-strong hover:border-primary",
+          "bg-[#27312D] text-[#FCFBF7] border border-[#48534D] hover:border-[#9BAFA3]",
       },
       {
         variant: "outline",
         tone: "inverse",
         class:
-          "border border-white/30 bg-white/10 text-white hover:border-gold hover:bg-white/20 hover:text-white backdrop-blur-xs",
+          "border border-white/30 bg-white/10 text-white hover:border-[#9BAFA3] hover:bg-white/20 hover:text-white backdrop-blur-xs",
       },
       {
         variant: "ghost",
         tone: "inverse",
-        class:
-          "text-ink-inverse hover:bg-charcoal-soft hover:text-gold",
+        class: "text-white/80 hover:bg-white/10 hover:text-white",
       },
     ],
     defaultVariants: {
@@ -109,74 +114,79 @@ const buttonVariants = cva(
       tone: "default",
       fullWidth: false,
     },
-  },
+  }
 );
 
 export interface ButtonProps
-  extends React.ComponentProps<"button">,
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  isLoading?: boolean;
   loading?: boolean;
   loadingLabel?: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
 
-function Button({
-  className,
-  variant,
-  size,
-  tone,
-  fullWidth,
-  asChild = false,
-  loading = false,
-  loadingLabel = "Loading",
-  disabled,
-  children,
-  type,
-  ...props
-}: ButtonProps) {
-  const Component = asChild ? Slot : "button";
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      className,
+      variant,
+      size,
+      tone,
+      fullWidth,
+      asChild = false,
+      isLoading = false,
+      loading = false,
+      loadingLabel,
+      leftIcon,
+      rightIcon,
+      disabled,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const Comp = asChild ? Slot : "button";
+    const busy = isLoading || loading;
 
-  if (asChild) {
+    const content = (
+      <>
+        {busy ? (
+          <>
+            <span
+              aria-hidden="true"
+              className="inline-block size-4 animate-spin rounded-full border-2 border-current border-t-transparent"
+            />
+            {loadingLabel ? <span>{loadingLabel}</span> : children}
+          </>
+        ) : (
+          <>
+            {leftIcon}
+            {children}
+            {rightIcon}
+          </>
+        )}
+      </>
+    );
+
     return (
-      <Component
-        data-slot="button"
-        data-variant={variant ?? "primary"}
-        data-loading={loading || undefined}
-        className={cn(buttonVariants({ variant, size, tone, fullWidth }), className)}
+      <Comp
+        ref={ref}
+        disabled={disabled || busy}
+        aria-busy={busy || undefined}
+        className={cn(
+          buttonVariants({ variant, size, tone, fullWidth, className })
+        )}
         {...props}
       >
-        {children}
-      </Component>
+        {content}
+      </Comp>
     );
   }
+);
 
-  return (
-    <Component
-      data-slot="button"
-      data-variant={variant ?? "primary"}
-      data-loading={loading || undefined}
-      type={type ?? "button"}
-      disabled={disabled || loading}
-      aria-busy={loading || undefined}
-      className={cn(buttonVariants({ variant, size, tone, fullWidth }), className)}
-      {...props}
-    >
-      {loading ? (
-        <span className="inline-flex items-center gap-2">
-          <span
-            aria-hidden="true"
-            className="size-4 animate-spin rounded-pill border-2 border-current border-t-transparent opacity-80"
-          />
-          <span className="sr-only">{loadingLabel}</span>
-          <span className="inline-flex items-center gap-2 opacity-70">
-            {children}
-          </span>
-        </span>
-      ) : (
-        children
-      )}
-    </Component>
-  );
-}
+Button.displayName = "Button";
 
-export { Button, buttonVariants };
+export { buttonVariants };

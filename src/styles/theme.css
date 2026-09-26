@@ -13,16 +13,19 @@
   --color-surface-raised: var(--color-surface-elevated);
   --color-surface-sunken: var(--color-surface-2);
   --color-surface-muted: var(--color-surface-muted);
+  --color-surface-pale-sage: var(--color-surface-pale-sage);
 
   --color-primary: var(--color-brand);
   --color-primary-hover: var(--color-brand-hover);
-  --color-primary-active: var(--color-brand-hover);
+  --color-primary-active: var(--bhagya-primary-active);
   --color-primary-disabled: var(--bhagya-primary-disabled);
-  --color-primary-foreground: #181714;
+  --color-primary-foreground: #FCFBF7;
 
   --color-brand: var(--color-brand);
   --color-brand-hover: var(--color-brand-hover);
+  --color-brand-light: var(--color-brand-light);
   --color-brand-soft: var(--color-brand-soft);
+  --color-brand-surface: var(--color-brand-surface);
 
   --color-gold: var(--color-brand);
   --color-gold-dark: var(--color-brand-hover);
@@ -69,7 +72,7 @@
   --color-success-surface: var(--color-success-bg);
   --color-success-bg: var(--color-success-bg);
   --color-soft-green: var(--color-success-bg);
-  --color-soft-green-strong: #294C38;
+  --color-soft-green-strong: var(--bhagya-soft-green-strong);
   --color-botanical: var(--color-success);
 
   --color-warning: var(--color-warning);
@@ -342,48 +345,71 @@
 }
 
 /* =============================================================================
-   APPROVED BHAGYA GRADIENTS
+   APPROVED BHAGYA GRADIENTS (Natural Sage, Warm Cream & Earthy Charcoal)
    ============================================================================= */
 @utility bg-gradient-hero-warm {
-  background-image: linear-gradient(135deg, #FFFDF8 0%, #F7F3EA 60%, #F1E9DA 100%);
+  background-image: linear-gradient(135deg, #FCFBF7 0%, #F3EFE5 55%, #DCE5DF 100%);
 }
 
 @utility bg-gradient-gold-soft {
-  background-image: linear-gradient(135deg, #F1E4C7 0%, #FFFDF8 100%);
+  background-image: linear-gradient(135deg, #EEF3EF 0%, #DCE5DF 100%);
+}
+
+@utility bg-gradient-sage-soft {
+  background-image: linear-gradient(135deg, #EEF3EF 0%, #DCE5DF 100%);
 }
 
 @utility bg-gradient-dark-env {
-  background-image: linear-gradient(180deg, #24231F 0%, #211F1B 100%);
+  background-image: linear-gradient(180deg, #1D2522 0%, #171E1B 100%);
+}
+
+@utility bg-gradient-dark-natural {
+  background-image: linear-gradient(135deg, #1D2522 0%, #27312D 60%, #34403A 100%);
 }
 
 @utility bg-gradient-dark-card {
-  background-image: linear-gradient(145deg, #302E28 0%, #292822 100%);
+  background-image: linear-gradient(145deg, #34403A 0%, #27312D 100%);
 }
 
 @utility bg-gradient-gold-cta {
-  background-image: linear-gradient(135deg, #C49A45 0%, #A97D2B 100%);
+  background-image: linear-gradient(135deg, #71877B 0%, #53695F 100%);
+}
+
+@utility bg-gradient-btn-gold {
+  background-image: linear-gradient(135deg, #71877B 0%, #53695F 100%);
+}
+
+@utility bg-gradient-sage-cta {
+  background-image: linear-gradient(135deg, #71877B 0%, #53695F 100%);
 }
 
 @utility bg-gradient-dark-header {
-  background-image: linear-gradient(180deg, #1B1A17 0%, #24231F 100%);
+  background-image: linear-gradient(180deg, #1D2522 0%, #27312D 100%);
 }
 
 @utility text-gradient-brand {
-  background-image: linear-gradient(135deg, #C49A45 0%, #A97D2B 60%, #825712 100%);
+  background-image: linear-gradient(135deg, #71877B 0%, #53695F 60%, #3E4F47 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-glow {
-  background-image: linear-gradient(135deg, #FFFDF8 0%, #DDBB72 50%, #C49A45 100%);
+  background-image: linear-gradient(135deg, #FCFBF7 0%, #DCE5DF 50%, #9BAFA3 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-gold {
-  background-image: linear-gradient(135deg, #A97D2B 0%, #C49A45 50%, #DDBB72 100%);
+  background-image: linear-gradient(135deg, #53695F 0%, #71877B 50%, #9BAFA3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gradient-sage {
+  background-image: linear-gradient(135deg, #53695F 0%, #71877B 50%, #9BAFA3 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

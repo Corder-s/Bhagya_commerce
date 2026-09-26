@@ -19,7 +19,7 @@ import { ThemeToggle } from "@/components/common/theme-toggle";
 import { AccountMenu } from "@/components/navigation/account-menu";
 import { MobileMenuPanel } from "@/components/navigation/mobile-menu-panel";
 import { SearchCommand } from "@/components/navigation/search-command";
-import { marketingRoutes, commerceRoutes, merchantRoutes } from "@/config/routes";
+import { marketingRoutes, merchantRoutes } from "@/config/routes";
 import { useCart } from "@/context/cart-context";
 import { useWishlist } from "@/context/wishlist-context";
 import { useNotifications } from "@/hooks/use-notifications";
@@ -48,9 +48,9 @@ export function SiteHeader({
     <header
       data-slot="site-header"
       className={cn(
-        "sticky top-0 z-header w-full bg-gradient-to-b from-[#151515] to-[#1D1C19] text-[#FFFDF8] border-b border-[#26241F]",
+        "sticky top-0 z-header w-full bg-[#53695F] dark:bg-[#1D2522] text-[#FCFBF7] border-b border-[#3E4F47] dark:border-[#34403A]",
         "transition-all duration-base ease-brand",
-        scrolled ? "shadow-md shadow-black/25" : "",
+        scrolled ? "shadow-md shadow-black/15 dark:shadow-black/35" : "",
         "print:hidden",
       )}
     >
@@ -61,7 +61,7 @@ export function SiteHeader({
             <Link
               href={marketingRoutes.home}
               aria-label="Bhagya Commerce — Home"
-              className="shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#C49A45] rounded-lg"
+              className="shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#9BAFA3] rounded-lg"
             >
               <BrandMark variant="full" size="md" />
             </Link>
@@ -69,11 +69,11 @@ export function SiteHeader({
             {/* All Categories Dropdown Trigger */}
             <Link
               href="/shop"
-              className="hidden xl:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#26241F] hover:bg-[#33302A] border border-[#33302A] hover:border-[#C49A45]/50 text-xs font-medium text-zinc-200 transition-colors"
+              className="hidden xl:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#3E4F47] dark:bg-[#27312D] hover:bg-[#34403A] dark:hover:bg-[#34403A] border border-[#5F756B] dark:border-[#48534D] hover:border-[#9BAFA3]/50 text-xs font-medium text-[#FCFBF7] transition-colors"
             >
-              <LayoutGrid className="size-3.5 text-[#C49A45]" />
+              <LayoutGrid className="size-3.5 text-[#DCE5DF]" />
               <span>All Categories</span>
-              <ChevronDown className="size-3 text-zinc-400" />
+              <ChevronDown className="size-3 text-[#CCD2CB]" />
             </Link>
           </div>
 
@@ -83,15 +83,12 @@ export function SiteHeader({
               <input
                 type="text"
                 placeholder="Search for organic products, brands, stores and more..."
-                className="w-full h-10 pl-4 pr-11 rounded-full bg-[#FFFDF8] border border-[#E5D9C5] text-[#181818] placeholder:text-[#858078] text-xs sm:text-sm focus:outline-none focus:border-[#C49A45] focus:ring-2 focus:ring-[#C49A45]/25 transition-all"
-                onFocus={(e) => {
-                  // Trigger shortcut or modal search if needed
-                }}
+                className="w-full h-10 pl-4 pr-11 rounded-full bg-[#FCFBF7] dark:bg-[#27312D] border border-[#DDD5C7] dark:border-[#48534D] text-[#202420] dark:text-[#F3F1E8] placeholder:text-[#7D877F] dark:placeholder:text-[#A7B0A9] text-xs sm:text-sm focus:outline-none focus:border-[#71877B] dark:focus:border-[#9BAFA3] focus:ring-2 focus:ring-[#71877B]/25 transition-all"
               />
               <button
                 type="button"
                 aria-label="Search"
-                className="absolute right-1 top-1 size-8 rounded-full bg-[#C49A45] hover:bg-[#9A6A20] text-[#151515] grid place-items-center transition-colors cursor-pointer"
+                className="absolute right-1 top-1 size-8 rounded-full bg-[#71877B] hover:bg-[#53695F] text-[#FCFBF7] grid place-items-center transition-colors cursor-pointer"
               >
                 <Search className="size-4" />
               </button>
@@ -102,40 +99,40 @@ export function SiteHeader({
           <div className="flex items-center gap-1.5 sm:gap-2.5 text-xs font-medium">
             {/* Mobile Search Trigger */}
             <div className="md:hidden">
-              <SearchCommand className="text-zinc-300 hover:text-white hover:bg-white/10" />
+              <SearchCommand className="text-[#CCD2CB] hover:text-[#FCFBF7] hover:bg-white/10" />
             </div>
 
             {/* Sell on Bhagya */}
             <Link
               href={merchantRoutes.root}
-              className="hidden lg:flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
+              className="hidden lg:flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-[#CCD2CB] hover:text-[#FCFBF7] hover:bg-white/10 transition-colors"
             >
-              <Store className="size-4 text-[#C49A45]" />
+              <Store className="size-4 text-[#DCE5DF]" />
               <div className="flex flex-col text-left leading-tight">
-                <span className="font-semibold text-white">Sell on Bhagya</span>
-                <span className="text-[10px] text-zinc-400">Open Your Store</span>
+                <span className="font-semibold text-[#FCFBF7]">Sell on Bhagya</span>
+                <span className="text-[10px] text-[#DCE5DF]">Open Your Store</span>
               </div>
             </Link>
 
             {/* Orders */}
             <Link
               href="/account/orders"
-              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-[#CCD2CB] hover:text-[#FCFBF7] hover:bg-white/10 transition-colors"
             >
-              <Package className="size-4 text-[#C49A45]" />
-              <span className="hidden xl:inline">Orders</span>
+              <Package className="size-4 text-[#DCE5DF]" />
+              <span className="hidden xl:inline text-[#FCFBF7]">Orders</span>
             </Link>
 
             {/* Notifications */}
             <Link
               href={"/notifications" as any}
-              className="relative flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
+              className="relative flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl text-[#CCD2CB] hover:text-[#FCFBF7] hover:bg-white/10 transition-colors"
               aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ""}`}
             >
-              <Bell className="size-4 text-zinc-300 hover:text-[#C49A45]" />
-              <span className="hidden xl:inline">Alerts</span>
+              <Bell className="size-4 text-[#CCD2CB] hover:text-[#FCFBF7]" />
+              <span className="hidden xl:inline text-[#FCFBF7]">Alerts</span>
               {unreadCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#C49A45] text-[#151515] text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#71877B] text-[#FCFBF7] text-[10px] font-bold flex items-center justify-center">
                   {unreadCount > 99 ? "99+" : unreadCount}
                 </span>
               )}
@@ -144,12 +141,12 @@ export function SiteHeader({
             {/* Wishlist */}
             <Link
               href="/wishlist"
-              className="relative flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
+              className="relative flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl text-[#CCD2CB] hover:text-[#FCFBF7] hover:bg-white/10 transition-colors"
             >
-              <Heart className="size-4 text-zinc-300 hover:text-[#C49A45]" />
-              <span className="hidden xl:inline">Wishlist</span>
+              <Heart className="size-4 text-[#CCD2CB] hover:text-[#FCFBF7]" />
+              <span className="hidden xl:inline text-[#FCFBF7]">Wishlist</span>
               {wishlistCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#C49A45] text-[#151515] text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#71877B] text-[#FCFBF7] text-[10px] font-bold flex items-center justify-center">
                   {wishlistCount > 99 ? "99+" : wishlistCount}
                 </span>
               )}
@@ -159,13 +156,13 @@ export function SiteHeader({
             <button
               type="button"
               onClick={() => openCartDrawer()}
-              className="relative flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl text-zinc-300 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              className="relative flex items-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl text-[#CCD2CB] hover:text-[#FCFBF7] hover:bg-white/10 transition-colors cursor-pointer"
               aria-label={`Shopping bag with ${cartCount} items`}
             >
-              <ShoppingBag className="size-4 text-[#C49A45]" />
-              <span className="hidden xl:inline">Cart</span>
+              <ShoppingBag className="size-4 text-[#DCE5DF]" />
+              <span className="hidden xl:inline text-[#FCFBF7]">Cart</span>
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#C49A45] text-[#151515] text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#71877B] text-[#FCFBF7] text-[10px] font-bold flex items-center justify-center">
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
@@ -175,7 +172,7 @@ export function SiteHeader({
             <ThemeToggle />
 
             {/* Account dropdown / Avatar */}
-            <div className="flex items-center pl-1 border-l border-[#33302A]">
+            <div className="flex items-center pl-1 border-l border-[#3E4F47] dark:border-[#34403A]">
               <AccountMenu />
             </div>
 
@@ -183,7 +180,7 @@ export function SiteHeader({
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="lg:hidden p-2 rounded-lg text-zinc-300 hover:text-white hover:bg-white/10"
+              className="lg:hidden p-2 rounded-lg text-[#CCD2CB] hover:text-[#FCFBF7] hover:bg-white/10"
               aria-label="Open menu"
             >
               <Menu className="size-5" />

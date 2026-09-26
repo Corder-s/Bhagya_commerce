@@ -15,7 +15,8 @@ import { useAuth } from "@/context/auth-context";
 
 /**
  * MerchantShell — the selling workspace.
- * Uses the designated Soft Charcoal system (#24231F / #1C1B18 / #2B2A25).
+ * Light mode: #F3EFE5 background with #FCFBF7 sidebar.
+ * Dark mode: #1D2522 background with #27312D sidebar.
  */
 export function MerchantShell({
   children,
@@ -39,18 +40,17 @@ export function MerchantShell({
     activeStoreStatus === "live" ? "Live" : activeStoreStatus === "paused" ? "Paused" : "Not live yet";
 
   return (
-    <div className="flex min-h-dvh flex-col bg-[#24231F] text-[#F5F1E8] lg:flex-row antialiased selection:bg-[#C49A45] selection:text-[#151515]">
-      {/* Workspace rail — dark header/nav #1C1B18 with soft border */}
+    <div className="flex min-h-dvh flex-col bg-background text-ink lg:flex-row antialiased selection:bg-[#DCE5DF] dark:selection:bg-[#46584F] selection:text-[#202420] dark:selection:text-[#F3F1E8]">
+      {/* Workspace rail */}
       <aside
-        data-surface="inverse"
-        className="border-b border-[#444139] bg-[#1C1B18] lg:sticky lg:top-0 lg:h-dvh lg:w-72 lg:shrink-0 lg:border-b-0 lg:border-r lg:overflow-y-auto"
+        className="border-b border-line bg-surface dark:bg-[#1D2522] lg:sticky lg:top-0 lg:h-dvh lg:w-72 lg:shrink-0 lg:border-b-0 lg:border-r lg:overflow-y-auto"
       >
         <div className="flex h-full flex-col gap-5 p-4 lg:p-5">
           <div className="flex items-center justify-between gap-3">
             <Link
               href={merchantRoutes.dashboard}
               aria-label="Bhagya Commerce — merchant workspace"
-              className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C49A45]"
+              className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#71877B] dark:focus-visible:outline-[#9BAFA3]"
             >
               <BrandMark variant="compact" size="sm" />
             </Link>
@@ -58,7 +58,7 @@ export function MerchantShell({
               asChild
               variant="ghost"
               size="sm"
-              className="lg:hidden text-[#C8C1B4] hover:text-[#C49A45] hover:bg-[#2B2A25]"
+              className="lg:hidden text-ink-soft hover:text-primary hover:bg-[#EEF3EF] dark:hover:bg-[#27312D]"
             >
               <Link href={marketingRoutes.home}>
                 Shop
@@ -68,12 +68,12 @@ export function MerchantShell({
           </div>
 
           {/* Store context block */}
-          <div className="flex items-center gap-3 rounded-xl px-3.5 py-3 border border-[#444139] bg-[#2B2A25] shadow-xs">
-            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-[#35332C] text-[#C49A45] border border-[#5B533F]">
-              <Store className="size-4" aria-hidden="true" />
+          <div className="flex items-center gap-3 rounded-xl px-3.5 py-3 border border-line bg-[#EEF3EF] dark:bg-[#27312D] shadow-xs">
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-surface dark:bg-[#34403A] text-primary border border-line">
+              <Store className="size-4 text-[#71877B] dark:text-[#9BAFA3]" aria-hidden="true" />
             </span>
             <div className="flex min-w-0 flex-col">
-              <span className="truncate text-sm font-semibold text-[#F5F1E8]">
+              <span className="truncate text-sm font-semibold text-ink">
                 {activeStoreName}
               </span>
               <Badge tone={statusTone} size="sm" className="mt-0.5 w-fit">
@@ -92,17 +92,17 @@ export function MerchantShell({
             </div>
           </div>
 
-          <div className="mt-auto hidden flex-col gap-1.5 border-t border-[#3A3831] pt-4 lg:flex">
+          <div className="mt-auto hidden flex-col gap-1.5 border-t border-line pt-4 lg:flex">
             <Link
               href={marketingRoutes.home}
-              className="flex min-h-10 items-center gap-2.5 rounded-lg px-3 text-sm font-medium text-[#C8C1B4] transition-colors hover:bg-[#2B2A25] hover:text-[#C49A45]"
+              className="flex min-h-10 items-center gap-2.5 rounded-lg px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-[#EEF3EF] dark:hover:bg-[#27312D] hover:text-ink"
             >
               <ArrowUpRight className="size-4" aria-hidden="true" />
               Back to shop
             </Link>
             <Link
               href={marketingRoutes.help}
-              className="flex min-h-10 items-center gap-2.5 rounded-lg px-3 text-sm font-medium text-[#C8C1B4] transition-colors hover:bg-[#2B2A25] hover:text-[#C49A45]"
+              className="flex min-h-10 items-center gap-2.5 rounded-lg px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-[#EEF3EF] dark:hover:bg-[#27312D] hover:text-ink"
             >
               <HelpCircle className="size-4" aria-hidden="true" />
               Seller help
@@ -112,10 +112,10 @@ export function MerchantShell({
       </aside>
 
       {/* Workspace content */}
-      <div className="flex min-w-0 flex-1 flex-col bg-[#24231F]">
-        <header className="sticky top-0 z-40 border-b border-[#3A3831] bg-[#1C1B18]/95 backdrop-blur-md">
+      <div className="flex min-w-0 flex-1 flex-col bg-background">
+        <header className="sticky top-0 z-40 border-b border-line bg-surface/90 dark:bg-[#1D2522]/90 backdrop-blur-md">
           <div className="flex h-[60px] items-center justify-between gap-4 px-4 sm:px-6">
-            <p className="truncate text-sm font-medium text-[#C8C1B4]">
+            <p className="truncate text-sm font-medium text-ink-soft">
               Merchant Workspace
             </p>
             <div className="flex items-center gap-2">
@@ -123,11 +123,11 @@ export function MerchantShell({
               <IconButton
                 label="Notifications"
                 tooltip="Notifications"
-                className="text-[#C8C1B4] hover:text-[#C49A45] hover:bg-[#2B2A25]"
+                className="text-ink-soft hover:text-ink hover:bg-[#EEF3EF] dark:hover:bg-[#27312D]"
               >
                 <Bell aria-hidden="true" />
               </IconButton>
-              <Button asChild variant="outline" size="sm" className="border-[#444139] bg-[#2B2A25] text-[#F5F1E8] hover:bg-[#302F29] hover:border-[#5B533F]">
+              <Button asChild variant="outline" size="sm" className="border-line bg-surface hover:bg-[#EEF3EF] dark:hover:bg-[#27312D]">
                 <Link href={merchantRoutes.store}>View store</Link>
               </Button>
             </div>

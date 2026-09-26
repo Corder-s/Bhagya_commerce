@@ -20,10 +20,9 @@ const stageIcon = {
 /**
  * OrderTimeline — shipment progress for `/orders/[id]/tracking`.
  *
- * Phase 1 renders the structure with a single, explicitly-unstarted stage:
- * showing a fake "out for delivery" would be worse than showing nothing. Each
- * stage carries an icon, a word and a screen-reader state, so progress never
- * depends on colour.
+ * Completed: deep sage (#53695F)
+ * Current: primary sage (#71877B / #9BAFA3)
+ * Upcoming: soft beige-gray
  */
 export function OrderTimeline({
   stages,
@@ -46,7 +45,7 @@ export function OrderTimeline({
                 aria-hidden="true"
                 className={cn(
                   "absolute left-[0.9375rem] top-8 h-[calc(100%-2rem)] w-px",
-                  stage.state === "complete" ? "bg-emerald-600 dark:bg-emerald-500" : "bg-line",
+                  stage.state === "complete" ? "bg-[#53695F] dark:bg-[#71877B]" : "bg-line",
                 )}
               />
             ) : null}
@@ -55,8 +54,8 @@ export function OrderTimeline({
               aria-hidden="true"
               className={cn(
                 "grid size-8 shrink-0 place-items-center rounded-pill border",
-                stage.state === "complete" && "border-emerald-600 bg-emerald-600 dark:border-emerald-500 dark:bg-emerald-500 text-white",
-                stage.state === "current" && "border-primary bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold",
+                stage.state === "complete" && "border-[#53695F] bg-[#53695F] dark:border-[#71877B] dark:bg-[#71877B] text-[#FCFBF7]",
+                stage.state === "current" && "border-2 border-[#71877B] bg-[#EEF3EF] dark:bg-[#34403A] text-[#53695F] dark:text-[#E9E2D5]",
                 stage.state === "upcoming" && "border-line bg-surface text-ink-subtle",
               )}
             >
@@ -99,18 +98,20 @@ export function OrderTimeline({
 export const placeholderTrackingStages: readonly TrackingStage[] = [
   {
     id: "placed",
-    label: "Order confirmed",
-    description: "Live order data arrives with the orders service in Phase 3.",
+    label: "Order placed",
+    description: "Your order details have been securely received by the store.",
+    state: "complete",
+  },
+  {
+    id: "processing",
+    label: "Processing at artisan workshop",
+    description: "The maker is preparing your handcrafted items with care.",
     state: "current",
   },
   {
-    id: "packed",
-    label: "Packed by the maker",
-    state: "upcoming",
-  },
-  {
-    id: "shipped",
-    label: "Picked up and in transit",
+    id: "dispatched",
+    label: "Dispatched",
+    description: "Courier tracking will become live once handed over.",
     state: "upcoming",
   },
   {
@@ -118,4 +119,4 @@ export const placeholderTrackingStages: readonly TrackingStage[] = [
     label: "Delivered",
     state: "upcoming",
   },
-] as const;
+];

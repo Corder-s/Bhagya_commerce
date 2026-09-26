@@ -31,11 +31,11 @@ export function RevenueOrderTrendChart({
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
-  // Theme-aware color parameters
-  const gridColor = isDark ? '#403D36' : '#E6DDCE';
-  const axisColor = isDark ? '#AAA397' : '#7B756B';
-  const primaryLineColor = '#C49A45';
-  const secondaryLineColor = isDark ? '#8F897D' : '#A89D8B';
+  // Section 31 Chart Theme mapping
+  const gridColor = isDark ? '#48534D' : '#DDD5C7';
+  const axisColor = isDark ? '#A7B0A9' : '#6F776F';
+  const primaryLineColor = isDark ? '#9BAFA3' : '#71877B';
+  const secondaryLineColor = isDark ? '#71877B' : '#9BAFA3';
 
   // Validate data
   const validPoints = (trendPoints || []).filter(
@@ -105,137 +105,143 @@ export function RevenueOrderTrendChart({
     }, '');
   };
 
+  const createAreaPath = (coords: Array<{ x: number; y: number }>) => {
+    if (coords.length === 0) return '';
+    const line = createLinePath(coords);
+    const lastX = coords[coords.length - 1].x;
+    const firstX = coords[0].x;
+    const bottomY = padding.top + plotHeight;
+    return `${line} L ${lastX} ${bottomY} L ${firstX} ${bottomY} Z`;
+  };
+
   const netPath = createLinePath(netCoords);
+  const netAreaPath = createAreaPath(netCoords);
   const grossPath = createLinePath(grossCoords);
 
-  const netAreaPath =
-    netCoords.length > 0
-      ? `${netPath} L ${netCoords[netCoords.length - 1].x} ${padding.top + plotHeight} L ${netCoords[0].x} ${padding.top + plotHeight} Z`
-      : '';
-
-  // Y-axis grid lines (4 ticks)
-  const yTicks = [0, 0.33, 0.66, 1].map((ratio) => ({
-    val: Math.round(maxSales * 1.15 * ratio),
-    y: padding.top + plotHeight - ratio * plotHeight,
-  }));
-
+  // Grid steps (4 horizontal guides)
+  const ySteps = [0, 0.33, 0.66, 1];
   const activePoint = hoveredIdx !== null ? validPoints[hoveredIdx] : null;
 
   return (
-    <div className="relative flex flex-col rounded-2xl border border-line bg-surface p-5 sm:p-6 shadow-md transition-colors">
-      {/* Chart Header with Controls */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-line pb-4">
+    <div className="flex flex-col w-full rounded-2xl border border-line bg-surface p-4 sm:p-6 shadow-sm">
+      {/* Header controls & toggles */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div>
           <div className="flex items-center gap-2">
-            <TrendingUp className="size-4 text-primary" />
-            <h3 className="font-serif text-lg font-semibold text-ink">Revenue & Order Trend</h3>
+            <h3 className="font-serif text-lg font-bold text-ink">
+              Revenue & Order Volume
+            </h3>
+            <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#E3ECE6] dark:bg-[#263B2D] text-[#5F8068] dark:text-[#78A383] border border-[#B5CEC0] dark:border-[#334E3C]">
+              <TrendingUp className="size-3" /> Live Realtime
+            </span>
           </div>
           <p className="text-xs text-ink-soft mt-0.5">
-            Daily verified sales trajectory for {storeName}
+            Trajectories across daily checkouts for <strong className="text-ink">{storeName}</strong>
           </p>
         </div>
 
-        {/* Metric Toggles & Legend */}
-        <div className="flex items-center gap-2">
+        {/* View toggles */}
+        <div className="flex items-center rounded-xl bg-[#EEF3EF] dark:bg-[#27312D] p-1 border border-line text-xs font-medium">
           <button
             type="button"
             onClick={() => setActiveMetric('both')}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${
+            className={`px-3 py-1 rounded-lg transition-all ${
               activeMetric === 'both'
-                ? 'bg-surface-sunken text-ink border border-line-strong'
-                : 'text-ink-soft hover:text-ink hover:bg-surface-sunken'
+                ? 'bg-surface text-primary shadow-xs font-semibold'
+                : 'text-ink-soft hover:text-ink'
             }`}
           >
-            <span className="size-2 rounded-full bg-primary" />
-            <span>Net & Gross</span>
+            All Trajectories
           </button>
-
           <button
             type="button"
             onClick={() => setActiveMetric('net')}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${
+            className={`px-3 py-1 rounded-lg transition-all ${
               activeMetric === 'net'
-                ? 'bg-surface-sunken text-primary border border-primary/40'
-                : 'text-ink-soft hover:text-primary hover:bg-surface-sunken'
+                ? 'bg-surface text-primary shadow-xs font-semibold'
+                : 'text-ink-soft hover:text-ink'
             }`}
           >
-            <span className="size-2 rounded-full bg-primary" />
-            <span>Net Sales</span>
+            Net Sales
           </button>
-
           <button
             type="button"
             onClick={() => setActiveMetric('gross')}
-            className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${
+            className={`px-3 py-1 rounded-lg transition-all ${
               activeMetric === 'gross'
-                ? 'bg-surface-sunken text-ink border border-line-strong'
-                : 'text-ink-soft hover:text-ink hover:bg-surface-sunken'
+                ? 'bg-surface text-primary shadow-xs font-semibold'
+                : 'text-ink-soft hover:text-ink'
             }`}
           >
-            <span className="size-2 rounded-full bg-ink-soft" />
-            <span>Gross Sales</span>
+            Gross Sales
           </button>
         </div>
       </div>
 
-      {/* Interactive SVG Chart Plotting Surface */}
-      <div className="relative w-full mt-4" style={{ minHeight: `${height}px`, height: `${height}px` }}>
+      {/* Main SVG Render Area */}
+      <div className="relative w-full overflow-hidden" style={{ minHeight: `${height}px` }}>
         <svg
           viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-          className="w-full h-full overflow-visible"
+          className="w-full h-full overflow-visible select-none"
           preserveAspectRatio="none"
         >
           <defs>
-            <linearGradient id={`net-gradient-${gradientId}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#C49A45" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="#C49A45" stopOpacity="0.0" />
+            {/* Net Sales Soft Glow Gradient */}
+            <linearGradient id={`${gradientId}-net`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={primaryLineColor} stopOpacity={isDark ? "0.35" : "0.22"} />
+              <stop offset="70%" stopColor={primaryLineColor} stopOpacity={isDark ? "0.08" : "0.04"} />
+              <stop offset="100%" stopColor={primaryLineColor} stopOpacity="0" />
             </linearGradient>
           </defs>
 
-          {/* Background Grid Lines */}
-          {yTicks.map((tick, i) => (
-            <g key={i} className="transition-opacity">
-              <line
-                x1={padding.left}
-                y1={tick.y}
-                x2={svgWidth - padding.right}
-                y2={tick.y}
-                stroke={gridColor}
-                strokeDasharray="4 4"
-                strokeWidth="1"
-              />
-              <text
-                x={padding.left - 10}
-                y={tick.y + 4}
-                textAnchor="end"
-                fill={axisColor}
-                fontSize="10"
-                fontFamily="sans-serif"
-              >
-                ₹{tick.val >= 1000 ? `${Math.round(tick.val / 1000)}k` : tick.val}
-              </text>
-            </g>
-          ))}
+          {/* Horizontal Grid lines & Y-Axis Labels */}
+          {ySteps.map((ratio, i) => {
+            const yPos = padding.top + plotHeight * (1 - ratio);
+            const val = maxSales * 1.15 * ratio;
+            return (
+              <g key={i}>
+                <line
+                  x1={padding.left}
+                  y1={yPos}
+                  x2={svgWidth - padding.right}
+                  y2={yPos}
+                  stroke={gridColor}
+                  strokeDasharray="3 3"
+                  strokeWidth="1"
+                />
+                <text
+                  x={padding.left - 10}
+                  y={yPos + 4}
+                  textAnchor="end"
+                  fill={axisColor}
+                  fontSize="10.5"
+                  fontFamily="sans-serif"
+                >
+                  {val >= 1000 ? `₹${(val / 1000).toFixed(0)}k` : `₹${val.toFixed(0)}`}
+                </text>
+              </g>
+            );
+          })}
 
           {/* Area Fill for Net Sales */}
           {(activeMetric === 'both' || activeMetric === 'net') && (
-            <path d={netAreaPath} fill={`url(#net-gradient-${gradientId})`} />
+            <path d={netAreaPath} fill={`url(#${gradientId}-net)`} />
           )}
 
-          {/* Gross Sales Line (Secondary) */}
+          {/* Gross Sales Line */}
           {(activeMetric === 'both' || activeMetric === 'gross') && (
             <path
               d={grossPath}
               fill="none"
               stroke={secondaryLineColor}
-              strokeWidth="2.5"
-              strokeDasharray="5 3"
+              strokeWidth="2"
+              strokeDasharray="4 4"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           )}
 
-          {/* Net Sales Line (Rich Bhagya Gold) */}
+          {/* Net Sales Primary Path */}
           {(activeMetric === 'both' || activeMetric === 'net') && (
             <path
               d={netPath}
@@ -263,7 +269,7 @@ export function RevenueOrderTrendChart({
                     y1={padding.top}
                     x2={x}
                     y2={padding.top + plotHeight}
-                    stroke="#C49A45"
+                    stroke={primaryLineColor}
                     strokeWidth="1.5"
                     strokeDasharray="2 2"
                   />
@@ -275,7 +281,7 @@ export function RevenueOrderTrendChart({
                     cx={x}
                     cy={yGross}
                     r={isHovered ? 5 : 3.5}
-                    fill={isDark ? '#2B2A25' : '#FFFDF8'}
+                    fill={isDark ? '#27312D' : '#FCFBF7'}
                     stroke={secondaryLineColor}
                     strokeWidth={isHovered ? 2.5 : 2}
                     className="transition-all duration-150"
@@ -288,8 +294,8 @@ export function RevenueOrderTrendChart({
                     cx={x}
                     cy={yNet}
                     r={isHovered ? 6 : 4}
-                    fill="#C49A45"
-                    stroke={isDark ? '#F5F1E8' : '#181714'}
+                    fill={primaryLineColor}
+                    stroke={isDark ? '#F3F1E8' : '#202420'}
                     strokeWidth={isHovered ? 2.5 : 1.5}
                     className="transition-all duration-150"
                   />
@@ -311,7 +317,7 @@ export function RevenueOrderTrendChart({
                   x={x}
                   y={padding.top + plotHeight + 22}
                   textAnchor="middle"
-                  fill={isHovered ? (isDark ? '#F5F1E8' : '#181714') : axisColor}
+                  fill={isHovered ? (isDark ? '#F3F1E8' : '#202420') : axisColor}
                   fontWeight={isHovered ? '600' : '400'}
                   fontSize="11"
                   fontFamily="sans-serif"
@@ -332,15 +338,15 @@ export function RevenueOrderTrendChart({
             }}
             className={`pointer-events-none absolute z-20 min-w-[170px] rounded-xl border p-3 shadow-xl animate-in fade-in zoom-in-95 ${
               isDark
-                ? 'border-[#575042] bg-[#35332C] text-[#F5F1E8]'
-                : 'border-[#D2C2A5] bg-[#FFFDF8] text-[#181714]'
+                ? 'border-[#59665E] bg-[#3B4741] text-[#F3F1E8]'
+                : 'border-[#DDD5C7] bg-[#FCFBF7] text-[#202420]'
             }`}
           >
-            <div className={`flex items-center justify-between border-b pb-1.5 mb-2 ${isDark ? 'border-[#444139]' : 'border-[#E2D7C3]'}`}>
+            <div className={`flex items-center justify-between border-b pb-1.5 mb-2 ${isDark ? 'border-[#48534D]' : 'border-[#E7E0D2]'}`}>
               <span className="font-serif text-xs font-bold">
                 {activePoint.date}
               </span>
-              <span className="flex items-center gap-1 text-[11px] font-semibold text-success">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-[#5F8068] dark:text-[#78A383]">
                 <ShoppingBag className="size-3" /> {activePoint.orderCount} orders
               </span>
             </div>
@@ -348,7 +354,7 @@ export function RevenueOrderTrendChart({
             <div className="space-y-1 text-xs">
               <div className="flex items-center justify-between">
                 <span className="text-ink-soft flex items-center gap-1.5">
-                  <span className="size-2 rounded-full bg-[#C49A45]" /> Net Sales
+                  <span className="size-2 rounded-full bg-[#71877B] dark:bg-[#9BAFA3]" /> Net Sales
                 </span>
                 <strong className="font-semibold text-primary">
                   {formatCurrency(activePoint.netSales)}

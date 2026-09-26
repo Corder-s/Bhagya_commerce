@@ -11,23 +11,21 @@ import { siteConfig } from "@/config/site";
 /**
  * FinalCTA — the emotional close.
  *
- * The page has argued; this is the exhale. Full-bleed deep green (the only
- * large green surface above the footer), the headline set large in the display
- * serif, two actions and nothing else competing for attention. The leaf motif
- * is the same geometry as the logo mark, scaled up as atmosphere.
+ * Muted deep sage in light mode (#53695F), deep dark in dark mode (#1D2522),
+ * with soft sage atmosphere and high contrast typography.
  */
 export function FinalCTA() {
   return (
     <section
       data-surface="inverse"
       aria-labelledby="final-cta-heading"
-      className="relative overflow-hidden bg-[#151515] bg-gradient-deep-brand text-ink-inverse"
+      className="relative overflow-hidden bg-[#53695F] dark:bg-[#1D2522] text-[#FCFBF7]"
     >
       <BhagyaGlyph
-        className="pointer-events-none absolute -right-16 -top-20 size-[26rem] text-[#C49A45]/15 sm:-right-10 sm:size-[30rem]"
+        className="pointer-events-none absolute -right-16 -top-20 size-[26rem] text-[#DCE5DF]/15 sm:-right-10 sm:size-[30rem]"
       />
       <BhagyaGlyph
-        className="pointer-events-none absolute -bottom-24 -left-20 size-[22rem] text-[#DDBB72]/10"
+        className="pointer-events-none absolute -bottom-24 -left-20 size-[22rem] text-[#9BAFA3]/10"
       />
 
       <div className="container-page relative py-[var(--section-y)]">
@@ -35,7 +33,7 @@ export function FinalCTA() {
           <Reveal>
             <h2
               id="final-cta-heading"
-              className="font-display text-display-lg font-medium text-white text-balance sm:text-display-xl"
+              className="font-display text-display-lg font-medium text-[#FCFBF7] text-balance sm:text-display-xl"
             >
               Choose better.
               <br />
@@ -46,7 +44,7 @@ export function FinalCTA() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <p className="max-w-md text-body-lg text-[#D5CEBF]">
+            <p className="max-w-md text-body-lg text-[#CCD2CB]">
               One account for both sides of Bhagya — shop today, open your store
               when you are ready.
             </p>
@@ -70,7 +68,7 @@ export function FinalCTA() {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="label-text text-[#8E877B] text-[11px] tracking-widest uppercase">{siteConfig.tagline}</p>
+            <p className="label-text text-[#CCD2CB]/80 text-[11px] tracking-widest uppercase">{siteConfig.tagline}</p>
           </Reveal>
         </div>
       </div>

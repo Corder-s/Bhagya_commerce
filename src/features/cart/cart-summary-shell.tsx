@@ -55,7 +55,7 @@ export function CartSummaryShell({
             className="h-1.5 w-full overflow-hidden rounded-pill bg-canvas-deep"
           >
             <div
-              className="h-full rounded-pill bg-gradient-to-r from-[#C49A45] to-[#B18332] transition-[width] duration-slow ease-brand"
+              className="h-full rounded-pill bg-gradient-sage-cta transition-[width] duration-slow ease-brand"
               style={{ width: `${progress}%` }}
             />
           </div>

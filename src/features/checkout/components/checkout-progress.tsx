@@ -39,9 +39,9 @@ export function CheckoutProgress({ currentStep, completedSteps, onStepClick }: P
                 aria-current={isCurrent ? "step" : undefined}
                 className={`size-8 rounded-full flex items-center justify-center text-xs font-bold border transition-all duration-200 ${
                   isCompleted
-                    ? "bg-primary border-primary text-[#151515] cursor-pointer shadow-xs font-extrabold"
+                    ? "bg-[#53695F] border-[#53695F] text-[#FCFBF7] cursor-pointer shadow-xs font-extrabold"
                     : isCurrent
-                    ? "border-2 border-primary bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold font-extrabold shadow-xs"
+                    ? "border-2 border-[#71877B] bg-[#EEF3EF] dark:bg-[#34403A] text-[#53695F] dark:text-[#E9E2D5] font-extrabold shadow-xs"
                     : "bg-surface border-line text-ink-subtle cursor-default"
                 }`}
               >
@@ -59,12 +59,12 @@ export function CheckoutProgress({ currentStep, completedSteps, onStepClick }: P
       <div className="sm:hidden">
         <div className="h-1.5 rounded-full bg-line overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-btn-gold transition-all duration-300"
+            className="h-full rounded-full bg-gradient-sage-cta transition-all duration-300"
             style={{ width: `${((currentIndex + 1) / STEPS.length) * 100}%` }}
           />
         </div>
         <p className="mt-2 text-xs text-ink-soft">
-          Step {currentIndex + 1} of {STEPS.length} — <span className="text-gold-dark dark:text-gold font-bold">{STEPS[currentIndex].label}</span>
+          Step {currentIndex + 1} of {STEPS.length} — <span className="text-primary font-bold">{STEPS[currentIndex].label}</span>
         </p>
       </div>
     </nav>

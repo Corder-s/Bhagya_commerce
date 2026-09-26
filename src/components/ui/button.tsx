@@ -160,11 +160,34 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const Comp = asChild ? Slot : "button";
     const busy = isLoading || loading;
 
-    const content = (
-      <>
+    if (asChild) {
+      return (
+        <Slot
+          ref={ref}
+          aria-busy={busy || undefined}
+          aria-disabled={disabled || busy ? true : undefined}
+          className={cn(
+            buttonVariants({ variant, size, tone, fullWidth, className })
+          )}
+          {...props}
+        >
+          {children}
+        </Slot>
+      );
+    }
+
+    return (
+      <button
+        ref={ref}
+        disabled={disabled || busy}
+        aria-busy={busy || undefined}
+        className={cn(
+          buttonVariants({ variant, size, tone, fullWidth, className })
+        )}
+        {...props}
+      >
         {busy ? (
           <>
             <span
@@ -180,21 +203,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             {rightIcon}
           </>
         )}
-      </>
-    );
-
-    return (
-      <Comp
-        ref={ref}
-        disabled={disabled || busy}
-        aria-busy={busy || undefined}
-        className={cn(
-          buttonVariants({ variant, size, tone, fullWidth, className })
-        )}
-        {...props}
-      >
-        {content}
-      </Comp>
+      </button>
     );
   }
 );

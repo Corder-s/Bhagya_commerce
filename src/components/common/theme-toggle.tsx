@@ -48,7 +48,7 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
           className={cn(
             "flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer",
             theme === "light"
-              ? "bg-[#71877B] text-[#FCFBF7] font-semibold shadow-xs"
+              ? "bg-[#708477] text-[#FFFFFF] font-semibold shadow-xs"
               : "text-ink-soft hover:text-ink",
           )}
         >
@@ -63,7 +63,7 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
           className={cn(
             "flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer",
             theme === "dark"
-              ? "bg-[#9BAFA3] text-[#1D2522] font-semibold shadow-xs"
+              ? "bg-[#A8B9AF] text-[#20231F] font-semibold shadow-xs"
               : "text-ink-soft hover:text-ink",
           )}
         >
@@ -78,7 +78,7 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
           className={cn(
             "flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer",
             theme === "system"
-              ? "bg-primary text-[#FCFBF7] dark:text-[#1D2522] font-semibold shadow-xs"
+              ? "bg-primary text-[#FFFFFF] dark:text-[#20231F] font-semibold shadow-xs"
               : "text-ink-soft hover:text-ink",
           )}
         >
@@ -101,7 +101,7 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
         "relative flex size-9 items-center justify-center rounded-xl",
         "bg-surface hover:bg-surface-sunken border border-line hover:border-primary/50",
         "text-ink hover:text-primary transition-all duration-base cursor-pointer",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D7A63A]",
         className,
       )}
     >
@@ -113,7 +113,7 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
       />
       <Moon
         className={cn(
-          "size-4 transition-transform duration-slow text-[#9BAFA3]",
+          "size-4 transition-transform duration-slow text-[#E2B84B]",
           isDark ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0 absolute",
         )}
       />

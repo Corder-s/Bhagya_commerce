@@ -11,8 +11,9 @@ import { cn } from "@/lib/utils";
 /**
  * MerchantSidebar — workspace navigation for a store owner.
  *
- * Light mode: #FCFBF7 surface, #DCE5DF active, #3E4942 text, #53695F active text.
- * Dark mode: #27312D surface, #3C4D45 active, #CCD2CB text, #E1E9E3 active text.
+ * Light mode: #FCFAF5 background, #DCE5DF active, #505A53 text, #566B60 active text.
+ * Dark mode: #252925 background, #3A433D active, #D8D2C6 text, #F5F1E7 active text.
+ * Active Indicator: Warm Yellow (#D7A63A).
  */
 export function MerchantSidebar({
   className,
@@ -46,14 +47,14 @@ export function MerchantSidebar({
                   "group relative flex min-h-10 items-center gap-3 whitespace-nowrap rounded-lg px-3 text-sm font-medium",
                   "transition-all duration-150 ease-out",
                   active
-                    ? "bg-[#DCE5DF] dark:bg-[#3C4D45] font-semibold text-[#53695F] dark:text-[#E1E9E3] border border-[#B5C7BD] dark:border-[#59665E] shadow-xs"
-                    : "text-[#3E4942] dark:text-[#CCD2CB] hover:bg-[#EEF3EF] dark:hover:bg-[#34403A] hover:text-[#202420] dark:hover:text-[#F3F1E8]",
+                    ? "bg-[#DCE5DF] dark:bg-[#3A433D] font-semibold text-[#566B60] dark:text-[#F5F1E7] border border-[#CFC3B1] dark:border-[#5C625B] shadow-xs"
+                    : "text-[#505A53] dark:text-[#D8D2C6] hover:bg-[#EDF2EE] dark:hover:bg-[#30332F] hover:text-[#20231F] dark:hover:text-[#F5F1E7]",
                 )}
               >
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "absolute inset-y-2 left-0 w-1 rounded-r-full bg-[#71877B] dark:bg-[#9BAFA3] transition-opacity duration-150",
+                    "absolute inset-y-2 left-0 w-1 rounded-r-full bg-[#D7A63A] transition-opacity duration-150",
                     active ? "opacity-100" : "opacity-0",
                   )}
                 />
@@ -63,8 +64,8 @@ export function MerchantSidebar({
                     className={cn(
                       "size-[1.125rem] shrink-0 transition-colors",
                       active
-                        ? "text-[#53695F] dark:text-[#9BAFA3]"
-                        : "text-[#7D877F] dark:text-[#A7B0A9] group-hover:text-[#53695F] dark:group-hover:text-[#9BAFA3]",
+                        ? "text-[#D7A63A]"
+                        : "text-[#737D76] dark:text-[#B3ADA2] group-hover:text-[#566B60] dark:group-hover:text-[#F5F1E7]",
                     )}
                   />
                 ) : null}

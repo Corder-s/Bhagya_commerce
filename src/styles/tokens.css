@@ -1,82 +1,90 @@
 /* =============================================================================
-   BHAGYA COMMERCE — GLOBAL SEMANTIC DESIGN TOKENS
-   Inspired by Natural Sage, Warm Cream, Soft Beige, and Natural Earthy Neutrals.
-   Single source of truth for Light Mode & Dark Mode.
+   BHAGYA COMMERCE — GLOBAL BALANCED DESIGN TOKENS
+   Palette: Sage + Warm Cream + Soft Beige + Layered Charcoal + Warm Yellow/Orange Accents.
+   Single authoritative source of truth for Light Mode & Dark Mode.
    ============================================================================= */
 
 @layer base {
   :root {
     /* -------------------------------------------------------------------------
-       LIGHT THEME (Default) — Sage + Cream + Beige + Natural Atmosphere
+       LIGHT THEME (Default) — Medium-Light, Warm, Natural & Balanced
        ------------------------------------------------------------------------- */
-    --color-background: #F3EFE5;
-    --color-surface: #FCFBF7;
-    --color-surface-2: #F8F5ED;
-    --color-surface-elevated: #FCFBF7;
-    --color-surface-muted: #EEF3EF;
+    --color-background: #F2EEE4;
+    --color-surface: #FCFAF5;
+    --color-surface-2: #F7F4EC;
+    --color-surface-elevated: #FFFFFF;
+    --color-surface-muted: #EDF2EE;
     --color-surface-pale-sage: #DCE5DF;
-    --color-header-bg: #53695F;
+    --color-header-bg: #566B60;
 
-    --color-text-primary: #202420;
-    --color-text-secondary: #566058;
-    --color-text-muted: #7D877F;
-    --color-text-disabled: #A8B2AA;
-    --color-text-inverse: #FCFBF7;
-    --color-text-inverse-muted: #CCD2CB;
+    --color-text-primary: #20231F;
+    --color-text-secondary: #505A53;
+    --color-text-muted: #737D76;
+    --color-text-disabled: #A8B1AA;
+    --color-text-inverse: #F5F1E7;
+    --color-text-inverse-muted: #D8D2C6;
 
-    --color-border: #DDD5C7;
-    --color-border-soft: #E7E0D2;
-    --color-border-strong: #CFC4B2;
-    --color-line-inverse: rgba(252, 251, 247, 0.18);
+    --color-border: #DDD4C4;
+    --color-border-soft: #E7DFD0;
+    --color-border-strong: #CFC3B1;
+    --color-line-inverse: rgba(245, 241, 231, 0.18);
 
-    --color-brand: #71877B;
-    --color-brand-hover: #53695F;
-    --color-brand-light: #9BAFA3;
+    /* ---- Sage Family -------------------------------------------------------- */
+    --color-brand: #708477;
+    --color-brand-hover: #566B60;
+    --color-brand-medium: #82968A;
+    --color-brand-light: #A8B9AF;
     --color-brand-soft: #DCE5DF;
-    --color-brand-surface: #EEF3EF;
-    --color-brand-dark: #53695F;
+    --color-brand-surface: #EDF2EE;
+    --color-brand-dark: #566B60;
 
-    --color-natural-brown: #8A7863;
-    --color-dark-brown: #5F5142;
-    --color-soft-brown: #B7A58F;
+    /* ---- Controlled Yellow & Orange Accent Layer --------------------------- */
+    --color-accent-yellow: #D7A63A;
+    --color-accent-yellow-hover: #C28F27;
+    --color-accent-yellow-gold: #E2B84B;
+    --color-accent-yellow-soft: #F3E8D0;
+    --color-accent-orange: #D47A32;
+    --color-accent-orange-soft: #E9B27D;
+    --color-accent-orange-bg: #F9EBE1;
 
-    --color-success: #5F8068;
-    --color-success-soft: #E3ECE6;
-    --color-success-bg: #E3ECE6;
-    --color-success-dark: #47664F;
+    /* ---- Status Feedback ---------------------------------------------------- */
+    --color-success: #5D8067;
+    --color-success-soft: #DFEAE2;
+    --color-success-bg: #DFEAE2;
+    --color-success-dark: #45624D;
 
-    --color-error: #A85D55;
-    --color-error-soft: #F3E5E2;
-    --color-error-bg: #F3E5E2;
+    --color-error: #A9574F;
+    --color-error-soft: #F2E3E0;
+    --color-error-bg: #F2E3E0;
 
-    --color-warning: #9A7B4E;
-    --color-warning-soft: #F2EADB;
-    --color-warning-bg: #F2EADB;
+    --color-warning: #B9792E;
+    --color-warning-soft: #F3E8D5;
+    --color-warning-bg: #F3E8D5;
 
-    --color-info: #687A72;
+    --color-info: #6E8078;
     --color-info-soft: #E5ECE8;
     --color-info-bg: #E5ECE8;
 
     /* ---- Bhagya Named Semantic Aliases (Light Mode) ------------------------- */
-    --bhagya-black: #202420;
-    --bhagya-charcoal: #27312D;
-    --bhagya-charcoal-soft: #34403A;
-    --bhagya-charcoal-light: #3B4741;
-    --bhagya-charcoal-border: #DDD5C7;
+    --bhagya-black: #20231F;
+    --bhagya-charcoal: #30332F;
+    --bhagya-charcoal-soft: #373B36;
+    --bhagya-charcoal-light: #3E433D;
+    --bhagya-charcoal-border: #DDD4C4;
 
-    --bhagya-gold: var(--color-brand);
-    --bhagya-gold-dark: var(--color-brand-hover);
-    --bhagya-gold-light: var(--color-brand-light);
-    --bhagya-gold-soft: var(--color-brand-soft);
-    --bhagya-gold-surface: var(--color-brand-surface);
+    --bhagya-gold: var(--color-accent-yellow);
+    --bhagya-gold-dark: var(--color-accent-yellow-hover);
+    --bhagya-gold-light: var(--color-accent-yellow-gold);
+    --bhagya-gold-soft: var(--color-accent-yellow-soft);
+    --bhagya-gold-surface: #FAF4E8;
 
     --bhagya-ivory: var(--color-background);
     --bhagya-cream: var(--color-surface-2);
     --bhagya-warm-white: var(--color-surface);
     --bhagya-white: var(--color-surface-elevated);
-    --bhagya-sand: #E7E0D2;
-    --bhagya-sand-light: #F8F5ED;
-    --bhagya-sand-deep: #CFC4B2;
+    --bhagya-sand: #E7DFD0;
+    --bhagya-sand-light: #F7F4EC;
+    --bhagya-sand-deep: #D4C9B8;
 
     --bhagya-border: var(--color-border);
     --bhagya-border-soft: var(--color-border-soft);
@@ -110,14 +118,14 @@
 
     --bhagya-primary: var(--color-brand);
     --bhagya-primary-hover: var(--color-brand-hover);
-    --bhagya-primary-active: #44564E;
-    --bhagya-primary-disabled: #C4D1C9;
-    --bhagya-deep: #53695F;
-    --bhagya-deep-hover: #3E4F47;
+    --bhagya-primary-active: #47584F;
+    --bhagya-primary-disabled: #C2CEC7;
+    --bhagya-deep: #566B60;
+    --bhagya-deep-hover: #43544B;
     --bhagya-botanical: var(--color-success);
     --bhagya-soft-green: var(--color-success-bg);
-    --bhagya-soft-green-strong: #B5CEC0;
-    --bhagya-botanical-soft: #5F8068;
+    --bhagya-soft-green-strong: #B0C9B6;
+    --bhagya-botanical-soft: #5D8067;
 
     --bhagya-ink: var(--color-text-primary);
     --bhagya-ink-soft: var(--color-text-secondary);
@@ -135,15 +143,15 @@
     --merchant-surface: var(--color-surface);
     --merchant-surface-2: var(--color-surface-2);
     --merchant-surface-elevated: var(--color-surface-elevated);
-    --merchant-header: #53695F;
+    --merchant-header: #566B60;
     --merchant-border: var(--color-border);
     --merchant-border-soft: var(--color-border-soft);
     --merchant-text: var(--color-text-primary);
     --merchant-text-secondary: var(--color-text-secondary);
     --merchant-text-muted: var(--color-text-muted);
-    --merchant-gold: var(--color-brand);
-    --merchant-gold-light: var(--color-brand-light);
-    --merchant-gold-soft: var(--color-brand-soft);
+    --merchant-gold: var(--color-accent-yellow);
+    --merchant-gold-light: var(--color-accent-yellow-gold);
+    --merchant-gold-soft: var(--color-accent-yellow-soft);
     --merchant-success: var(--color-success);
     --merchant-success-soft: var(--color-success-soft);
     --merchant-error: var(--color-error);
@@ -152,7 +160,8 @@
 
     /* ---- Focus Rings -------------------------------------------------------- */
     --focus-ring: var(--color-brand);
-    --focus-ring-inverse: #9BAFA3;
+    --focus-ring-accent: var(--color-accent-yellow);
+    --focus-ring-inverse: #A8B9AF;
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
 
@@ -192,9 +201,9 @@
     --radius-xl: 20px;
     --radius-pill: 9999px;
 
-    --shadow-color: 50 45 35;
+    --shadow-color: 40 35 25;
     --shadow-xs: 0 1px 2px rgb(var(--shadow-color) / 0.04);
-    --shadow-sm: 0 2px 12px rgb(var(--shadow-color) / 0.06);
+    --shadow-sm: 0 2px 10px rgb(var(--shadow-color) / 0.05);
     --shadow-md: 0 8px 24px rgb(var(--shadow-color) / 0.08);
     --shadow-lg: 0 12px 28px -6px rgb(var(--shadow-color) / 0.09), 0 4px 10px -3px rgb(var(--shadow-color) / 0.05);
     --shadow-xl: 0 20px 48px -12px rgb(var(--shadow-color) / 0.12);
@@ -231,80 +240,86 @@
 
   /* ===========================================================================
      DARK THEME (Activated via .dark, [data-theme="dark"], html.dark)
-     Soft Sage-Charcoal Layers + Calm White/Cream Typography + Subtle Depth.
+     Soft Layered Charcoal-Green Canvas + High Contrast Light Typography.
      =========================================================================== */
   .dark,
   [data-theme="dark"] {
-    --color-background: #1D2522;
-    --color-surface: #27312D;
-    --color-surface-2: #34403A;
-    --color-surface-elevated: #3B4741;
-    --color-surface-muted: #2B3530;
-    --color-surface-pale-sage: #3C4D45;
-    --color-header-bg: #1D2522;
+    --color-background: #252925;
+    --color-surface: #30332F;
+    --color-surface-2: #373B36;
+    --color-surface-elevated: #3E433D;
+    --color-surface-muted: #30332F;
+    --color-surface-pale-sage: #3A433D;
+    --color-header-bg: #1D211E;
 
-    --color-text-primary: #F3F1E8;
-    --color-text-secondary: #CCD2CB;
-    --color-text-muted: #A7B0A9;
-    --color-text-disabled: #67736C;
-    --color-text-inverse: #202420;
-    --color-text-inverse-muted: #566058;
+    --color-text-primary: #F5F1E7;
+    --color-text-secondary: #D8D2C6;
+    --color-text-muted: #B3ADA2;
+    --color-text-disabled: #6D746D;
+    --color-text-inverse: #20231F;
+    --color-text-inverse-muted: #505A53;
 
-    --color-border: #48534D;
-    --color-border-soft: #3C4640;
-    --color-border-strong: #59665E;
-    --color-line-inverse: rgba(243, 241, 232, 0.16);
+    --color-border: #4B514B;
+    --color-border-soft: #3E443E;
+    --color-border-strong: #5C625B;
+    --color-line-inverse: rgba(245, 241, 231, 0.16);
 
-    --color-brand: #9BAFA3;
-    --color-brand-hover: #71877B;
-    --color-brand-light: #B5C7BD;
-    --color-brand-soft: #46584F;
-    --color-brand-surface: #2F3D36;
-    --color-brand-dark: #71877B;
+    /* ---- Sage Family (Dark Mode) -------------------------------------------- */
+    --color-brand: #A8B9AF;
+    --color-brand-hover: #82968A;
+    --color-brand-medium: #82968A;
+    --color-brand-light: #C2CEC7;
+    --color-brand-soft: #3A433D;
+    --color-brand-surface: #2E3630;
+    --color-brand-dark: #708477;
 
-    --color-natural-brown: #B7A58F;
-    --color-dark-brown: #8A7863;
-    --color-soft-brown: #D9CEC1;
+    /* ---- Controlled Yellow & Orange Accent Layer (Dark Mode) ---------------- */
+    --color-accent-yellow: #E2B84B;
+    --color-accent-yellow-hover: #D7A63A;
+    --color-accent-yellow-gold: #F0CE68;
+    --color-accent-yellow-soft: #4C3F25;
+    --color-accent-orange: #D47A32;
+    --color-accent-orange-soft: #E9B27D;
+    --color-accent-orange-bg: #4A3323;
 
-    --color-cream-accent: #E9E2D5;
-
+    /* ---- Status Feedback (Dark Mode) ---------------------------------------- */
     --color-success: #78A383;
-    --color-success-soft: #263B2D;
-    --color-success-bg: #263B2D;
-    --color-success-dark: #5F8068;
+    --color-success-soft: #294437;
+    --color-success-bg: #294437;
+    --color-success-dark: #5D8067;
 
     --color-error: #C4746B;
-    --color-error-soft: #3D2725;
-    --color-error-bg: #3D2725;
+    --color-error-soft: #4A2D2A;
+    --color-error-bg: #4A2D2A;
 
     --color-warning: #BA9964;
-    --color-warning-soft: #3D3323;
-    --color-warning-bg: #3D3323;
+    --color-warning-soft: #4A3B25;
+    --color-warning-bg: #4A3B25;
 
     --color-info: #93A89F;
-    --color-info-soft: #25342D;
-    --color-info-bg: #25342D;
+    --color-info-soft: #283730;
+    --color-info-bg: #283730;
 
     /* ---- Bhagya Named Semantic Aliases (Dark Mode) -------------------------- */
-    --bhagya-black: #171E1B;
-    --bhagya-charcoal: #1D2522;
-    --bhagya-charcoal-soft: #27312D;
-    --bhagya-charcoal-light: #34403A;
-    --bhagya-charcoal-border: #48534D;
+    --bhagya-black: #1D211E;
+    --bhagya-charcoal: #252925;
+    --bhagya-charcoal-soft: #30332F;
+    --bhagya-charcoal-light: #373B36;
+    --bhagya-charcoal-border: #4B514B;
 
-    --bhagya-gold: var(--color-brand);
-    --bhagya-gold-dark: #71877B;
-    --bhagya-gold-light: #B5C7BD;
-    --bhagya-gold-soft: var(--color-brand-soft);
-    --bhagya-gold-surface: var(--color-brand-surface);
+    --bhagya-gold: var(--color-accent-yellow);
+    --bhagya-gold-dark: #C28F27;
+    --bhagya-gold-light: var(--color-accent-yellow-gold);
+    --bhagya-gold-soft: var(--color-accent-yellow-soft);
+    --bhagya-gold-surface: #382F1D;
 
     --bhagya-ivory: var(--color-background);
     --bhagya-cream: var(--color-surface-2);
     --bhagya-warm-white: var(--color-surface);
     --bhagya-white: var(--color-surface-elevated);
-    --bhagya-sand: #242E29;
-    --bhagya-sand-light: #1D2522;
-    --bhagya-sand-deep: #34403A;
+    --bhagya-sand: #2C302B;
+    --bhagya-sand-light: #252925;
+    --bhagya-sand-deep: #373B36;
 
     --bhagya-border: var(--color-border);
     --bhagya-border-soft: var(--color-border-soft);
@@ -317,8 +332,8 @@
     --bhagya-text-muted: var(--color-text-muted);
     --bhagya-text-disabled: var(--color-text-disabled);
     --bhagya-text-faint: var(--color-text-disabled);
-    --bhagya-text-inverse: #202420;
-    --bhagya-text-inverse-muted: #566058;
+    --bhagya-text-inverse: #20231F;
+    --bhagya-text-inverse-muted: #505A53;
 
     --bhagya-success: var(--color-success);
     --bhagya-success-soft: var(--color-success-soft);
@@ -338,53 +353,54 @@
 
     --bhagya-primary: var(--color-brand);
     --bhagya-primary-hover: var(--color-brand-hover);
-    --bhagya-primary-active: #71877B;
-    --bhagya-primary-disabled: #37463F;
-    --bhagya-deep: #171E1B;
-    --bhagya-deep-hover: #121815;
+    --bhagya-primary-active: #82968A;
+    --bhagya-primary-disabled: #3E4A43;
+    --bhagya-deep: #1D211E;
+    --bhagya-deep-hover: #161A17;
     --bhagya-botanical: var(--color-success);
     --bhagya-soft-green: var(--color-success-bg);
-    --bhagya-soft-green-strong: #334E3C;
+    --bhagya-soft-green-strong: #385947;
 
     --bhagya-ink: var(--color-text-primary);
     --bhagya-ink-soft: var(--color-text-secondary);
     --bhagya-ink-subtle: var(--color-text-muted);
     --bhagya-ink-faint: var(--color-text-disabled);
-    --bhagya-ink-inverse: #202420;
-    --bhagya-ink-inverse-soft: #566058;
+    --bhagya-ink-inverse: #20231F;
+    --bhagya-ink-inverse-soft: #505A53;
 
     --bhagya-line: var(--color-border);
     --bhagya-line-strong: var(--color-border-strong);
-    --bhagya-gold-deep: var(--color-brand);
+    --bhagya-gold-deep: var(--color-accent-yellow);
 
     /* ---- Merchant Workspace Tokens (Dark Mode) ----------------------------- */
-    --merchant-bg: #1D2522;
-    --merchant-surface: #27312D;
-    --merchant-surface-2: #34403A;
-    --merchant-surface-elevated: #3B4741;
-    --merchant-header: #1D2522;
-    --merchant-border: #48534D;
-    --merchant-border-soft: #3C4640;
-    --merchant-text: #F3F1E8;
-    --merchant-text-secondary: #CCD2CB;
-    --merchant-text-muted: #A7B0A9;
-    --merchant-gold: #9BAFA3;
-    --merchant-gold-light: #B5C7BD;
-    --merchant-gold-soft: #46584F;
+    --merchant-bg: #252925;
+    --merchant-surface: #30332F;
+    --merchant-surface-2: #373B36;
+    --merchant-surface-elevated: #3E433D;
+    --merchant-header: #1D211E;
+    --merchant-border: #4B514B;
+    --merchant-border-soft: #3E443E;
+    --merchant-text: #F5F1E7;
+    --merchant-text-secondary: #D8D2C6;
+    --merchant-text-muted: #B3ADA2;
+    --merchant-gold: #E2B84B;
+    --merchant-gold-light: #F0CE68;
+    --merchant-gold-soft: #4C3F25;
     --merchant-success: #78A383;
-    --merchant-success-soft: #263B2D;
+    --merchant-success-soft: #294437;
     --merchant-error: #C4746B;
-    --merchant-error-soft: #3D2725;
+    --merchant-error-soft: #4A2D2A;
     --merchant-warning: #BA9964;
 
     /* ---- Focus Rings (Dark Mode) ------------------------------------------- */
     --focus-ring: var(--color-brand);
+    --focus-ring-accent: var(--color-accent-yellow);
     --focus-ring-inverse: #DCE5DF;
 
     /* ---- Shadows (Dark Theme) ---------------------------------------------- */
     --shadow-color: 0 0 0;
-    --shadow-sm: 0 2px 14px rgba(0, 0, 0, 0.20);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.26);
+    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.18);
+    --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.24);
   }
 
   [data-surface="inverse"] {

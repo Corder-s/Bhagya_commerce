@@ -31,11 +31,12 @@ export function RevenueOrderTrendChart({
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
-  // Section 31 Chart Theme mapping
-  const gridColor = isDark ? '#48534D' : '#DDD5C7';
-  const axisColor = isDark ? '#A7B0A9' : '#6F776F';
-  const primaryLineColor = isDark ? '#9BAFA3' : '#71877B';
-  const secondaryLineColor = isDark ? '#71877B' : '#9BAFA3';
+  // Section 24 & 25 Chart Theme mapping
+  const gridColor = isDark ? '#4B514B' : '#DDD4C4';
+  const axisColor = isDark ? '#B3ADA2' : '#737D76';
+  const primaryLineColor = isDark ? '#A8B9AF' : '#708477';
+  const secondaryLineColor = isDark ? '#82968A' : '#A8B9AF';
+  const highlightColor = isDark ? '#E2B84B' : '#D7A63A';
 
   // Validate data
   const validPoints = (trendPoints || []).filter(
@@ -131,7 +132,7 @@ export function RevenueOrderTrendChart({
             <h3 className="font-serif text-lg font-bold text-ink">
               Revenue & Order Volume
             </h3>
-            <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#E3ECE6] dark:bg-[#263B2D] text-[#5F8068] dark:text-[#78A383] border border-[#B5CEC0] dark:border-[#334E3C]">
+            <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#DFEAE2] dark:bg-[#294437] text-[#5D8067] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#385947]">
               <TrendingUp className="size-3" /> Live Realtime
             </span>
           </div>
@@ -141,7 +142,7 @@ export function RevenueOrderTrendChart({
         </div>
 
         {/* View toggles */}
-        <div className="flex items-center rounded-xl bg-[#EEF3EF] dark:bg-[#27312D] p-1 border border-line text-xs font-medium">
+        <div className="flex items-center rounded-xl bg-[#EDF2EE] dark:bg-[#30332F] p-1 border border-line text-xs font-medium">
           <button
             type="button"
             onClick={() => setActiveMetric('both')}
@@ -188,7 +189,7 @@ export function RevenueOrderTrendChart({
           <defs>
             {/* Net Sales Soft Glow Gradient */}
             <linearGradient id={`${gradientId}-net`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={primaryLineColor} stopOpacity={isDark ? "0.35" : "0.22"} />
+              <stop offset="0%" stopColor={primaryLineColor} stopOpacity={isDark ? "0.32" : "0.20"} />
               <stop offset="70%" stopColor={primaryLineColor} stopOpacity={isDark ? "0.08" : "0.04"} />
               <stop offset="100%" stopColor={primaryLineColor} stopOpacity="0" />
             </linearGradient>
@@ -269,7 +270,7 @@ export function RevenueOrderTrendChart({
                     y1={padding.top}
                     x2={x}
                     y2={padding.top + plotHeight}
-                    stroke={primaryLineColor}
+                    stroke={highlightColor}
                     strokeWidth="1.5"
                     strokeDasharray="2 2"
                   />
@@ -281,7 +282,7 @@ export function RevenueOrderTrendChart({
                     cx={x}
                     cy={yGross}
                     r={isHovered ? 5 : 3.5}
-                    fill={isDark ? '#27312D' : '#FCFBF7'}
+                    fill={isDark ? '#30332F' : '#FCFAF5'}
                     stroke={secondaryLineColor}
                     strokeWidth={isHovered ? 2.5 : 2}
                     className="transition-all duration-150"
@@ -294,8 +295,8 @@ export function RevenueOrderTrendChart({
                     cx={x}
                     cy={yNet}
                     r={isHovered ? 6 : 4}
-                    fill={primaryLineColor}
-                    stroke={isDark ? '#F3F1E8' : '#202420'}
+                    fill={highlightColor}
+                    stroke={isDark ? '#F5F1E7' : '#20231F'}
                     strokeWidth={isHovered ? 2.5 : 1.5}
                     className="transition-all duration-150"
                   />
@@ -317,7 +318,7 @@ export function RevenueOrderTrendChart({
                   x={x}
                   y={padding.top + plotHeight + 22}
                   textAnchor="middle"
-                  fill={isHovered ? (isDark ? '#F3F1E8' : '#202420') : axisColor}
+                  fill={isHovered ? (isDark ? '#F5F1E7' : '#20231F') : axisColor}
                   fontWeight={isHovered ? '600' : '400'}
                   fontSize="11"
                   fontFamily="sans-serif"
@@ -338,15 +339,15 @@ export function RevenueOrderTrendChart({
             }}
             className={`pointer-events-none absolute z-20 min-w-[170px] rounded-xl border p-3 shadow-xl animate-in fade-in zoom-in-95 ${
               isDark
-                ? 'border-[#59665E] bg-[#3B4741] text-[#F3F1E8]'
-                : 'border-[#DDD5C7] bg-[#FCFBF7] text-[#202420]'
+                ? 'border-[#5C625B] bg-[#3E433D] text-[#F5F1E7]'
+                : 'border-[#DDD4C4] bg-[#FCFAF5] text-[#20231F]'
             }`}
           >
-            <div className={`flex items-center justify-between border-b pb-1.5 mb-2 ${isDark ? 'border-[#48534D]' : 'border-[#E7E0D2]'}`}>
+            <div className={`flex items-center justify-between border-b pb-1.5 mb-2 ${isDark ? 'border-[#4B514B]' : 'border-[#E7DFD0]'}`}>
               <span className="font-serif text-xs font-bold">
                 {activePoint.date}
               </span>
-              <span className="flex items-center gap-1 text-[11px] font-semibold text-[#5F8068] dark:text-[#78A383]">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-[#5D8067] dark:text-[#78A383]">
                 <ShoppingBag className="size-3" /> {activePoint.orderCount} orders
               </span>
             </div>
@@ -354,7 +355,7 @@ export function RevenueOrderTrendChart({
             <div className="space-y-1 text-xs">
               <div className="flex items-center justify-between">
                 <span className="text-ink-soft flex items-center gap-1.5">
-                  <span className="size-2 rounded-full bg-[#71877B] dark:bg-[#9BAFA3]" /> Net Sales
+                  <span className="size-2 rounded-full bg-[#D7A63A] dark:bg-[#E2B84B]" /> Net Sales
                 </span>
                 <strong className="font-semibold text-primary">
                   {formatCurrency(activePoint.netSales)}

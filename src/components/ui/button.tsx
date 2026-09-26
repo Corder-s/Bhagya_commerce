@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 /**
  * Button — Global Bhagya Commerce Button System
  *
- * Primary Light: bg #71877B text #FFFFFF (Hover #53695F)
- * Primary Dark: bg #9BAFA3 text #1D2522 (Hover #71877B)
- * Secondary Light: cream bg, sage border, dark sage text
- * Secondary Dark: dark sage surface, soft sage border, cream text
+ * Primary Light: bg #708477 text #FFFFFF (Hover #566B60)
+ * Primary Dark: bg #A8B9AF text #20231F (Hover #82968A)
+ * Accent Yellow: bg #D7A63A text #20231F (Hover #C28F27)
+ * Accent Orange: bg #D47A32 text #FFFFFF (Hover #B86524)
  */
 const buttonVariants = cva(
   [
@@ -28,36 +28,48 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "bg-[#71877B] text-[#FCFBF7] font-semibold shadow-xs border border-[#53695F]",
-          "hover:bg-[#53695F] hover:shadow-sm",
-          "dark:bg-[#9BAFA3] dark:text-[#1D2522] dark:border-[#71877B] dark:hover:bg-[#71877B] dark:hover:text-[#FCFBF7]",
+          "bg-[#708477] text-[#FFFFFF] font-semibold shadow-xs border border-[#566B60]",
+          "hover:bg-[#566B60] hover:shadow-sm",
+          "dark:bg-[#A8B9AF] dark:text-[#20231F] dark:border-[#82968A] dark:hover:bg-[#82968A] dark:hover:text-[#FFFFFF]",
+          "active:brightness-95",
+        ],
+        accent: [
+          "bg-[#D7A63A] text-[#20231F] font-bold shadow-xs border border-[#C28F27]",
+          "hover:bg-[#C28F27] hover:shadow-sm",
+          "dark:bg-[#E2B84B] dark:text-[#20231F] dark:border-[#D7A63A] dark:hover:bg-[#D7A63A]",
+          "active:brightness-95",
+        ],
+        orange: [
+          "bg-[#D47A32] text-[#FFFFFF] font-bold shadow-xs border border-[#B86524]",
+          "hover:bg-[#B86524] hover:shadow-sm",
+          "dark:bg-[#D47A32] dark:text-[#FFFFFF] dark:border-[#E9B27D]/40 dark:hover:bg-[#B86524]",
           "active:brightness-95",
         ],
         secondary: [
-          "bg-[#F8F5ED] text-[#53695F] border border-[#71877B]/50 shadow-xs",
-          "hover:border-[#71877B] hover:bg-[#EEF3EF] hover:text-[#3E4F47]",
-          "dark:bg-[#27312D] dark:text-[#F3F1E8] dark:border-[#9BAFA3]/60 dark:hover:bg-[#34403A] dark:hover:border-[#9BAFA3]",
+          "bg-[#F7F4EC] text-[#566B60] border border-[#708477]/50 shadow-xs",
+          "hover:border-[#708477] hover:bg-[#EDF2EE] hover:text-[#20231F]",
+          "dark:bg-[#30332F] dark:text-[#F5F1E7] dark:border-[#A8B9AF]/60 dark:hover:bg-[#373B36] dark:hover:border-[#A8B9AF]",
           "active:bg-canvas-deep",
         ],
         outline: [
           "border border-line bg-surface text-ink shadow-xs",
-          "hover:border-primary hover:bg-[#EEF3EF] dark:hover:bg-[#27312D] hover:text-ink",
+          "hover:border-primary hover:bg-[#EDF2EE] dark:hover:bg-[#30332F] hover:text-ink",
           "active:bg-canvas-deep",
         ],
         dark: [
-          "bg-[#27312D] text-[#FCFBF7] border border-[#48534D] shadow-sm",
-          "hover:bg-[#34403A] hover:border-[#71877B]",
-          "active:bg-[#1D2522]",
+          "bg-[#30332F] text-[#F5F1E7] border border-[#4B514B] shadow-sm",
+          "hover:bg-[#373B36] hover:border-[#708477]",
+          "active:bg-[#252925]",
         ],
         ghost: [
           "bg-transparent text-ink-soft",
-          "hover:bg-[#EEF3EF] dark:hover:bg-[#27312D] hover:text-ink",
-          "active:bg-[#EEF3EF] dark:active:bg-[#27312D]",
+          "hover:bg-[#EDF2EE] dark:hover:bg-[#30332F] hover:text-ink",
+          "active:bg-[#EDF2EE] dark:active:bg-[#30332F]",
         ],
         gold: [
-          "bg-[#71877B] text-[#FCFBF7] font-semibold shadow-xs border border-[#53695F]",
-          "hover:bg-[#53695F]",
-          "dark:bg-[#9BAFA3] dark:text-[#1D2522] dark:border-[#71877B] dark:hover:bg-[#71877B] dark:hover:text-[#FCFBF7]",
+          "bg-[#D7A63A] text-[#20231F] font-bold shadow-xs border border-[#C28F27]",
+          "hover:bg-[#C28F27]",
+          "dark:bg-[#E2B84B] dark:text-[#20231F] dark:border-[#D7A63A] dark:hover:bg-[#D7A63A]",
           "active:brightness-95",
         ],
         destructive: [
@@ -65,8 +77,8 @@ const buttonVariants = cva(
           "active:brightness-95",
         ],
         link: [
-          "h-auto p-0 text-[#71877B] dark:text-[#9BAFA3] underline-offset-4 font-medium",
-          "hover:underline hover:opacity-90",
+          "h-auto p-0 text-[#566B60] dark:text-[#A8B9AF] hover:text-[#D7A63A] dark:hover:text-[#E2B84B] underline-offset-4 font-medium",
+          "hover:underline",
           "active:opacity-80",
         ],
       },
@@ -88,19 +100,19 @@ const buttonVariants = cva(
         variant: "primary",
         tone: "inverse",
         class:
-          "bg-[#9BAFA3] text-[#1D2522] border border-[#71877B] shadow-xs hover:bg-[#71877B] hover:text-[#FCFBF7]",
+          "bg-[#A8B9AF] text-[#20231F] border border-[#708477] shadow-xs hover:bg-[#708477] hover:text-[#FFFFFF]",
       },
       {
         variant: "secondary",
         tone: "inverse",
         class:
-          "bg-[#27312D] text-[#FCFBF7] border border-[#48534D] hover:border-[#9BAFA3]",
+          "bg-[#30332F] text-[#F5F1E7] border border-[#4B514B] hover:border-[#A8B9AF]",
       },
       {
         variant: "outline",
         tone: "inverse",
         class:
-          "border border-white/30 bg-white/10 text-white hover:border-[#9BAFA3] hover:bg-white/20 hover:text-white backdrop-blur-xs",
+          "border border-white/30 bg-white/10 text-white hover:border-[#D7A63A] hover:bg-white/20 hover:text-white backdrop-blur-xs",
       },
       {
         variant: "ghost",

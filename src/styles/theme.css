@@ -19,18 +19,27 @@
   --color-primary-hover: var(--color-brand-hover);
   --color-primary-active: var(--bhagya-primary-active);
   --color-primary-disabled: var(--bhagya-primary-disabled);
-  --color-primary-foreground: #FCFBF7;
+  --color-primary-foreground: #FCFAF5;
 
   --color-brand: var(--color-brand);
   --color-brand-hover: var(--color-brand-hover);
+  --color-brand-medium: var(--color-brand-medium);
   --color-brand-light: var(--color-brand-light);
   --color-brand-soft: var(--color-brand-soft);
   --color-brand-surface: var(--color-brand-surface);
 
-  --color-gold: var(--color-brand);
-  --color-gold-dark: var(--color-brand-hover);
+  /* Controlled Yellow / Orange Accent layer */
+  --color-accent-yellow: var(--color-accent-yellow);
+  --color-accent-yellow-hover: var(--color-accent-yellow-hover);
+  --color-accent-yellow-gold: var(--color-accent-yellow-gold);
+  --color-accent-yellow-soft: var(--color-accent-yellow-soft);
+  --color-accent-orange: var(--color-accent-orange);
+  --color-accent-orange-soft: var(--color-accent-orange-soft);
+
+  --color-gold: var(--color-accent-yellow);
+  --color-gold-dark: var(--color-accent-yellow-hover);
   --color-gold-light: var(--bhagya-gold-light);
-  --color-gold-soft: var(--color-brand-soft);
+  --color-gold-soft: var(--color-accent-yellow-soft);
   --color-gold-surface: var(--bhagya-gold-surface);
 
   --color-black: var(--bhagya-black);
@@ -345,71 +354,79 @@
 }
 
 /* =============================================================================
-   APPROVED BHAGYA GRADIENTS (Natural Sage, Warm Cream & Earthy Charcoal)
+   APPROVED BALANCED GRADIENTS
    ============================================================================= */
 @utility bg-gradient-hero-warm {
-  background-image: linear-gradient(135deg, #FCFBF7 0%, #F3EFE5 55%, #DCE5DF 100%);
+  background-image: linear-gradient(135deg, #FCFAF5 0%, #F7F4EC 55%, #EDF2EE 100%);
 }
 
 @utility bg-gradient-gold-soft {
-  background-image: linear-gradient(135deg, #EEF3EF 0%, #DCE5DF 100%);
+  background-image: linear-gradient(135deg, #EDF2EE 0%, #DCE5DF 100%);
 }
 
 @utility bg-gradient-sage-soft {
-  background-image: linear-gradient(135deg, #EEF3EF 0%, #DCE5DF 100%);
+  background-image: linear-gradient(135deg, #EDF2EE 0%, #DCE5DF 100%);
 }
 
 @utility bg-gradient-dark-env {
-  background-image: linear-gradient(180deg, #1D2522 0%, #171E1B 100%);
+  background-image: linear-gradient(180deg, #252925 0%, #1D211E 100%);
 }
 
 @utility bg-gradient-dark-natural {
-  background-image: linear-gradient(135deg, #1D2522 0%, #27312D 60%, #34403A 100%);
+  background-image: linear-gradient(135deg, #252925 0%, #30332F 60%, #373B36 100%);
 }
 
 @utility bg-gradient-dark-card {
-  background-image: linear-gradient(145deg, #34403A 0%, #27312D 100%);
+  background-image: linear-gradient(145deg, #373B36 0%, #30332F 100%);
 }
 
 @utility bg-gradient-gold-cta {
-  background-image: linear-gradient(135deg, #71877B 0%, #53695F 100%);
+  background-image: linear-gradient(135deg, #708477 0%, #566B60 100%);
 }
 
 @utility bg-gradient-btn-gold {
-  background-image: linear-gradient(135deg, #71877B 0%, #53695F 100%);
+  background-image: linear-gradient(135deg, #708477 0%, #566B60 100%);
 }
 
 @utility bg-gradient-sage-cta {
-  background-image: linear-gradient(135deg, #71877B 0%, #53695F 100%);
+  background-image: linear-gradient(135deg, #708477 0%, #566B60 100%);
+}
+
+@utility bg-gradient-warm-accent {
+  background-image: linear-gradient(135deg, #D7A63A 0%, #C28F27 100%);
+}
+
+@utility bg-gradient-sage-warm {
+  background-image: linear-gradient(135deg, #708477 0%, #82968A 100%);
 }
 
 @utility bg-gradient-dark-header {
-  background-image: linear-gradient(180deg, #1D2522 0%, #27312D 100%);
+  background-image: linear-gradient(180deg, #1D211E 0%, #252925 100%);
 }
 
 @utility text-gradient-brand {
-  background-image: linear-gradient(135deg, #71877B 0%, #53695F 60%, #3E4F47 100%);
+  background-image: linear-gradient(135deg, #708477 0%, #566B60 60%, #30332F 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-glow {
-  background-image: linear-gradient(135deg, #FCFBF7 0%, #DCE5DF 50%, #9BAFA3 100%);
+  background-image: linear-gradient(135deg, #FCFAF5 0%, #DCE5DF 50%, #A8B9AF 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-gold {
-  background-image: linear-gradient(135deg, #53695F 0%, #71877B 50%, #9BAFA3 100%);
+  background-image: linear-gradient(135deg, #D7A63A 0%, #E2B84B 60%, #D47A32 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-sage {
-  background-image: linear-gradient(135deg, #53695F 0%, #71877B 50%, #9BAFA3 100%);
+  background-image: linear-gradient(135deg, #566B60 0%, #708477 50%, #A8B9AF 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

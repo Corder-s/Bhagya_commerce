@@ -57,7 +57,7 @@ export function ProductCard({
         className,
       )}
     >
-      <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-[#F8F5ED] dark:bg-[#27312D] border border-line">
+      <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-[#F7F4EC] dark:bg-[#30332F] border border-line">
         {product.image ? (
           <Image
             src={product.image.src}
@@ -112,10 +112,10 @@ export function ProductCard({
           onClick={onQuickAdd}
           className={cn(
             "absolute inset-x-3 bottom-3 z-10 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg cursor-pointer",
-            "bg-[#71877B] hover:bg-[#53695F] text-[#FCFBF7] font-semibold border border-[#53695F] shadow-sm",
-            "dark:bg-[#9BAFA3] dark:hover:bg-[#71877B] dark:text-[#1D2522] dark:border-[#71877B]",
+            "bg-[#708477] hover:bg-[#566B60] text-[#FFFFFF] font-semibold border border-[#566B60] shadow-sm",
+            "dark:bg-[#A8B9AF] dark:hover:bg-[#82968A] dark:text-[#20231F] dark:border-[#82968A]",
             "transition-all duration-base ease-brand active:scale-[0.98]",
-            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#71877B] dark:focus-visible:outline-[#9BAFA3]",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D7A63A]",
             "pointer-coarse:translate-y-0 pointer-coarse:opacity-100",
             "sm:translate-y-2 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 sm:group-focus-within:translate-y-0 sm:group-focus-within:opacity-100",
           )}
@@ -144,7 +144,7 @@ export function ProductCard({
         {product.rating ? (
           <p className="flex items-center gap-1.5 text-caption text-ink-soft">
             <Star
-              className="size-3.5 fill-[#9A7B4E] text-[#9A7B4E]"
+              className="size-3.5 fill-[#D7A63A] text-[#D7A63A]"
               aria-hidden="true"
             />
             <span className="tabular-nums font-medium text-ink">

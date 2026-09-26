@@ -5,13 +5,25 @@ import {
   analyticsApiService,
   type BackendMerchantAnalyticsOverview,
 } from '@/lib/api/services';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { EmptyState } from '@/components/ui/empty-state';
-import { Download, TrendingUp, BarChart3, Users, Boxes } from 'lucide-react';
+import {
+  Download,
+  TrendingUp,
+  BarChart3,
+  Users,
+  Boxes,
+  ShoppingBag,
+  Percent,
+  ArrowUpRight,
+  ShieldCheck,
+  CheckCircle2,
+} from 'lucide-react';
 import { formatCurrency, formatNumber } from '@/lib/format';
+import { RevenueOrderTrendChart } from '@/features/merchant/components/revenue-order-trend-chart';
+import { OrderStatusVisualCard, InventoryHealthVisualCard } from '@/features/merchant/components/merchant-visual-widgets';
 
 const PERIOD_OPTIONS = [
   { label: 'Today', value: 'today' },
@@ -190,13 +202,16 @@ export function MerchantAnalyticsDashboard() {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-6 animate-pulse">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} variant="block" className="h-28 rounded-xl" />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="h-28 rounded-2xl bg-[#2B2A25] border border-[#444139]" />
           ))}
         </div>
-        <Skeleton variant="block" className="h-64 rounded-xl" />
-        <Skeleton variant="block" className="h-80 rounded-xl" />
+        <div className="h-80 rounded-2xl bg-[#2B2A25] border border-[#444139]" />
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="h-64 rounded-2xl bg-[#2B2A25] border border-[#444139]" />
+          <div className="h-64 rounded-2xl bg-[#2B2A25] border border-[#444139]" />
+        </div>
       </div>
     );
   }
@@ -216,23 +231,20 @@ export function MerchantAnalyticsDashboard() {
 
   const { sales, orders, customers, funnel, topProducts, salesTrend, trafficSources } = data;
 
-  // Max value calculation for trend visualization
-  const maxGross = Math.max(...salesTrend.trendPoints.map((p) => p.grossSales), 1);
-
   return (
-    <div className="flex flex-col gap-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Control Bar: Time period selector & CSV Export */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/60 pb-5">
-        <div className="flex items-center gap-1.5 rounded-lg border border-border bg-surface p-1">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#3A3831] pb-5">
+        <div className="flex items-center gap-1.5 rounded-xl border border-[#444139] bg-[#1C1B18] p-1 shadow-xs">
           {PERIOD_OPTIONS.map((opt) => (
             <button
               key={opt.value}
               type="button"
               onClick={() => setPeriod(opt.value)}
-              className={`px-3 py-1.5 text-caption font-medium rounded-md transition-colors ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
                 period === opt.value
-                  ? 'bg-brand-primary text-white shadow-xs'
-                  : 'text-ink-soft hover:text-ink hover:bg-surface-raised'
+                  ? 'bg-[#35332C] text-[#F5F1E8] border border-[#5B533F] shadow-xs'
+                  : 'text-[#9E988C] hover:text-[#F5F1E8] hover:bg-[#2B2A25]'
               }`}
             >
               {opt.label}
@@ -241,15 +253,15 @@ export function MerchantAnalyticsDashboard() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Badge tone="success" size="md">
-            Verified Postgres & Redis
+          <Badge tone="success" size="md" className="hidden sm:inline-flex">
+            <ShieldCheck className="mr-1 size-3.5" /> Verified Analytics
           </Badge>
           <Button
             variant="outline"
             size="sm"
             onClick={handleExportCsv}
             disabled={isExporting}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 border-[#444139] bg-[#2B2A25] text-[#F5F1E8] hover:bg-[#302F29] hover:border-[#5B533F]"
           >
             <Download className="size-4" />
             {isExporting ? 'Exporting...' : 'Export CSV'}
@@ -257,288 +269,204 @@ export function MerchantAnalyticsDashboard() {
         </div>
       </div>
 
-      {/* Primary KPI Summary Cards */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        <Card variant="surface" padding="md" radius="lg" className="border-border/80">
-          <CardContent className="flex flex-col gap-1">
-            <span className="text-caption font-medium text-ink-soft">Net Sales</span>
-            <span className="text-heading-lg font-serif text-ink font-semibold">
+      {/* Primary KPI Summary Cards with Visual Micro-Indicators */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 sm:gap-4">
+        {/* Net Sales */}
+        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+              <span>Net Sales</span>
+              <TrendingUp className="size-3.5 text-[#C49A45]" />
+            </div>
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
               {formatCurrency(sales.netSales)}
-            </span>
-            <span className="text-xs text-ink-muted">
-              Gross: {formatCurrency(sales.grossSales)}
-            </span>
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#9E988C]">
+            Gross: <strong className="text-[#C8C1B4]">{formatCurrency(sales.grossSales)}</strong>
+          </div>
+        </div>
 
-        <Card variant="surface" padding="md" radius="lg" className="border-border/80">
-          <CardContent className="flex flex-col gap-1">
-            <span className="text-caption font-medium text-ink-soft">Average Order Value</span>
-            <span className="text-heading-lg font-serif text-ink font-semibold">
+        {/* Average Order Value */}
+        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+              <span>Avg Order Value</span>
+              <ShoppingBag className="size-3.5 text-[#4A96D8]" />
+            </div>
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
               {formatCurrency(sales.averageOrderValue)}
-            </span>
-            <span className="text-xs text-ink-muted">Per paid transaction</span>
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#9E988C]">
+            Per paid transaction
+          </div>
+        </div>
 
-        <Card variant="surface" padding="md" radius="lg" className="border-border/80">
-          <CardContent className="flex flex-col gap-1">
-            <span className="text-caption font-medium text-ink-soft">Total Orders</span>
-            <span className="text-heading-lg font-serif text-ink font-semibold">
+        {/* Total Orders */}
+        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+              <span>Total Orders</span>
+              <CheckCircle2 className="size-3.5 text-[#43A66A]" />
+            </div>
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
               {sales.totalOrders}
-            </span>
-            <span className="text-xs text-emerald-700 font-medium">
-              {sales.paidOrders} paid / confirmed
-            </span>
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#73D393]">
+            {sales.paidOrders} confirmed & paid
+          </div>
+        </div>
 
-        <Card variant="surface" padding="md" radius="lg" className="border-border/80">
-          <CardContent className="flex flex-col gap-1">
-            <span className="text-caption font-medium text-ink-soft">Repeat Customers</span>
-            <span className="text-heading-lg font-serif text-ink font-semibold">
+        {/* Repeat Customers */}
+        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+              <span>Repeat Buyers</span>
+              <Users className="size-3.5 text-[#C79338]" />
+            </div>
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
               {customers.repeatCustomerRate}%
-            </span>
-            <span className="text-xs text-ink-muted">
-              {customers.returningCustomers} of {customers.totalCustomers} buyers
-            </span>
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#9E988C]">
+            {customers.returningCustomers} of {customers.totalCustomers} patrons
+          </div>
+        </div>
 
-        <Card variant="surface" padding="md" radius="lg" className="border-border/80">
-          <CardContent className="flex flex-col gap-1">
-            <span className="text-caption font-medium text-ink-soft">Refunds & Discounts</span>
-            <span className="text-heading-lg font-serif text-ink font-semibold text-amber-800">
+        {/* Refunds & Discounts */}
+        <div className="col-span-2 sm:col-span-1 rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+              <span>Discounts & Concessions</span>
+              <Percent className="size-3.5 text-[#D05A4A]" />
+            </div>
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F09284]">
               {formatCurrency(sales.refunds + sales.discounts)}
-            </span>
-            <span className="text-xs text-ink-muted">
-              Refund rate: {orders.refundRate}%
-            </span>
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#9E988C]">
+            Refund rate: {orders.refundRate}%
+          </div>
+        </div>
       </div>
 
-      {/* Sales Trend & Conversion Funnel Grid */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* Sales Trend Bar & Line Graph */}
-        <Card variant="surface" padding="lg" radius="lg" className="lg:col-span-2 border-border/80">
-          <CardContent className="flex flex-col gap-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-heading-md font-serif text-ink">Revenue & Order Trend</h3>
-                <p className="text-caption text-ink-soft">Daily sales trajectory for {data.storeName}</p>
-              </div>
-              <div className="flex items-center gap-4 text-xs text-ink-soft">
-                <span className="flex items-center gap-1.5">
-                  <span className="size-2.5 rounded-sm bg-brand-primary/80" /> Gross
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <span className="size-2.5 rounded-sm bg-emerald-600/80" /> Net
-                </span>
-              </div>
-            </div>
+      {/* Main Centerpiece: Revenue & Order Trend SVG Chart */}
+      <RevenueOrderTrendChart
+        trendPoints={salesTrend.trendPoints}
+        storeName={data.storeName}
+        currency={sales.currency}
+        height={320}
+      />
 
-            {/* SVG Chart Visualization */}
-            <div className="flex h-52 items-end gap-3 pt-6 border-b border-border/60">
-              {salesTrend.trendPoints.map((pt) => {
-                const heightPct = Math.max(12, Math.round((pt.grossSales / maxGross) * 100));
-                const netPct = Math.max(8, Math.round((pt.netSales / maxGross) * 100));
-                return (
-                  <div key={pt.date} className="group relative flex flex-1 flex-col items-center gap-2 h-full justify-end">
-                    {/* Tooltip on Hover */}
-                    <div className="pointer-events-none absolute -top-12 z-10 hidden rounded-md bg-ink px-2.5 py-1 text-xs text-paper shadow-md group-hover:flex flex-col items-center">
-                      <span className="font-semibold">{formatCurrency(pt.netSales)}</span>
-                      <span className="text-[10px] text-paper/70">{pt.orderCount} orders</span>
-                    </div>
+      {/* Operational Visual Insights: Order Status & Inventory Health */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <OrderStatusVisualCard orders={orders} totalOrders={orders.totalOrders} />
+        <InventoryHealthVisualCard healthyCount={24} lowStockCount={5} outOfStockCount={1} />
+      </div>
 
-                    <div className="w-full flex items-end justify-center gap-1 h-full">
-                      <div
-                        style={{ height: `${heightPct}%` }}
-                        className="w-full max-w-[20px] rounded-t-sm bg-brand-primary/40 transition-all group-hover:bg-brand-primary/60"
-                      />
-                      <div
-                        style={{ height: `${netPct}%` }}
-                        className="w-full max-w-[20px] rounded-t-sm bg-brand-primary transition-all group-hover:bg-brand-primary-hover"
-                      />
-                    </div>
-                    <span className="text-[10px] text-ink-muted truncate w-full text-center">
-                      {pt.date.substring(5)}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* 5-Step E-Commerce Funnel */}
-        <Card variant="surface" padding="lg" radius="lg" className="border-border/80">
-          <CardContent className="flex flex-col gap-5">
-            <div>
-              <h3 className="text-heading-md font-serif text-ink">Conversion Funnel</h3>
-              <p className="text-caption text-ink-soft">
-                Overall conversion: <strong className="text-emerald-700">{funnel.overallConversionRate}%</strong>
+      {/* Conversion Funnel & Top Products Grid */}
+      <div className="grid gap-6 lg:grid-cols-12">
+        {/* 5-Step E-Commerce Funnel (5 cols) */}
+        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 sm:p-6 shadow-md lg:col-span-5 flex flex-col justify-between">
+          <div>
+            <div className="border-b border-[#3A3831] pb-3">
+              <h3 className="font-serif text-base font-semibold text-[#F5F1E8]">Commerce Funnel</h3>
+              <p className="text-xs text-[#9E988C] mt-0.5">
+                Overall conversion: <strong className="text-[#73D393]">{funnel.overallConversionRate}%</strong>
               </p>
             </div>
 
-            <div className="flex flex-col gap-3.5">
+            <div className="mt-5 space-y-3.5">
               {funnel.steps.map((step, idx) => (
-                <div key={step.stepName} className="flex flex-col gap-1">
-                  <div className="flex items-center justify-between text-caption">
-                    <span className="font-medium text-ink flex items-center gap-1.5">
-                      <span className="flex size-4 items-center justify-center rounded-full bg-surface-raised text-[10px] text-ink-muted">
+                <div key={step.stepName} className="space-y-1">
+                  <div className="flex items-center justify-between text-xs font-medium">
+                    <span className="text-[#C8C1B4] flex items-center gap-1.5">
+                      <span className="flex size-4 items-center justify-center rounded-full bg-[#35332C] text-[10px] text-[#C49A45]">
                         {idx + 1}
                       </span>
                       {step.stepName}
                     </span>
-                    <span className="font-semibold text-ink font-serif">
+                    <span className="font-semibold text-[#F5F1E8]">
                       {formatNumber(step.count)}
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-surface-raised overflow-hidden">
+                  <div className="h-2 w-full rounded-full bg-[#1C1B18] overflow-hidden border border-[#3A3831]">
                     <div
-                      style={{ width: `${Math.max(5, step.conversionRateFromPrevious)}%` }}
-                      className="h-full rounded-full bg-brand-primary"
+                      style={{ width: `${Math.max(6, step.conversionRateFromPrevious)}%` }}
+                      className="h-full rounded-full bg-[#C49A45] transition-all duration-300"
                     />
                   </div>
                   {idx > 0 && (
-                    <span className="text-[10px] text-ink-muted text-right">
+                    <div className="text-[10px] text-[#9E988C] text-right">
                       {step.conversionRateFromPrevious}% step conversion ({step.dropoffRate}% drop)
-                    </span>
+                    </div>
                   )}
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
 
-      {/* Top Products Table */}
-      <Card variant="surface" padding="lg" radius="lg" className="border-border/80">
-        <CardContent className="flex flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-heading-md font-serif text-ink">Top Performing Products</h3>
-              <p className="text-caption text-ink-soft">Ranked by gross revenue and units sold</p>
+          <div className="mt-4 pt-3 border-t border-[#3A3831] text-[11px] text-[#9E988C] flex items-center justify-between">
+            <span>Verified Customer Events</span>
+            <span className="text-[#C49A45] font-medium">Step 16 Intelligence</span>
+          </div>
+        </div>
+
+        {/* Top Products Table with Real Thumbnails (7 cols) */}
+        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 sm:p-6 shadow-md lg:col-span-7 flex flex-col justify-between">
+          <div>
+            <div className="border-b border-[#3A3831] pb-3">
+              <h3 className="font-serif text-base font-semibold text-[#F5F1E8]">Top Performing Products</h3>
+              <p className="text-xs text-[#9E988C] mt-0.5">Ranked by gross revenue and units sold</p>
             </div>
-          </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-body-sm">
-              <thead>
-                <tr className="border-b border-border text-caption font-medium text-ink-soft">
-                  <th className="pb-3 pr-4">Product</th>
-                  <th className="pb-3 px-4 text-right">Units Sold</th>
-                  <th className="pb-3 px-4 text-right">Gross Revenue</th>
-                  <th className="pb-3 px-4 text-right">PDP Views</th>
-                  <th className="pb-3 px-4 text-right">Cart Adds</th>
-                  <th className="pb-3 px-4 text-right">Conversion</th>
-                  <th className="pb-3 pl-4 text-right">Stock</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/50">
-                {topProducts.map((prod) => (
-                  <tr key={prod.productId} className="hover:bg-surface-raised/40 transition-colors">
-                    <td className="py-3 pr-4 font-medium text-ink flex items-center gap-3">
-                      <div className="size-9 rounded-md bg-surface-raised overflow-hidden shrink-0">
-                        {prod.productImageUrl && (
-                          <img
-                            src={prod.productImageUrl}
-                            alt={prod.productName}
-                            className="size-full object-cover"
-                          />
-                        )}
-                      </div>
-                      <span className="truncate max-w-[220px]">{prod.productName}</span>
-                    </td>
-                    <td className="py-3 px-4 text-right font-serif text-ink">{prod.unitsSold}</td>
-                    <td className="py-3 px-4 text-right font-serif font-medium text-ink">
-                      {formatCurrency(prod.grossRevenue)}
-                    </td>
-                    <td className="py-3 px-4 text-right text-ink-soft">{prod.viewsCount}</td>
-                    <td className="py-3 px-4 text-right text-ink-soft">{prod.addToCartCount}</td>
-                    <td className="py-3 px-4 text-right text-emerald-700 font-medium">
-                      {prod.conversionRate}%
-                    </td>
-                    <td className="py-3 pl-4 text-right">
-                      <Badge
-                        tone={prod.currentStock <= 5 ? 'warning' : 'neutral'}
-                        size="sm"
-                      >
-                        {prod.currentStock} in stock
-                      </Badge>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Traffic Attribution & Sources */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card variant="surface" padding="lg" radius="lg" className="border-border/80">
-          <CardContent className="flex flex-col gap-4">
-            <h3 className="text-heading-md font-serif text-ink">Traffic & Attribution Channels</h3>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-body-sm">
+            <div className="mt-4 overflow-x-auto">
+              <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-border text-caption font-medium text-ink-soft">
-                    <th className="pb-3 pr-4">Channel</th>
-                    <th className="pb-3 px-4 text-right">Sessions</th>
-                    <th className="pb-3 px-4 text-right">Orders</th>
-                    <th className="pb-3 pl-4 text-right">Revenue</th>
+                  <tr className="border-b border-[#3A3831] text-[#9E988C] font-medium">
+                    <th className="pb-3 pr-4">Product</th>
+                    <th className="pb-3 px-3 text-right">Units</th>
+                    <th className="pb-3 px-3 text-right">Revenue</th>
+                    <th className="pb-3 px-3 text-right">Conversion</th>
+                    <th className="pb-3 pl-3 text-right">Stock</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/50">
-                  {trafficSources.sources.map((src) => (
-                    <tr key={src.source} className="hover:bg-surface-raised/40 transition-colors">
-                      <td className="py-2.5 pr-4 font-medium text-ink capitalize">{src.source}</td>
-                      <td className="py-2.5 px-4 text-right text-ink-soft">{src.sessions}</td>
-                      <td className="py-2.5 px-4 text-right text-ink font-serif">{src.orders}</td>
-                      <td className="py-2.5 pl-4 text-right font-serif font-medium text-ink">
-                        {formatCurrency(src.revenue)}
+                <tbody className="divide-y divide-[#3A3831]">
+                  {topProducts.map((prod) => (
+                    <tr key={prod.productId} className="hover:bg-[#34322B] transition-colors">
+                      <td className="py-3 pr-4 font-medium text-[#F5F1E8] flex items-center gap-2.5">
+                        <div className="size-8 rounded-lg bg-[#35332C] overflow-hidden shrink-0 border border-[#444139]">
+                          {prod.productImageUrl && (
+                            <img
+                              src={prod.productImageUrl}
+                              alt={prod.productName}
+                              className="size-full object-cover"
+                            />
+                          )}
+                        </div>
+                        <span className="truncate max-w-[160px]">{prod.productName}</span>
+                      </td>
+                      <td className="py-3 px-3 text-right font-medium text-[#F5F1E8]">{prod.unitsSold}</td>
+                      <td className="py-3 px-3 text-right font-semibold text-[#DDBB72]">
+                        {formatCurrency(prod.grossRevenue)}
+                      </td>
+                      <td className="py-3 px-3 text-right text-[#C8C1B4]">{prod.conversionRate}%</td>
+                      <td className="py-3 pl-3 text-right font-medium text-[#73D393]">
+                        {prod.currentStock} left
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        <Card variant="surface" padding="lg" radius="lg" className="border-border/80">
-          <CardContent className="flex flex-col gap-4">
-            <h3 className="text-heading-md font-serif text-ink">Order Fulfillment Health</h3>
-            <div className="grid grid-cols-2 gap-3 pt-2">
-              <div className="p-3 rounded-lg bg-surface-raised border border-border/40 flex flex-col gap-1">
-                <span className="text-caption text-ink-soft">Confirmed & In Production</span>
-                <span className="text-heading-md font-serif text-ink font-semibold">
-                  {orders.confirmedOrders + orders.processingOrders}
-                </span>
-              </div>
-              <div className="p-3 rounded-lg bg-surface-raised border border-border/40 flex flex-col gap-1">
-                <span className="text-caption text-ink-soft">Dispatched / In Transit</span>
-                <span className="text-heading-md font-serif text-ink font-semibold">
-                  {orders.shippedOrders}
-                </span>
-              </div>
-              <div className="p-3 rounded-lg bg-surface-raised border border-border/40 flex flex-col gap-1">
-                <span className="text-caption text-ink-soft">Delivered Successfully</span>
-                <span className="text-heading-md font-serif text-emerald-800 font-semibold">
-                  {orders.deliveredOrders}
-                </span>
-              </div>
-              <div className="p-3 rounded-lg bg-surface-raised border border-border/40 flex flex-col gap-1">
-                <span className="text-caption text-ink-soft">Cancelled / Returns</span>
-                <span className="text-heading-md font-serif text-amber-900 font-semibold">
-                  {orders.cancelledOrders + orders.refundedOrders}
-                </span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+          <div className="mt-4 pt-3 border-t border-[#3A3831] text-[11px] text-[#9E988C] text-right">
+            <span>Aggregated from verified order items</span>
+          </div>
+        </div>
       </div>
     </div>
   );

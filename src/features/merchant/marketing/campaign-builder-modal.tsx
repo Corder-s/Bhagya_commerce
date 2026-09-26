@@ -8,13 +8,10 @@ import {
   type BackendPromotion,
 } from '@/lib/api/services';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import {
   X,
   Megaphone,
   Users,
-  MessageSquare,
-  Radio,
   Calendar,
   CheckCircle2,
   Sparkles,
@@ -56,7 +53,7 @@ export function CampaignBuilderModal({
   const [channel, setChannel] = useState<'EMAIL' | 'WHATSAPP' | 'SMS'>('WHATSAPP');
   const [subject, setSubject] = useState('Exclusive Handloom Festive Savings ✨');
   const [messageBody, setMessageBody] = useState(
-    'Namaste! Explore our new GI-tagged festive Katan silks with 15% off using code NAVRATRI15. View collection: https://bhagya.commerce/shop'
+    'Namaste! Explore our new GI-tagged festive Katan silks with 15% off using code FESTIVE15. View collection: https://bhagya.commerce/shop'
   );
   const [scheduleType, setScheduleType] = useState<'now' | 'later'>('now');
   const [scheduledDateTime, setScheduledDateTime] = useState('');
@@ -107,7 +104,6 @@ export function CampaignBuilderModal({
         setMessageBody(res.data.body);
       }
     } catch {
-      // Fallback AI prompt copy
       setMessageBody(
         'Namaste! Master artisans at Varanasi Handloom Guild invite you to celebrate heritage crafts with exclusive festive privileges. Explore authentic GI-certified creations now: https://bhagya.commerce/shop'
       );
@@ -152,23 +148,23 @@ export function CampaignBuilderModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs overflow-y-auto">
-      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col rounded-2xl border border-border bg-surface shadow-2xl animate-in fade-in zoom-in-95 my-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-xs overflow-y-auto">
+      <div className="relative flex max-h-[90vh] w-full max-w-2xl flex-col rounded-2xl border border-[#444139] bg-[#2B2A25] shadow-2xl animate-in fade-in zoom-in-95 my-auto text-[#F5F1E8]">
         {/* Header */}
-        <div className="flex shrink-0 items-center justify-between border-b border-border p-5 bg-surface rounded-t-2xl">
+        <div className="flex shrink-0 items-center justify-between border-b border-[#3A3831] p-5 bg-[#2B2A25] rounded-t-2xl">
           <div className="flex items-center gap-3">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <div className="flex size-10 items-center justify-center rounded-xl bg-[#35332C] text-[#C49A45] border border-[#5B533F]">
               <Megaphone className="size-5" />
             </div>
             <div>
-              <h2 className="text-heading-md font-serif text-charcoal">Marketing Campaign Builder</h2>
-              <p className="text-caption text-charcoal-muted">Create, target, preview and dispatch audience promotions</p>
+              <h2 className="text-base sm:text-lg font-serif font-semibold text-[#F5F1E8]">Marketing Campaign Builder</h2>
+              <p className="text-xs text-[#9E988C]">Create, target, preview and dispatch audience promotions</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-charcoal-muted hover:bg-surface-elevated hover:text-charcoal transition-colors"
+            className="rounded-lg p-1.5 text-[#9E988C] hover:bg-[#35332C] hover:text-[#F5F1E8] transition-colors"
             title="Close modal"
           >
             <X className="size-5" />
@@ -176,21 +172,21 @@ export function CampaignBuilderModal({
         </div>
 
         {/* Stepper Progress Indicator */}
-        <div className="flex items-center justify-between border-b border-border/60 bg-surface-raised/40 px-6 py-3">
+        <div className="flex items-center justify-between border-b border-[#3A3831] bg-[#1C1B18] px-6 py-3 overflow-x-auto no-scrollbar gap-2">
           {STEPS.map((s) => (
-            <div key={s.step} className="flex items-center gap-2 text-caption">
+            <div key={s.step} className="flex items-center gap-2 text-xs shrink-0">
               <span
                 className={`flex size-6 items-center justify-center rounded-full text-xs font-semibold ${
                   currentStep === s.step
-                    ? 'bg-brand-primary text-white ring-2 ring-brand-primary/30'
+                    ? 'bg-[#C49A45] text-[#151515] ring-2 ring-[#C49A45]/40'
                     : currentStep > s.step
-                    ? 'bg-emerald-700 text-white'
-                    : 'bg-surface border border-border text-ink-muted'
+                    ? 'bg-[#43A66A] text-[#151515]'
+                    : 'bg-[#2B2A25] border border-[#444139] text-[#9E988C]'
                 }`}
               >
                 {currentStep > s.step ? '✓' : s.step}
               </span>
-              <span className={`hidden sm:inline font-medium ${currentStep === s.step ? 'text-ink' : 'text-ink-soft'}`}>
+              <span className={`hidden sm:inline font-medium ${currentStep === s.step ? 'text-[#F5F1E8]' : 'text-[#9E988C]'}`}>
                 {s.title}
               </span>
             </div>
@@ -198,9 +194,9 @@ export function CampaignBuilderModal({
         </div>
 
         {/* Form Body */}
-        <div className="flex-1 overflow-y-auto p-6 text-body-sm">
+        <div className="flex-1 overflow-y-auto p-6 text-sm">
           {error && (
-            <div className="mb-4 rounded-lg bg-rose-50 p-3 text-caption text-rose-800 border border-rose-200">
+            <div className="mb-4 rounded-lg bg-[#4A2924] p-3 text-xs text-[#F09284] border border-[#D05A4A]">
               {error}
             </div>
           )}
@@ -209,23 +205,23 @@ export function CampaignBuilderModal({
           {currentStep === 1 && (
             <div className="flex flex-col gap-4">
               <div>
-                <label className="text-caption font-medium text-ink">Campaign Name *</label>
+                <label className="text-xs font-medium text-[#C8C1B4]">Campaign Name *</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Navratri Artisan Silk Broadcast"
-                  className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-ink placeholder:text-ink-muted focus:border-brand-primary focus:outline-hidden"
+                  className="mt-1 w-full rounded-lg border border-[#444139] bg-[#1C1B18] px-3 py-2 text-[#F5F1E8] placeholder:text-[#9E988C] focus:border-[#C49A45] focus:outline-hidden"
                 />
               </div>
 
               <div>
-                <label className="text-caption font-medium text-ink">Campaign Purpose</label>
+                <label className="text-xs font-medium text-[#C8C1B4]">Campaign Purpose</label>
                 <select
                   value={purpose}
                   onChange={(e) => setPurpose(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-ink focus:border-brand-primary focus:outline-hidden"
+                  className="mt-1 w-full rounded-lg border border-[#444139] bg-[#1C1B18] px-3 py-2 text-[#F5F1E8] focus:border-[#C49A45] focus:outline-hidden"
                 >
                   <option value="Festive Promotion">Festive Celebration Offer</option>
                   <option value="New Collection Launch">New Artisan Collection Arrival</option>
@@ -235,16 +231,16 @@ export function CampaignBuilderModal({
               </div>
 
               <div>
-                <label className="text-caption font-medium text-ink">Attach Promotion / Coupon</label>
+                <label className="text-xs font-medium text-[#C8C1B4]">Attach Promotion / Coupon</label>
                 <select
                   value={selectedPromotionId}
                   onChange={(e) => setSelectedPromotionId(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-ink focus:border-brand-primary focus:outline-hidden"
+                  className="mt-1 w-full rounded-lg border border-[#444139] bg-[#1C1B18] px-3 py-2 text-[#F5F1E8] focus:border-[#C49A45] focus:outline-hidden"
                 >
-                  <option value="">None (Informational Broadcast)</option>
+                  <option value="">No attached promotion (Informational broadcast)</option>
                   {promotions.map((p) => (
                     <option key={p.id} value={p.id}>
-                      {p.name} — {p.couponCode ? `Code: ${p.couponCode} (${p.value}${p.type.includes('PERCENTAGE') ? '%' : '₹'} off)` : `${p.value} off`}
+                      {p.name} ({p.couponCode ? `Code: ${p.couponCode}` : `${p.value}% Off`})
                     </option>
                   ))}
                 </select>
@@ -255,54 +251,51 @@ export function CampaignBuilderModal({
           {/* STEP 2: Audience */}
           {currentStep === 2 && (
             <div className="flex flex-col gap-4">
-              <span className="text-caption text-ink-soft">
-                Select the verified customer segment to receive this promotional broadcast.
-              </span>
+              <div>
+                <label className="text-xs font-medium text-[#C8C1B4]">Select Verified Customer Segment</label>
+                <p className="text-xs text-[#9E988C] mt-0.5">
+                  Privacy-safe audience filters honoring notification preferences.
+                </p>
+              </div>
 
-              <div className="flex flex-col gap-3">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {segments.map((seg) => (
-                  <label
+                  <div
                     key={seg.id}
-                    className={`flex items-center justify-between rounded-xl border p-4 cursor-pointer transition-all ${
+                    onClick={() => setSelectedSegmentId(seg.id)}
+                    className={`cursor-pointer rounded-xl border p-4 transition-all ${
                       selectedSegmentId === seg.id
-                        ? 'border-brand-primary bg-brand-primary/5 ring-1 ring-brand-primary'
-                        : 'border-border bg-surface hover:border-ink-muted'
+                        ? 'border-[#C49A45] bg-[#35332C] shadow-xs'
+                        : 'border-[#444139] bg-[#302F29] hover:border-[#5B533F]'
                     }`}
                   >
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="segment"
-                        checked={selectedSegmentId === seg.id}
-                        onChange={() => setSelectedSegmentId(seg.id)}
-                        className="text-brand-primary focus:ring-brand-primary"
-                      />
-                      <div>
-                        <span className="font-medium text-ink">{seg.name}</span>
-                        {seg.description && <p className="text-caption text-ink-soft">{seg.description}</p>}
-                      </div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-sm text-[#F5F1E8]">{seg.name}</span>
+                      <span className="rounded-full bg-[#1C1B18] px-2 py-0.5 text-xs font-semibold text-[#DDBB72] border border-[#444139]">
+                        {seg.estimatedCount}
+                      </span>
                     </div>
-                    <Badge tone="neutral" size="sm">
-                      ~{seg.estimatedCount} recipients
-                    </Badge>
-                  </label>
+                    {seg.description && (
+                      <p className="mt-1.5 text-xs text-[#9E988C] line-clamp-2">{seg.description}</p>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* STEP 3: Content */}
+          {/* STEP 3: Content & AI Generation */}
           {currentStep === 3 && (
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <span className="text-caption font-medium text-ink">Promotional Copy</span>
+                <span className="text-xs font-medium text-[#C8C1B4]">Message Copy</span>
                 <Button
+                  type="button"
                   variant="outline"
                   size="sm"
-                  type="button"
                   onClick={handleGenerateAICopy}
                   disabled={isGeneratingAI}
-                  className="flex items-center gap-1.5 text-xs text-brand-primary border-brand-primary/40 hover:bg-brand-primary/10"
+                  className="flex items-center gap-1.5 text-xs border-[#C49A45]/40 bg-[#35332C] text-[#DDBB72] hover:bg-[#C49A45]/20"
                 >
                   {isGeneratingAI ? <Loader2 className="size-3.5 animate-spin" /> : <Sparkles className="size-3.5" />}
                   Draft with Bhagya AI
@@ -311,31 +304,24 @@ export function CampaignBuilderModal({
 
               {channel === 'EMAIL' && (
                 <div>
-                  <label className="text-caption font-medium text-ink">Subject Line *</label>
+                  <label className="text-xs font-medium text-[#C8C1B4]">Email Subject Line</label>
                   <input
                     type="text"
-                    required
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    placeholder="Enter inspiring email subject..."
-                    className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-ink focus:border-brand-primary focus:outline-hidden"
+                    className="mt-1 w-full rounded-lg border border-[#444139] bg-[#1C1B18] px-3 py-2 text-[#F5F1E8] focus:border-[#C49A45] focus:outline-hidden"
                   />
                 </div>
               )}
 
               <div>
-                <label className="text-caption font-medium text-ink">Message Body *</label>
+                <label className="text-xs font-medium text-[#C8C1B4]">Message Body</label>
                 <textarea
-                  rows={4}
-                  required
+                  rows={5}
                   value={messageBody}
                   onChange={(e) => setMessageBody(e.target.value)}
-                  placeholder="Craft your artisan story, product highlights and store link..."
-                  className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-ink focus:border-brand-primary focus:outline-hidden font-sans"
+                  className="mt-1 w-full rounded-lg border border-[#444139] bg-[#1C1B18] px-3 py-2 text-[#F5F1E8] focus:border-[#C49A45] focus:outline-hidden font-sans"
                 />
-                <span className="mt-1 block text-right text-[11px] text-ink-muted">
-                  {messageBody.length} characters
-                </span>
               </div>
             </div>
           )}
@@ -343,41 +329,58 @@ export function CampaignBuilderModal({
           {/* STEP 4: Channel */}
           {currentStep === 4 && (
             <div className="flex flex-col gap-4">
-              <span className="text-caption text-ink-soft">
-                Choose the communication channel. Unsubscribed customers on this channel are automatically suppressed.
-              </span>
+              <div>
+                <label className="text-xs font-medium text-[#C8C1B4]">Dispatch Channel</label>
+                <p className="text-xs text-[#9E988C] mt-0.5">
+                  Delivered through verified Bhagya messaging orchestrators.
+                </p>
+              </div>
 
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  { id: 'WHATSAPP' as const, label: 'WhatsApp', icon: MessageSquare, desc: 'High engagement broadcast' },
-                  { id: 'EMAIL' as const, label: 'Email', icon: Mail, desc: 'Rich editorial newsletter' },
-                  { id: 'SMS' as const, label: 'SMS', icon: Smartphone, desc: 'Direct mobile alert' },
-                ].map((ch) => {
-                  const IconComp = ch.icon;
-                  return (
-                    <label
-                      key={ch.id}
-                      className={`flex flex-col gap-2 rounded-xl border p-4 cursor-pointer transition-all ${
-                        channel === ch.id
-                          ? 'border-brand-primary bg-brand-primary/5 ring-1 ring-brand-primary'
-                          : 'border-border bg-surface hover:border-ink-muted'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <IconComp className={`size-5 ${channel === ch.id ? 'text-brand-primary' : 'text-ink-soft'}`} />
-                        <input
-                          type="radio"
-                          name="channel"
-                          checked={channel === ch.id}
-                          onChange={() => setChannel(ch.id)}
-                          className="text-brand-primary focus:ring-brand-primary"
-                        />
-                      </div>
-                      <span className="font-medium text-ink">{ch.label}</span>
-                      <span className="text-[11px] text-ink-soft">{ch.desc}</span>
-                    </label>
-                  );
-                })}
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div
+                  onClick={() => setChannel('WHATSAPP')}
+                  className={`cursor-pointer rounded-xl border p-4 transition-all ${
+                    channel === 'WHATSAPP'
+                      ? 'border-[#43A66A] bg-[#294C38]/40 shadow-xs'
+                      : 'border-[#444139] bg-[#302F29] hover:border-[#5B533F]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="size-5 text-[#73D393]" />
+                    <span className="font-medium text-sm text-[#F5F1E8]">WhatsApp</span>
+                  </div>
+                  <p className="mt-2 text-xs text-[#9E988C]">Interactive broadcast with verified catalog links</p>
+                </div>
+
+                <div
+                  onClick={() => setChannel('EMAIL')}
+                  className={`cursor-pointer rounded-xl border p-4 transition-all ${
+                    channel === 'EMAIL'
+                      ? 'border-[#4A96D8] bg-[#132230]/40 shadow-xs'
+                      : 'border-[#444139] bg-[#302F29] hover:border-[#5B533F]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Mail className="size-5 text-[#4A96D8]" />
+                    <span className="font-medium text-sm text-[#F5F1E8]">Email</span>
+                  </div>
+                  <p className="mt-2 text-xs text-[#9E988C]">HTML newsletter with product collection showcase</p>
+                </div>
+
+                <div
+                  onClick={() => setChannel('SMS')}
+                  className={`cursor-pointer rounded-xl border p-4 transition-all ${
+                    channel === 'SMS'
+                      ? 'border-[#C79338] bg-[#4A3B24]/40 shadow-xs'
+                      : 'border-[#444139] bg-[#302F29] hover:border-[#5B533F]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="size-5 text-[#DDBB72]" />
+                    <span className="font-medium text-sm text-[#F5F1E8]">SMS</span>
+                  </div>
+                  <p className="mt-2 text-xs text-[#9E988C]">Direct transactional & promotional SMS alerts</p>
+                </div>
               </div>
             </div>
           )}
@@ -385,110 +388,88 @@ export function CampaignBuilderModal({
           {/* STEP 5: Schedule */}
           {currentStep === 5 && (
             <div className="flex flex-col gap-4">
-              <span className="text-caption text-ink-soft">
-                Choose when this campaign should be queued and dispatched.
-              </span>
-
-              <div className="flex flex-col gap-3">
-                <label
-                  className={`flex items-center gap-3 rounded-xl border p-4 cursor-pointer ${
-                    scheduleType === 'now'
-                      ? 'border-brand-primary bg-brand-primary/5 ring-1 ring-brand-primary'
-                      : 'border-border bg-surface'
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="schedule"
-                    checked={scheduleType === 'now'}
-                    onChange={() => setScheduleType('now')}
-                  />
-                  <div>
-                    <span className="font-medium text-ink">Launch Immediately</span>
-                    <p className="text-caption text-ink-soft">Dispatch to recipient queue right after review</p>
-                  </div>
-                </label>
-
-                <label
-                  className={`flex flex-col gap-3 rounded-xl border p-4 cursor-pointer ${
-                    scheduleType === 'later'
-                      ? 'border-brand-primary bg-brand-primary/5 ring-1 ring-brand-primary'
-                      : 'border-border bg-surface'
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="radio"
-                      name="schedule"
-                      checked={scheduleType === 'later'}
-                      onChange={() => setScheduleType('later')}
-                    />
-                    <div>
-                      <span className="font-medium text-ink">Schedule for Later</span>
-                      <p className="text-caption text-ink-soft">Automatic dispatch at configured store time</p>
-                    </div>
-                  </div>
-
-                  {scheduleType === 'later' && (
-                    <input
-                      type="datetime-local"
-                      value={scheduledDateTime}
-                      onChange={(e) => setScheduledDateTime(e.target.value)}
-                      className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-ink focus:border-brand-primary focus:outline-hidden"
-                    />
-                  )}
-                </label>
+              <div>
+                <label className="text-xs font-medium text-[#C8C1B4]">Launch Timing</label>
               </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div
+                  onClick={() => setScheduleType('now')}
+                  className={`cursor-pointer rounded-xl border p-4 transition-all ${
+                    scheduleType === 'now'
+                      ? 'border-[#C49A45] bg-[#35332C] shadow-xs'
+                      : 'border-[#444139] bg-[#302F29] hover:border-[#5B533F]'
+                  }`}
+                >
+                  <span className="font-medium text-sm text-[#F5F1E8]">Send Immediately</span>
+                  <p className="mt-1 text-xs text-[#9E988C]">Dispatch to worker queue upon launch confirmation</p>
+                </div>
+
+                <div
+                  onClick={() => setScheduleType('later')}
+                  className={`cursor-pointer rounded-xl border p-4 transition-all ${
+                    scheduleType === 'later'
+                      ? 'border-[#C49A45] bg-[#35332C] shadow-xs'
+                      : 'border-[#444139] bg-[#302F29] hover:border-[#5B533F]'
+                  }`}
+                >
+                  <span className="font-medium text-sm text-[#F5F1E8]">Schedule for Later</span>
+                  <p className="mt-1 text-xs text-[#9E988C]">Automatic queue dispatch at selected date/time</p>
+                </div>
+              </div>
+
+              {scheduleType === 'later' && (
+                <div className="mt-2">
+                  <label className="text-xs font-medium text-[#C8C1B4]">Date & Time (Store Timezone)</label>
+                  <input
+                    type="datetime-local"
+                    value={scheduledDateTime}
+                    onChange={(e) => setScheduledDateTime(e.target.value)}
+                    className="mt-1 w-full rounded-lg border border-[#444139] bg-[#1C1B18] px-3 py-2 text-[#F5F1E8] focus:border-[#C49A45] focus:outline-hidden"
+                  />
+                </div>
+              )}
             </div>
           )}
 
-          {/* STEP 6: Review & Launch */}
+          {/* STEP 6: Review */}
           {currentStep === 6 && (
-            <div className="flex flex-col gap-4">
-              <div className="rounded-xl border border-border/80 bg-surface-raised/40 p-4 flex flex-col gap-3">
-                <div className="flex items-center justify-between border-b border-border/60 pb-2">
-                  <span className="text-caption text-ink-soft">Campaign</span>
-                  <span className="font-medium text-ink">{name || 'Untitled Campaign'}</span>
+            <div className="space-y-4">
+              <div className="rounded-xl border border-[#3A3831] bg-[#302F29] p-4 space-y-2.5">
+                <div className="flex justify-between text-xs">
+                  <span className="text-[#9E988C]">Campaign Name:</span>
+                  <strong className="text-[#F5F1E8]">{name}</strong>
                 </div>
-                <div className="flex items-center justify-between border-b border-border/60 pb-2">
-                  <span className="text-caption text-ink-soft">Audience</span>
-                  <span className="font-medium text-ink">
-                    {selectedSegment?.name} (~{selectedSegment?.estimatedCount} recipients)
-                  </span>
+                <div className="flex justify-between text-xs">
+                  <span className="text-[#9E988C]">Audience Target:</span>
+                  <strong className="text-[#DDBB72]">{selectedSegment?.name} ({selectedSegment?.estimatedCount} reach)</strong>
                 </div>
-                <div className="flex items-center justify-between border-b border-border/60 pb-2">
-                  <span className="text-caption text-ink-soft">Channel</span>
-                  <Badge tone="neutral" size="sm">{channel}</Badge>
+                <div className="flex justify-between text-xs">
+                  <span className="text-[#9E988C]">Channel:</span>
+                  <span className="font-semibold text-[#73D393] uppercase">{channel}</span>
                 </div>
-                <div className="flex items-center justify-between border-b border-border/60 pb-2">
-                  <span className="text-caption text-ink-soft">Dispatch Time</span>
-                  <span className="font-medium text-ink">
-                    {scheduleType === 'now' ? 'Immediate upon confirmation' : scheduledDateTime || 'Scheduled'}
-                  </span>
-                </div>
-                <div className="flex flex-col gap-1 pt-1">
-                  <span className="text-caption text-ink-soft">Message Preview</span>
-                  <p className="rounded-lg bg-surface border border-border/50 p-3 text-caption text-ink italic">
-                    {messageBody}
-                  </p>
+                <div className="flex justify-between text-xs">
+                  <span className="text-[#9E988C]">Timing:</span>
+                  <span className="text-[#F5F1E8]">{scheduleType === 'now' ? 'Immediate Broadcast' : scheduledDateTime}</span>
                 </div>
               </div>
 
-              <div className="rounded-lg bg-emerald-50 border border-emerald-200 p-3 text-caption text-emerald-900">
-                ✓ Campaign delivery adheres to verified customer opt-in consent and respects provider rate limits.
+              <div className="rounded-xl border border-[#3A3831] bg-[#1C1B18] p-4 text-xs">
+                <span className="font-semibold text-[#9E988C] block mb-1">Message Preview:</span>
+                <p className="text-[#F5F1E8] whitespace-pre-line">{messageBody}</p>
               </div>
             </div>
           )}
         </div>
 
         {/* Footer Navigation */}
-        <div className="flex shrink-0 items-center justify-between border-t border-border p-5 bg-surface rounded-b-2xl">
+        <div className="flex shrink-0 items-center justify-between border-t border-[#3A3831] p-5 bg-[#2B2A25] rounded-b-2xl">
           <Button
             variant="outline"
             type="button"
             disabled={currentStep === 1 || isSubmitting}
             onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1))}
-            className="flex items-center gap-1.5"
+            className="flex items-center gap-1.5 border-[#444139] bg-[#302F29] text-[#F5F1E8] hover:bg-[#35332C]"
           >
             <ArrowLeft className="size-4" /> Back
           </Button>
@@ -499,7 +480,7 @@ export function CampaignBuilderModal({
               type="button"
               disabled={currentStep === 1 && !name.trim()}
               onClick={() => setCurrentStep((prev) => Math.min(6, prev + 1))}
-              className="flex items-center gap-1.5"
+              className="flex items-center gap-1.5 bg-[#C49A45] hover:bg-[#DDBB72] text-[#151515] font-semibold"
             >
               Next <ArrowRight className="size-4" />
             </Button>
@@ -509,7 +490,7 @@ export function CampaignBuilderModal({
               type="button"
               disabled={isSubmitting || !name.trim()}
               onClick={handleLaunch}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 bg-[#C49A45] hover:bg-[#DDBB72] text-[#151515] font-semibold"
             >
               {isSubmitting ? (
                 <>

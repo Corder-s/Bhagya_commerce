@@ -70,6 +70,27 @@
   --color-info: var(--bhagya-info);
   --color-info-surface: var(--bhagya-info-bg);
 
+  /* ---- Merchant Workspace Theme ----------------------------------------- */
+  --color-merchant-bg: var(--merchant-bg);
+  --color-merchant-surface: var(--merchant-surface);
+  --color-merchant-surface-2: var(--merchant-surface-2);
+  --color-merchant-surface-elevated: var(--merchant-surface-elevated);
+  --color-merchant-header: var(--merchant-header);
+  --color-merchant-border: var(--merchant-border);
+  --color-merchant-border-soft: var(--merchant-border-soft);
+  --color-merchant-text: var(--merchant-text);
+  --color-merchant-text-secondary: var(--merchant-text-secondary);
+  --color-merchant-text-muted: var(--merchant-text-muted);
+  --color-merchant-gold: var(--merchant-gold);
+  --color-merchant-gold-light: var(--merchant-gold-light);
+  --color-merchant-gold-soft: var(--merchant-gold-soft);
+  --color-merchant-success: var(--merchant-success);
+  --color-merchant-success-soft: var(--merchant-success-soft);
+  --color-merchant-error: var(--merchant-error);
+  --color-merchant-error-soft: var(--merchant-error-soft);
+  --color-merchant-warning: var(--merchant-warning);
+
+
   /* ---- Typography ------------------------------------------------------- */
   --font-sans: var(--font-inter), var(--bhagya-font-sans-token);
   --font-display: var(--font-cormorant), var(--bhagya-font-display-token);

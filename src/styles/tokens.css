@@ -1,116 +1,155 @@
 /* =============================================================================
-   BHAGYA COMMERCE — GLOBAL DESIGN TOKENS
-   Single source of truth for the locked Bhagya Commerce design system.
-   Palette: Black/Charcoal Header + Warm Ivory Canvas + Warm White Cards +
-            Rich Gold Accents + Subtle Beige Borders + Dark Ink Text.
+   BHAGYA COMMERCE — GLOBAL SEMANTIC DESIGN TOKENS
+   Single source of truth for Bhagya Commerce Light & Dark Mode.
+   Palette: Warm Ivory/Charcoal Canvas + High Contrast Surfaces +
+            Bhagya Heritage Gold + Semantic Status + Low-Distraction Shadows.
    ============================================================================= */
 
 @layer base {
   :root {
     /* -------------------------------------------------------------------------
-       DARK BRAND (Charcoals & Blacks)
+       LIGHT THEME (Default)
        ------------------------------------------------------------------------- */
-    --bhagya-black: #151515;
-    --bhagya-charcoal: #1D1C19;
-    --bhagya-charcoal-soft: #26241F;
-    --bhagya-charcoal-light: #26241F;
-    --bhagya-charcoal-border: #33302A;
+    --color-background: #F7F3EA;
+    --color-surface: #FFFDF8;
+    --color-surface-2: #F1E9DA;
+    --color-surface-elevated: #FFFFFF;
+    --color-surface-muted: #F1E9DA;
 
-    /* -------------------------------------------------------------------------
-       GOLD
-       ------------------------------------------------------------------------- */
-    --bhagya-gold: #C49A45;
-    --bhagya-gold-dark: #9A6A20;
+    --color-text-primary: #181714;
+    --color-text-secondary: #5E5A52;
+    --color-text-muted: #858078;
+    --color-text-disabled: #A6A098;
+    --color-text-inverse: #FFFDF8;
+    --color-text-inverse-muted: #C8C1B4;
+
+    --color-border: #E2D7C3;
+    --color-border-soft: #ECE3D4;
+    --color-border-strong: #D2C2A5;
+    --color-line-inverse: rgb(255 253 248 / 0.14);
+
+    --color-brand: #C49A45;
+    --color-brand-hover: #A97D2B;
+    --color-brand-soft: #F1E4C7;
+    --color-brand-surface: #FAF5EA;
+
+    --color-success: #2F7A4A;
+    --color-success-soft: #E7F1E9;
+    --color-success-bg: #E7F1E9;
+    --color-success-dark: #236039;
+
+    --color-error: #B74438;
+    --color-error-soft: #F8EAE7;
+    --color-error-bg: #F8EAE7;
+
+    --color-warning: #B87922;
+    --color-warning-soft: #FBF0D9;
+    --color-warning-bg: #FBF0D9;
+
+    --color-info: #6E7D75;
+    --color-info-soft: #EAF0EC;
+    --color-info-bg: #EAF0EC;
+
+    /* ---- Bhagya Named Semantic Aliases (Light Mode) ------------------------- */
+    --bhagya-black: #181714;
+    --bhagya-charcoal: #26241F;
+    --bhagya-charcoal-soft: #33302A;
+    --bhagya-charcoal-light: #3D3932;
+    --bhagya-charcoal-border: #E2D7C3;
+
+    --bhagya-gold: var(--color-brand);
+    --bhagya-gold-dark: var(--color-brand-hover);
     --bhagya-gold-light: #DDBB72;
-    --bhagya-gold-soft: #F3E6C8;
-    --bhagya-gold-surface: #FAF5EA;
+    --bhagya-gold-soft: var(--color-brand-soft);
+    --bhagya-gold-surface: var(--color-brand-surface);
 
-    /* -------------------------------------------------------------------------
-       WARM BACKGROUNDS
-       ------------------------------------------------------------------------- */
-    --bhagya-ivory: #F8F4EC;
-    --bhagya-cream: #F3EBDD;
-    --bhagya-warm-white: #FFFDF8;
-    --bhagya-white: #FFFFFF;
+    --bhagya-ivory: var(--color-background);
+    --bhagya-cream: var(--color-surface-2);
+    --bhagya-warm-white: var(--color-surface);
+    --bhagya-white: var(--color-surface-elevated);
     --bhagya-sand: #EDE3D1;
     --bhagya-sand-light: #F6F0E6;
     --bhagya-sand-deep: #E2D5BE;
 
-    /* -------------------------------------------------------------------------
-       BORDERS
-       ------------------------------------------------------------------------- */
-    --bhagya-border: #E5D9C5;
-    --bhagya-border-soft: #EDE4D5;
-    --bhagya-border-strong: #D7C6A8;
-    --bhagya-border-light: #EDE4D5;
-    --bhagya-line-inverse: rgb(255 253 248 / 0.14);
+    --bhagya-border: var(--color-border);
+    --bhagya-border-soft: var(--color-border-soft);
+    --bhagya-border-strong: var(--color-border-strong);
+    --bhagya-border-light: var(--color-border-soft);
+    --bhagya-line-inverse: var(--color-line-inverse);
 
-    /* -------------------------------------------------------------------------
-       TEXT
-       ------------------------------------------------------------------------- */
-    --bhagya-text: #181818;
-    --bhagya-text-secondary: #5E5A52;
-    --bhagya-text-muted: #858078;
-    --bhagya-text-disabled: #A6A098;
-    --bhagya-text-faint: #A6A098;
-    --bhagya-text-inverse: #FFFDF8;
-    --bhagya-text-inverse-muted: #BDB6AA;
+    --bhagya-text: var(--color-text-primary);
+    --bhagya-text-secondary: var(--color-text-secondary);
+    --bhagya-text-muted: var(--color-text-muted);
+    --bhagya-text-disabled: var(--color-text-disabled);
+    --bhagya-text-faint: var(--color-text-disabled);
+    --bhagya-text-inverse: var(--color-text-inverse);
+    --bhagya-text-inverse-muted: var(--color-text-inverse-muted);
 
-    /* -------------------------------------------------------------------------
-       SUCCESS, ERROR, WARNING, INFO
-       ------------------------------------------------------------------------- */
-    --bhagya-success: #2F7A4A;
-    --bhagya-success-soft: #E9F3EB;
-    --bhagya-success-bg: #E9F3EB;
-    --bhagya-success-dark: #236039;
+    --bhagya-success: var(--color-success);
+    --bhagya-success-soft: var(--color-success-soft);
+    --bhagya-success-bg: var(--color-success-bg);
+    --bhagya-success-dark: var(--color-success-dark);
 
-    --bhagya-error: #B74438;
-    --bhagya-error-soft: #F9ECE9;
-    --bhagya-error-bg: #F9ECE9;
+    --bhagya-error: var(--color-error);
+    --bhagya-error-soft: var(--color-error-soft);
+    --bhagya-error-bg: var(--color-error-bg);
 
-    --bhagya-warning: #B87922;
-    --bhagya-warning-soft: #FBF1DC;
-    --bhagya-warning-bg: #FBF1DC;
+    --bhagya-warning: var(--color-warning);
+    --bhagya-warning-soft: var(--color-warning-soft);
+    --bhagya-warning-bg: var(--color-warning-bg);
 
-    --bhagya-info: #2A6496;
-    --bhagya-info-bg: #EBF3FB;
+    --bhagya-info: var(--color-info);
+    --bhagya-info-bg: var(--color-info-bg);
 
-    /* -------------------------------------------------------------------------
-       SYSTEM ALIASES
-       ------------------------------------------------------------------------- */
-    --bhagya-primary: var(--bhagya-gold);
-    --bhagya-primary-hover: var(--bhagya-gold-dark);
+    --bhagya-primary: var(--color-brand);
+    --bhagya-primary-hover: var(--color-brand-hover);
     --bhagya-primary-active: #825712;
     --bhagya-primary-disabled: #D9C59C;
     --bhagya-deep: var(--bhagya-charcoal);
-    --bhagya-deep-hover: var(--bhagya-black);
-    --bhagya-botanical: var(--bhagya-success);
-    --bhagya-soft-green: var(--bhagya-success-bg);
+    --bhagya-deep-hover: #151515;
+    --bhagya-botanical: var(--color-success);
+    --bhagya-soft-green: var(--color-success-bg);
     --bhagya-soft-green-strong: #D4EBD8;
     --bhagya-botanical-soft: #4E9A68;
 
-    --bhagya-ink: var(--bhagya-text);
-    --bhagya-ink-soft: var(--bhagya-text-secondary);
-    --bhagya-ink-subtle: var(--bhagya-text-muted);
-    --bhagya-ink-faint: var(--bhagya-text-disabled);
-    --bhagya-ink-inverse: var(--bhagya-text-inverse);
-    --bhagya-ink-inverse-soft: var(--bhagya-text-inverse-muted);
+    --bhagya-ink: var(--color-text-primary);
+    --bhagya-ink-soft: var(--color-text-secondary);
+    --bhagya-ink-subtle: var(--color-text-muted);
+    --bhagya-ink-faint: var(--color-text-disabled);
+    --bhagya-ink-inverse: var(--color-text-inverse);
+    --bhagya-ink-inverse-soft: var(--color-text-inverse-muted);
 
-    --bhagya-line: var(--bhagya-border);
-    --bhagya-line-strong: var(--bhagya-border-strong);
-    --bhagya-gold-deep: var(--bhagya-gold-dark);
+    --bhagya-line: var(--color-border);
+    --bhagya-line-strong: var(--color-border-strong);
+    --bhagya-gold-deep: var(--color-brand-hover);
 
-    /* -------------------------------------------------------------------------
-       FOCUS RING
-       ------------------------------------------------------------------------- */
-    --focus-ring: var(--bhagya-gold);
-    --focus-ring-inverse: var(--bhagya-gold-light);
+    /* ---- Merchant Workspace Tokens (Semantic Bridge) ----------------------- */
+    --merchant-bg: var(--color-background);
+    --merchant-surface: var(--color-surface);
+    --merchant-surface-2: var(--color-surface-2);
+    --merchant-surface-elevated: var(--color-surface-elevated);
+    --merchant-header: #1B1A17;
+    --merchant-border: var(--color-border);
+    --merchant-border-soft: var(--color-border-soft);
+    --merchant-text: var(--color-text-primary);
+    --merchant-text-secondary: var(--color-text-secondary);
+    --merchant-text-muted: var(--color-text-muted);
+    --merchant-gold: var(--color-brand);
+    --merchant-gold-light: #DDBB72;
+    --merchant-gold-soft: var(--color-brand-soft);
+    --merchant-success: var(--color-success);
+    --merchant-success-soft: var(--color-success-soft);
+    --merchant-error: var(--color-error);
+    --merchant-error-soft: var(--color-error-soft);
+    --merchant-warning: var(--color-warning);
+
+    /* ---- Focus Rings -------------------------------------------------------- */
+    --focus-ring: var(--color-brand);
+    --focus-ring-inverse: #DDBB72;
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
 
-    /* -------------------------------------------------------------------------
-       TYPOGRAPHY
-       ------------------------------------------------------------------------- */
+    /* ---- Typography --------------------------------------------------------- */
     --bhagya-font-display-token: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
     --bhagya-font-sans-token: "Inter", "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
@@ -118,9 +157,7 @@
     --tracking-display: -0.015em;
     --tracking-heading: -0.012em;
 
-    /* -------------------------------------------------------------------------
-       SPACING & LAYOUT
-       ------------------------------------------------------------------------- */
+    /* ---- Spacing & Layout --------------------------------------------------- */
     --spacing-unit: 0.25rem;
     --space-2xs: 0.25rem;
     --space-xs: 0.5rem;
@@ -140,9 +177,7 @@
     --header-h-sm: 4rem;
     --tabbar-h: 4rem;
 
-    /* -------------------------------------------------------------------------
-       RADIUS & SHADOWS
-       ------------------------------------------------------------------------- */
+    /* ---- Radius & Shadows (Light Theme) ------------------------------------- */
     --radius-xs: 4px;
     --radius-sm: 8px;
     --radius-md: 12px;
@@ -150,16 +185,14 @@
     --radius-xl: 20px;
     --radius-pill: 9999px;
 
-    --shadow-color: 23 23 23;
+    --shadow-color: 40 30 15;
     --shadow-xs: 0 1px 2px rgb(var(--shadow-color) / 0.04);
-    --shadow-sm: 0 2px 4px rgb(var(--shadow-color) / 0.05), 0 1px 2px rgb(var(--shadow-color) / 0.03);
-    --shadow-md: 0 4px 14px -2px rgb(var(--shadow-color) / 0.07), 0 2px 6px -2px rgb(var(--shadow-color) / 0.04);
+    --shadow-sm: 0 2px 10px rgb(var(--shadow-color) / 0.05);
+    --shadow-md: 0 8px 24px rgb(var(--shadow-color) / 0.08);
     --shadow-lg: 0 12px 28px -6px rgb(var(--shadow-color) / 0.09), 0 4px 10px -3px rgb(var(--shadow-color) / 0.05);
     --shadow-xl: 0 20px 48px -12px rgb(var(--shadow-color) / 0.12);
 
-    /* -------------------------------------------------------------------------
-       MOTION
-       ------------------------------------------------------------------------- */
+    /* ---- Motion ------------------------------------------------------------- */
     --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-brand-in-out: cubic-bezier(0.65, 0, 0.35, 1);
     --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
@@ -169,9 +202,7 @@
     --duration-slow: 350ms;
     --duration-slower: 500ms;
 
-    /* -------------------------------------------------------------------------
-       Z-INDEX
-       ------------------------------------------------------------------------- */
+    /* ---- Z-Index ------------------------------------------------------------ */
     --z-below: -1;
     --z-base: 0;
     --z-raised: 10;
@@ -184,22 +215,137 @@
     --z-toast: 700;
     --z-tooltip: 800;
 
-    /* -------------------------------------------------------------------------
-       CONTAINERS
-       ------------------------------------------------------------------------- */
+    /* ---- Containers --------------------------------------------------------- */
     --container-narrow: 42rem;
     --container-content: 74rem;
     --container-wide: 84rem;
     --container-edge: 92rem;
+  }
 
-    /* -------------------------------------------------------------------------
-       MERCHANT WORKSPACE TOKENS
-       ------------------------------------------------------------------------- */
+  /* ===========================================================================
+     DARK THEME (Activated via .dark, [data-theme="dark"], html.dark)
+     Soft layered charcoal system + warm gold + high contrast typography.
+     =========================================================================== */
+  .dark,
+  [data-theme="dark"] {
+    --color-background: #24231F;
+    --color-surface: #2B2A25;
+    --color-surface-2: #302F29;
+    --color-surface-elevated: #35332C;
+    --color-surface-muted: #302F29;
+
+    --color-text-primary: #F5F1E8;
+    --color-text-secondary: #C8C1B4;
+    --color-text-muted: #9E988C;
+    --color-text-disabled: #6E685D;
+    --color-text-inverse: #181714;
+    --color-text-inverse-muted: #5E5A52;
+
+    --color-border: #444139;
+    --color-border-soft: #3A3831;
+    --color-border-strong: #575042;
+    --color-line-inverse: rgb(255 253 248 / 0.16);
+
+    --color-brand: #C49A45;
+    --color-brand-hover: #DDBB72;
+    --color-brand-soft: #493B24;
+    --color-brand-surface: #302715;
+
+    --color-success: #43A66A;
+    --color-success-soft: #294C38;
+    --color-success-bg: #294C38;
+    --color-success-dark: #2F7A4A;
+
+    --color-error: #D05A4A;
+    --color-error-soft: #4A2924;
+    --color-error-bg: #4A2924;
+
+    --color-warning: #C79338;
+    --color-warning-soft: #4A3B24;
+    --color-warning-bg: #4A3B24;
+
+    --color-info: #9DA99F;
+    --color-info-soft: #27332C;
+    --color-info-bg: #27332C;
+
+    /* ---- Bhagya Named Semantic Aliases (Dark Mode) -------------------------- */
+    --bhagya-black: #1B1A17;
+    --bhagya-charcoal: #24231F;
+    --bhagya-charcoal-soft: #2B2A25;
+    --bhagya-charcoal-light: #302F29;
+    --bhagya-charcoal-border: #444139;
+
+    --bhagya-gold: var(--color-brand);
+    --bhagya-gold-dark: #B18332;
+    --bhagya-gold-light: var(--color-brand-hover);
+    --bhagya-gold-soft: var(--color-brand-soft);
+    --bhagya-gold-surface: var(--color-brand-surface);
+
+    --bhagya-ivory: var(--color-background);
+    --bhagya-cream: var(--color-surface-2);
+    --bhagya-warm-white: var(--color-surface);
+    --bhagya-white: var(--color-surface-elevated);
+    --bhagya-sand: #282620;
+    --bhagya-sand-light: #24231F;
+    --bhagya-sand-deep: #302F29;
+
+    --bhagya-border: var(--color-border);
+    --bhagya-border-soft: var(--color-border-soft);
+    --bhagya-border-strong: var(--color-border-strong);
+    --bhagya-border-light: var(--color-border-soft);
+    --bhagya-line-inverse: var(--color-line-inverse);
+
+    --bhagya-text: var(--color-text-primary);
+    --bhagya-text-secondary: var(--color-text-secondary);
+    --bhagya-text-muted: var(--color-text-muted);
+    --bhagya-text-disabled: var(--color-text-disabled);
+    --bhagya-text-faint: var(--color-text-disabled);
+    --bhagya-text-inverse: #181714;
+    --bhagya-text-inverse-muted: #5E5A52;
+
+    --bhagya-success: var(--color-success);
+    --bhagya-success-soft: var(--color-success-soft);
+    --bhagya-success-bg: var(--color-success-bg);
+    --bhagya-success-dark: var(--color-success-dark);
+
+    --bhagya-error: var(--color-error);
+    --bhagya-error-soft: var(--color-error-soft);
+    --bhagya-error-bg: var(--color-error-bg);
+
+    --bhagya-warning: var(--color-warning);
+    --bhagya-warning-soft: var(--color-warning-soft);
+    --bhagya-warning-bg: var(--color-warning-bg);
+
+    --bhagya-info: var(--color-info);
+    --bhagya-info-bg: var(--color-info-bg);
+
+    --bhagya-primary: var(--color-brand);
+    --bhagya-primary-hover: var(--color-brand-hover);
+    --bhagya-primary-active: #C49A45;
+    --bhagya-primary-disabled: #473B23;
+    --bhagya-deep: #1B1A17;
+    --bhagya-deep-hover: #141311;
+    --bhagya-botanical: var(--color-success);
+    --bhagya-soft-green: var(--color-success-bg);
+    --bhagya-soft-green-strong: #294C38;
+
+    --bhagya-ink: var(--color-text-primary);
+    --bhagya-ink-soft: var(--color-text-secondary);
+    --bhagya-ink-subtle: var(--color-text-muted);
+    --bhagya-ink-faint: var(--color-text-disabled);
+    --bhagya-ink-inverse: #181714;
+    --bhagya-ink-inverse-soft: #5E5A52;
+
+    --bhagya-line: var(--color-border);
+    --bhagya-line-strong: var(--color-border-strong);
+    --bhagya-gold-deep: var(--color-brand);
+
+    /* ---- Merchant Workspace Tokens (Dark Mode) ----------------------------- */
     --merchant-bg: #24231F;
     --merchant-surface: #2B2A25;
     --merchant-surface-2: #302F29;
     --merchant-surface-elevated: #35332C;
-    --merchant-header: #1C1B18;
+    --merchant-header: #1B1A17;
     --merchant-border: #444139;
     --merchant-border-soft: #3A3831;
     --merchant-text: #F5F1E8;
@@ -207,91 +353,21 @@
     --merchant-text-muted: #9E988C;
     --merchant-gold: #C49A45;
     --merchant-gold-light: #DDBB72;
-    --merchant-gold-soft: #5A4725;
+    --merchant-gold-soft: #493B24;
     --merchant-success: #43A66A;
     --merchant-success-soft: #294C38;
     --merchant-error: #D05A4A;
     --merchant-error-soft: #4A2924;
     --merchant-warning: #C79338;
-  }
 
-  .dark,
-  [data-theme="dark"] {
-    --bhagya-black: #0C0B0A;
-    --bhagya-charcoal: #141311;
-    --bhagya-charcoal-soft: #1E1D19;
-    --bhagya-charcoal-light: #25241F;
-    --bhagya-charcoal-border: #333028;
+    /* ---- Focus Rings (Dark Mode) ------------------------------------------- */
+    --focus-ring: var(--color-brand);
+    --focus-ring-inverse: #DDBB72;
 
-    --bhagya-gold: #D4A84B;
-    --bhagya-gold-dark: #B18332;
-    --bhagya-gold-light: #EAC97D;
-    --bhagya-gold-soft: #2E2514;
-    --bhagya-gold-surface: #221B0F;
-
-    --bhagya-ivory: #121110;
-    --bhagya-cream: #181714;
-    --bhagya-warm-white: #1C1B17;
-    --bhagya-white: #23221C;
-    --bhagya-sand: #1E1C18;
-    --bhagya-sand-light: #181714;
-    --bhagya-sand-deep: #282620;
-
-    --bhagya-border: #2B2923;
-    --bhagya-border-soft: #22201B;
-    --bhagya-border-strong: #3D3930;
-    --bhagya-border-light: #22201B;
-    --bhagya-line-inverse: rgb(255 253 248 / 0.16);
-
-    --bhagya-text: #F6F2E9;
-    --bhagya-text-secondary: #C2BCB0;
-    --bhagya-text-muted: #8E877B;
-    --bhagya-text-disabled: #5E5951;
-    --bhagya-text-faint: #5E5951;
-    --bhagya-text-inverse: #FFFDF8;
-    --bhagya-text-inverse-muted: #BDB6AA;
-
-    --bhagya-success: #3EB868;
-    --bhagya-success-soft: #14281B;
-    --bhagya-success-bg: #14281B;
-    --bhagya-success-dark: #2F7A4A;
-
-    --bhagya-error: #E05648;
-    --bhagya-error-soft: #2D1714;
-    --bhagya-error-bg: #2D1714;
-
-    --bhagya-warning: #DDA245;
-    --bhagya-warning-soft: #2B2111;
-    --bhagya-warning-bg: #2B2111;
-
-    --bhagya-info: #4A96D8;
-    --bhagya-info-bg: #132230;
-
-    --bhagya-primary: var(--bhagya-gold);
-    --bhagya-primary-hover: var(--bhagya-gold-light);
-    --bhagya-primary-active: #C49A45;
-    --bhagya-primary-disabled: #473B23;
-    --bhagya-deep: #0C0B0A;
-    --bhagya-deep-hover: #141311;
-    --bhagya-botanical: var(--bhagya-success);
-    --bhagya-soft-green: var(--bhagya-success-bg);
-    --bhagya-soft-green-strong: #1D3B27;
-
-    --bhagya-ink: var(--bhagya-text);
-    --bhagya-ink-soft: var(--bhagya-text-secondary);
-    --bhagya-ink-subtle: var(--bhagya-text-muted);
-    --bhagya-ink-faint: var(--bhagya-text-disabled);
-    --bhagya-ink-inverse: var(--bhagya-text-inverse);
-    --bhagya-ink-inverse-soft: var(--bhagya-text-inverse-muted);
-
-    --bhagya-line: var(--bhagya-border);
-    --bhagya-line-strong: var(--bhagya-border-strong);
-    --bhagya-gold-deep: var(--bhagya-gold);
-
-    --focus-ring: var(--bhagya-gold);
-    --focus-ring-inverse: var(--bhagya-gold-light);
-
+    /* ---- Shadows (Dark Theme) ---------------------------------------------- */
     --shadow-color: 0 0 0;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.18);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
   }
 
   [data-surface="inverse"] {

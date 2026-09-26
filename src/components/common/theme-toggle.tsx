@@ -22,7 +22,7 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
     return (
       <div
         className={cn(
-          "size-9 rounded-xl border border-transparent bg-white/5 opacity-60",
+          "size-9 rounded-xl border border-transparent bg-surface-sunken opacity-60",
           className,
         )}
         aria-hidden="true"
@@ -36,7 +36,7 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
         role="radiogroup"
         aria-label="Color theme selection"
         className={cn(
-          "inline-flex items-center rounded-xl p-1 bg-[#26241F] border border-[#33302A] text-xs font-medium",
+          "inline-flex items-center rounded-xl p-1 bg-surface-sunken border border-line text-xs font-medium",
           className,
         )}
       >
@@ -48,8 +48,8 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
           className={cn(
             "flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer",
             theme === "light"
-              ? "bg-[#C49A45] text-[#151515] font-semibold shadow-xs"
-              : "text-zinc-400 hover:text-white",
+              ? "bg-primary text-[#181714] font-semibold shadow-xs"
+              : "text-ink-soft hover:text-ink",
           )}
         >
           <Sun className="size-3.5" />
@@ -63,8 +63,8 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
           className={cn(
             "flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer",
             theme === "dark"
-              ? "bg-[#C49A45] text-[#151515] font-semibold shadow-xs"
-              : "text-zinc-400 hover:text-white",
+              ? "bg-primary text-[#181714] font-semibold shadow-xs"
+              : "text-ink-soft hover:text-ink",
           )}
         >
           <Moon className="size-3.5" />
@@ -78,8 +78,8 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
           className={cn(
             "flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all cursor-pointer",
             theme === "system"
-              ? "bg-[#C49A45] text-[#151515] font-semibold shadow-xs"
-              : "text-zinc-400 hover:text-white",
+              ? "bg-primary text-[#181714] font-semibold shadow-xs"
+              : "text-ink-soft hover:text-ink",
           )}
         >
           <Monitor className="size-3.5" />
@@ -99,15 +99,15 @@ export function ThemeToggle({ className, variant = "icon" }: ThemeToggleProps) {
       title={`Switch to ${isDark ? "light" : "dark"} mode`}
       className={cn(
         "relative flex size-9 items-center justify-center rounded-xl",
-        "bg-[#26241F] hover:bg-[#33302A] border border-[#33302A] hover:border-[#C49A45]/50",
-        "text-zinc-300 hover:text-[#C49A45] transition-all duration-base cursor-pointer",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C49A45]",
+        "bg-surface hover:bg-surface-sunken border border-line hover:border-primary/50",
+        "text-ink hover:text-primary transition-all duration-base cursor-pointer",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
         className,
       )}
     >
       <Sun
         className={cn(
-          "size-4 transition-transform duration-slow",
+          "size-4 transition-transform duration-slow text-ink",
           isDark ? "rotate-90 scale-0 opacity-0 absolute" : "rotate-0 scale-100 opacity-100",
         )}
       />

@@ -5,6 +5,7 @@ import Link from "next/link";
 import * as React from "react";
 
 import { BrandMark } from "@/components/common/brand-mark";
+import { ThemeToggle } from "@/components/common/theme-toggle";
 import { MerchantSidebar } from "@/components/navigation/merchant-sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -118,6 +119,7 @@ export function MerchantShell({
               Merchant Workspace
             </p>
             <div className="flex items-center gap-2">
+              <ThemeToggle />
               <IconButton
                 label="Notifications"
                 tooltip="Notifications"

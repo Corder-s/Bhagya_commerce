@@ -1,20 +1,33 @@
 /* =============================================================================
    TAILWIND THEME BRIDGE
-   Exposes the raw tokens in `tokens.css` as Tailwind v4 theme variables.
+   Exposes the semantic tokens in `tokens.css` as Tailwind v4 theme variables.
    ============================================================================= */
 
 @theme {
-  /* ---- Colour: Brand & Gold --------------------------------------------- */
-  --color-primary: var(--bhagya-gold);
-  --color-primary-hover: var(--bhagya-gold-dark);
-  --color-primary-active: var(--bhagya-gold-dark);
-  --color-primary-disabled: var(--bhagya-primary-disabled);
-  --color-primary-foreground: #171717;
+  /* ---- Colour: Semantic Core -------------------------------------------- */
+  --color-background: var(--color-background);
+  --color-canvas: var(--color-background);
+  --color-canvas-deep: var(--color-surface-2);
 
-  --color-gold: var(--bhagya-gold);
-  --color-gold-dark: var(--bhagya-gold-dark);
+  --color-surface: var(--color-surface);
+  --color-surface-raised: var(--color-surface-elevated);
+  --color-surface-sunken: var(--color-surface-2);
+  --color-surface-muted: var(--color-surface-muted);
+
+  --color-primary: var(--color-brand);
+  --color-primary-hover: var(--color-brand-hover);
+  --color-primary-active: var(--color-brand-hover);
+  --color-primary-disabled: var(--bhagya-primary-disabled);
+  --color-primary-foreground: #181714;
+
+  --color-brand: var(--color-brand);
+  --color-brand-hover: var(--color-brand-hover);
+  --color-brand-soft: var(--color-brand-soft);
+
+  --color-gold: var(--color-brand);
+  --color-gold-dark: var(--color-brand-hover);
   --color-gold-light: var(--bhagya-gold-light);
-  --color-gold-soft: var(--bhagya-gold-soft);
+  --color-gold-soft: var(--color-brand-soft);
   --color-gold-surface: var(--bhagya-gold-surface);
 
   --color-black: var(--bhagya-black);
@@ -26,49 +39,51 @@
   --color-deep-soft: var(--bhagya-charcoal-soft);
   --color-deep-hover: var(--bhagya-black);
 
-  /* ---- Colour: Surfaces ------------------------------------------------- */
-  --color-canvas: var(--bhagya-ivory);
-  --color-canvas-deep: var(--bhagya-cream);
-  --color-surface: var(--bhagya-warm-white);
-  --color-surface-raised: var(--bhagya-white);
-  --color-surface-sunken: var(--bhagya-cream);
   --color-sand: var(--bhagya-sand);
   --color-sand-light: var(--bhagya-sand-light);
   --color-sand-strong: var(--bhagya-sand-deep);
 
   /* ---- Colour: Ink / Text ----------------------------------------------- */
-  --color-ink: var(--bhagya-text);
-  --color-ink-soft: var(--bhagya-text-secondary);
-  --color-ink-subtle: var(--bhagya-text-muted);
-  --color-ink-faint: var(--bhagya-text-faint);
-  --color-ink-inverse: var(--bhagya-text-inverse);
-  --color-ink-inverse-soft: var(--bhagya-text-inverse-muted);
+  --color-ink: var(--color-text-primary);
+  --color-ink-soft: var(--color-text-secondary);
+  --color-ink-subtle: var(--color-text-muted);
+  --color-ink-faint: var(--color-text-disabled);
+  --color-ink-inverse: var(--color-text-inverse);
+  --color-ink-inverse-soft: var(--color-text-inverse-muted);
+
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-disabled: var(--color-text-disabled);
 
   /* ---- Colour: Lines / Borders ------------------------------------------ */
-  --color-line: var(--bhagya-border);
-  --color-line-strong: var(--bhagya-border-strong);
-  --color-line-inverse: var(--bhagya-line-inverse);
-  --color-border: var(--bhagya-border);
+  --color-line: var(--color-border);
+  --color-line-strong: var(--color-border-strong);
+  --color-line-inverse: var(--color-line-inverse);
+  --color-border: var(--color-border);
+  --color-border-soft: var(--color-border-soft);
+  --color-border-strong: var(--color-border-strong);
 
   /* ---- Colour: Feedback ------------------------------------------------- */
-  --color-success: var(--bhagya-success);
-  --color-success-surface: var(--bhagya-success-bg);
-  --color-success-bg: var(--bhagya-success-bg);
-  --color-soft-green: var(--bhagya-success-bg);
-  --color-soft-green-strong: #d4ebd8;
-  --color-botanical: var(--bhagya-success);
+  --color-success: var(--color-success);
+  --color-success-surface: var(--color-success-bg);
+  --color-success-bg: var(--color-success-bg);
+  --color-soft-green: var(--color-success-bg);
+  --color-soft-green-strong: #294C38;
+  --color-botanical: var(--color-success);
 
-  --color-warning: var(--bhagya-warning);
-  --color-warning-surface: var(--bhagya-warning-bg);
-  --color-warning-bg: var(--bhagya-warning-bg);
+  --color-warning: var(--color-warning);
+  --color-warning-surface: var(--color-warning-bg);
+  --color-warning-bg: var(--color-warning-bg);
 
-  --color-danger: var(--bhagya-error);
-  --color-danger-surface: var(--bhagya-error-bg);
-  --color-error: var(--bhagya-error);
-  --color-error-bg: var(--bhagya-error-bg);
+  --color-danger: var(--color-error);
+  --color-danger-surface: var(--color-error-bg);
+  --color-error: var(--color-error);
+  --color-error-bg: var(--color-error-bg);
 
-  --color-info: var(--bhagya-info);
-  --color-info-surface: var(--bhagya-info-bg);
+  --color-info: var(--color-info);
+  --color-info-surface: var(--color-info-bg);
+  --color-info-bg: var(--color-info-bg);
 
   /* ---- Merchant Workspace Theme ----------------------------------------- */
   --color-merchant-bg: var(--merchant-bg);
@@ -89,7 +104,6 @@
   --color-merchant-error: var(--merchant-error);
   --color-merchant-error-soft: var(--merchant-error-soft);
   --color-merchant-warning: var(--merchant-warning);
-
 
   /* ---- Typography ------------------------------------------------------- */
   --font-sans: var(--font-inter), var(--bhagya-font-sans-token);
@@ -177,7 +191,7 @@
   *,
   *::before,
   *::after {
-    border-color: var(--bhagya-border);
+    border-color: var(--color-border);
   }
 
   html {
@@ -186,14 +200,15 @@
   }
 
   body {
-    background-color: var(--bhagya-ivory);
-    color: var(--bhagya-text);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
     font-family: var(--font-sans);
     font-size: var(--text-body-md);
     line-height: 1.55;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
     overflow-x: clip;
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
   }
 
   h1,
@@ -201,7 +216,7 @@
   h3,
   h4 {
     text-wrap: balance;
-    color: var(--bhagya-text);
+    color: var(--color-text-primary);
   }
 
   p {
@@ -219,8 +234,8 @@
   }
 
   ::selection {
-    background-color: var(--bhagya-gold-soft);
-    color: var(--bhagya-charcoal);
+    background-color: var(--color-brand-soft);
+    color: var(--color-text-primary);
   }
 
   input,
@@ -290,7 +305,7 @@
 }
 
 @utility canvas-atmosphere {
-  background-color: var(--bhagya-ivory);
+  background-color: var(--color-background);
   background-image:
     radial-gradient(
       60rem 36rem at 5% -5%,
@@ -299,7 +314,7 @@
     ),
     radial-gradient(
       45rem 30rem at 98% 3%,
-      color-mix(in oklab, var(--bhagya-gold-soft) 45%, transparent),
+      color-mix(in oklab, var(--color-brand-soft) 45%, transparent),
       transparent
     );
 }
@@ -326,61 +341,50 @@
   }
 }
 
-/* Approved Bhagya Gradients & Theme Utilities */
+/* =============================================================================
+   APPROVED BHAGYA GRADIENTS
+   ============================================================================= */
 @utility bg-gradient-hero-warm {
-  background-image: linear-gradient(135deg, var(--bhagya-warm-white) 0%, var(--bhagya-ivory) 55%, var(--bhagya-cream) 100%);
+  background-image: linear-gradient(135deg, #FFFDF8 0%, #F7F3EA 60%, #F1E9DA 100%);
 }
 
 @utility bg-gradient-gold-soft {
-  background-image: linear-gradient(135deg, var(--bhagya-gold-soft) 0%, var(--bhagya-warm-white) 100%);
+  background-image: linear-gradient(135deg, #F1E4C7 0%, #FFFDF8 100%);
 }
 
-@utility bg-gradient-dark-header {
-  background-image: linear-gradient(180deg, #151515 0%, #1D1C19 100%);
+@utility bg-gradient-dark-env {
+  background-image: linear-gradient(180deg, #24231F 0%, #211F1B 100%);
 }
 
-@utility bg-gradient-deep-brand {
-  background-image: linear-gradient(145deg, #121110 0%, #1A1916 45%, #24221D 100%);
-  background-color: #1A1916;
+@utility bg-gradient-dark-card {
+  background-image: linear-gradient(145deg, #302E28 0%, #292822 100%);
 }
 
 @utility bg-gradient-gold-cta {
-  background-image: linear-gradient(135deg, #C49A45 0%, #B18332 100%);
+  background-image: linear-gradient(135deg, #C49A45 0%, #A97D2B 100%);
+}
+
+@utility bg-gradient-dark-header {
+  background-image: linear-gradient(180deg, #1B1A17 0%, #24231F 100%);
 }
 
 @utility text-gradient-brand {
-  background-image: linear-gradient(135deg, #C49A45 0%, #9A6A20 60%, #825712 100%);
+  background-image: linear-gradient(135deg, #C49A45 0%, #A97D2B 60%, #825712 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-glow {
-  background-image: linear-gradient(135deg, #FFFDF8 0%, #EAC97D 50%, #C49A45 100%);
+  background-image: linear-gradient(135deg, #FFFDF8 0%, #DDBB72 50%, #C49A45 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 @utility text-gradient-gold {
-  background-image: linear-gradient(135deg, var(--bhagya-gold-dark) 0%, var(--bhagya-gold) 50%, var(--bhagya-gold-light) 100%);
+  background-image: linear-gradient(135deg, #A97D2B 0%, #C49A45 50%, #DDBB72 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-
-@utility text-gradient-charcoal {
-  background-image: linear-gradient(135deg, var(--bhagya-black) 0%, var(--bhagya-charcoal) 60%, var(--bhagya-gold-dark) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@utility bg-gradient-btn-gold {
-  background-image: linear-gradient(135deg, #C49A45 0%, #B18332 100%);
-}
-
-@utility bg-gradient-btn-dark {
-  background-image: linear-gradient(135deg, #1D1C19 0%, #26241F 50%, #151515 100%);
-}
-

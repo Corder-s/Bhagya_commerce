@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Badge — compact status or taxonomy label for Bhagya Commerce.
+ * Semantic status colors mapped cleanly for both Light and Dark themes.
  */
 const badgeVariants = cva(
   [
@@ -15,16 +16,16 @@ const badgeVariants = cva(
   {
     variants: {
       tone: {
-        neutral: "border-line bg-canvas-deep text-ink-soft",
-        primary: "border-primary/40 bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold",
-        gold: "border-primary/40 bg-gold-soft/30 dark:bg-gold/15 text-gold-dark dark:text-gold",
-        botanical: "border-primary/30 bg-gold-surface dark:bg-surface-elevated text-gold-dark dark:text-gold",
-        sand: "border-line bg-canvas-deep text-ink",
+        neutral: "border-line bg-surface-sunken text-ink-soft",
+        primary: "border-primary/40 bg-gold-soft/30 dark:bg-gold-soft/40 text-gold-dark dark:text-gold-light",
+        gold: "border-primary/40 bg-gold-soft/30 dark:bg-gold-soft/40 text-gold-dark dark:text-gold-light",
+        botanical: "border-primary/30 bg-gold-surface dark:bg-surface-elevated text-gold-dark dark:text-gold-light",
+        sand: "border-line bg-surface-sunken text-ink",
         outline: "border-line bg-transparent text-ink-soft",
-        success: "border-emerald-500/20 bg-emerald-500/15 text-emerald-700 dark:text-emerald-400",
-        warning: "border-amber-500/20 bg-amber-500/15 text-amber-800 dark:text-amber-400",
-        danger: "border-red-500/20 bg-red-500/15 text-red-700 dark:text-red-400",
-        info: "border-sky-500/20 bg-sky-500/15 text-sky-700 dark:text-sky-400",
+        success: "border-success/30 bg-success-surface text-success dark:bg-success-surface dark:text-[#73D393]",
+        warning: "border-warning/30 bg-warning-surface text-warning dark:bg-warning-surface dark:text-[#DDBB72]",
+        danger: "border-danger/30 bg-danger-surface text-danger dark:bg-danger-surface dark:text-[#F09284]",
+        info: "border-info/30 bg-info-surface text-info dark:bg-info-surface dark:text-[#9DA99F]",
       },
       size: {
         sm: "px-2 py-0.5 text-[9px]",

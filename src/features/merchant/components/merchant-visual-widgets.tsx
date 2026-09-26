@@ -34,51 +34,51 @@ export function OrderStatusVisualCard({
     {
       label: 'Delivered',
       count: orders.deliveredOrders || 0,
-      color: 'bg-[#43A66A]',
-      textColor: 'text-[#73D393]',
-      icon: <CheckCircle2 className="size-3.5 text-[#43A66A]" />,
+      color: 'bg-success',
+      textColor: 'text-success',
+      icon: <CheckCircle2 className="size-3.5 text-success" />,
     },
     {
       label: 'Shipped',
       count: orders.shippedOrders || 0,
-      color: 'bg-[#C49A45]',
-      textColor: 'text-[#DDBB72]',
-      icon: <Truck className="size-3.5 text-[#C49A45]" />,
+      color: 'bg-primary',
+      textColor: 'text-primary',
+      icon: <Truck className="size-3.5 text-primary" />,
     },
     {
       label: 'Processing',
       count: orders.processingOrders || 0,
-      color: 'bg-[#4A96D8]',
-      textColor: 'text-[#4A96D8]',
-      icon: <Clock className="size-3.5 text-[#4A96D8]" />,
+      color: 'bg-warning',
+      textColor: 'text-warning',
+      icon: <Clock className="size-3.5 text-warning" />,
     },
     {
       label: 'Confirmed',
       count: orders.confirmedOrders || 0,
-      color: 'bg-[#C8C1B4]',
-      textColor: 'text-[#C8C1B4]',
-      icon: <Package className="size-3.5 text-[#C8C1B4]" />,
+      color: 'bg-sand-strong',
+      textColor: 'text-ink-soft',
+      icon: <Package className="size-3.5 text-ink-soft" />,
     },
   ];
 
   const validTotal = Math.max(totalOrders, 1);
 
   return (
-    <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 shadow-md flex flex-col justify-between">
+    <div className="rounded-2xl border border-line bg-surface p-5 shadow-md flex flex-col justify-between transition-colors">
       <div>
-        <div className="flex items-center justify-between border-b border-[#3A3831] pb-3">
+        <div className="flex items-center justify-between border-b border-line pb-3">
           <div>
-            <h3 className="font-serif text-base font-semibold text-[#F5F1E8]">Order Status Breakdown</h3>
-            <p className="text-xs text-[#9E988C] mt-0.5">Live fulfillment pipeline</p>
+            <h3 className="font-serif text-base font-semibold text-ink">Order Status Breakdown</h3>
+            <p className="text-xs text-ink-soft mt-0.5">Live fulfillment pipeline</p>
           </div>
-          <span className="rounded-full bg-[#35332C] px-2.5 py-0.5 text-xs font-semibold text-[#C49A45] border border-[#444139]">
+          <span className="rounded-full bg-surface-sunken px-2.5 py-0.5 text-xs font-semibold text-primary border border-line">
             {totalOrders} Total
           </span>
         </div>
 
         {/* Multi-segment stacked progress bar */}
         <div className="mt-4 space-y-2">
-          <div className="flex h-3 w-full overflow-hidden rounded-full bg-[#24231F] border border-[#3A3831]">
+          <div className="flex h-3 w-full overflow-hidden rounded-full bg-surface-sunken border border-line">
             {statuses.map((st) => {
               const widthPct = (st.count / validTotal) * 100;
               if (widthPct === 0) return null;
@@ -101,15 +101,15 @@ export function OrderStatusVisualCard({
             return (
               <div
                 key={st.label}
-                className="flex items-center justify-between rounded-xl border border-[#3A3831] bg-[#302F29] p-2.5"
+                className="flex items-center justify-between rounded-xl border border-line bg-surface-sunken p-2.5"
               >
                 <div className="flex items-center gap-2">
                   {st.icon}
-                  <span className="text-xs font-medium text-[#C8C1B4]">{st.label}</span>
+                  <span className="text-xs font-medium text-ink-soft">{st.label}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-bold text-[#F5F1E8]">{st.count}</span>
-                  <span className="text-[10px] text-[#9E988C] block">{pct}%</span>
+                  <span className="text-xs font-bold text-ink">{st.count}</span>
+                  <span className="text-[10px] text-ink-subtle block">{pct}%</span>
                 </div>
               </div>
             );
@@ -135,48 +135,48 @@ export function InventoryHealthVisualCard({
   const outPct = Math.round((outOfStockCount / total) * 100);
 
   return (
-    <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 shadow-md flex flex-col justify-between">
+    <div className="rounded-2xl border border-line bg-surface p-5 shadow-md flex flex-col justify-between transition-colors">
       <div>
-        <div className="flex items-center justify-between border-b border-[#3A3831] pb-3">
+        <div className="flex items-center justify-between border-b border-line pb-3">
           <div className="flex items-center gap-2">
-            <Boxes className="size-4 text-[#C49A45]" />
-            <h3 className="font-serif text-base font-semibold text-[#F5F1E8]">Stock & Inventory Health</h3>
+            <Boxes className="size-4 text-primary" />
+            <h3 className="font-serif text-base font-semibold text-ink">Stock & Inventory Health</h3>
           </div>
-          <span className="text-xs text-[#9E988C]">{total} SKUs Tracked</span>
+          <span className="text-xs text-ink-soft">{total} SKUs Tracked</span>
         </div>
 
         {/* Visual Stacked Bar */}
         <div className="mt-4 space-y-2">
-          <div className="flex h-3 w-full overflow-hidden rounded-full bg-[#24231F] border border-[#3A3831]">
-            <div style={{ width: `${healthyPct}%` }} className="bg-[#43A66A]" title="Healthy Stock" />
-            <div style={{ width: `${lowPct}%` }} className="bg-[#C79338]" title="Low Stock Alert" />
-            <div style={{ width: `${outPct}%` }} className="bg-[#D05A4A]" title="Out of Stock" />
+          <div className="flex h-3 w-full overflow-hidden rounded-full bg-surface-sunken border border-line">
+            <div style={{ width: `${healthyPct}%` }} className="bg-success" title="Healthy Stock" />
+            <div style={{ width: `${lowPct}%` }} className="bg-warning" title="Low Stock Alert" />
+            <div style={{ width: `${outPct}%` }} className="bg-danger" title="Out of Stock" />
           </div>
         </div>
 
         <div className="mt-4 space-y-2">
-          <div className="flex items-center justify-between rounded-xl border border-[#3A3831] bg-[#302F29] p-2.5">
+          <div className="flex items-center justify-between rounded-xl border border-line bg-surface-sunken p-2.5">
             <div className="flex items-center gap-2">
-              <span className="size-2 rounded-full bg-[#43A66A]" />
-              <span className="text-xs text-[#C8C1B4]">Healthy Stock Level</span>
+              <span className="size-2 rounded-full bg-success" />
+              <span className="text-xs text-ink-soft">Healthy Stock Level</span>
             </div>
-            <span className="text-xs font-bold text-[#73D393]">{healthyCount} items ({healthyPct}%)</span>
+            <span className="text-xs font-bold text-success">{healthyCount} items ({healthyPct}%)</span>
           </div>
 
-          <div className="flex items-center justify-between rounded-xl border border-[#3A3831] bg-[#302F29] p-2.5">
+          <div className="flex items-center justify-between rounded-xl border border-line bg-surface-sunken p-2.5">
             <div className="flex items-center gap-2">
-              <span className="size-2 rounded-full bg-[#C79338]" />
-              <span className="text-xs text-[#C8C1B4]">Low Stock Alert</span>
+              <span className="size-2 rounded-full bg-warning" />
+              <span className="text-xs text-ink-soft">Low Stock Alert</span>
             </div>
-            <span className="text-xs font-bold text-[#DDBB72]">{lowStockCount} items ({lowPct}%)</span>
+            <span className="text-xs font-bold text-warning">{lowStockCount} items ({lowPct}%)</span>
           </div>
 
-          <div className="flex items-center justify-between rounded-xl border border-[#3A3831] bg-[#302F29] p-2.5">
+          <div className="flex items-center justify-between rounded-xl border border-line bg-surface-sunken p-2.5">
             <div className="flex items-center gap-2">
-              <span className="size-2 rounded-full bg-[#D05A4A]" />
-              <span className="text-xs text-[#C8C1B4]">Out of Stock</span>
+              <span className="size-2 rounded-full bg-danger" />
+              <span className="text-xs text-ink-soft">Out of Stock</span>
             </div>
-            <span className="text-xs font-bold text-[#F09284]">{outOfStockCount} items ({outPct}%)</span>
+            <span className="text-xs font-bold text-danger">{outOfStockCount} items ({outPct}%)</span>
           </div>
         </div>
       </div>

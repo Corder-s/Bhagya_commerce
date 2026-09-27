@@ -29,7 +29,7 @@ export function MerchantStoreSettingsView() {
   const [tagline, setTagline] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [categoryId, setCategoryId] = React.useState("heritage-fashion");
-  const [brandAccent, setBrandAccent] = React.useState("#C49A45");
+  const [brandAccent, setBrandAccent] = React.useState("#E89535");
   const [status, setStatus] = React.useState<"active" | "draft">("active");
 
   React.useEffect(() => {
@@ -45,7 +45,7 @@ export function MerchantStoreSettingsView() {
             setTagline(s.tagline || "");
             setDescription(s.description || "");
             setCategoryId(s.categoryId || "heritage-fashion");
-            setBrandAccent(s.brandAccent || "#C49A45");
+            setBrandAccent(s.brandAccent || "#E89535");
             setStatus(s.status === "active" ? "active" : "draft");
           }
         }
@@ -186,7 +186,7 @@ export function MerchantStoreSettingsView() {
                   id="scat"
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-body-sm text-ink focus:border-[#C49A45] focus:outline-none"
+                  className="w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-body-sm text-ink focus:border-[#E89535] focus:outline-none"
                 >
                   {MERCHANT_CATEGORIES.map((c) => (
                     <option key={c.id} value={c.id}>
@@ -224,7 +224,7 @@ export function MerchantStoreSettingsView() {
                         onClick={() => setBrandAccent(accent.hex)}
                         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${
                           isSelected
-                            ? "border-[#C49A45] bg-[#C49A45]/10 text-ink"
+                            ? "border-[#E89535] bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349]"
                             : "border-line bg-surface text-ink-soft hover:text-ink"
                         }`}
                       >
@@ -248,7 +248,7 @@ export function MerchantStoreSettingsView() {
                       name="storeStatus"
                       checked={status === "active"}
                       onChange={() => setStatus("active")}
-                      className="accent-[#C49A45]"
+                      className="accent-[#E89535]"
                     />
                     <span>Active (Public Storefront Live)</span>
                   </label>
@@ -258,7 +258,7 @@ export function MerchantStoreSettingsView() {
                       name="storeStatus"
                       checked={status === "draft"}
                       onChange={() => setStatus("draft")}
-                      className="accent-[#C49A45]"
+                      className="accent-[#E89535]"
                     />
                     <span>Draft Mode (Hidden from Search)</span>
                   </label>

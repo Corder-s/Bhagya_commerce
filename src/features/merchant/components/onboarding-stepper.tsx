@@ -64,8 +64,8 @@ export function OnboardingStepper({
                     aria-hidden="true"
                     className={cn(
                       "grid size-8 sm:size-9 shrink-0 place-items-center rounded-full text-xs font-bold transition-all duration-fast",
-                      isComplete && "bg-[#C49A45] text-[#151515] font-extrabold shadow-xs group-hover:scale-105",
-                      isCurrent && "border-2 border-[#C49A45] bg-[#C49A45]/15 text-[#9A6A20] dark:text-[#C49A45] shadow-xs font-extrabold ring-4 ring-[#C49A45]/10",
+                      isComplete && "bg-[#E89535] text-[#241812] font-extrabold shadow-xs group-hover:scale-105",
+                      isCurrent && "border-2 border-[#E89535] bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] shadow-xs font-extrabold ring-4 ring-[#E89535]/15",
                       !isComplete && !isCurrent && "border border-line bg-surface text-ink-subtle",
                     )}
                   >
@@ -77,7 +77,7 @@ export function OnboardingStepper({
                       "text-[11px] sm:text-xs font-medium tracking-tight whitespace-nowrap",
                       isCurrent ? "text-ink font-bold" : "text-ink-soft",
                       !isComplete && !isCurrent && "text-ink-subtle",
-                      isClickable && "group-hover:text-gold transition-colors",
+                      isClickable && "group-hover:text-[#E89535] transition-colors",
                     )}
                   >
                     <span className="hidden md:inline">{step.label}</span>
@@ -99,7 +99,7 @@ export function OnboardingStepper({
                   aria-hidden="true"
                   className={cn(
                     "h-0.5 flex-1 min-w-3 sm:min-w-8 mx-1 -mt-6 transition-colors duration-fast",
-                    index < currentIndex ? "bg-[#C49A45]" : "bg-line",
+                    index < currentIndex ? "bg-[#E89535]" : "bg-line",
                   )}
                 />
               )}

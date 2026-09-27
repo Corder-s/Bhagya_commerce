@@ -45,7 +45,7 @@ export function AIProductCard({ product }: { product: AIProductRecommendation })
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 p-3 rounded-2xl border border-line bg-surface shadow-xs transition-colors hover:border-[#C49A45]/40 group">
+    <div className="flex flex-col sm:flex-row gap-3 p-3 rounded-2xl border border-line bg-surface shadow-xs transition-colors hover:border-[#E89535]/40 group">
       {/* Product Image */}
       <div className="relative size-20 sm:size-24 shrink-0 rounded-xl overflow-hidden bg-surface-subtle border border-line">
         <Image
@@ -61,12 +61,12 @@ export function AIProductCard({ product }: { product: AIProductRecommendation })
       <div className="flex-1 min-w-0 flex flex-col justify-between">
         <div>
           <div className="flex items-start justify-between gap-2">
-            <h4 className="text-body-sm font-bold text-ink leading-snug line-clamp-1 group-hover:text-[#9A6A20] dark:group-hover:text-[#C49A45] transition-colors">
+            <h4 className="text-body-sm font-bold text-ink leading-snug line-clamp-1 group-hover:text-[#D48024] dark:group-hover:text-[#F0A349] transition-colors">
               {product.name}
             </h4>
             {product.rating && (
               <span className="inline-flex items-center gap-0.5 text-caption font-semibold text-ink bg-surface-subtle px-1.5 py-0.5 rounded-md border border-line shrink-0">
-                <Star className="size-3 fill-[#C49A45] text-[#C49A45]" />
+                <Star className="size-3 fill-[#E89535] text-[#E89535]" />
                 {product.rating}
               </span>
             )}

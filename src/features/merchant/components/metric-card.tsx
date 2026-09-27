@@ -47,8 +47,8 @@ export function MetricCard({
       padding="md"
       radius="xl"
       className={cn(
-        "border-line shadow-card transition-all hover:border-[#C49A45]/40",
-        variant === "gold" && "border-[#C49A45]/40 bg-[#C49A45]/5",
+        "border-line shadow-card transition-all hover:border-[#E89535]/40",
+        variant === "gold" && "border-[#E89535]/40 bg-[#E89535]/5",
       )}
     >
       <CardContent className="space-y-3 p-1">
@@ -57,7 +57,7 @@ export function MetricCard({
             {title}
           </span>
           {icon && (
-            <span className="size-8 rounded-lg bg-surface-subtle border border-line flex items-center justify-center text-[#9A6A20] dark:text-[#C49A45]">
+            <span className="size-8 rounded-lg bg-surface-subtle border border-line flex items-center justify-center text-[#D48024] dark:text-[#F0A349]">
               {icon}
             </span>
           )}
@@ -75,7 +75,7 @@ export function MetricCard({
               <span
                 className={cn(
                   "inline-flex items-center gap-0.5 font-bold tabular-nums text-xs px-1.5 py-0.5 rounded-md",
-                  isPositive && "bg-[#2F5E3D]/15 text-[#2F5E3D]",
+                  isPositive && "bg-[#EAF3ED] dark:bg-[#25392B] text-[#4E7C59] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41]",
                   isNegative && "bg-danger/15 text-danger",
                   !isPositive && !isNegative && "bg-surface-subtle text-ink-soft",
                 )}

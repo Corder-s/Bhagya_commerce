@@ -92,7 +92,7 @@ export function CategoryStep({
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#C49A45]/20 text-[#9A6A20] dark:text-[#C49A45]">
+          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30">
             Step 3 of 5
           </span>
           <span className="text-caption text-ink-soft">Marketplace Category</span>
@@ -120,16 +120,16 @@ export function CategoryStep({
               onClick={() => handleCategorySelect(category.id)}
               className={`cursor-pointer transition-all border text-left ${
                 isSelected
-                  ? "border-[#C49A45] ring-2 ring-[#C49A45]/20 bg-[#C49A45]/5"
-                  : "border-line hover:border-[#C49A45]/40 hover:bg-surface-subtle"
+                  ? "border-[#E89535] ring-2 ring-[#E89535]/20 bg-[#FFF6ED] dark:bg-[#33241C]"
+                  : "border-line hover:border-[#E89535]/40 hover:bg-surface-subtle"
               }`}
             >
               <CardContent className="flex items-start gap-3 p-1">
                 <div
                   className={`size-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
                     isSelected
-                      ? "bg-[#C49A45] text-[#151515]"
-                      : "bg-surface-subtle border border-line text-[#9A6A20] dark:text-[#C49A45]"
+                      ? "bg-[#E89535] text-[#241812] font-bold"
+                      : "bg-surface-subtle border border-line text-[#D48024] dark:text-[#F0A349]"
                   }`}
                 >
                   <IconComponent className="size-5" />
@@ -140,7 +140,7 @@ export function CategoryStep({
                       {category.name}
                     </h3>
                     {isSelected && (
-                      <span className="size-5 rounded-full bg-[#C49A45] text-[#151515] flex items-center justify-center">
+                      <span className="size-5 rounded-full bg-[#E89535] text-[#241812] flex items-center justify-center">
                         <Check className="size-3" strokeWidth={3} />
                       </span>
                     )}
@@ -183,8 +183,8 @@ export function CategoryStep({
                   onClick={() => handleTagToggle(tag)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-all ${
                     isSelected
-                      ? "bg-[#C49A45] text-[#151515] border-[#C49A45] font-semibold"
-                      : "bg-surface border-line text-ink-soft hover:border-[#C49A45]/40 hover:text-ink"
+                      ? "bg-[#E89535] text-[#241812] border-[#E89535] font-semibold"
+                      : "bg-surface border-line text-ink-soft hover:border-[#E89535]/40 hover:text-ink"
                   }`}
                 >
                   {isSelected ? `✓ ${tag}` : `+ ${tag}`}

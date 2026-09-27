@@ -128,24 +128,24 @@ export function CampaignList({
       case 'SMS':
         return <Smartphone className="size-4 text-[#DDBB72]" />;
       default:
-        return <Megaphone className="size-4 text-[#C49A45]" />;
+        return <Megaphone className="size-4 text-[#E89535]" />;
     }
   };
 
   if (!campaigns || campaigns.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#444139] bg-[#2B2A25] p-12 text-center">
-        <div className="flex size-14 items-center justify-center rounded-full bg-[#35332C] text-[#C49A45] mb-4">
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-surface p-12 text-center">
+        <div className="flex size-14 items-center justify-center rounded-full bg-[#FFF6ED] dark:bg-[#33241C] text-[#E89535] dark:text-[#F0A349] mb-4">
           <Megaphone className="size-7" />
         </div>
-        <h3 className="font-serif text-lg font-semibold text-[#F5F1E8]">No campaigns launched yet</h3>
-        <p className="mt-1 max-w-sm text-sm text-[#9E988C]">
+        <h3 className="font-display text-lg font-semibold text-ink">No campaigns launched yet</h3>
+        <p className="mt-1 max-w-sm text-sm text-ink-soft">
           Promote seasonal artisan collections, announce offers, and connect with your verified customers via WhatsApp, Email, or SMS.
         </p>
         <Button
           variant="primary"
           size="md"
-          className="mt-6 bg-[#C49A45] hover:bg-[#DDBB72] text-[#151515] font-semibold"
+          className="mt-6"
           onClick={onOpenCreate}
         >
           Create First Campaign
@@ -157,9 +157,9 @@ export function CampaignList({
   return (
     <div className="space-y-4">
       {/* Desktop Table View */}
-      <div className="hidden md:block overflow-hidden rounded-2xl border border-[#444139] bg-[#2B2A25] shadow-md">
+      <div className="hidden md:block overflow-hidden rounded-2xl border border-line bg-surface shadow-md">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-[#3A3831] bg-[#1C1B18] text-xs uppercase tracking-wider text-[#9E988C] font-medium">
+          <thead className="border-b border-line bg-surface-subtle text-xs uppercase tracking-wider text-ink-soft font-medium">
             <tr>
               <th className="px-6 py-4">Campaign</th>
               <th className="px-6 py-4">Channel</th>
@@ -170,34 +170,34 @@ export function CampaignList({
               <th className="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#3A3831]">
+          <tbody className="divide-y divide-line">
             {campaigns.map((camp) => (
-              <tr key={camp.id} className="transition-colors hover:bg-[#34322B]">
+              <tr key={camp.id} className="transition-colors hover:bg-surface-subtle/50">
                 <td className="px-6 py-4">
-                  <div className="font-medium text-[#F5F1E8]">{camp.name}</div>
+                  <div className="font-medium text-ink">{camp.name}</div>
                   {camp.description && (
-                    <div className="line-clamp-1 text-xs text-[#9E988C]">{camp.description}</div>
+                    <div className="line-clamp-1 text-xs text-ink-soft">{camp.description}</div>
                   )}
                 </td>
                 <td className="px-6 py-4">
-                  <div className="flex items-center gap-1.5 font-medium text-[#F5F1E8]">
+                  <div className="flex items-center gap-1.5 font-medium text-ink">
                     {getChannelIcon(camp.channel)}
                     <span className="capitalize text-xs">{camp.channel.toLowerCase()}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4">{renderStatusBadge(camp.status)}</td>
                 <td className="px-6 py-4">
-                  <div className="flex items-center gap-1 text-[#F5F1E8]">
-                    <Users className="size-3.5 text-[#9E988C]" />
+                  <div className="flex items-center gap-1 text-ink">
+                    <Users className="size-3.5 text-ink-soft" />
                     <span>{camp.totalRecipients || 0}</span>
                   </div>
                   {camp.sentCount ? (
-                    <div className="text-[11px] text-[#9E988C]">
+                    <div className="text-[11px] text-ink-soft">
                       {camp.sentCount} sent ({camp.deliveredCount || 0} delivered)
                     </div>
                   ) : null}
                 </td>
-                <td className="px-6 py-4 text-xs text-[#9E988C]">
+                <td className="px-6 py-4 text-xs text-ink-soft">
                   {camp.scheduledAt ? (
                     <div className="flex items-center gap-1">
                       <Calendar className="size-3.5" />
@@ -210,11 +210,11 @@ export function CampaignList({
                   )}
                 </td>
                 <td className="px-6 py-4">
-                  <div className="flex items-center gap-1 font-medium text-[#F5F1E8]">
-                    <TrendingUp className="size-3.5 text-[#43A66A]" />
+                  <div className="flex items-center gap-1 font-medium text-ink">
+                    <TrendingUp className="size-3.5 text-[#4E7C59]" />
                     <span>{formatPrice(camp.attributedSales || 0)}</span>
                   </div>
-                  <div className="text-[11px] text-[#9E988C]">
+                  <div className="text-[11px] text-ink-soft">
                     {camp.attributedOrders || 0} orders
                   </div>
                 </td>
@@ -226,7 +226,6 @@ export function CampaignList({
                         size="sm"
                         disabled={actionLoadingId === camp.id}
                         onClick={() => handleLaunch(camp.id)}
-                        className="bg-[#C49A45] hover:bg-[#DDBB72] text-[#151515] font-semibold"
                       >
                         <Play className="mr-1 size-3" /> Launch
                       </Button>
@@ -237,7 +236,7 @@ export function CampaignList({
                         size="sm"
                         disabled={actionLoadingId === camp.id}
                         onClick={() => handlePause(camp.id)}
-                        className="border-[#444139] bg-[#302F29] text-[#F5F1E8] hover:bg-[#35332C]"
+                        className="border-line bg-surface hover:bg-surface-subtle"
                       >
                         <Pause className="mr-1 size-3" /> Pause
                       </Button>
@@ -246,7 +245,7 @@ export function CampaignList({
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-[#444139] text-[#F09284] hover:bg-[#4A2924] hover:border-[#D05A4A]"
+                        className="border-line text-danger hover:bg-danger-surface/40 hover:border-danger/40"
                         disabled={actionLoadingId === camp.id}
                         onClick={() => handleCancel(camp.id)}
                         title="Cancel campaign"
@@ -267,42 +266,41 @@ export function CampaignList({
         {campaigns.map((camp) => (
           <div
             key={camp.id}
-            className="rounded-xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm space-y-3"
+            className="rounded-xl border border-line bg-surface p-4 shadow-sm space-y-3"
           >
             <div className="flex items-start justify-between">
               <div>
-                <h4 className="font-medium text-[#F5F1E8]">{camp.name}</h4>
+                <h4 className="font-medium text-ink">{camp.name}</h4>
                 <div className="flex items-center gap-2 mt-1">
-                  <div className="flex items-center gap-1 text-xs text-[#9E988C] capitalize">
+                  <div className="flex items-center gap-1 text-xs text-ink-soft capitalize">
                     {getChannelIcon(camp.channel)}
                     {camp.channel.toLowerCase()}
                   </div>
-                  <span className="text-[#444139]">•</span>
-                  <span className="text-xs text-[#9E988C]">{camp.totalRecipients || 0} reach</span>
+                  <span className="text-ink-soft">•</span>
+                  <span className="text-xs text-ink-soft">{camp.totalRecipients || 0} reach</span>
                 </div>
               </div>
               <div>{renderStatusBadge(camp.status)}</div>
             </div>
 
-            <div className="flex items-center justify-between rounded-lg bg-[#302F29] p-2.5 text-xs border border-[#3A3831]">
+            <div className="flex items-center justify-between rounded-lg bg-surface-subtle p-2.5 text-xs border border-line">
               <div>
-                <span className="text-[#9E988C]">Attributed Sales:</span>{' '}
-                <strong className="text-[#F5F1E8]">{formatPrice(camp.attributedSales || 0)}</strong>
+                <span className="text-ink-soft">Attributed Sales:</span>{' '}
+                <strong className="text-ink">{formatPrice(camp.attributedSales || 0)}</strong>
               </div>
               <div>
-                <span className="text-[#9E988C]">Orders:</span>{' '}
-                <strong className="text-[#F5F1E8]">{camp.attributedOrders || 0}</strong>
+                <span className="text-ink-soft">Orders:</span>{' '}
+                <strong className="text-ink">{camp.attributedOrders || 0}</strong>
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-1 border-t border-[#3A3831]">
+            <div className="flex items-center justify-end gap-2 pt-1 border-t border-line">
               {(camp.status === 'DRAFT' || camp.status === 'SCHEDULED') && (
                 <Button
                   variant="primary"
                   size="sm"
                   disabled={actionLoadingId === camp.id}
                   onClick={() => handleLaunch(camp.id)}
-                  className="bg-[#C49A45] hover:bg-[#DDBB72] text-[#151515] font-semibold"
                 >
                   <Play className="mr-1 size-3" /> Launch Now
                 </Button>
@@ -313,7 +311,7 @@ export function CampaignList({
                   size="sm"
                   disabled={actionLoadingId === camp.id}
                   onClick={() => handlePause(camp.id)}
-                  className="border-[#444139] bg-[#302F29] text-[#F5F1E8]"
+                  className="border-line bg-surface"
                 >
                   <Pause className="mr-1 size-3" /> Pause
                 </Button>
@@ -322,7 +320,7 @@ export function CampaignList({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-[#444139] text-[#F09284]"
+                  className="border-line text-danger hover:bg-danger-surface/40"
                   disabled={actionLoadingId === camp.id}
                   onClick={() => handleCancel(camp.id)}
                 >

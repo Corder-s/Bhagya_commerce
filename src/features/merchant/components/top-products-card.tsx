@@ -14,13 +14,13 @@ export function TopProductsCard({ products }: { products: TopProduct[] }) {
     <Card variant="surface" padding="none" radius="xl" className="border-line shadow-card overflow-hidden">
       <div className="flex items-center justify-between p-4 sm:p-5 border-b border-line bg-surface">
         <div className="flex items-center gap-2">
-          <TrendingUp className="size-4 text-[#C49A45]" />
+          <TrendingUp className="size-4 text-[#E89535] dark:text-[#F0A349]" />
           <h3 className="text-body-sm font-bold uppercase tracking-wider text-ink">
             Top Performing Products
           </h3>
         </div>
 
-        <Button asChild variant="ghost" size="sm" className="text-xs text-[#9A6A20] dark:text-[#C49A45] hover:underline">
+        <Button asChild variant="ghost" size="sm" className="text-xs text-[#E89535] dark:text-[#F0A349] hover:underline">
           <Link href={"/merchant/products" as any}>
             Catalogue
             <ArrowRight className="size-3" />

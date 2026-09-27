@@ -182,13 +182,13 @@ export const BUSINESS_TYPES: readonly { value: BusinessType; label: string; desc
 ] as const;
 
 /**
- * Curated brand accent presets harmonious with Bhagya's Warm Ivory design system
+ * Curated brand accent presets harmonious with Bhagya's Warm Nude & Amber design system
  */
 export const BRAND_ACCENTS: readonly { id: string; name: string; hex: string; bgClass: string }[] = [
-  { id: "gold", name: "Bhagya Gold", hex: "#C49A45", bgClass: "bg-[#C49A45]" },
-  { id: "ochre", name: "Deep Ochre", hex: "#9A6A20", bgClass: "bg-[#9A6A20]" },
-  { id: "forest", name: "Forest Moss", hex: "#2F5E3D", bgClass: "bg-[#2F5E3D]" },
-  { id: "terracotta", name: "Terracotta Rust", hex: "#A04B32", bgClass: "bg-[#A04B32]" },
-  { id: "indigo", name: "Indigo Clay", hex: "#2C3E50", bgClass: "bg-[#2C3E50]" },
-  { id: "charcoal", name: "Noble Charcoal", hex: "#2A2A2A", bgClass: "bg-[#2A2A2A]" },
+  { id: "amber", name: "Luminous Amber", hex: "#E89535", bgClass: "bg-[#E89535]" },
+  { id: "honey", name: "Warm Honey", hex: "#F0A349", bgClass: "bg-[#F0A349]" },
+  { id: "terracotta", name: "Warm Terracotta", hex: "#E0732A", bgClass: "bg-[#E0732A]" },
+  { id: "botanical", name: "Botanical Sage", hex: "#4E7C59", bgClass: "bg-[#4E7C59]" },
+  { id: "espresso", name: "Dark Espresso", hex: "#241812", bgClass: "bg-[#241812]" },
+  { id: "taupe", name: "Warm Taupe", hex: "#695A50", bgClass: "bg-[#695A50]" },
 ] as const;

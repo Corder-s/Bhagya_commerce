@@ -95,7 +95,7 @@ export function BrandingStep({
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#C49A45]/20 text-[#9A6A20] dark:text-[#C49A45]">
+          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30">
             Step 4 of 5
           </span>
           <span className="text-caption text-ink-soft">Visual Identity & Assets</span>
@@ -135,7 +135,7 @@ export function BrandingStep({
               ) : (
                 <div
                   className="size-full flex items-center justify-center font-display text-2xl font-bold text-white"
-                  style={{ backgroundColor: data.brandAccent || "#C49A45" }}
+                  style={{ backgroundColor: data.brandAccent || "#E89535" }}
                 >
                   {(data.storeName || "B")[0]?.toUpperCase()}
                 </div>
@@ -143,7 +143,7 @@ export function BrandingStep({
 
               {isUploadingLogo && (
                 <div className="absolute inset-0 bg-black/50 backdrop-blur-xs flex items-center justify-center">
-                  <Loader2 className="size-6 text-[#C49A45] animate-spin" />
+                  <Loader2 className="size-6 text-[#E89535] animate-spin" />
                 </div>
               )}
             </div>
@@ -219,7 +219,7 @@ export function BrandingStep({
 
               {isUploadingBanner && (
                 <div className="absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center">
-                  <Loader2 className="size-7 text-[#C49A45] animate-spin" />
+                  <Loader2 className="size-7 text-[#E89535] animate-spin" />
                 </div>
               )}
             </div>
@@ -269,7 +269,7 @@ export function BrandingStep({
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
             {BRAND_ACCENTS.map((accent) => {
-              const isSelected = (data.brandAccent || "#C49A45") === accent.hex;
+              const isSelected = (data.brandAccent || "#E89535") === accent.hex;
               return (
                 <button
                   type="button"
@@ -277,7 +277,7 @@ export function BrandingStep({
                   onClick={() => onUpdate({ brandAccent: accent.hex })}
                   className={`flex items-center gap-2.5 p-2.5 rounded-xl border transition-all text-left ${
                     isSelected
-                      ? "border-[#C49A45] ring-2 ring-[#C49A45]/20 bg-[#C49A45]/5"
+                      ? "border-[#E89535] ring-2 ring-[#E89535]/20 bg-[#FFF6ED] dark:bg-[#33241C]"
                       : "border-line bg-surface hover:border-line-deep"
                   }`}
                 >

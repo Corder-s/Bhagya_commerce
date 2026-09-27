@@ -34,12 +34,12 @@ export function CompleteStep({ store }: { store: Store }) {
   return (
     <div className="space-y-6 text-center py-4">
       {/* Celebration Icon */}
-      <div className="mx-auto size-20 rounded-full bg-[#C49A45]/20 border-2 border-[#C49A45] flex items-center justify-center text-[#9A6A20] dark:text-[#C49A45] shadow-md animate-in fade-in zoom-in duration-300">
+      <div className="mx-auto size-20 rounded-full bg-[#FFF6ED] dark:bg-[#33241C] border-2 border-[#E89535] flex items-center justify-center text-[#E89535] dark:text-[#F0A349] shadow-md animate-in fade-in zoom-in duration-300">
         <Sparkles className="size-10" />
       </div>
 
       <div className="space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#2F5E3D]/15 text-[#2F5E3D] text-xs font-semibold border border-[#2F5E3D]/30">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EAF3ED] dark:bg-[#25392B] text-[#4E7C59] dark:text-[#78A383] text-xs font-semibold border border-[#B0C9B6] dark:border-[#375D41]">
           <CheckCircle2 className="size-3.5" />
           Store Successfully Launched
         </div>
@@ -60,14 +60,14 @@ export function CompleteStep({ store }: { store: Store }) {
             <span className="text-caption font-semibold text-ink-soft uppercase tracking-wider">
               Your Public Store Link
             </span>
-            <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-[#C49A45]/20 text-[#9A6A20] dark:text-[#C49A45]">
+            <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30">
               {store.categoryName || "Artisan Store"}
             </span>
           </div>
 
           <div className="flex items-center justify-between p-3 rounded-xl bg-surface-subtle border border-line gap-2">
             <div className="flex items-center gap-2 min-w-0">
-              <StoreIcon className="size-4 text-[#C49A45] shrink-0" />
+              <StoreIcon className="size-4 text-[#E89535] shrink-0" />
               <span className="font-mono text-body-sm font-semibold text-ink truncate">
                 {storeUrl}
               </span>

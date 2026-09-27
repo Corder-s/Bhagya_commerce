@@ -531,7 +531,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                       <span className="w-6 text-ink-soft tabular-nums font-medium">{row.stars} ★</span>
                       <div className="h-2 flex-1 rounded-pill bg-line overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-[#C49A45] to-[#B18332]"
+                          className="h-full bg-gradient-to-r from-[#E89535] to-[#F0A349]"
                           style={{ width: `${row.pct}%` }}
                         />
                       </div>

@@ -314,14 +314,14 @@ export function MerchantAiCopilotView() {
               >
                 <defs>
                   <radialGradient id="aiCoreGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#DDBB72" stopOpacity="0.3" />
-                    <stop offset="50%" stopColor="#C49A45" stopOpacity="0.12" />
-                    <stop offset="100%" stopColor={isDark ? "#24231F" : "#F7F3EA"} stopOpacity="0" />
+                    <stop offset="0%" stopColor="#F0A349" stopOpacity="0.3" />
+                    <stop offset="50%" stopColor="#E89535" stopOpacity="0.12" />
+                    <stop offset="100%" stopColor={isDark ? "#241812" : "#FDF8F3"} stopOpacity="0" />
                   </radialGradient>
                   <linearGradient id="orbitLine" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#C49A45" stopOpacity="0.8" />
+                    <stop offset="0%" stopColor="#E89535" stopOpacity="0.8" />
                     <stop offset="50%" stopColor="#9E988C" stopOpacity="0.2" />
-                    <stop offset="100%" stopColor="#43A66A" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#4E7C59" stopOpacity="0.6" />
                   </linearGradient>
                 </defs>
 
@@ -367,24 +367,24 @@ export function MerchantAiCopilotView() {
                 <line x1="155" y1="45" x2="45" y2="155" stroke={isDark ? "#3A3831" : "#E2D7C3"} strokeWidth="0.8" />
 
                 {/* Commerce Node 1: Sales Spark */}
-                <circle cx="45" cy="60" r="5" fill={isDark ? "#2B2A25" : "#FFFDF8"} stroke="#C49A45" strokeWidth="1.5" />
-                <circle cx="45" cy="60" r="2" fill="#DDBB72" />
+                <circle cx="45" cy="60" r="5" fill={isDark ? "#2B2A25" : "#FFFDF8"} stroke="#E89535" strokeWidth="1.5" />
+                <circle cx="45" cy="60" r="2" fill="#F0A349" />
 
                 {/* Commerce Node 2: Stock Health */}
-                <circle cx="155" cy="60" r="5" fill={isDark ? "#2B2A25" : "#FFFDF8"} stroke="#43A66A" strokeWidth="1.5" />
-                <circle cx="155" cy="60" r="2" fill="#43A66A" />
+                <circle cx="155" cy="60" r="5" fill={isDark ? "#2B2A25" : "#FFFDF8"} stroke="#4E7C59" strokeWidth="1.5" />
+                <circle cx="155" cy="60" r="2" fill="#4E7C59" />
 
                 {/* Commerce Node 3: Catalog Sync */}
-                <circle cx="150" cy="145" r="5" fill={isDark ? "#2B2A25" : "#FFFDF8"} stroke="#C49A45" strokeWidth="1.5" />
-                <circle cx="150" cy="145" r="2" fill="#DDBB72" />
+                <circle cx="150" cy="145" r="5" fill={isDark ? "#2B2A25" : "#FFFDF8"} stroke="#E89535" strokeWidth="1.5" />
+                <circle cx="150" cy="145" r="2" fill="#F0A349" />
 
                 {/* Commerce Node 4: Broadcast */}
-                <circle cx="50" cy="145" r="5" fill={isDark ? "#2B2A25" : "#FFFDF8"} stroke="#DDBB72" strokeWidth="1.5" />
+                <circle cx="50" cy="145" r="5" fill={isDark ? "#2B2A25" : "#FFFDF8"} stroke="#F0A349" strokeWidth="1.5" />
                 <circle cx="50" cy="145" r="2" fill={isDark ? "#F5F1E8" : "#181714"} />
 
                 {/* Central Bhagya Core Intelligence Orb */}
-                <circle cx="100" cy="100" r="16" fill={isDark ? "#24231F" : "#FFFDF8"} stroke="#C49A45" strokeWidth="2" />
-                <circle cx="100" cy="100" r="10" fill="#C49A45" className="opacity-90 animate-pulse" />
+                <circle cx="100" cy="100" r="16" fill={isDark ? "#24231F" : "#FFFDF8"} stroke="#E89535" strokeWidth="2" />
+                <circle cx="100" cy="100" r="10" fill="#E89535" className="opacity-90 animate-pulse" />
                 <circle cx="100" cy="100" r="4" fill={isDark ? "#F5F1E8" : "#FFFDF8"} />
               </svg>
 
@@ -450,7 +450,7 @@ export function MerchantAiCopilotView() {
                       <svg className="w-16 h-5" viewBox="0 0 64 20" fill="none">
                         <path
                           d="M2 16 L16 14 L30 8 L44 11 L62 3"
-                          stroke="#C49A45"
+                          stroke="#E89535"
                           strokeWidth="2"
                           strokeLinecap="round"
                           strokeLinejoin="round"

@@ -63,7 +63,7 @@ export function MerchantOrdersView() {
                 onClick={() => setSelectedStatus(tab.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
                   selectedStatus === tab.id
-                    ? "bg-[#C49A45] text-[#151515]"
+                    ? "bg-[#E89535] text-[#241812] font-bold"
                     : "text-ink-soft hover:bg-surface-subtle hover:text-ink"
                 }`}
               >

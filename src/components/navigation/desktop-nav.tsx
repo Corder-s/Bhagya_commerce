@@ -51,7 +51,7 @@ export function DesktopNav({
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "absolute inset-x-3.5 bottom-2 h-0.5 origin-left bg-gradient-to-r from-[#C49A45] to-[#B18332] transition-transform duration-base ease-brand",
+                    "absolute inset-x-3.5 bottom-2 h-0.5 origin-left bg-gradient-to-r from-[#E89535] to-[#F0A349] transition-transform duration-base ease-brand",
                     active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100",
                   )}
                 />

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import type { TileTone } from "@/types/catalogue";
 
 const toneStyles: Record<TileTone, string> = {
-  "soft-green": "bg-[#F3E6C8] text-[#9A6A20]",
+  "soft-green": "bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349]",
   sand: "bg-sand text-ink",
   deep: "bg-deep text-ink-inverse",
   canvas: "bg-canvas-deep text-ink-soft",

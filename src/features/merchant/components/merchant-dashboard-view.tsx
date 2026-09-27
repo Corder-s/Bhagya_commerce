@@ -109,7 +109,7 @@ export function MerchantDashboardView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border border-line bg-surface shadow-card">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-caption font-semibold text-[#9A6A20] dark:text-[#C49A45] uppercase tracking-wider">
+            <span className="text-caption font-semibold text-[#D48024] dark:text-[#F0A349] uppercase tracking-wider">
               Merchant Workspace
             </span>
             <span className="text-ink-soft">·</span>
@@ -132,7 +132,7 @@ export function MerchantDashboardView() {
         <div className="flex items-center gap-2.5 shrink-0">
           <Button asChild variant="outline" size="md">
             <Link href={"/merchant/store" as any}>
-              <StoreIcon className="size-4 text-[#C49A45]" />
+              <StoreIcon className="size-4 text-[#E89535] dark:text-[#F0A349]" />
               <span>Manage Store</span>
             </Link>
           </Button>

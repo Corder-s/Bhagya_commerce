@@ -122,7 +122,7 @@ export function AccountMenu({ user: propUser }: AccountMenuProps) {
                 <DropdownMenuItem asChild>
                   <Link href={merchantRoutes.dashboard} className="justify-between">
                     <span className="flex items-center gap-2.5">
-                      <Store aria-hidden="true" className="text-[#C49A45]" />
+                      <Store aria-hidden="true" className="text-[#E89535] dark:text-[#F0A349]" />
                       <span className="font-medium text-ink">
                         {user.organizationMembership.storeName || "My Store"}
                       </span>
@@ -143,7 +143,7 @@ export function AccountMenu({ user: propUser }: AccountMenuProps) {
               <DropdownMenuItem asChild>
                 <Link href={"/start-selling" as any} className="justify-between">
                   <span className="flex items-center gap-2.5">
-                    <Store aria-hidden="true" className="text-[#C49A45]" />
+                    <Store aria-hidden="true" className="text-[#E89535] dark:text-[#F0A349]" />
                     Start selling
                   </span>
                   <Badge tone="outline" size="sm">

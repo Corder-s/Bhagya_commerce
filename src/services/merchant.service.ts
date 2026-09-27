@@ -130,7 +130,7 @@ class MerchantService {
       tagline: data.storeTagline?.trim() || undefined,
       logoUrl: data.logoUrl,
       bannerUrl: data.bannerUrl,
-      brandAccent: data.brandAccent || "#C49A45",
+      brandAccent: data.brandAccent || "#E89535",
       categoryId: data.primaryCategoryId,
       categoryName: category?.name || "Handmade & Crafts",
       businessType: data.businessType,

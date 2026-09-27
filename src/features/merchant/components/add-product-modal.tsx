@@ -103,7 +103,7 @@ export function AddProductModal({
                 id="pcat"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full rounded-xl border border-line bg-surface px-3 py-2 text-body-sm text-ink focus:border-[#C49A45] focus:outline-none"
+                className="w-full rounded-xl border border-line bg-surface px-3 py-2 text-body-sm text-ink focus:border-[#E89535] focus:outline-none"
               >
                 {MERCHANT_CATEGORIES.map((c) => (
                   <option key={c.id} value={c.name}>
@@ -191,7 +191,7 @@ export function AddProductModal({
                 name="prodStatus"
                 checked={status === "published"}
                 onChange={() => setStatus("published")}
-                className="accent-[#C49A45]"
+                className="accent-[#E89535]"
               />
               <span>Publish Immediately</span>
             </label>
@@ -201,7 +201,7 @@ export function AddProductModal({
                 name="prodStatus"
                 checked={status === "draft"}
                 onChange={() => setStatus("draft")}
-                className="accent-[#C49A45]"
+                className="accent-[#E89535]"
               />
               <span>Save as Draft</span>
             </label>

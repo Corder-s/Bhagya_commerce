@@ -64,7 +64,7 @@ export function BusinessStep({
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#C49A45]/20 text-[#9A6A20] dark:text-[#C49A45]">
+          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30">
             Step 1 of 5
           </span>
           <span className="text-caption text-ink-soft">Business & Legal Entity</span>
@@ -203,8 +203,8 @@ export function BusinessStep({
                   }}
                   className={`cursor-pointer transition-all border ${
                     isSelected
-                      ? "border-[#C49A45] ring-2 ring-[#C49A45]/20 bg-[#C49A45]/5"
-                      : "border-line hover:border-[#C49A45]/50"
+                      ? "border-[#E89535] ring-2 ring-[#E89535]/20 bg-[#FFF6ED] dark:bg-[#33241C]"
+                      : "border-line hover:border-[#E89535]/50"
                   }`}
                 >
                   <CardContent className="flex items-start gap-2.5 p-1">
@@ -213,7 +213,7 @@ export function BusinessStep({
                       name="businessType"
                       checked={isSelected}
                       onChange={() => {}}
-                      className="mt-1 accent-[#C49A45]"
+                      className="mt-1 accent-[#E89535]"
                       aria-label={bt.label}
                     />
                     <div className="flex flex-col">
@@ -237,7 +237,7 @@ export function BusinessStep({
 
       {/* Helpful context */}
       <div className="flex items-start gap-3 p-3.5 rounded-xl bg-surface-subtle border border-line text-caption text-ink-soft">
-        <ShieldCheck className="size-4 text-[#2F5E3D] shrink-0 mt-0.5" />
+        <ShieldCheck className="size-4 text-[#4E7C59] shrink-0 mt-0.5" />
         <span>
           <strong>Artisan Trust:</strong> GSTIN is optional for micro-sellers under threshold limits. You will only be asked for payout details after store creation.
         </span>

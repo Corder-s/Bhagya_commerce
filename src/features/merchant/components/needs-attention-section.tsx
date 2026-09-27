@@ -13,7 +13,7 @@ export function NeedsAttentionSection({ items }: { items: AttentionItem[] }) {
     return (
       <Card variant="surface" padding="md" radius="xl" className="border-line shadow-card">
         <CardContent className="flex items-center gap-3 py-2 text-ink-soft text-body-sm">
-          <CheckCircle2 className="size-5 text-[#2F5E3D] shrink-0" />
+          <CheckCircle2 className="size-5 text-[#4E7C59] shrink-0" />
           <span>
             <strong>All caught up!</strong> No orders or inventory require immediate action right now.
           </span>
@@ -26,7 +26,7 @@ export function NeedsAttentionSection({ items }: { items: AttentionItem[] }) {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <AlertCircle className="size-4 text-[#9A6A20] dark:text-[#C49A45]" />
+          <AlertCircle className="size-4 text-[#E89535] dark:text-[#F0A349]" />
           <h3 className="text-body-sm font-bold uppercase tracking-wider text-ink">
             Needs Your Attention
           </h3>
@@ -49,7 +49,7 @@ export function NeedsAttentionSection({ items }: { items: AttentionItem[] }) {
               radius="xl"
               className={`border transition-all shadow-card ${
                 isUrgent
-                  ? "border-[#C49A45]/50 bg-[#C49A45]/5 ring-1 ring-[#C49A45]/20"
+                  ? "border-[#E89535]/50 bg-[#FFF6ED] dark:bg-[#33241C] ring-1 ring-[#E89535]/20"
                   : "border-line bg-surface"
               }`}
             >
@@ -58,8 +58,8 @@ export function NeedsAttentionSection({ items }: { items: AttentionItem[] }) {
                   <div
                     className={`size-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
                       isUrgent
-                        ? "bg-[#C49A45] text-[#151515]"
-                        : "bg-surface-subtle border border-line text-[#9A6A20] dark:text-[#C49A45]"
+                        ? "bg-[#E89535] text-[#241812] font-bold"
+                        : "bg-surface-subtle border border-line text-[#D48024] dark:text-[#F0A349]"
                     }`}
                   >
                     <Icon className="size-4.5" />

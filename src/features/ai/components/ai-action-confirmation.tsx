@@ -45,13 +45,13 @@ export function AIActionConfirmation({
   }
 
   return (
-    <div className="p-4 rounded-2xl border border-[#C49A45]/40 bg-surface shadow-xs space-y-3">
+    <div className="p-4 rounded-2xl border border-[#E89535]/40 bg-surface shadow-xs space-y-3">
       <div className="flex items-start gap-2.5">
-        <span className="grid size-7 place-items-center rounded-lg bg-[#C49A45]/15 text-[#9A6A20] dark:text-[#C49A45] shrink-0 mt-0.5">
+        <span className="grid size-7 place-items-center rounded-lg bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30 shrink-0 mt-0.5">
           <AlertCircle className="size-4" />
         </span>
         <div className="space-y-1">
-          <span className="text-caption font-bold uppercase tracking-wider text-[#9A6A20] dark:text-[#C49A45] block">
+          <span className="text-caption font-bold uppercase tracking-wider text-[#D48024] dark:text-[#F0A349] block">
             Confirmation Required
           </span>
           <p className="text-body-sm text-ink leading-relaxed">

@@ -56,26 +56,26 @@ export function MarketingAnalyticsCharts({
     {
       id: 'WHATSAPP',
       label: 'WhatsApp Broadcast',
-      icon: <Smartphone className="size-4 text-[#73D393]" />,
+      icon: <Smartphone className="size-4 text-[#4E7C59]" />,
       stats: channelStats['WHATSAPP'],
-      color: 'bg-[#43A66A]',
-      badgeBg: 'bg-[#294C38]',
+      color: 'bg-[#4E7C59]',
+      badgeBg: 'bg-[#EAF3ED] dark:bg-[#25392B]',
     },
     {
       id: 'EMAIL',
       label: 'Email Newsletters',
-      icon: <Mail className="size-4 text-[#4A96D8]" />,
+      icon: <Mail className="size-4 text-[#6B7A75]" />,
       stats: channelStats['EMAIL'],
-      color: 'bg-[#4A96D8]',
-      badgeBg: 'bg-[#132230]',
+      color: 'bg-[#6B7A75]',
+      badgeBg: 'bg-[#EBF1F0] dark:bg-[#202E2B]',
     },
     {
       id: 'SMS',
       label: 'SMS Alerts',
-      icon: <Smartphone className="size-4 text-[#DDBB72]" />,
+      icon: <Smartphone className="size-4 text-[#E89535]" />,
       stats: channelStats['SMS'],
-      color: 'bg-[#C79338]',
-      badgeBg: 'bg-[#4A3B24]',
+      color: 'bg-[#E89535]',
+      badgeBg: 'bg-[#FFF6ED] dark:bg-[#33241C]',
     },
   ];
 
@@ -83,27 +83,27 @@ export function MarketingAnalyticsCharts({
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {/* Channel Revenue Attribution Chart (7 cols on desktop) */}
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 sm:p-6 shadow-md lg:col-span-7">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-[#3A3831] gap-2">
+        <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6 shadow-md lg:col-span-7">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-line gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <BarChart3 className="size-4 text-[#C49A45]" />
-                <h3 className="font-serif text-base sm:text-lg font-semibold text-[#F5F1E8]">
+                <BarChart3 className="size-4 text-[#E89535] dark:text-[#F0A349]" />
+                <h3 className="font-display text-base sm:text-lg font-semibold text-ink">
                   Revenue Attribution by Channel
                 </h3>
               </div>
-              <p className="text-xs text-[#9E988C] mt-0.5">
+              <p className="text-xs text-ink-soft mt-0.5">
                 Real checkout sales verified against campaign tokens
               </p>
             </div>
-            <span className="rounded-full bg-[#35332C] px-3 py-1 text-xs font-semibold text-[#73D393] border border-[#444139] w-fit flex items-center gap-1">
-              <TrendingUp className="size-3 text-[#43A66A]" /> {formatPrice(totalSales)} Total
+            <span className="rounded-full bg-[#EAF3ED] dark:bg-[#25392B] px-3 py-1 text-xs font-semibold text-[#4E7C59] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41] w-fit flex items-center gap-1">
+              <TrendingUp className="size-3 text-[#4E7C59]" /> {formatPrice(totalSales)} Total
             </span>
           </div>
 
           {/* Visual Channel Share Bar */}
           <div className="mt-5 space-y-2">
-            <div className="flex h-3.5 w-full overflow-hidden rounded-full bg-[#1C1B18] border border-[#3A3831]">
+            <div className="flex h-3.5 w-full overflow-hidden rounded-full bg-surface-subtle border border-line">
               {channels.map((ch) => {
                 const percentage = Math.max(8, Math.round((ch.stats.sales / totalSales) * 100));
                 return (
@@ -116,11 +116,11 @@ export function MarketingAnalyticsCharts({
                 );
               })}
             </div>
-            <div className="flex flex-wrap items-center justify-between text-[11px] text-[#9E988C] pt-1">
+            <div className="flex flex-wrap items-center justify-between text-[11px] text-ink-soft pt-1">
               {channels.map((ch) => (
                 <div key={ch.id} className="flex items-center gap-1.5">
                   <span className={`inline-block size-2.5 rounded-full ${ch.color}`} />
-                  <span className="font-medium text-[#C8C1B4]">{ch.label.split(' ')[0]}</span>
+                  <span className="font-medium text-ink">{ch.label.split(' ')[0]}</span>
                   <span>({Math.round((ch.stats.sales / totalSales) * 100)}%)</span>
                 </div>
               ))}
@@ -134,15 +134,15 @@ export function MarketingAnalyticsCharts({
               return (
                 <div
                   key={ch.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between rounded-xl border border-[#3A3831] bg-[#302F29] p-3.5 gap-2 transition-colors hover:bg-[#34322B]"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between rounded-xl border border-line bg-surface p-3.5 gap-2 transition-colors hover:bg-surface-subtle"
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`flex size-9 items-center justify-center rounded-lg ${ch.badgeBg} border border-[#444139]`}>
+                    <div className={`flex size-9 items-center justify-center rounded-lg ${ch.badgeBg} border border-line`}>
                       {ch.icon}
                     </div>
                     <div>
-                      <div className="font-medium text-sm text-[#F5F1E8]">{ch.label}</div>
-                      <div className="text-xs text-[#9E988C]">
+                      <div className="font-medium text-sm text-ink">{ch.label}</div>
+                      <div className="text-xs text-ink-soft">
                         {ch.stats.delivered} delivered • {ch.stats.orders} attributed orders
                       </div>
                     </div>
@@ -150,10 +150,10 @@ export function MarketingAnalyticsCharts({
 
                   <div className="flex items-center justify-between sm:justify-end gap-4 text-right">
                     <div>
-                      <div className="font-semibold text-sm text-[#F5F1E8]">{formatPrice(ch.stats.sales)}</div>
-                      <div className="text-[11px] text-[#9E988C]">{share}% of revenue</div>
+                      <div className="font-semibold text-sm text-ink">{formatPrice(ch.stats.sales)}</div>
+                      <div className="text-[11px] text-ink-soft">{share}% of revenue</div>
                     </div>
-                    <div className="hidden sm:block w-16 bg-[#1C1B18] rounded-full h-2 overflow-hidden border border-[#3A3831]">
+                    <div className="hidden sm:block w-16 bg-surface-subtle rounded-full h-2 overflow-hidden border border-line">
                       <div className={`h-full ${ch.color}`} style={{ width: `${share}%` }} />
                     </div>
                   </div>
@@ -164,71 +164,71 @@ export function MarketingAnalyticsCharts({
         </div>
 
         {/* Funnel & Conversion Breakdown (5 cols on desktop) */}
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 sm:p-6 shadow-md lg:col-span-5 flex flex-col justify-between">
+        <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6 shadow-md lg:col-span-5 flex flex-col justify-between">
           <div>
-            <div className="pb-4 border-b border-[#3A3831]">
+            <div className="pb-4 border-b border-line">
               <div className="flex items-center gap-2">
-                <Sparkles className="size-4 text-[#C49A45]" />
-                <h3 className="font-serif text-base sm:text-lg font-semibold text-[#F5F1E8]">
+                <Sparkles className="size-4 text-[#E89535] dark:text-[#F0A349]" />
+                <h3 className="font-display text-base sm:text-lg font-semibold text-ink">
                   Marketing Conversion Funnel
                 </h3>
               </div>
-              <p className="text-xs text-[#9E988C] mt-0.5">
+              <p className="text-xs text-ink-soft mt-0.5">
                 From audience reach to completed customer orders
               </p>
             </div>
 
             {/* Funnel Stages */}
             <div className="mt-5 space-y-3">
-              <div className="rounded-xl border border-[#3A3831] bg-[#302F29] p-3 space-y-1.5">
+              <div className="rounded-xl border border-line bg-surface p-3 space-y-1.5">
                 <div className="flex justify-between text-xs font-medium">
-                  <span className="text-[#C8C1B4] flex items-center gap-1.5">
-                    <Users className="size-3.5 text-[#C49A45]" /> Audience Reach
+                  <span className="text-ink-soft flex items-center gap-1.5">
+                    <Users className="size-3.5 text-[#E89535] dark:text-[#F0A349]" /> Audience Reach
                   </span>
-                  <span className="text-[#F5F1E8] font-semibold">{totalRecipients} patrons</span>
+                  <span className="text-ink font-semibold">{totalRecipients} patrons</span>
                 </div>
-                <div className="w-full bg-[#1C1B18] rounded-full h-2 border border-[#3A3831]">
-                  <div className="bg-[#C49A45] h-full rounded-full w-full" />
+                <div className="w-full bg-surface-subtle rounded-full h-2 border border-line">
+                  <div className="bg-[#E89535] h-full rounded-full w-full" />
                 </div>
               </div>
 
-              <div className="rounded-xl border border-[#3A3831] bg-[#302F29] p-3 space-y-1.5">
+              <div className="rounded-xl border border-line bg-surface p-3 space-y-1.5">
                 <div className="flex justify-between text-xs font-medium">
-                  <span className="text-[#C8C1B4] flex items-center gap-1.5">
-                    <Megaphone className="size-3.5 text-[#4A96D8]" /> Delivered Messages
+                  <span className="text-ink-soft flex items-center gap-1.5">
+                    <Megaphone className="size-3.5 text-[#6B7A75]" /> Delivered Messages
                   </span>
-                  <span className="text-[#F5F1E8] font-semibold">
+                  <span className="text-ink font-semibold">
                     {Math.round(totalRecipients * 0.96)} (96%)
                   </span>
                 </div>
-                <div className="w-full bg-[#1C1B18] rounded-full h-2 border border-[#3A3831]">
-                  <div className="bg-[#4A96D8] h-full rounded-full w-[96%]" />
+                <div className="w-full bg-surface-subtle rounded-full h-2 border border-line">
+                  <div className="bg-[#6B7A75] h-full rounded-full w-[96%]" />
                 </div>
               </div>
 
-              <div className="rounded-xl border border-[#3A3831] bg-[#302F29] p-3 space-y-1.5">
+              <div className="rounded-xl border border-line bg-surface p-3 space-y-1.5">
                 <div className="flex justify-between text-xs font-medium">
-                  <span className="text-[#C8C1B4] flex items-center gap-1.5">
-                    <ShoppingBag className="size-3.5 text-[#43A66A]" /> Attributed Orders
+                  <span className="text-ink-soft flex items-center gap-1.5">
+                    <ShoppingBag className="size-3.5 text-[#4E7C59]" /> Attributed Orders
                   </span>
-                  <span className="text-[#F5F1E8] font-semibold">
+                  <span className="text-ink font-semibold">
                     {totalOrders} checkouts (
                     {totalRecipients ? Math.round((totalOrders / totalRecipients) * 100) : 0}%)
                   </span>
                 </div>
-                <div className="w-full bg-[#1C1B18] rounded-full h-2 border border-[#3A3831]">
-                  <div className="bg-[#43A66A] h-full rounded-full w-[24%]" />
+                <div className="w-full bg-surface-subtle rounded-full h-2 border border-line">
+                  <div className="bg-[#4E7C59] h-full rounded-full w-[24%]" />
                 </div>
               </div>
             </div>
           </div>
 
           {/* Efficiency Footnote Card */}
-          <div className="mt-4 rounded-xl bg-[#302F29] border border-[#3A3831] p-3 flex items-center justify-between text-xs">
-            <div className="text-[#9E988C]">
-              Average Attributed Order: <strong className="text-[#F5F1E8]">{formatPrice(Math.round(totalSales / (totalOrders || 1)))}</strong>
+          <div className="mt-4 rounded-xl bg-surface-subtle border border-line p-3 flex items-center justify-between text-xs">
+            <div className="text-ink-soft">
+              Average Attributed Order: <strong className="text-ink">{formatPrice(Math.round(totalSales / (totalOrders || 1)))}</strong>
             </div>
-            <span className="font-semibold text-[#73D393]">Verified Attribution</span>
+            <span className="font-semibold text-[#4E7C59]">Verified Attribution</span>
           </div>
         </div>
       </div>

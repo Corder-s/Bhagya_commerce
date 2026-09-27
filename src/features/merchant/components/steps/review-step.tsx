@@ -57,7 +57,7 @@ export function ReviewStep({
     <form onSubmit={handleFinalSubmit} className="space-y-6">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#C49A45]/20 text-[#9A6A20] dark:text-[#C49A45]">
+          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30">
             Step 5 of 5
           </span>
           <span className="text-caption text-ink-soft">Review & Confirmation</span>
@@ -82,7 +82,7 @@ export function ReviewStep({
           <CardContent className="space-y-3 p-1">
             <div className="flex items-center justify-between border-b border-line pb-2.5">
               <div className="flex items-center gap-2">
-                <Building2 className="size-4 text-[#C49A45]" />
+                <Building2 className="size-4 text-[#E89535]" />
                 <h3 className="text-body-sm font-semibold text-ink">Business Entity</h3>
               </div>
               <Button
@@ -90,7 +90,7 @@ export function ReviewStep({
                 variant="ghost"
                 size="sm"
                 onClick={() => onEditStep("business")}
-                className="text-xs text-[#9A6A20] dark:text-[#C49A45] hover:underline flex items-center gap-1"
+                className="text-xs text-[#D48024] dark:text-[#F0A349] hover:underline flex items-center gap-1"
               >
                 <Edit2 className="size-3" />
                 Edit
@@ -127,7 +127,7 @@ export function ReviewStep({
           <CardContent className="space-y-3 p-1">
             <div className="flex items-center justify-between border-b border-line pb-2.5">
               <div className="flex items-center gap-2">
-                <StoreIcon className="size-4 text-[#C49A45]" />
+                <StoreIcon className="size-4 text-[#E89535]" />
                 <h3 className="text-body-sm font-semibold text-ink">Storefront & URL</h3>
               </div>
               <Button
@@ -135,7 +135,7 @@ export function ReviewStep({
                 variant="ghost"
                 size="sm"
                 onClick={() => onEditStep("store")}
-                className="text-xs text-[#9A6A20] dark:text-[#C49A45] hover:underline flex items-center gap-1"
+                className="text-xs text-[#D48024] dark:text-[#F0A349] hover:underline flex items-center gap-1"
               >
                 <Edit2 className="size-3" />
                 Edit
@@ -151,7 +151,7 @@ export function ReviewStep({
               <div>
                 <span className="text-ink-soft block">Public Store URL:</span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-subtle font-mono text-xs text-ink font-semibold border border-line">
-                  <Globe className="size-3 text-[#C49A45]" />
+                  <Globe className="size-3 text-[#E89535]" />
                   bhagya.in/store/{data.storeSlug}
                 </span>
               </div>
@@ -178,7 +178,7 @@ export function ReviewStep({
           <CardContent className="space-y-3 p-1">
             <div className="flex items-center justify-between border-b border-line pb-2.5">
               <div className="flex items-center gap-2">
-                <Tag className="size-4 text-[#C49A45]" />
+                <Tag className="size-4 text-[#E89535]" />
                 <h3 className="text-body-sm font-semibold text-ink">Category & Craft Specialty</h3>
               </div>
               <Button
@@ -186,7 +186,7 @@ export function ReviewStep({
                 variant="ghost"
                 size="sm"
                 onClick={() => onEditStep("category")}
-                className="text-xs text-[#9A6A20] dark:text-[#C49A45] hover:underline flex items-center gap-1"
+                className="text-xs text-[#D48024] dark:text-[#F0A349] hover:underline flex items-center gap-1"
               >
                 <Edit2 className="size-3" />
                 Edit
@@ -196,7 +196,7 @@ export function ReviewStep({
             <div className="space-y-2 text-caption">
               <div>
                 <span className="text-ink-soft block mb-1">Primary Category:</span>
-                <span className="px-3 py-1 rounded-full bg-[#C49A45]/15 text-[#9A6A20] dark:text-[#C49A45] font-semibold text-xs border border-[#C49A45]/30">
+                <span className="px-3 py-1 rounded-full bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] font-semibold text-xs border border-[#E89535]/30">
                   {categoryObj?.name || "Handmade & Crafts"}
                 </span>
               </div>
@@ -225,7 +225,7 @@ export function ReviewStep({
           <CardContent className="space-y-3 p-1">
             <div className="flex items-center justify-between border-b border-line pb-2.5">
               <div className="flex items-center gap-2">
-                <Palette className="size-4 text-[#C49A45]" />
+                <Palette className="size-4 text-[#E89535]" />
                 <h3 className="text-body-sm font-semibold text-ink">Branding Assets</h3>
               </div>
               <Button
@@ -233,7 +233,7 @@ export function ReviewStep({
                 variant="ghost"
                 size="sm"
                 onClick={() => onEditStep("branding")}
-                className="text-xs text-[#9A6A20] dark:text-[#C49A45] hover:underline flex items-center gap-1"
+                className="text-xs text-[#D48024] dark:text-[#F0A349] hover:underline flex items-center gap-1"
               >
                 <Edit2 className="size-3" />
                 Edit
@@ -247,7 +247,7 @@ export function ReviewStep({
                 ) : (
                   <div
                     className="size-full flex items-center justify-center font-display text-lg font-bold text-white"
-                    style={{ backgroundColor: data.brandAccent || "#C49A45" }}
+                    style={{ backgroundColor: data.brandAccent || "#E89535" }}
                   >
                     {(data.storeName || "B")[0]?.toUpperCase()}
                   </div>
@@ -277,7 +277,7 @@ export function ReviewStep({
               setAgreed(e.target.checked);
               if (e.target.checked) setTermsError("");
             }}
-            className="mt-1 size-4 rounded-sm border-line text-[#C49A45] accent-[#C49A45]"
+            className="mt-1 size-4 rounded-sm border-line text-[#E89535] accent-[#E89535]"
           />
           <div className="text-caption text-ink-soft leading-snug">
             <span className="font-medium text-ink">

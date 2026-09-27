@@ -60,14 +60,14 @@ export function QuickActionsBar({
 
           <Button asChild variant="outline" size="md" className="gap-1.5">
             <Link href={"/merchant/store" as any}>
-              <Store className="size-4 text-[#C49A45]" />
+              <Store className="size-4 text-[#E89535] dark:text-[#F0A349]" />
               <span>View Store</span>
             </Link>
           </Button>
 
-          <Button asChild variant="outline" size="md" className="gap-1.5 border-[#C49A45]/40 text-[#9A6A20] dark:text-[#C49A45] hover:border-[#C49A45]">
+          <Button asChild variant="outline" size="md" className="gap-1.5 border-[#E89535]/40 text-[#D48024] dark:text-[#F0A349] hover:border-[#E89535]">
             <Link href={"/merchant/ai" as any}>
-              <Sparkles className="size-4 text-[#C49A45]" />
+              <Sparkles className="size-4 text-[#E89535] dark:text-[#F0A349]" />
               <span>Ask AI Copilot</span>
             </Link>
           </Button>

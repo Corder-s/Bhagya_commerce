@@ -85,8 +85,8 @@ export function MarketingDashboardView() {
       {/* Header & Quick Action Buttons */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-serif text-2xl font-bold text-[#F5F1E8] sm:text-3xl">Marketing & Promotions</h1>
-          <p className="mt-1 text-xs sm:text-sm text-[#9E988C]">
+          <h1 className="font-display text-2xl font-bold text-ink sm:text-3xl">Marketing & Promotions</h1>
+          <p className="mt-1 text-xs sm:text-sm text-ink-soft">
             Launch artisan campaigns, manage coupon codes, and measure real revenue attribution.
           </p>
         </div>
@@ -96,7 +96,7 @@ export function MarketingDashboardView() {
             size="sm"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="flex items-center gap-1.5 border-[#444139] bg-[#2B2A25] text-[#F5F1E8] hover:bg-[#302F29] hover:border-[#5B533F]"
+            className="flex items-center gap-1.5 border-line bg-surface hover:bg-surface-subtle"
           >
             <RefreshCw className={`size-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
             Refresh
@@ -105,16 +105,16 @@ export function MarketingDashboardView() {
             variant="outline"
             size="sm"
             onClick={() => setIsPromotionModalOpen(true)}
-            className="flex items-center gap-1.5 border-[#444139] bg-[#2B2A25] text-[#F5F1E8] hover:bg-[#302F29] hover:border-[#5B533F]"
+            className="flex items-center gap-1.5 border-line bg-surface hover:bg-surface-subtle"
           >
-            <Tag className="size-4 text-[#C49A45]" />
+            <Tag className="size-4 text-[#E89535] dark:text-[#F0A349]" />
             Create Promotion
           </Button>
           <Button
             variant="primary"
             size="sm"
             onClick={() => setIsCampaignModalOpen(true)}
-            className="flex items-center gap-1.5 bg-[#C49A45] hover:bg-[#DDBB72] text-[#151515] font-semibold"
+            className="flex items-center gap-1.5"
           >
             <Megaphone className="size-4" />
             New Campaign
@@ -122,58 +122,58 @@ export function MarketingDashboardView() {
         </div>
       </div>
 
-      {/* KPI Stat Cards — Soft Charcoal Design */}
+      {/* KPI Stat Cards — LUNÉA Surface Design */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 sm:gap-4">
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm">
-          <div className="flex items-center gap-2 text-[#9E988C]">
-            <Megaphone className="size-4 text-[#C49A45]" />
+        <div className="rounded-2xl border border-line bg-surface p-4 shadow-sm">
+          <div className="flex items-center gap-2 text-ink-soft">
+            <Megaphone className="size-4 text-[#E89535] dark:text-[#F0A349]" />
             <span className="text-xs font-medium">Active Campaigns</span>
           </div>
-          <div className="mt-2 text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-ink">
             {isLoading ? '—' : overview?.activeCampaignsCount ?? campaigns.filter((c) => c.status === 'RUNNING').length}
           </div>
-          <div className="mt-1 text-[11px] text-[#9E988C]">Currently dispatching</div>
+          <div className="mt-1 text-[11px] text-ink-soft">Currently dispatching</div>
         </div>
 
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm">
-          <div className="flex items-center gap-2 text-[#9E988C]">
-            <Clock className="size-4 text-[#C79338]" />
+        <div className="rounded-2xl border border-line bg-surface p-4 shadow-sm">
+          <div className="flex items-center gap-2 text-ink-soft">
+            <Clock className="size-4 text-[#E89535] dark:text-[#F0A349]" />
             <span className="text-xs font-medium">Scheduled</span>
           </div>
-          <div className="mt-2 text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-ink">
             {isLoading ? '—' : overview?.scheduledCampaignsCount ?? campaigns.filter((c) => c.status === 'SCHEDULED').length}
           </div>
-          <div className="mt-1 text-[11px] text-[#9E988C]">Upcoming launches</div>
+          <div className="mt-1 text-[11px] text-ink-soft">Upcoming launches</div>
         </div>
 
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm">
-          <div className="flex items-center gap-2 text-[#9E988C]">
-            <Tag className="size-4 text-[#43A66A]" />
+        <div className="rounded-2xl border border-line bg-surface p-4 shadow-sm">
+          <div className="flex items-center gap-2 text-ink-soft">
+            <Tag className="size-4 text-[#4E7C59]" />
             <span className="text-xs font-medium">Active Promotions</span>
           </div>
-          <div className="mt-2 text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-ink">
             {isLoading ? '—' : overview?.activePromotionsCount ?? promotions.filter((p) => p.status === 'ACTIVE').length}
           </div>
-          <div className="mt-1 text-[11px] text-[#9E988C]">Redeemable at checkout</div>
+          <div className="mt-1 text-[11px] text-ink-soft">Redeemable at checkout</div>
         </div>
 
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm">
-          <div className="flex items-center gap-2 text-[#9E988C]">
-            <ShoppingBag className="size-4 text-[#4A96D8]" />
+        <div className="rounded-2xl border border-line bg-surface p-4 shadow-sm">
+          <div className="flex items-center gap-2 text-ink-soft">
+            <ShoppingBag className="size-4 text-[#E0732A]" />
             <span className="text-xs font-medium">Attributed Orders</span>
           </div>
-          <div className="mt-2 text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-ink">
             {isLoading ? '—' : overview?.totalAttributedOrders ?? campaigns.reduce((acc, c) => acc + (c.attributedOrders || 0), 0)}
           </div>
-          <div className="mt-1 text-[11px] text-[#9E988C]">Campaign & coupon sales</div>
+          <div className="mt-1 text-[11px] text-ink-soft">Campaign & coupon sales</div>
         </div>
 
-        <div className="col-span-2 sm:col-span-1 rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm">
-          <div className="flex items-center gap-2 text-[#9E988C]">
-            <TrendingUp className="size-4 text-[#43A66A]" />
+        <div className="col-span-2 sm:col-span-1 rounded-2xl border border-line bg-surface p-4 shadow-sm">
+          <div className="flex items-center gap-2 text-ink-soft">
+            <TrendingUp className="size-4 text-[#4E7C59]" />
             <span className="text-xs font-medium">Attributed Sales</span>
           </div>
-          <div className="mt-2 text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+          <div className="mt-2 text-xl sm:text-2xl font-bold text-ink">
             {isLoading
               ? '—'
               : formatPrice(
@@ -181,19 +181,19 @@ export function MarketingDashboardView() {
                     campaigns.reduce((acc, c) => acc + (c.attributedSales || 0), 0)
                 )}
           </div>
-          <div className="mt-1 text-[11px] text-[#73D393]">Verified order revenue</div>
+          <div className="mt-1 text-[11px] text-[#4E7C59]">Verified order revenue</div>
         </div>
       </div>
 
-      {/* Navigation Tabs - High-Contrast Soft Charcoal Palette */}
-      <div className="flex items-center border-b border-[#3A3831] overflow-x-auto no-scrollbar gap-1">
+      {/* Navigation Tabs - LUNÉA Theme Palette */}
+      <div className="flex items-center border-b border-line overflow-x-auto no-scrollbar gap-1">
         <button
           type="button"
           onClick={() => setActiveTab('analytics')}
           className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors duration-150 ${
             activeTab === 'analytics'
-              ? 'border-[#C49A45] text-[#DDBB72] font-semibold bg-[#302B20]/40'
-              : 'border-transparent text-[#B8B1A5] hover:text-[#F5F1E8] hover:bg-[#34322B]'
+              ? 'border-[#E89535] text-[#D48024] dark:text-[#F0A349] font-semibold bg-[#FFF6ED] dark:bg-[#33241C]'
+              : 'border-transparent text-ink-soft hover:text-ink hover:bg-surface-subtle'
           }`}
         >
           <BarChart2 className="size-4" />
@@ -205,13 +205,13 @@ export function MarketingDashboardView() {
           onClick={() => setActiveTab('campaigns')}
           className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors duration-150 ${
             activeTab === 'campaigns'
-              ? 'border-[#C49A45] text-[#DDBB72] font-semibold bg-[#302B20]/40'
-              : 'border-transparent text-[#B8B1A5] hover:text-[#F5F1E8] hover:bg-[#34322B]'
+              ? 'border-[#E89535] text-[#D48024] dark:text-[#F0A349] font-semibold bg-[#FFF6ED] dark:bg-[#33241C]'
+              : 'border-transparent text-ink-soft hover:text-ink hover:bg-surface-subtle'
           }`}
         >
           <Megaphone className="size-4" />
           Campaigns
-          <span className="ml-1 rounded-full bg-[#35332C] px-2 py-0.5 text-xs text-[#C8C1B4] border border-[#444139]">
+          <span className="ml-1 rounded-full bg-surface-subtle px-2 py-0.5 text-xs text-ink-soft border border-line">
             {campaigns.length}
           </span>
         </button>
@@ -221,13 +221,13 @@ export function MarketingDashboardView() {
           onClick={() => setActiveTab('promotions')}
           className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors duration-150 ${
             activeTab === 'promotions'
-              ? 'border-[#C49A45] text-[#DDBB72] font-semibold bg-[#302B20]/40'
-              : 'border-transparent text-[#B8B1A5] hover:text-[#F5F1E8] hover:bg-[#34322B]'
+              ? 'border-[#E89535] text-[#D48024] dark:text-[#F0A349] font-semibold bg-[#FFF6ED] dark:bg-[#33241C]'
+              : 'border-transparent text-ink-soft hover:text-ink hover:bg-surface-subtle'
           }`}
         >
           <Tag className="size-4" />
           Promotions & Coupons
-          <span className="ml-1 rounded-full bg-[#35332C] px-2 py-0.5 text-xs text-[#C8C1B4] border border-[#444139]">
+          <span className="ml-1 rounded-full bg-surface-subtle px-2 py-0.5 text-xs text-ink-soft border border-line">
             {promotions.length}
           </span>
         </button>
@@ -237,13 +237,13 @@ export function MarketingDashboardView() {
           onClick={() => setActiveTab('audiences')}
           className={`flex shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors duration-150 ${
             activeTab === 'audiences'
-              ? 'border-[#C49A45] text-[#DDBB72] font-semibold bg-[#302B20]/40'
-              : 'border-transparent text-[#B8B1A5] hover:text-[#F5F1E8] hover:bg-[#34322B]'
+              ? 'border-[#E89535] text-[#D48024] dark:text-[#F0A349] font-semibold bg-[#FFF6ED] dark:bg-[#33241C]'
+              : 'border-transparent text-ink-soft hover:text-ink hover:bg-surface-subtle'
           }`}
         >
           <Users className="size-4" />
           Customer Audiences
-          <span className="ml-1 rounded-full bg-[#35332C] px-2 py-0.5 text-xs text-[#C8C1B4] border border-[#444139]">
+          <span className="ml-1 rounded-full bg-surface-subtle px-2 py-0.5 text-xs text-ink-soft border border-line">
             {segments.length}
           </span>
         </button>
@@ -254,7 +254,7 @@ export function MarketingDashboardView() {
         <div className="space-y-6 transition-opacity duration-200">
           <MarketingAnalyticsCharts campaigns={campaigns} promotions={promotions} />
           <div className="pt-2">
-            <h3 className="font-serif text-lg font-semibold text-[#F5F1E8] mb-4">Recent Campaign Results</h3>
+            <h3 className="font-display text-lg font-semibold text-ink mb-4">Recent Campaign Results</h3>
             <CampaignList
               campaigns={campaigns}
               onRefresh={fetchData}
@@ -286,18 +286,18 @@ export function MarketingDashboardView() {
 
       {activeTab === 'audiences' && (
         <div className="space-y-4 transition-opacity duration-200">
-          <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 sm:p-6 shadow-md">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-[#3A3831] gap-2">
+          <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6 shadow-md">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-line gap-2">
               <div>
-                <h3 className="font-serif text-base sm:text-lg font-semibold text-[#F5F1E8]">
+                <h3 className="font-display text-base sm:text-lg font-semibold text-ink">
                   Configured Customer Segments
                 </h3>
-                <p className="text-xs text-[#9E988C] mt-0.5">
+                <p className="text-xs text-ink-soft mt-0.5">
                   Privacy-safe audience calculations respecting notification consent preferences.
                 </p>
               </div>
-              <span className="rounded-full bg-[#294C38] px-3 py-1 text-xs font-semibold text-[#73D393] border border-[#444139] w-fit flex items-center gap-1">
-                <ShieldCheck className="size-3.5 text-[#43A66A]" /> Store-Scoped & Consent-Aware
+              <span className="rounded-full bg-[#EAF3ED] dark:bg-[#25392B] px-3 py-1 text-xs font-semibold text-[#4E7C59] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41] w-fit flex items-center gap-1">
+                <ShieldCheck className="size-3.5 text-[#4E7C59]" /> Store-Scoped & Consent-Aware
               </span>
             </div>
 
@@ -305,25 +305,25 @@ export function MarketingDashboardView() {
               {segments.map((seg) => (
                 <div
                   key={seg.id}
-                  className="flex flex-col justify-between rounded-xl border border-[#3A3831] bg-[#302F29] p-4 transition-all duration-150 hover:border-[#5B533F] hover:bg-[#35332C]"
+                  className="flex flex-col justify-between rounded-xl border border-line bg-surface p-4 transition-all duration-150 hover:border-[#E89535]/40 hover:bg-surface-subtle"
                 >
                   <div>
                     <div className="flex items-center justify-between">
-                      <span className="font-medium text-[#F5F1E8]">{seg.name}</span>
-                      <span className="rounded-full bg-[#35332C] px-2 py-0.5 text-xs font-semibold text-[#DDBB72] border border-[#444139]">
+                      <span className="font-medium text-ink">{seg.name}</span>
+                      <span className="rounded-full bg-[#FFF6ED] dark:bg-[#33241C] px-2 py-0.5 text-xs font-semibold text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30">
                         {seg.estimatedCount} Reach
                       </span>
                     </div>
                     {seg.description && (
-                      <p className="mt-1 text-xs text-[#9E988C] line-clamp-2">{seg.description}</p>
+                      <p className="mt-1 text-xs text-ink-soft line-clamp-2">{seg.description}</p>
                     )}
                   </div>
-                  <div className="mt-4 pt-3 border-t border-[#3A3831] flex items-center justify-between text-xs text-[#9E988C]">
+                  <div className="mt-4 pt-3 border-t border-line flex items-center justify-between text-xs text-ink-soft">
                     <span>Target criteria</span>
                     <button
                       type="button"
                       onClick={() => setIsCampaignModalOpen(true)}
-                      className="flex items-center gap-1 text-[#C49A45] hover:text-[#DDBB72] font-medium transition-colors"
+                      className="flex items-center gap-1 text-[#E89535] dark:text-[#F0A349] hover:text-[#D48024] font-medium transition-colors"
                     >
                       Target with campaign <ArrowRight className="size-3" />
                     </button>

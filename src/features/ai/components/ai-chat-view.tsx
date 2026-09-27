@@ -89,7 +89,7 @@ export function AIChatView({
       {customerContext?.productName && (
         <div className="flex items-center justify-between px-4 py-2 bg-gold-surface border-b border-line text-caption">
           <div className="flex items-center gap-1.5 truncate">
-            <span className="text-[#9A6A20] dark:text-[#C49A45] font-semibold">Product Context:</span>
+            <span className="text-[#D48024] dark:text-[#F0A349] font-semibold">Product Context:</span>
             <span className="text-ink truncate font-medium">{customerContext.productName}</span>
           </div>
           <Badge tone="gold" size="sm">Active</Badge>
@@ -118,7 +118,7 @@ export function AIChatView({
         {/* Thinking / Tool Calling State */}
         {isThinking && !streamingText && (
           <div className="flex items-center gap-2 text-caption text-ink-soft bg-surface-subtle p-3 rounded-xl border border-line w-fit">
-            <Loader2 className="size-3.5 animate-spin text-[#C49A45]" />
+            <Loader2 className="size-3.5 animate-spin text-[#E89535]" />
             {activeToolName ? (
               <span>Executing safe tool: <strong className="font-mono text-ink">{activeToolName}</strong>…</span>
             ) : (
@@ -143,7 +143,7 @@ export function AIChatView({
                 type="button"
                 onClick={() => handlePromptClick(s.prompt)}
                 disabled={isThinking}
-                className="text-left rounded-pill border border-line bg-surface px-3 py-1.5 text-caption font-medium text-ink hover:border-[#C49A45] hover:text-[#9A6A20] dark:hover:text-[#C49A45] transition-colors shadow-2xs disabled:opacity-50"
+                className="text-left rounded-pill border border-line bg-surface px-3 py-1.5 text-caption font-medium text-ink hover:border-[#E89535] hover:text-[#D48024] dark:hover:text-[#F0A349] transition-colors shadow-2xs disabled:opacity-50"
               >
                 {s.label}
               </button>
@@ -175,7 +175,7 @@ export function AIChatView({
             onChange={(e) => setInputValue(e.target.value)}
             placeholder={placeholder || (mode === "customer" ? "Ask about products, orders, or craft…" : "Ask about sales, stock, or listings…")}
             disabled={isThinking}
-            className="flex-1 rounded-xl border border-line bg-canvas px-4 py-2.5 text-body-sm text-ink placeholder:text-ink-faint focus:border-[#C49A45] focus:outline-none transition-colors"
+            className="flex-1 rounded-xl border border-line bg-canvas px-4 py-2.5 text-body-sm text-ink placeholder:text-ink-faint focus:border-[#E89535] focus:outline-none transition-colors"
           />
 
           <Button

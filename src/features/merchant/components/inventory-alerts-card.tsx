@@ -28,7 +28,7 @@ export function InventoryAlertsCard({
     return (
       <Card variant="surface" padding="md" radius="xl" className="border-line shadow-card">
         <CardContent className="flex items-center gap-3 p-1">
-          <CheckCircle2 className="size-5 text-[#2F5E3D]" />
+          <CheckCircle2 className="size-5 text-[#4E7C59]" />
           <span className="text-body-sm text-ink-soft">
             <strong>Healthy Inventory:</strong> All active products are adequately stocked.
           </span>
@@ -42,13 +42,13 @@ export function InventoryAlertsCard({
       <Card variant="surface" padding="none" radius="xl" className="border-line shadow-card overflow-hidden">
         <div className="flex items-center justify-between p-4 sm:p-5 border-b border-line bg-surface">
           <div className="flex items-center gap-2">
-            <Boxes className="size-4 text-[#9A6A20] dark:text-[#C49A45]" />
+            <Boxes className="size-4 text-[#E89535] dark:text-[#F0A349]" />
             <h3 className="text-body-sm font-bold uppercase tracking-wider text-ink">
               Inventory Alerts
             </h3>
           </div>
 
-          <Button asChild variant="ghost" size="sm" className="text-xs text-[#9A6A20] dark:text-[#C49A45] hover:underline">
+          <Button asChild variant="ghost" size="sm" className="text-xs text-[#D48024] dark:text-[#F0A349] hover:underline">
             <Link href={"/merchant/inventory" as any}>
               Full Inventory
               <ArrowRight className="size-3" />
@@ -74,7 +74,7 @@ export function InventoryAlertsCard({
                       className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${
                         isOutOfStock
                           ? "bg-danger/15 text-danger border border-danger/30"
-                          : "bg-[#9A6A20]/15 text-[#9A6A20] dark:text-[#C49A45] border border-[#9A6A20]/30"
+                          : "bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
                       }`}
                     >
                       {isOutOfStock ? "Out of Stock" : `${alert.currentStock} Units Left`}

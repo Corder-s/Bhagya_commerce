@@ -87,7 +87,7 @@ export function MerchantProductsView() {
                 onClick={() => setSelectedStatus(tab.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
                   selectedStatus === tab.id
-                    ? "bg-[#C49A45] text-[#151515]"
+                    ? "bg-[#E89535] text-[#241812] font-bold"
                     : "text-ink-soft hover:bg-surface-subtle hover:text-ink"
                 }`}
               >
@@ -172,7 +172,7 @@ export function MerchantProductsView() {
                               isOutOfStock
                                 ? "bg-danger/15 text-danger"
                                 : isLowStock
-                                  ? "bg-[#9A6A20]/15 text-[#9A6A20] dark:text-[#C49A45]"
+                                  ? "bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
                                   : "bg-surface-subtle text-ink font-mono"
                             }`}
                           >
@@ -189,7 +189,7 @@ export function MerchantProductsView() {
                               })
                             }
                             title="Quick Adjust Stock"
-                            className="text-ink-soft hover:text-gold p-1"
+                            className="text-ink-soft hover:text-[#E89535] p-1"
                           >
                             <RefreshCw className="size-3" />
                           </button>

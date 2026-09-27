@@ -99,7 +99,7 @@ export function StoreStep({
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#C49A45]/20 text-[#9A6A20] dark:text-[#C49A45]">
+          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30">
             Step 2 of 5
           </span>
           <span className="text-caption text-ink-soft">Store Identity & URL</span>
@@ -152,7 +152,7 @@ export function StoreStep({
             <span className="text-[11px] text-ink-soft">Lowercase letters, numbers, hyphens</span>
           </div>
 
-          <div className="flex rounded-xl border border-line bg-surface overflow-hidden focus-within:ring-2 focus-within:ring-[#C49A45] focus-within:border-[#C49A45] transition-all">
+          <div className="flex rounded-xl border border-line bg-surface overflow-hidden focus-within:ring-2 focus-within:ring-[#E89535] focus-within:border-[#E89535] transition-all">
             <span className="inline-flex items-center px-3.5 bg-surface-subtle border-r border-line text-xs font-mono text-ink-soft select-none">
               bhagya.in/store/
             </span>
@@ -178,7 +178,7 @@ export function StoreStep({
                 Checking handle availability...
               </span>
             ) : slugStatus === "valid" ? (
-              <span className="flex items-center gap-1 text-[11px] font-medium text-[#2F5E3D]">
+              <span className="flex items-center gap-1 text-[11px] font-medium text-[#4E7C59]">
                 <CheckCircle2 className="size-3.5" />
                 {slugMessage}
               </span>
@@ -203,7 +203,7 @@ export function StoreStep({
             Brand Tagline / Catchphrase <span className="text-ink-soft text-caption">(Optional)</span>
           </label>
           <div className="relative">
-            <Sparkles className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#C49A45]" />
+            <Sparkles className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-[#E89535]" />
             <Input
               id="storeTagline"
               placeholder="e.g. 4th generation master weavers of pure Banarasi brocade"

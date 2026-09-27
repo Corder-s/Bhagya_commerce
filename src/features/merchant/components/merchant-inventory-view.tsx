@@ -112,8 +112,8 @@ export function MerchantInventoryView() {
                             isOut
                               ? "bg-danger/15 text-danger border border-danger/30"
                               : isLow
-                                ? "bg-[#9A6A20]/15 text-[#9A6A20] dark:text-[#C49A45] border border-[#9A6A20]/30"
-                                : "bg-[#2F5E3D]/15 text-[#2F5E3D] border border-[#2F5E3D]/30"
+                                ? "bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
+                                : "bg-[#EAF3ED] dark:bg-[#25392B] text-[#4E7C59] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41]"
                           }`}
                         >
                           {isOut ? "Out of Stock" : isLow ? "Low Stock (≤5)" : "In Stock"}

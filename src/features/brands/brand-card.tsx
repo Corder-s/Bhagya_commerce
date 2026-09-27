@@ -30,7 +30,7 @@ export function BrandCard({
     >
       <span
         aria-hidden="true"
-        className="grid size-14 shrink-0 place-items-center rounded-xl bg-[#F3E6C8] font-display text-heading-xl text-[#9A6A20]"
+        className="grid size-14 shrink-0 place-items-center rounded-xl bg-[#FFF6ED] dark:bg-[#33241C] font-display text-heading-xl text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
       >
         {brand.monogram}
       </span>

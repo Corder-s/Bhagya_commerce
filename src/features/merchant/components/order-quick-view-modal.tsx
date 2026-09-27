@@ -52,7 +52,7 @@ export function OrderQuickViewModal({
           {/* Customer & Shipping Information */}
           <div className="p-3.5 rounded-xl border border-line bg-surface space-y-2 text-caption">
             <div className="flex items-center gap-2 text-body-sm font-semibold text-ink border-b border-line pb-2">
-              <MapPin className="size-4 text-[#C49A45]" />
+              <MapPin className="size-4 text-[#E89535] dark:text-[#F0A349]" />
               <span>Customer & Destination</span>
             </div>
 
@@ -79,7 +79,7 @@ export function OrderQuickViewModal({
           {/* Ordered Items Preview */}
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-body-sm font-semibold text-ink">
-              <Package className="size-4 text-[#C49A45]" />
+              <Package className="size-4 text-[#E89535] dark:text-[#F0A349]" />
               <span>Items in this Order ({order.itemCount})</span>
             </div>
 

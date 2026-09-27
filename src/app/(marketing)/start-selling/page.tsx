@@ -137,7 +137,7 @@ export default function StartSellingPage() {
             <Card variant="surface" padding="lg" radius="xl" className="shadow-sm border-line">
               <CardContent className="flex flex-col gap-4">
                 <div className="flex items-center justify-between gap-4">
-                  <p className="label-text text-[#9A6A20] dark:text-[#C49A45]">Worked example</p>
+                  <p className="label-text text-[#D48024] dark:text-[#F0A349]">Worked example</p>
                   <Badge tone="outline" size="md">
                     Transparent Pricing
                   </Badge>
@@ -187,7 +187,7 @@ export default function StartSellingPage() {
               <div className="flex items-center justify-between gap-4">
                 <span
                   aria-hidden="true"
-                  className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
+                  className="grid size-10 place-items-center rounded-xl bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
                 >
                   <Icon className="size-4.5" />
                 </span>
@@ -217,7 +217,7 @@ export default function StartSellingPage() {
                 <CardContent className="flex flex-col gap-2.5">
                   <span
                     aria-hidden="true"
-                    className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
+                    className="grid size-10 place-items-center rounded-xl bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
                   >
                     <Icon className="size-4.5" />
                   </span>

@@ -34,7 +34,7 @@ const INITIAL_ONBOARDING_DATA: MerchantOnboardingData = {
   storeTagline: "",
   primaryCategoryId: "handmade-crafts",
   specialtyTags: [],
-  brandAccent: "#C49A45",
+  brandAccent: "#E89535",
   agreedToCharter: true,
   currentStep: "business",
   completedSteps: [],
@@ -165,7 +165,7 @@ export function MerchantOnboardingWizard() {
   if (isLoading) {
     return (
       <div className="py-20 flex flex-col items-center justify-center gap-3">
-        <div className="size-8 rounded-full border-2 border-[#C49A45] border-t-transparent animate-spin" />
+        <div className="size-8 rounded-full border-2 border-[#E89535] border-t-transparent animate-spin" />
         <p className="text-body-sm text-ink-soft">Loading onboarding workspace...</p>
       </div>
     );
@@ -208,7 +208,7 @@ export function MerchantOnboardingWizard() {
         <button
           type="button"
           onClick={() => setShowMobilePreview(!showMobilePreview)}
-          className="flex items-center gap-1.5 text-xs font-semibold text-[#9A6A20] dark:text-[#C49A45]"
+          className="flex items-center gap-1.5 text-xs font-semibold text-[#D48024] dark:text-[#F0A349]"
         >
           {showMobilePreview ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5" />}
           {showMobilePreview ? "Hide Preview" : "Show Preview"}

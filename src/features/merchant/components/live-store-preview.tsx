@@ -26,7 +26,7 @@ export function LiveStorePreview({
   const category = MERCHANT_CATEGORIES.find((c) => c.id === data.primaryCategoryId);
   const categoryName = category?.name || "Handmade & Crafts";
 
-  const brandAccent = data.brandAccent || "#C49A45";
+  const brandAccent = data.brandAccent || "#E89535";
 
   // Initials for avatar
   const initials = storeName
@@ -39,7 +39,7 @@ export function LiveStorePreview({
     <div className={className}>
       <div className="flex items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-1.5 text-xs font-semibold text-ink-soft uppercase tracking-wider">
-          <Sparkles className="size-3.5 text-[#C49A45]" />
+          <Sparkles className="size-3.5 text-[#E89535]" />
           <span>Live Storefront Preview</span>
         </div>
         <Badge tone="outline" size="sm" className="text-[10px] text-ink-soft font-mono">
@@ -65,7 +65,7 @@ export function LiveStorePreview({
                 background: `linear-gradient(135deg, #1A1A18 0%, #2A261E 50%, #151515 100%)`,
               }}
             >
-              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#C49A45_1px,transparent_1px)] [background-size:16px_16px]" />
+              <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#E89535_1px,transparent_1px)] [background-size:16px_16px]" />
               <StoreIcon className="size-10 text-white/20" />
             </div>
           )}
@@ -107,7 +107,7 @@ export function LiveStorePreview({
             </div>
 
             <div className="flex items-center gap-1.5 text-xs text-ink-soft bg-surface-subtle px-2.5 py-1 rounded-lg border border-line">
-              <CheckCircle2 className="size-3.5 text-[#2F5E3D]" />
+              <CheckCircle2 className="size-3.5 text-[#4E7C59]" />
               <span className="font-medium text-ink">Verified Maker</span>
             </div>
           </div>
@@ -120,7 +120,7 @@ export function LiveStorePreview({
               </h4>
             </div>
 
-            <p className="text-body-sm font-medium text-[#9A6A20] dark:text-[#C49A45]">
+            <p className="text-body-sm font-medium text-[#D48024] dark:text-[#F0A349]">
               {tagline}
             </p>
 
@@ -145,11 +145,11 @@ export function LiveStorePreview({
             {/* Footer URL representation */}
             <div className="pt-4 border-t border-line/60 flex items-center justify-between text-caption text-ink-faint">
               <span className="flex items-center gap-1.5">
-                <Globe className="size-3.5 text-[#C49A45]" />
+                <Globe className="size-3.5 text-[#E89535]" />
                 <span className="font-mono text-[11px]">bhagya.in/store/{slug}</span>
               </span>
               <span
-                className="text-[11px] font-semibold text-[#9A6A20] dark:text-[#C49A45] hover:underline"
+                className="text-[11px] font-semibold text-[#D48024] dark:text-[#F0A349] hover:underline"
               >
                 Store preview →
               </span>

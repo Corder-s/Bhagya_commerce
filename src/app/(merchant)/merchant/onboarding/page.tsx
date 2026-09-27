@@ -22,8 +22,8 @@ export default function MerchantOnboardingPage() {
           title="Open your store on Bhagya"
           description="Build your store identity, configure your brand craft category, and begin selling to conscious customers nationwide."
           actions={
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#C49A45]/15 text-[#9A6A20] dark:text-[#C49A45] text-xs font-semibold border border-[#C49A45]/30 shadow-xs">
-              <Sparkles className="size-4" />
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] text-xs font-semibold border border-[#E89535]/30 shadow-xs">
+              <Sparkles className="size-4 text-[#E89535]" />
               <span>Artisan Onboarding</span>
             </div>
           }

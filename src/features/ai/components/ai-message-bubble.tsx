@@ -49,7 +49,7 @@ export function AIMessageBubble({
       {message.toolCall && (
         <div className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-pill bg-surface border border-line text-caption text-ink-soft shadow-xs">
           {message.toolCall.status === "running" ? (
-            <Loader2 className="size-3 animate-spin text-[#C49A45]" />
+            <Loader2 className="size-3 animate-spin text-[#E89535]" />
           ) : (
             <CheckCircle2 className="size-3 text-success" />
           )}
@@ -69,7 +69,7 @@ export function AIMessageBubble({
         {/* Structured Data: Product Recommendations */}
         {message.structuredData?.type === "product_recommendations" && (
           <div className="space-y-2 pt-2 border-t border-line">
-            <span className="text-caption font-semibold uppercase tracking-wider text-[#9A6A20] dark:text-[#C49A45] block">
+            <span className="text-caption font-semibold uppercase tracking-wider text-[#D48024] dark:text-[#F0A349] block">
               Curated Artisan Products ({message.structuredData.data.length})
             </span>
             <div className="grid grid-cols-1 gap-2.5">
@@ -85,7 +85,7 @@ export function AIMessageBubble({
           <div className="p-3.5 rounded-xl border border-line bg-surface-subtle space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Truck className="size-4 text-[#C49A45]" />
+                <Truck className="size-4 text-[#E89535] dark:text-[#F0A349]" />
                 <span className="font-mono font-bold text-body-sm text-ink">
                   {message.structuredData.data.orderNumber}
                 </span>
@@ -127,7 +127,7 @@ export function AIMessageBubble({
         {message.structuredData?.type === "merchant_sales_summary" && (
           <div className="p-3.5 rounded-xl border border-line bg-surface-subtle space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-caption font-bold uppercase tracking-wider text-[#9A6A20] dark:text-[#C49A45]">
+              <span className="text-caption font-bold uppercase tracking-wider text-[#D48024] dark:text-[#F0A349]">
                 Today's Store Performance
               </span>
               <span className="inline-flex items-center gap-1 text-caption font-semibold text-success">
@@ -151,7 +151,7 @@ export function AIMessageBubble({
               </div>
               <div className="p-2 rounded-lg bg-surface border border-line">
                 <span className="text-[11px] text-ink-soft block">Pending</span>
-                <span className="font-display text-body-md font-bold text-[#9A6A20]">
+                <span className="font-display text-body-md font-bold text-[#D48024] dark:text-[#F0A349]">
                   {message.structuredData.data.pendingOrdersCount}
                 </span>
               </div>

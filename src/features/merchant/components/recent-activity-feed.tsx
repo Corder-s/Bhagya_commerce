@@ -24,7 +24,7 @@ export function RecentActivityFeed({ activities }: { activities: MerchantActivit
     <Card variant="surface" padding="none" radius="xl" className="border-line shadow-card overflow-hidden">
       <div className="flex items-center justify-between p-4 sm:p-5 border-b border-line bg-surface">
         <div className="flex items-center gap-2">
-          <History className="size-4 text-[#C49A45]" />
+          <History className="size-4 text-[#E89535] dark:text-[#F0A349]" />
           <h3 className="text-body-sm font-bold uppercase tracking-wider text-ink">
             Store Activity Log
           </h3>
@@ -39,7 +39,7 @@ export function RecentActivityFeed({ activities }: { activities: MerchantActivit
           return (
             <div key={act.id} className="p-4 flex items-start justify-between gap-3 hover:bg-surface-subtle/40 transition-colors">
               <div className="flex items-start gap-3">
-                <span className="size-8 rounded-lg bg-surface-subtle border border-line flex items-center justify-center text-[#9A6A20] dark:text-[#C49A45] shrink-0 mt-0.5">
+                <span className="size-8 rounded-lg bg-surface-subtle border border-line flex items-center justify-center text-[#D48024] dark:text-[#F0A349] shrink-0 mt-0.5">
                   <IconComponent className="size-4" />
                 </span>
 

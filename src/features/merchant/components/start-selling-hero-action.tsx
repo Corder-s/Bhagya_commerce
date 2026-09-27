@@ -51,7 +51,7 @@ export function StartSellingHeroAction() {
           <CardContent className="space-y-3 p-1">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="size-8 rounded-lg bg-[#C49A45]/20 text-[#9A6A20] dark:text-[#C49A45] flex items-center justify-center">
+                <span className="size-8 rounded-lg bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] flex items-center justify-center border border-[#E89535]/30">
                   <Store className="size-4" />
                 </span>
                 <span className="text-caption font-semibold text-ink-soft uppercase tracking-wider">
@@ -119,7 +119,7 @@ export function StartSellingHeroAction() {
       </div>
 
       <div className="flex items-center gap-2 text-caption text-ink-soft">
-        <CheckCircle2 className="size-3.5 text-[#2F5E3D]" />
+        <CheckCircle2 className="size-3.5 text-[#4E7C59]" />
         <span>One unified account — shop and sell with the same login.</span>
       </div>
     </div>

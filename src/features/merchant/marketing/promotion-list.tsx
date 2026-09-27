@@ -102,21 +102,21 @@ export function PromotionList({
     switch (promo.type) {
       case 'PERCENTAGE_DISCOUNT':
         return (
-          <div className="flex items-center gap-1 font-semibold text-[#F5F1E8]">
-            <Percent className="size-3.5 text-[#C49A45]" />
+          <div className="flex items-center gap-1 font-semibold text-ink">
+            <Percent className="size-3.5 text-[#E89535] dark:text-[#F0A349]" />
             <span>{promo.value}% OFF</span>
           </div>
         );
       case 'FIXED_DISCOUNT':
         return (
-          <div className="flex items-center gap-1 font-semibold text-[#F5F1E8]">
-            <IndianRupee className="size-3.5 text-[#C49A45]" />
+          <div className="flex items-center gap-1 font-semibold text-ink">
+            <IndianRupee className="size-3.5 text-[#E89535] dark:text-[#F0A349]" />
             <span>{formatPrice(promo.value)} Flat</span>
           </div>
         );
       case 'FREE_DELIVERY':
         return (
-          <div className="flex items-center gap-1 font-semibold text-[#73D393]">
+          <div className="flex items-center gap-1 font-semibold text-[#4E7C59]">
             <Truck className="size-3.5" />
             <span>Free Delivery</span>
           </div>
@@ -128,18 +128,18 @@ export function PromotionList({
 
   if (!promotions || promotions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#444139] bg-[#2B2A25] p-12 text-center">
-        <div className="flex size-14 items-center justify-center rounded-full bg-[#35332C] text-[#C49A45] mb-4">
+      <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-surface p-12 text-center">
+        <div className="flex size-14 items-center justify-center rounded-full bg-[#FFF6ED] dark:bg-[#33241C] text-[#E89535] dark:text-[#F0A349] mb-4">
           <Tag className="size-7" />
         </div>
-        <h3 className="font-serif text-lg font-semibold text-[#F5F1E8]">No promotions created</h3>
-        <p className="mt-1 max-w-sm text-sm text-[#9E988C]">
+        <h3 className="font-display text-lg font-semibold text-ink">No promotions created</h3>
+        <p className="mt-1 max-w-sm text-sm text-ink-soft">
           Create percentage discounts, flat order savings, or free delivery coupons for your store.
         </p>
         <Button
           variant="primary"
           size="md"
-          className="mt-6 bg-[#C49A45] hover:bg-[#DDBB72] text-[#151515] font-semibold"
+          className="mt-6"
           onClick={onOpenCreate}
         >
           Create First Promotion
@@ -151,9 +151,9 @@ export function PromotionList({
   return (
     <div className="space-y-4">
       {/* Desktop Table View */}
-      <div className="hidden md:block overflow-hidden rounded-2xl border border-[#444139] bg-[#2B2A25] shadow-md">
+      <div className="hidden md:block overflow-hidden rounded-2xl border border-line bg-surface shadow-md">
         <table className="w-full text-left text-sm">
-          <thead className="border-b border-[#3A3831] bg-[#1C1B18] text-xs uppercase tracking-wider text-[#9E988C] font-medium">
+          <thead className="border-b border-line bg-surface-subtle text-xs uppercase tracking-wider text-ink-soft font-medium">
             <tr>
               <th className="px-6 py-4">Promotion & Code</th>
               <th className="px-6 py-4">Benefit</th>
@@ -163,52 +163,52 @@ export function PromotionList({
               <th className="px-6 py-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#3A3831]">
+          <tbody className="divide-y divide-line">
             {promotions.map((promo) => {
               const primaryCoupon = promo.couponCode;
               return (
-                <tr key={promo.id} className="transition-colors hover:bg-[#34322B]">
+                <tr key={promo.id} className="transition-colors hover:bg-surface-subtle/50">
                   <td className="px-6 py-4">
-                    <div className="font-medium text-[#F5F1E8]">{promo.name}</div>
+                    <div className="font-medium text-ink">{promo.name}</div>
                     {primaryCoupon ? (
                       <div className="mt-1 flex items-center gap-1.5">
-                        <span className="inline-flex items-center gap-1 rounded-md bg-[#35332C] px-2 py-0.5 font-mono text-xs font-semibold text-[#DDBB72] border border-[#5B533F]">
-                          <Tag className="size-3 text-[#C49A45]" />
+                        <span className="inline-flex items-center gap-1 rounded-md bg-[#FFF6ED] dark:bg-[#33241C] px-2 py-0.5 font-mono text-xs font-semibold text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30">
+                          <Tag className="size-3 text-[#E89535] dark:text-[#F0A349]" />
                           {primaryCoupon}
                         </span>
                         <button
                           type="button"
                           onClick={() => handleCopyCode(primaryCoupon)}
-                          className="text-[#9E988C] hover:text-[#F5F1E8] transition-colors"
+                          className="text-ink-soft hover:text-ink transition-colors cursor-pointer"
                           title="Copy Code"
                         >
                           {copiedCode === primaryCoupon ? (
-                            <Check className="size-3.5 text-[#43A66A]" />
+                            <Check className="size-3.5 text-[#4E7C59]" />
                           ) : (
                             <Copy className="size-3.5" />
                           )}
                         </button>
                       </div>
                     ) : (
-                      <span className="text-xs text-[#9E988C]">Automatic Discount</span>
+                      <span className="text-xs text-ink-soft">Automatic Discount</span>
                     )}
                   </td>
                   <td className="px-6 py-4">{renderValueDisplay(promo)}</td>
                   <td className="px-6 py-4">{renderStatusBadge(promo.status)}</td>
-                  <td className="px-6 py-4 text-xs text-[#C8C1B4]">
+                  <td className="px-6 py-4 text-xs text-ink-soft">
                     {promo.minimumOrderValue ? (
                       <div>Min order: {formatPrice(promo.minimumOrderValue)}</div>
                     ) : (
                       <div>No minimum spend</div>
                     )}
                     {promo.maximumDiscount ? (
-                      <div className="text-[#9E988C]">Cap: {formatPrice(promo.maximumDiscount)}</div>
+                      <div className="text-ink-soft">Cap: {formatPrice(promo.maximumDiscount)}</div>
                     ) : null}
                   </td>
                   <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-[#F5F1E8]">
+                    <div className="text-sm font-medium text-ink">
                       {promo.usageCount || 0}{' '}
-                      <span className="text-xs font-normal text-[#9E988C]">
+                      <span className="text-xs font-normal text-ink-soft">
                         / {promo.usageLimit || '∞'} uses
                       </span>
                     </div>
@@ -221,7 +221,7 @@ export function PromotionList({
                           size="sm"
                           disabled={actionLoadingId === promo.id}
                           onClick={() => handleToggleStatus(promo)}
-                          className="border-[#444139] bg-[#302F29] text-[#F5F1E8] hover:bg-[#35332C]"
+                          className="border-line bg-surface hover:bg-surface-subtle"
                         >
                           {promo.status === 'ACTIVE' ? (
                             <>
@@ -250,26 +250,26 @@ export function PromotionList({
           return (
             <div
               key={promo.id}
-              className="rounded-xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm space-y-3"
+              className="rounded-xl border border-line bg-surface p-4 shadow-sm space-y-3"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h4 className="font-medium text-[#F5F1E8]">{promo.name}</h4>
+                  <h4 className="font-medium text-ink">{promo.name}</h4>
                   <div className="mt-1">{renderValueDisplay(promo)}</div>
                 </div>
                 <div>{renderStatusBadge(promo.status)}</div>
               </div>
 
               {primaryCoupon && (
-                <div className="flex items-center justify-between rounded-lg bg-[#302F29] p-2 border border-[#3A3831]">
+                <div className="flex items-center justify-between rounded-lg bg-surface-subtle p-2 border border-line">
                   <div className="flex items-center gap-1.5">
-                    <Tag className="size-3.5 text-[#C49A45]" />
-                    <span className="font-mono text-xs font-semibold text-[#DDBB72]">{primaryCoupon}</span>
+                    <Tag className="size-3.5 text-[#E89535] dark:text-[#F0A349]" />
+                    <span className="font-mono text-xs font-semibold text-[#D48024] dark:text-[#F0A349]">{primaryCoupon}</span>
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-6 px-2 text-xs text-[#9E988C] hover:text-[#F5F1E8]"
+                    className="h-6 px-2 text-xs text-ink-soft hover:text-ink"
                     onClick={() => handleCopyCode(primaryCoupon)}
                   >
                     {copiedCode === primaryCoupon ? 'Copied' : 'Copy'}
@@ -277,7 +277,7 @@ export function PromotionList({
                 </div>
               )}
 
-              <div className="flex items-center justify-between text-xs text-[#9E988C]">
+              <div className="flex items-center justify-between text-xs text-ink-soft">
                 <span>
                   Min order: {promo.minimumOrderValue ? formatPrice(promo.minimumOrderValue) : 'None'}
                 </span>
@@ -286,14 +286,14 @@ export function PromotionList({
                 </span>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#3A3831]">
+              <div className="flex items-center justify-end gap-2 pt-2 border-t border-line">
                 {promo.status !== 'ARCHIVED' && (
                   <Button
                     variant="outline"
                     size="sm"
                     disabled={actionLoadingId === promo.id}
                     onClick={() => handleToggleStatus(promo)}
-                    className="border-[#444139] bg-[#302F29] text-[#F5F1E8]"
+                    className="border-line bg-surface"
                   >
                     {promo.status === 'ACTIVE' ? 'Pause' : 'Resume'}
                   </Button>

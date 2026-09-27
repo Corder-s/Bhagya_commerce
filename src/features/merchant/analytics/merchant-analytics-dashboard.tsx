@@ -276,7 +276,7 @@ export function MerchantAnalyticsDashboard() {
           <div>
             <div className="flex items-center justify-between text-[#9E988C] text-xs">
               <span>Net Sales</span>
-              <TrendingUp className="size-3.5 text-[#C49A45]" />
+              <TrendingUp className="size-3.5 text-[#E89535]" />
             </div>
             <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
               {formatCurrency(sales.netSales)}
@@ -383,7 +383,7 @@ export function MerchantAnalyticsDashboard() {
                 <div key={step.stepName} className="space-y-1">
                   <div className="flex items-center justify-between text-xs font-medium">
                     <span className="text-[#C8C1B4] flex items-center gap-1.5">
-                      <span className="flex size-4 items-center justify-center rounded-full bg-[#35332C] text-[10px] text-[#C49A45]">
+                      <span className="flex size-4 items-center justify-center rounded-full bg-[#35332C] text-[10px] text-[#E89535]">
                         {idx + 1}
                       </span>
                       {step.stepName}
@@ -395,7 +395,7 @@ export function MerchantAnalyticsDashboard() {
                   <div className="h-2 w-full rounded-full bg-[#1C1B18] overflow-hidden border border-[#3A3831]">
                     <div
                       style={{ width: `${Math.max(6, step.conversionRateFromPrevious)}%` }}
-                      className="h-full rounded-full bg-[#C49A45] transition-all duration-300"
+                      className="h-full rounded-full bg-[#E89535] transition-all duration-300"
                     />
                   </div>
                   {idx > 0 && (
@@ -410,7 +410,7 @@ export function MerchantAnalyticsDashboard() {
 
           <div className="mt-4 pt-3 border-t border-[#3A3831] text-[11px] text-[#9E988C] flex items-center justify-between">
             <span>Verified Customer Events</span>
-            <span className="text-[#C49A45] font-medium">Step 16 Intelligence</span>
+            <span className="text-[#E89535] font-medium">Step 16 Intelligence</span>
           </div>
         </div>
 

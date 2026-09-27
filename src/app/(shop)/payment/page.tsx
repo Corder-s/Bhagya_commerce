@@ -41,8 +41,8 @@ export default function PaymentPage() {
       <Suspense
         fallback={
           <div className="py-20 text-center">
-            <div className="size-12 rounded-full border-2 border-[#C49A45] border-t-transparent animate-spin mx-auto" />
-            <p className="text-[#5E5A52] text-sm mt-4">Loading secure payment options…</p>
+            <div className="size-12 rounded-full border-2 border-[#E89535] border-t-transparent animate-spin mx-auto" />
+            <p className="text-ink-soft text-sm mt-4">Loading secure payment options…</p>
           </div>
         }
       >

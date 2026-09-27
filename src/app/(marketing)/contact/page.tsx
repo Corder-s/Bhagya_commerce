@@ -30,7 +30,7 @@ export default function ContactPage() {
           <CardContent className="flex flex-col gap-1.5">
             <span
               aria-hidden="true"
-              className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
+              className="grid size-10 place-items-center rounded-xl bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
             >
               <Mail className="size-4" />
             </span>
@@ -49,7 +49,7 @@ export default function ContactPage() {
           <CardContent className="flex flex-col gap-1.5">
             <span
               aria-hidden="true"
-              className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
+              className="grid size-10 place-items-center rounded-xl bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
             >
               <Phone className="size-4" />
             </span>
@@ -68,7 +68,7 @@ export default function ContactPage() {
           <CardContent className="flex flex-col gap-1.5">
             <span
               aria-hidden="true"
-              className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
+              className="grid size-10 place-items-center rounded-xl bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
             >
               <MessageCircle className="size-4" />
             </span>
@@ -84,7 +84,7 @@ export default function ContactPage() {
           <CardContent className="flex flex-col gap-1.5">
             <span
               aria-hidden="true"
-              className="grid size-10 place-items-center rounded-xl bg-[#F3E6C8] text-[#9A6A20]"
+              className="grid size-10 place-items-center rounded-xl bg-[#FFF6ED] dark:bg-[#33241C] text-[#D48024] dark:text-[#F0A349] border border-[#E89535]/30"
             >
               <MapPin className="size-4" />
             </span>

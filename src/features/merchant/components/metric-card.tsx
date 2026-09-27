@@ -83,7 +83,7 @@ export function MetricCard({
                 <DeltaIcon className="size-3" strokeWidth={2.5} />
                 {formatDelta(delta)}
               </span>
-              <span className="text-ink-faint text-[11px]">{deltaLabel}</span>
+              <span className="text-ink-soft text-[11px]">{deltaLabel}</span>
             </div>
           ) : (
             <span className="text-ink-soft text-[11px]">

@@ -112,19 +112,19 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   return (
     <div>
       {/* ── Breadcrumbs ─────────────────────────────────────────────────── */}
-      <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-body-sm text-ink-faint">
-        <Link href="/" className="hover:text-ink transition-colors">Home</Link>
+      <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-1.5 text-body-sm text-ink-soft">
+        <Link href="/" className="hover:text-primary transition-colors">Home</Link>
         <span>/</span>
-        <Link href={marketingRoutes.shop} className="hover:text-ink transition-colors">Shop</Link>
+        <Link href={marketingRoutes.shop} className="hover:text-primary transition-colors">Shop</Link>
         <span>/</span>
         <Link
           href={`/shop?category=${product.categorySlug}`}
-          className="hover:text-ink transition-colors capitalize"
+          className="hover:text-primary transition-colors capitalize"
         >
           {product.categorySlug.replace("-", " ")}
         </Link>
         <span>/</span>
-        <span className="text-ink font-medium truncate max-w-[240px] sm:max-w-none">
+        <span className="text-ink font-semibold truncate max-w-[240px] sm:max-w-none">
           {product.name}
         </span>
       </nav>
@@ -264,7 +264,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             <span className="text-body-sm font-bold text-ink tabular-nums">
               {ratingValue.toFixed(1)}
             </span>
-            <span className="text-body-sm text-ink-faint">
+            <span className="text-body-sm text-ink-soft">
               ({reviewCount} customer reviews)
             </span>
           </div>
@@ -275,7 +275,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               {formatPrice(currentPrice)}
             </span>
             {currentMrp && currentMrp > currentPrice && (
-              <span className="text-body-lg text-ink-faint line-through tabular-nums">
+              <span className="text-body-lg text-ink-soft/75 line-through tabular-nums">
                 {formatPrice(currentMrp)}
               </span>
             )}
@@ -513,7 +513,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                       <Star key={s} className="size-4 fill-gold text-gold" />
                     ))}
                   </div>
-                  <p className="text-caption text-ink-faint">
+                  <p className="text-caption text-ink-soft">
                     Based on {reviewCount} verified reviews
                   </p>
                 </div>
@@ -535,7 +535,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                           style={{ width: `${row.pct}%` }}
                         />
                       </div>
-                      <span className="w-8 text-right text-ink-faint tabular-nums">{row.pct}%</span>
+                      <span className="w-8 text-right text-ink-soft tabular-nums">{row.pct}%</span>
                     </div>
                   ))}
                 </div>
@@ -579,7 +579,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                           />
                         ))}
                       </div>
-                      <span className="text-caption text-ink-faint">{review.date}</span>
+                      <span className="text-caption text-ink-soft">{review.date}</span>
                     </div>
                     <h5 className="font-bold text-ink text-body-sm">{review.title}</h5>
                     <p className="text-body-sm text-ink-soft leading-relaxed">{review.comment}</p>
@@ -603,7 +603,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
       <div className="fixed inset-x-0 bottom-0 z-sticky lg:hidden border-t border-line bg-surface/95 backdrop-blur-md p-3.5 shadow-xl">
         <div className="flex items-center gap-3 max-w-md mx-auto">
           <div>
-            <p className="text-caption text-ink-faint">Total Price</p>
+            <p className="text-caption text-ink-soft">Total Price</p>
             <p className="text-body-md font-bold text-ink tabular-nums">
               {formatPrice(currentPrice * qty)}
             </p>

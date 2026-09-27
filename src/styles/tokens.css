@@ -253,9 +253,9 @@
     --color-header-bg: #140C09;
 
     --color-text-primary: #FAF4EE;
-    --color-text-secondary: #D4C4B6;
-    --color-text-muted: #A6968B;
-    --color-text-disabled: #6D5F56;
+    --color-text-secondary: #D8CCC0;
+    --color-text-muted: #B8A89C;
+    --color-text-disabled: #98877D;
     --color-text-inverse: #1F1510;
     --color-text-inverse-muted: #695A50;
 
@@ -381,8 +381,8 @@
     --merchant-border: #47362E;
     --merchant-border-soft: #382A23;
     --merchant-text: #FAF4EE;
-    --merchant-text-secondary: #D4C4B6;
-    --merchant-text-muted: #A6968B;
+    --merchant-text-secondary: #D8CCC0;
+    --merchant-text-muted: #B8A89C;
     --merchant-gold: #F0A349;
     --merchant-gold-light: #F7C07E;
     --merchant-gold-soft: #422918;

@@ -86,7 +86,6 @@ export function LiveStorePreview({
           <div className="-mt-10 mb-4 flex items-end justify-between">
             <div
               className="size-20 rounded-2xl border-4 border-surface bg-surface shadow-md overflow-hidden relative flex items-center justify-center"
-              style={{ borderColor: "#FFFFFF" }}
             >
               {data.logoUrl ? (
                 <Image
@@ -107,7 +106,7 @@ export function LiveStorePreview({
             </div>
 
             <div className="flex items-center gap-1.5 text-xs text-ink-soft bg-surface-subtle px-2.5 py-1 rounded-lg border border-line">
-              <CheckCircle2 className="size-3.5 text-[#4E7C59]" />
+              <CheckCircle2 className="size-3.5 text-[#4E7C59] dark:text-[#78A383]" />
               <span className="font-medium text-ink">Verified Maker</span>
             </div>
           </div>
@@ -143,10 +142,10 @@ export function LiveStorePreview({
             )}
 
             {/* Footer URL representation */}
-            <div className="pt-4 border-t border-line/60 flex items-center justify-between text-caption text-ink-faint">
+            <div className="pt-4 border-t border-line/60 flex items-center justify-between text-caption text-ink-soft">
               <span className="flex items-center gap-1.5">
-                <Globe className="size-3.5 text-[#E89535]" />
-                <span className="font-mono text-[11px]">bhagya.in/store/{slug}</span>
+                <Globe className="size-3.5 text-[#E89535] dark:text-[#F0A349]" />
+                <span className="font-mono text-[11px] text-ink-soft">bhagya.in/store/{slug}</span>
               </span>
               <span
                 className="text-[11px] font-semibold text-[#D48024] dark:text-[#F0A349] hover:underline"

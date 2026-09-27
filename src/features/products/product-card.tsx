@@ -126,15 +126,15 @@ export function ProductCard({
       </div>
 
       <div className="flex flex-1 flex-col pt-3.5">
-        <p className="text-caption font-medium uppercase tracking-[0.08em] text-ink-faint">
+        <p className="text-caption font-semibold uppercase tracking-[0.08em] text-[#D48024] dark:text-[#F0A349]">
           {product.brand.name}
         </p>
 
-        <h3 className="mt-1.5 line-clamp-2 text-body-md font-medium text-ink">
+        <h3 className="mt-1.5 line-clamp-2 text-body-md font-medium text-ink group-hover:text-primary transition-colors">
           {/* Stretched link: the whole card is the target, the title is the label. */}
           <Link
             href={href}
-            className="after:absolute after:inset-0 after:rounded-lg focus-visible:outline-none hover:text-primary transition-colors"
+            className="after:absolute after:inset-0 after:rounded-lg focus-visible:outline-none"
           >
             {product.name}
           </Link>
@@ -144,13 +144,13 @@ export function ProductCard({
         {product.rating ? (
           <p className="flex items-center gap-1.5 text-caption text-ink-soft">
             <Star
-              className="size-3.5 fill-[#E89535] text-[#E89535]"
+              className="size-3.5 fill-[#E89535] text-[#E89535] dark:fill-[#F0A349] dark:text-[#F0A349]"
               aria-hidden="true"
             />
-            <span className="tabular-nums font-medium text-ink">
+            <span className="tabular-nums font-bold text-ink">
               {formatRating(product.rating.value)}
             </span>
-            <span className="tabular-nums">
+            <span className="tabular-nums text-ink-soft">
               ({formatReviewCount(product.rating.count)})
             </span>
             <span className="sr-only">
@@ -160,15 +160,15 @@ export function ProductCard({
         ) : null}
 
         <p className="mt-1.5 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <span className="text-body-md font-semibold tabular-nums text-ink">
+          <span className="text-body-md font-bold tabular-nums text-ink">
             {formatPrice(product.priceInr)}
           </span>
           {discount != null && product.mrpInr != null ? (
             <>
-              <span className="text-caption tabular-nums text-ink-faint line-through">
+              <span className="text-caption tabular-nums text-ink-soft/75 line-through">
                 {formatPrice(product.mrpInr)}
               </span>
-              <span className="text-caption font-semibold text-success">
+              <span className="text-caption font-bold text-success">
                 {discount}% off
               </span>
             </>
@@ -176,7 +176,7 @@ export function ProductCard({
         </p>
 
         {lowStock ? (
-          <p className="mt-1.5 text-caption text-warning">Low stock</p>
+          <p className="mt-1.5 text-caption font-semibold text-warning">Low stock</p>
         ) : null}
         </div>
       </div>

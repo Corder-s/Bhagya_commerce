@@ -75,44 +75,44 @@ export function CampaignList({
     switch (status) {
       case 'RUNNING':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#294C38] px-2.5 py-0.5 text-xs font-semibold text-[#73D393] border border-[#444139] animate-pulse">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#EAF3ED] dark:bg-[#223829] px-2.5 py-0.5 text-xs font-semibold text-[#375D41] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41] animate-pulse">
             <Play className="size-3" /> Running
           </span>
         );
       case 'SCHEDULED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#4A3B24] px-2.5 py-0.5 text-xs font-semibold text-[#DDBB72] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF6ED] dark:bg-[#33241C] px-2.5 py-0.5 text-xs font-semibold text-[#D48024] dark:text-[#F0A349] border border-[#F7C07E] dark:border-[#4D382B]">
             <Clock className="size-3" /> Scheduled
           </span>
         );
       case 'COMPLETED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#35332C] px-2.5 py-0.5 text-xs font-semibold text-[#F5F1E8] border border-[#444139]">
-            <CheckCircle2 className="size-3 text-[#43A66A]" /> Completed
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#EAF3ED] dark:bg-[#223829] px-2.5 py-0.5 text-xs font-semibold text-[#375D41] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41]">
+            <CheckCircle2 className="size-3 text-[#4E7C59] dark:text-[#78A383]" /> Completed
           </span>
         );
       case 'PAUSED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#4A3B24] px-2.5 py-0.5 text-xs font-semibold text-[#DDBB72] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF6ED] dark:bg-[#33241C] px-2.5 py-0.5 text-xs font-semibold text-[#D48024] dark:text-[#F0A349] border border-[#F7C07E] dark:border-[#4D382B]">
             <Pause className="size-3" /> Paused
           </span>
         );
       case 'FAILED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#4A2924] px-2.5 py-0.5 text-xs font-semibold text-[#F09284] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#FAEBE9] dark:bg-[#42231F] px-2.5 py-0.5 text-xs font-semibold text-[#B84A39] dark:text-[#F09284] border border-[#F5C4BD] dark:border-[#5E2B25]">
             <AlertCircle className="size-3" /> Failed
           </span>
         );
       case 'CANCELLED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#34322B] px-2.5 py-0.5 text-xs font-semibold text-[#C8C1B4] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#F2E7DC] dark:bg-[#2C201A] px-2.5 py-0.5 text-xs font-semibold text-[#695A50] dark:text-[#D8CCC0] border border-[#ECE1D6] dark:border-[#47362E]">
             Cancelled
           </span>
         );
       case 'DRAFT':
       default:
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#34322B] px-2.5 py-0.5 text-xs font-semibold text-[#C8C1B4] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#F2E7DC] dark:bg-[#2C201A] px-2.5 py-0.5 text-xs font-semibold text-[#695A50] dark:text-[#D8CCC0] border border-[#ECE1D6] dark:border-[#47362E]">
             Draft
           </span>
         );

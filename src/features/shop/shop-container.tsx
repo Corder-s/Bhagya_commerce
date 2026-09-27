@@ -127,7 +127,7 @@ export function ShopContainer() {
       <div className="mb-8 flex gap-3">
         <div className="relative flex-1">
           <Search
-            className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-ink-faint"
+            className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-ink-soft"
             aria-hidden="true"
           />
           <input
@@ -138,16 +138,16 @@ export function ShopContainer() {
             placeholder="Search products, brands, materials…"
             className={cn(
               "w-full rounded-xl border border-line bg-surface py-3.5 pl-11 pr-4",
-              "text-body-sm text-ink placeholder:text-ink-faint",
+              "text-body-sm text-ink placeholder:text-ink-soft/70",
               "transition-colors duration-fast ease-brand",
-              "focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20",
+              "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20",
             )}
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-ink-faint hover:text-ink"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-ink-soft hover:text-ink"
               aria-label="Clear search"
             >
               <X className="size-4" />
@@ -165,8 +165,8 @@ export function ShopContainer() {
             className={cn(
               "shrink-0 rounded-pill border px-4 py-2 text-body-sm font-semibold transition-all duration-fast shadow-xs cursor-pointer",
               filters.category === "all"
-                ? "border-primary bg-primary text-[#151515] font-bold shadow-sm shadow-primary/20"
-                : "border-line bg-surface text-ink-soft hover:border-primary hover:text-gold-dark dark:hover:text-gold",
+                ? "border-primary bg-primary text-[#1F1510] font-bold shadow-sm shadow-primary/25"
+                : "border-line bg-surface text-ink-soft hover:border-primary/60 hover:text-primary",
             )}
           >
             All
@@ -184,8 +184,8 @@ export function ShopContainer() {
               className={cn(
                 "shrink-0 rounded-pill border px-4 py-2 text-body-sm font-semibold transition-all duration-fast shadow-xs cursor-pointer",
                 filters.category === cat.slug
-                  ? "border-primary bg-primary text-[#151515] font-bold shadow-sm shadow-primary/20"
-                  : "border-line bg-surface text-ink-soft hover:border-primary hover:text-gold-dark dark:hover:text-gold",
+                  ? "border-primary bg-primary text-[#1F1510] font-bold shadow-sm shadow-primary/25"
+                  : "border-line bg-surface text-ink-soft hover:border-primary/60 hover:text-primary",
               )}
             >
               {cat.name}
@@ -196,17 +196,17 @@ export function ShopContainer() {
 
       {/* ── Discovery tabs ───────────────────────────────────────────────── */}
       <div className="mb-6 -mx-4 px-4 sm:mx-0 sm:px-0">
-        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
           {BUCKET_TABS.map((tab) => (
             <button
               key={tab.value}
               type="button"
               onClick={() => setBucket(tab.value)}
               className={cn(
-                "shrink-0 rounded-lg px-4 py-2 text-body-sm font-medium transition-colors duration-fast",
+                "shrink-0 rounded-xl px-4 py-2 text-body-sm font-medium transition-all duration-fast cursor-pointer",
                 bucket === tab.value
-                  ? "bg-canvas-deep text-ink"
-                  : "text-ink-faint hover:text-ink",
+                  ? "bg-surface text-primary border border-line shadow-xs font-semibold"
+                  : "text-ink-soft hover:text-ink hover:bg-surface/60 border border-transparent",
               )}
             >
               {tab.label}
@@ -222,17 +222,17 @@ export function ShopContainer() {
           type="button"
           onClick={() => setFilterOpen((o) => !o)}
           className={cn(
-            "inline-flex items-center gap-2 rounded-lg border px-4 py-2.5 text-body-sm font-medium",
+            "inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-body-sm font-medium cursor-pointer",
             "transition-colors duration-fast ease-brand",
             filterOpen || activeFilterCount > 0
-              ? "border-primary/40 bg-primary/10 text-primary"
-              : "border-line bg-surface text-ink-soft hover:text-ink",
+              ? "border-primary bg-primary/15 text-primary font-semibold shadow-xs"
+              : "border-line bg-surface text-ink hover:border-line-strong",
           )}
         >
           <SlidersHorizontal className="size-4" aria-hidden="true" />
           Filters
           {activeFilterCount > 0 && (
-            <span className="grid size-5 place-items-center rounded-full bg-primary text-[11px] font-bold text-white">
+            <span className="grid size-5 place-items-center rounded-full bg-primary text-[11px] font-bold text-[#1F1510]">
               {activeFilterCount}
             </span>
           )}
@@ -244,8 +244,8 @@ export function ShopContainer() {
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
             className={cn(
-              "appearance-none rounded-lg border border-line bg-surface py-2.5 pl-4 pr-9 text-body-sm text-ink",
-              "transition-colors duration-fast focus:border-primary/60 focus:outline-none focus:ring-2 focus:ring-primary/20",
+              "appearance-none rounded-xl border border-line bg-surface py-2.5 pl-4 pr-9 text-body-sm font-medium text-ink cursor-pointer",
+              "transition-colors duration-fast focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20",
             )}
           >
             {SORT_OPTIONS.map((opt) => (
@@ -255,7 +255,7 @@ export function ShopContainer() {
             ))}
           </select>
           <ChevronDown
-            className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-ink-faint"
+            className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-ink-soft"
             aria-hidden="true"
           />
         </div>
@@ -265,7 +265,7 @@ export function ShopContainer() {
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex items-center gap-1.5 text-body-sm text-ink-faint hover:text-ink"
+            className="inline-flex items-center gap-1.5 text-body-sm font-medium text-ink-soft hover:text-primary transition-colors cursor-pointer"
           >
             <X className="size-3.5" aria-hidden="true" />
             Clear all
@@ -273,8 +273,8 @@ export function ShopContainer() {
         )}
 
         {/* Result count */}
-        <p className="ml-auto text-body-sm text-ink-faint">
-          <span className="font-semibold text-ink">{filtered.length}</span>{" "}
+        <p className="ml-auto text-body-sm text-ink-soft">
+          <span className="font-bold text-ink">{filtered.length}</span>{" "}
           {filtered.length === 1 ? "product" : "products"}
         </p>
 
@@ -285,10 +285,10 @@ export function ShopContainer() {
             onClick={() => setLayout("grid")}
             aria-label="Grid layout"
             className={cn(
-              "rounded-md p-2 transition-colors",
+              "rounded-lg p-2 transition-all cursor-pointer",
               layout === "grid"
-                ? "bg-canvas-deep text-ink"
-                : "text-ink-faint hover:text-ink",
+                ? "bg-surface border border-line text-primary shadow-xs"
+                : "text-ink-soft hover:text-ink",
             )}
           >
             <LayoutGrid className="size-4" />
@@ -298,10 +298,10 @@ export function ShopContainer() {
             onClick={() => setLayout("list")}
             aria-label="List layout"
             className={cn(
-              "rounded-md p-2 transition-colors",
+              "rounded-lg p-2 transition-all cursor-pointer",
               layout === "list"
-                ? "bg-canvas-deep text-ink"
-                : "text-ink-faint hover:text-ink",
+                ? "bg-surface border border-line text-primary shadow-xs"
+                : "text-ink-soft hover:text-ink",
             )}
           >
             <LayoutList className="size-4" />
@@ -407,15 +407,15 @@ export function ShopContainer() {
       {/* ── Product grid ─────────────────────────────────────────────────── */}
       {filtered.length === 0 ? (
         <div className="flex flex-col items-center gap-4 py-24 text-center">
-          <Filter className="size-10 text-ink-faint" aria-hidden="true" />
-          <p className="text-body-lg font-medium text-ink">No products found</p>
+          <Filter className="size-10 text-ink-soft" aria-hidden="true" />
+          <p className="text-body-lg font-bold text-ink">No products found</p>
           <p className="max-w-xs text-body-sm text-ink-soft">
             Try adjusting your search or filters to discover more.
           </p>
           <button
             type="button"
             onClick={resetFilters}
-            className="mt-2 rounded-lg border border-line px-5 py-2.5 text-body-sm font-medium text-ink hover:border-line-strong"
+            className="mt-2 rounded-xl border border-line bg-surface px-5 py-2.5 text-body-sm font-semibold text-ink hover:border-primary hover:text-primary transition-colors cursor-pointer shadow-xs"
           >
             Reset filters
           </button>
@@ -446,12 +446,12 @@ export function ShopContainer() {
                 type="button"
                 onClick={() => setPage((p) => p + 1)}
                 className={cn(
-                  "rounded-xl border border-line bg-surface px-8 py-3.5 text-body-sm font-medium text-ink",
-                  "transition-colors duration-fast hover:border-line-strong hover:bg-canvas-deep",
+                  "rounded-xl border border-line bg-surface px-8 py-3.5 text-body-sm font-semibold text-ink shadow-xs cursor-pointer",
+                  "transition-all duration-fast hover:border-primary hover:text-primary hover:bg-surface-sunken",
                 )}
               >
                 Load more —{" "}
-                <span className="text-ink-faint">
+                <span className="text-ink-soft font-normal">
                   showing {pageItems.length} of {filtered.length}
                 </span>
               </button>

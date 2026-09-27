@@ -204,13 +204,13 @@ export function MerchantAnalyticsDashboard() {
       <div className="flex flex-col gap-6 animate-pulse">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-28 rounded-2xl bg-[#2B2A25] border border-[#444139]" />
+            <div key={i} className="h-28 rounded-2xl bg-surface border border-line" />
           ))}
         </div>
-        <div className="h-80 rounded-2xl bg-[#2B2A25] border border-[#444139]" />
+        <div className="h-80 rounded-2xl bg-surface border border-line" />
         <div className="grid gap-6 sm:grid-cols-2">
-          <div className="h-64 rounded-2xl bg-[#2B2A25] border border-[#444139]" />
-          <div className="h-64 rounded-2xl bg-[#2B2A25] border border-[#444139]" />
+          <div className="h-64 rounded-2xl bg-surface border border-line" />
+          <div className="h-64 rounded-2xl bg-surface border border-line" />
         </div>
       </div>
     );
@@ -234,17 +234,17 @@ export function MerchantAnalyticsDashboard() {
   return (
     <div className="space-y-6 sm:space-y-8">
       {/* Control Bar: Time period selector & CSV Export */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#3A3831] pb-5">
-        <div className="flex items-center gap-1.5 rounded-xl border border-[#444139] bg-[#1C1B18] p-1 shadow-xs">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-line pb-5">
+        <div className="flex items-center gap-1.5 rounded-xl border border-line bg-surface-sunken p-1 shadow-xs">
           {PERIOD_OPTIONS.map((opt) => (
             <button
               key={opt.value}
               type="button"
               onClick={() => setPeriod(opt.value)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
                 period === opt.value
-                  ? 'bg-[#35332C] text-[#F5F1E8] border border-[#5B533F] shadow-xs'
-                  : 'text-[#9E988C] hover:text-[#F5F1E8] hover:bg-[#2B2A25]'
+                  ? 'bg-surface text-primary border border-line shadow-xs font-semibold'
+                  : 'text-ink-soft hover:text-ink hover:bg-surface/50'
               }`}
             >
               {opt.label}
@@ -261,7 +261,7 @@ export function MerchantAnalyticsDashboard() {
             size="sm"
             onClick={handleExportCsv}
             disabled={isExporting}
-            className="flex items-center gap-2 border-[#444139] bg-[#2B2A25] text-[#F5F1E8] hover:bg-[#302F29] hover:border-[#5B533F]"
+            className="flex items-center gap-2 border-line bg-surface text-ink hover:bg-surface-sunken"
           >
             <Download className="size-4" />
             {isExporting ? 'Exporting...' : 'Export CSV'}
@@ -272,81 +272,81 @@ export function MerchantAnalyticsDashboard() {
       {/* Primary KPI Summary Cards with Visual Micro-Indicators */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 sm:gap-4">
         {/* Net Sales */}
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-line bg-surface p-4 shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+            <div className="flex items-center justify-between text-ink-soft text-xs">
               <span>Net Sales</span>
-              <TrendingUp className="size-3.5 text-[#E89535]" />
+              <TrendingUp className="size-3.5 text-primary" />
             </div>
-            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-ink">
               {formatCurrency(sales.netSales)}
             </div>
           </div>
-          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#9E988C]">
-            Gross: <strong className="text-[#C8C1B4]">{formatCurrency(sales.grossSales)}</strong>
+          <div className="mt-2 pt-2 border-t border-line text-[11px] text-ink-soft">
+            Gross: <strong className="text-ink">{formatCurrency(sales.grossSales)}</strong>
           </div>
         </div>
 
         {/* Average Order Value */}
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-line bg-surface p-4 shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+            <div className="flex items-center justify-between text-ink-soft text-xs">
               <span>Avg Order Value</span>
-              <ShoppingBag className="size-3.5 text-[#4A96D8]" />
+              <ShoppingBag className="size-3.5 text-primary" />
             </div>
-            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-ink">
               {formatCurrency(sales.averageOrderValue)}
             </div>
           </div>
-          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#9E988C]">
+          <div className="mt-2 pt-2 border-t border-line text-[11px] text-ink-soft">
             Per paid transaction
           </div>
         </div>
 
         {/* Total Orders */}
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-line bg-surface p-4 shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+            <div className="flex items-center justify-between text-ink-soft text-xs">
               <span>Total Orders</span>
-              <CheckCircle2 className="size-3.5 text-[#43A66A]" />
+              <CheckCircle2 className="size-3.5 text-success" />
             </div>
-            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-ink">
               {sales.totalOrders}
             </div>
           </div>
-          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#73D393]">
+          <div className="mt-2 pt-2 border-t border-line text-[11px] text-success font-medium">
             {sales.paidOrders} confirmed & paid
           </div>
         </div>
 
         {/* Repeat Customers */}
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-line bg-surface p-4 shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+            <div className="flex items-center justify-between text-ink-soft text-xs">
               <span>Repeat Buyers</span>
-              <Users className="size-3.5 text-[#C79338]" />
+              <Users className="size-3.5 text-primary" />
             </div>
-            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F5F1E8]">
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-ink">
               {customers.repeatCustomerRate}%
             </div>
           </div>
-          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#9E988C]">
+          <div className="mt-2 pt-2 border-t border-line text-[11px] text-ink-soft">
             {customers.returningCustomers} of {customers.totalCustomers} patrons
           </div>
         </div>
 
         {/* Refunds & Discounts */}
-        <div className="col-span-2 sm:col-span-1 rounded-2xl border border-[#444139] bg-[#2B2A25] p-4 shadow-sm flex flex-col justify-between">
+        <div className="col-span-2 sm:col-span-1 rounded-2xl border border-line bg-surface p-4 shadow-sm flex flex-col justify-between">
           <div>
-            <div className="flex items-center justify-between text-[#9E988C] text-xs">
+            <div className="flex items-center justify-between text-ink-soft text-xs">
               <span>Discounts & Concessions</span>
-              <Percent className="size-3.5 text-[#D05A4A]" />
+              <Percent className="size-3.5 text-danger" />
             </div>
-            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-[#F09284]">
+            <div className="mt-1 font-serif text-xl sm:text-2xl font-bold text-danger">
               {formatCurrency(sales.refunds + sales.discounts)}
             </div>
           </div>
-          <div className="mt-2 pt-2 border-t border-[#3A3831] text-[11px] text-[#9E988C]">
+          <div className="mt-2 pt-2 border-t border-line text-[11px] text-ink-soft">
             Refund rate: {orders.refundRate}%
           </div>
         </div>
@@ -369,12 +369,12 @@ export function MerchantAnalyticsDashboard() {
       {/* Conversion Funnel & Top Products Grid */}
       <div className="grid gap-6 lg:grid-cols-12">
         {/* 5-Step E-Commerce Funnel (5 cols) */}
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 sm:p-6 shadow-md lg:col-span-5 flex flex-col justify-between">
+        <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6 shadow-sm lg:col-span-5 flex flex-col justify-between">
           <div>
-            <div className="border-b border-[#3A3831] pb-3">
-              <h3 className="font-serif text-base font-semibold text-[#F5F1E8]">Commerce Funnel</h3>
-              <p className="text-xs text-[#9E988C] mt-0.5">
-                Overall conversion: <strong className="text-[#73D393]">{funnel.overallConversionRate}%</strong>
+            <div className="border-b border-line pb-3">
+              <h3 className="font-serif text-base font-semibold text-ink">Commerce Funnel</h3>
+              <p className="text-xs text-ink-soft mt-0.5">
+                Overall conversion: <strong className="text-success">{funnel.overallConversionRate}%</strong>
               </p>
             </div>
 
@@ -382,24 +382,24 @@ export function MerchantAnalyticsDashboard() {
               {funnel.steps.map((step, idx) => (
                 <div key={step.stepName} className="space-y-1">
                   <div className="flex items-center justify-between text-xs font-medium">
-                    <span className="text-[#C8C1B4] flex items-center gap-1.5">
-                      <span className="flex size-4 items-center justify-center rounded-full bg-[#35332C] text-[10px] text-[#E89535]">
+                    <span className="text-ink flex items-center gap-1.5">
+                      <span className="flex size-4 items-center justify-center rounded-full bg-surface-sunken text-[10px] text-primary font-bold">
                         {idx + 1}
                       </span>
                       {step.stepName}
                     </span>
-                    <span className="font-semibold text-[#F5F1E8]">
+                    <span className="font-semibold text-ink">
                       {formatNumber(step.count)}
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-[#1C1B18] overflow-hidden border border-[#3A3831]">
+                  <div className="h-2 w-full rounded-full bg-surface-sunken overflow-hidden border border-line">
                     <div
                       style={{ width: `${Math.max(6, step.conversionRateFromPrevious)}%` }}
-                      className="h-full rounded-full bg-[#E89535] transition-all duration-300"
+                      className="h-full rounded-full bg-primary transition-all duration-300"
                     />
                   </div>
                   {idx > 0 && (
-                    <div className="text-[10px] text-[#9E988C] text-right">
+                    <div className="text-[10px] text-ink-soft text-right">
                       {step.conversionRateFromPrevious}% step conversion ({step.dropoffRate}% drop)
                     </div>
                   )}
@@ -408,24 +408,24 @@ export function MerchantAnalyticsDashboard() {
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-[#3A3831] text-[11px] text-[#9E988C] flex items-center justify-between">
+          <div className="mt-4 pt-3 border-t border-line text-[11px] text-ink-soft flex items-center justify-between">
             <span>Verified Customer Events</span>
-            <span className="text-[#E89535] font-medium">Step 16 Intelligence</span>
+            <span className="text-primary font-medium">Step 16 Intelligence</span>
           </div>
         </div>
 
         {/* Top Products Table with Real Thumbnails (7 cols) */}
-        <div className="rounded-2xl border border-[#444139] bg-[#2B2A25] p-5 sm:p-6 shadow-md lg:col-span-7 flex flex-col justify-between">
+        <div className="rounded-2xl border border-line bg-surface p-5 sm:p-6 shadow-sm lg:col-span-7 flex flex-col justify-between">
           <div>
-            <div className="border-b border-[#3A3831] pb-3">
-              <h3 className="font-serif text-base font-semibold text-[#F5F1E8]">Top Performing Products</h3>
-              <p className="text-xs text-[#9E988C] mt-0.5">Ranked by gross revenue and units sold</p>
+            <div className="border-b border-line pb-3">
+              <h3 className="font-serif text-base font-semibold text-ink">Top Performing Products</h3>
+              <p className="text-xs text-ink-soft mt-0.5">Ranked by gross revenue and units sold</p>
             </div>
 
             <div className="mt-4 overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-[#3A3831] text-[#9E988C] font-medium">
+                  <tr className="border-b border-line text-ink-soft font-semibold uppercase tracking-wider text-[11px]">
                     <th className="pb-3 pr-4">Product</th>
                     <th className="pb-3 px-3 text-right">Units</th>
                     <th className="pb-3 px-3 text-right">Revenue</th>
@@ -433,11 +433,11 @@ export function MerchantAnalyticsDashboard() {
                     <th className="pb-3 pl-3 text-right">Stock</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#3A3831]">
+                <tbody className="divide-y divide-line">
                   {topProducts.map((prod) => (
-                    <tr key={prod.productId} className="hover:bg-[#34322B] transition-colors">
-                      <td className="py-3 pr-4 font-medium text-[#F5F1E8] flex items-center gap-2.5">
-                        <div className="size-8 rounded-lg bg-[#35332C] overflow-hidden shrink-0 border border-[#444139]">
+                    <tr key={prod.productId} className="hover:bg-surface-sunken/50 transition-colors">
+                      <td className="py-3 pr-4 font-medium text-ink flex items-center gap-2.5">
+                        <div className="size-8 rounded-lg bg-surface-sunken overflow-hidden shrink-0 border border-line">
                           {prod.productImageUrl && (
                             <img
                               src={prod.productImageUrl}
@@ -446,14 +446,14 @@ export function MerchantAnalyticsDashboard() {
                             />
                           )}
                         </div>
-                        <span className="truncate max-w-[160px]">{prod.productName}</span>
+                        <span className="truncate max-w-[160px] font-semibold text-ink">{prod.productName}</span>
                       </td>
-                      <td className="py-3 px-3 text-right font-medium text-[#F5F1E8]">{prod.unitsSold}</td>
-                      <td className="py-3 px-3 text-right font-semibold text-[#DDBB72]">
+                      <td className="py-3 px-3 text-right font-medium text-ink">{prod.unitsSold}</td>
+                      <td className="py-3 px-3 text-right font-semibold text-primary">
                         {formatCurrency(prod.grossRevenue)}
                       </td>
-                      <td className="py-3 px-3 text-right text-[#C8C1B4]">{prod.conversionRate}%</td>
-                      <td className="py-3 pl-3 text-right font-medium text-[#73D393]">
+                      <td className="py-3 px-3 text-right text-ink-soft">{prod.conversionRate}%</td>
+                      <td className="py-3 pl-3 text-right font-medium text-success">
                         {prod.currentStock} left
                       </td>
                     </tr>
@@ -463,7 +463,7 @@ export function MerchantAnalyticsDashboard() {
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-[#3A3831] text-[11px] text-[#9E988C] text-right">
+          <div className="mt-4 pt-3 border-t border-line text-[11px] text-ink-soft text-right">
             <span>Aggregated from verified order items</span>
           </div>
         </div>

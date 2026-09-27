@@ -60,38 +60,38 @@ export function PromotionList({
     switch (status) {
       case 'ACTIVE':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#294C38] px-2.5 py-0.5 text-xs font-semibold text-[#73D393] border border-[#444139]">
-            <CheckCircle2 className="size-3 text-[#43A66A]" /> Active
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#EAF3ED] dark:bg-[#223829] px-2.5 py-0.5 text-xs font-semibold text-[#375D41] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41]">
+            <CheckCircle2 className="size-3 text-[#4E7C59] dark:text-[#78A383]" /> Active
           </span>
         );
       case 'PAUSED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#4A3B24] px-2.5 py-0.5 text-xs font-semibold text-[#DDBB72] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF6ED] dark:bg-[#33241C] px-2.5 py-0.5 text-xs font-semibold text-[#D48024] dark:text-[#F0A349] border border-[#F7C07E] dark:border-[#4D382B]">
             <Pause className="size-3" /> Paused
           </span>
         );
       case 'EXPIRED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#34322B] px-2.5 py-0.5 text-xs font-semibold text-[#9E988C] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#F2E7DC] dark:bg-[#2C201A] px-2.5 py-0.5 text-xs font-semibold text-[#695A50] dark:text-[#D8CCC0] border border-[#ECE1D6] dark:border-[#47362E]">
             <Clock className="size-3" /> Expired
           </span>
         );
       case 'ARCHIVED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#34322B] px-2.5 py-0.5 text-xs font-semibold text-[#C8C1B4] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#F2E7DC] dark:bg-[#2C201A] px-2.5 py-0.5 text-xs font-semibold text-[#695A50] dark:text-[#D8CCC0] border border-[#ECE1D6] dark:border-[#47362E]">
             Archived
           </span>
         );
       case 'SCHEDULED':
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#4A3B24] px-2.5 py-0.5 text-xs font-semibold text-[#DDBB72] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#FFF6ED] dark:bg-[#33241C] px-2.5 py-0.5 text-xs font-semibold text-[#D48024] dark:text-[#F0A349] border border-[#F7C07E] dark:border-[#4D382B]">
             Scheduled
           </span>
         );
       case 'DRAFT':
       default:
         return (
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#34322B] px-2.5 py-0.5 text-xs font-semibold text-[#C8C1B4] border border-[#444139]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#F2E7DC] dark:bg-[#2C201A] px-2.5 py-0.5 text-xs font-semibold text-[#695A50] dark:text-[#D8CCC0] border border-[#ECE1D6] dark:border-[#47362E]">
             Draft
           </span>
         );

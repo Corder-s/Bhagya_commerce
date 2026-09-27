@@ -360,14 +360,23 @@
    ============================================================================= */
 @utility bg-gradient-hero-warm {
   background-image: linear-gradient(135deg, #FDF8F3 0%, #F8EFE7 55%, #F0E3D6 100%);
+  :is(.dark, [data-theme="dark"]) & {
+    background-image: linear-gradient(135deg, #1B120E 0%, #241812 55%, #2D1E17 100%);
+  }
 }
 
 @utility bg-gradient-gold-soft {
   background-image: linear-gradient(135deg, #FFF6ED 0%, #FCECDA 100%);
+  :is(.dark, [data-theme="dark"]) & {
+    background-image: linear-gradient(135deg, #33241C 0%, #3D2B21 100%);
+  }
 }
 
 @utility bg-gradient-sage-soft {
   background-image: linear-gradient(135deg, #F7EFE8 0%, #ECE1D6 100%);
+  :is(.dark, [data-theme="dark"]) & {
+    background-image: linear-gradient(135deg, #261B15 0%, #30231C 100%);
+  }
 }
 
 @utility bg-gradient-dark-env {
@@ -383,15 +392,15 @@
 }
 
 @utility bg-gradient-gold-cta {
-  background-image: linear-gradient(135deg, #F0A349 0%, #E38827 100%);
+  background-image: linear-gradient(135deg, #E89535 0%, #D48024 100%);
 }
 
 @utility bg-gradient-btn-gold {
-  background-image: linear-gradient(135deg, #F0A349 0%, #E38827 100%);
+  background-image: linear-gradient(135deg, #E89535 0%, #D48024 100%);
 }
 
 @utility bg-gradient-sage-cta {
-  background-image: linear-gradient(135deg, #F0A349 0%, #E38827 100%);
+  background-image: linear-gradient(135deg, #4E7C59 0%, #375D41 100%);
 }
 
 @utility bg-gradient-warm-accent {
@@ -407,29 +416,41 @@
 }
 
 @utility text-gradient-brand {
-  background-image: linear-gradient(135deg, #E89535 0%, #D48024 60%, #1F1510 100%);
+  background-image: linear-gradient(135deg, #D48024 0%, #B86514 60%, #1F1510 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  :is(.dark, [data-theme="dark"]) & {
+    background-image: linear-gradient(135deg, #F0A349 0%, #F7C07E 60%, #FAF4EE 100%);
+  }
 }
 
 @utility text-gradient-glow {
-  background-image: linear-gradient(135deg, #FAF4EE 0%, #FCECDA 50%, #F0A349 100%);
+  background-image: linear-gradient(135deg, #1F1510 0%, #695A50 50%, #D48024 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  :is(.dark, [data-theme="dark"]) & {
+    background-image: linear-gradient(135deg, #FAF4EE 0%, #FCECDA 50%, #F0A349 100%);
+  }
 }
 
 @utility text-gradient-gold {
-  background-image: linear-gradient(135deg, #F0A349 0%, #E89535 60%, #E0732A 100%);
+  background-image: linear-gradient(135deg, #D48024 0%, #E89535 60%, #C46F19 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  :is(.dark, [data-theme="dark"]) & {
+    background-image: linear-gradient(135deg, #F0A349 0%, #F7C07E 60%, #E89535 100%);
+  }
 }
 
 @utility text-gradient-sage {
-  background-image: linear-gradient(135deg, #96867B 0%, #695A50 50%, #1F1510 100%);
+  background-image: linear-gradient(135deg, #4E7C59 0%, #375D41 50%, #1F1510 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  :is(.dark, [data-theme="dark"]) & {
+    background-image: linear-gradient(135deg, #78A383 0%, #A8D1B2 50%, #FAF4EE 100%);
+  }
 }

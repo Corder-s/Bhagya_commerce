@@ -49,17 +49,17 @@ export function Hero() {
             <Reveal delay={0.05}>
               <h1
                 id="hero-heading"
-                className="font-display text-display-xl font-medium text-ink text-balance"
+                className="font-display text-display-xl font-bold text-ink text-balance"
               >
                 Better choices,
                 <br />
-                <em className="not-italic text-gradient-brand font-semibold">beautifully</em> brought
+                <em className="not-italic text-gradient-brand font-bold">beautifully</em> brought
                 together.
               </h1>
             </Reveal>
 
             <Reveal delay={0.1}>
-              <p className="max-w-lg text-body-lg text-ink-soft">
+              <p className="max-w-lg text-body-lg text-ink-soft leading-relaxed">
                 Discover thoughtful products from independent Indian brands
                 creating a better tomorrow.
               </p>

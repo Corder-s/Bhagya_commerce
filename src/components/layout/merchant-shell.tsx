@@ -70,10 +70,10 @@ export function MerchantShell({
           {/* Store context block */}
           <div className="flex items-center gap-3 rounded-xl px-3.5 py-3 border border-line bg-[#F7EFE8] dark:bg-[#30231C] shadow-xs">
             <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-surface dark:bg-[#38271E] text-primary border border-line">
-              <Store className="size-4 text-[#E89535]" aria-hidden="true" />
+              <Store className="size-4 text-[#E89535] dark:text-[#F0A349]" aria-hidden="true" />
             </span>
             <div className="flex min-w-0 flex-col">
-              <span className="truncate text-sm font-semibold text-ink">
+              <span className="truncate text-sm font-bold text-ink">
                 {activeStoreName}
               </span>
               <Badge tone={statusTone} size="sm" className="mt-0.5 w-fit">
@@ -113,9 +113,9 @@ export function MerchantShell({
 
       {/* Workspace content */}
       <div className="flex min-w-0 flex-1 flex-col bg-background">
-        <header className="sticky top-0 z-40 border-b border-line bg-surface/90 dark:bg-[#261B15]/90 backdrop-blur-md">
+        <header className="sticky top-0 z-40 border-b border-line bg-surface/95 dark:bg-[#261B15]/95 backdrop-blur-md">
           <div className="flex h-[60px] items-center justify-between gap-4 px-4 sm:px-6">
-            <p className="truncate text-sm font-medium text-ink-soft">
+            <p className="truncate text-sm font-bold text-ink">
               Merchant Workspace
             </p>
             <div className="flex items-center gap-2">

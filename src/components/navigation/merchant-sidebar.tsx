@@ -47,8 +47,8 @@ export function MerchantSidebar({
                   "group relative flex min-h-10 items-center gap-3 whitespace-nowrap rounded-lg px-3 text-sm font-medium",
                   "transition-all duration-150 ease-out",
                   active
-                    ? "bg-[#FCECDA] dark:bg-[#33241C] font-semibold text-[#1F1510] dark:text-[#FAF4EE] border border-[#F7C07E]/60 dark:border-[#4D382B] shadow-xs"
-                    : "text-[#695A50] dark:text-[#D4C4B6] hover:bg-[#F7EFE8] dark:hover:bg-[#261B15] hover:text-[#1F1510] dark:hover:text-[#FAF4EE]",
+                    ? "bg-[#FCECDA] dark:bg-[#33241C] font-bold text-[#1F1510] dark:text-[#FAF4EE] border border-[#F7C07E] dark:border-[#4D382B] shadow-xs"
+                    : "text-[#4A3B32] dark:text-[#D8CCC0] hover:bg-[#F7EFE8] dark:hover:bg-[#30231C] hover:text-[#1F1510] dark:hover:text-[#FAF4EE]",
                 )}
               >
                 <span
@@ -65,11 +65,11 @@ export function MerchantSidebar({
                       "size-[1.125rem] shrink-0 transition-colors",
                       active
                         ? "text-[#E89535] dark:text-[#F0A349]"
-                        : "text-[#96867B] dark:text-[#A8988D] group-hover:text-[#1F1510] dark:group-hover:text-[#FAF4EE]",
+                        : "text-[#695A50] dark:text-[#D8CCC0] group-hover:text-[#1F1510] dark:group-hover:text-[#FAF4EE]",
                     )}
                   />
                 ) : null}
-                <span className="truncate">{item.label}</span>
+                <span className="truncate font-medium">{item.label}</span>
               </Link>
             </li>
           );

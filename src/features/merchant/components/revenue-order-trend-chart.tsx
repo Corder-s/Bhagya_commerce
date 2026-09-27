@@ -31,12 +31,12 @@ export function RevenueOrderTrendChart({
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
 
-  // Section 24 & 25 Chart Theme mapping
-  const gridColor = isDark ? '#4B514B' : '#DDD4C4';
-  const axisColor = isDark ? '#B3ADA2' : '#737D76';
-  const primaryLineColor = isDark ? '#A8B9AF' : '#708477';
-  const secondaryLineColor = isDark ? '#82968A' : '#A8B9AF';
-  const highlightColor = isDark ? '#E2B84B' : '#D7A63A';
+  // Section 24 & 25 Chart Theme mapping — LUNÉA Reflection
+  const gridColor = isDark ? '#38271E' : '#ECE1D6';
+  const axisColor = isDark ? '#D4C4B6' : '#96867B';
+  const primaryLineColor = isDark ? '#F0A349' : '#E89535';
+  const secondaryLineColor = isDark ? '#D4C4B6' : '#695A50';
+  const highlightColor = isDark ? '#F0A349' : '#E89535';
 
   // Validate data
   const validPoints = (trendPoints || []).filter(
@@ -132,7 +132,7 @@ export function RevenueOrderTrendChart({
             <h3 className="font-serif text-lg font-bold text-ink">
               Revenue & Order Volume
             </h3>
-            <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#DFEAE2] dark:bg-[#294437] text-[#5D8067] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#385947]">
+            <span className="flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full bg-[#EAF3ED] dark:bg-[#25392B] text-[#4E7C59] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41]">
               <TrendingUp className="size-3" /> Live Realtime
             </span>
           </div>
@@ -142,7 +142,7 @@ export function RevenueOrderTrendChart({
         </div>
 
         {/* View toggles */}
-        <div className="flex items-center rounded-xl bg-[#EDF2EE] dark:bg-[#30332F] p-1 border border-line text-xs font-medium">
+        <div className="flex items-center rounded-xl bg-[#F7EFE8] dark:bg-[#261B15] p-1 border border-line text-xs font-medium">
           <button
             type="button"
             onClick={() => setActiveMetric('both')}
@@ -282,7 +282,7 @@ export function RevenueOrderTrendChart({
                     cx={x}
                     cy={yGross}
                     r={isHovered ? 5 : 3.5}
-                    fill={isDark ? '#30332F' : '#FCFAF5'}
+                    fill={isDark ? '#261B15' : '#FDF8F3'}
                     stroke={secondaryLineColor}
                     strokeWidth={isHovered ? 2.5 : 2}
                     className="transition-all duration-150"
@@ -296,7 +296,7 @@ export function RevenueOrderTrendChart({
                     cy={yNet}
                     r={isHovered ? 6 : 4}
                     fill={highlightColor}
-                    stroke={isDark ? '#F5F1E7' : '#20231F'}
+                    stroke={isDark ? '#FAF4EE' : '#1F1510'}
                     strokeWidth={isHovered ? 2.5 : 1.5}
                     className="transition-all duration-150"
                   />
@@ -318,7 +318,7 @@ export function RevenueOrderTrendChart({
                   x={x}
                   y={padding.top + plotHeight + 22}
                   textAnchor="middle"
-                  fill={isHovered ? (isDark ? '#F5F1E7' : '#20231F') : axisColor}
+                  fill={isHovered ? (isDark ? '#FAF4EE' : '#1F1510') : axisColor}
                   fontWeight={isHovered ? '600' : '400'}
                   fontSize="11"
                   fontFamily="sans-serif"
@@ -339,15 +339,15 @@ export function RevenueOrderTrendChart({
             }}
             className={`pointer-events-none absolute z-20 min-w-[170px] rounded-xl border p-3 shadow-xl animate-in fade-in zoom-in-95 ${
               isDark
-                ? 'border-[#5C625B] bg-[#3E433D] text-[#F5F1E7]'
-                : 'border-[#DDD4C4] bg-[#FCFAF5] text-[#20231F]'
+                ? 'border-[#38271E] bg-[#261B15] text-[#FAF4EE]'
+                : 'border-[#ECE1D6] bg-[#FFFFFF] text-[#1F1510]'
             }`}
           >
-            <div className={`flex items-center justify-between border-b pb-1.5 mb-2 ${isDark ? 'border-[#4B514B]' : 'border-[#E7DFD0]'}`}>
+            <div className={`flex items-center justify-between border-b pb-1.5 mb-2 ${isDark ? 'border-[#38271E]' : 'border-[#F7EFE8]'}`}>
               <span className="font-serif text-xs font-bold">
                 {activePoint.date}
               </span>
-              <span className="flex items-center gap-1 text-[11px] font-semibold text-[#5D8067] dark:text-[#78A383]">
+              <span className="flex items-center gap-1 text-[11px] font-semibold text-[#4E7C59] dark:text-[#78A383]">
                 <ShoppingBag className="size-3" /> {activePoint.orderCount} orders
               </span>
             </div>
@@ -355,7 +355,7 @@ export function RevenueOrderTrendChart({
             <div className="space-y-1 text-xs">
               <div className="flex items-center justify-between">
                 <span className="text-ink-soft flex items-center gap-1.5">
-                  <span className="size-2 rounded-full bg-[#D7A63A] dark:bg-[#E2B84B]" /> Net Sales
+                  <span className="size-2 rounded-full bg-[#E89535] dark:bg-[#F0A349]" /> Net Sales
                 </span>
                 <strong className="font-semibold text-primary">
                   {formatCurrency(activePoint.netSales)}

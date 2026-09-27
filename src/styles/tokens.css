@@ -1,90 +1,90 @@
 /* =============================================================================
-   BHAGYA COMMERCE — GLOBAL BALANCED DESIGN TOKENS
-   Palette: Sage + Warm Cream + Soft Beige + Layered Charcoal + Warm Yellow/Orange Accents.
+   BHAGYA COMMERCE — GLOBAL SEMANTIC DESIGN TOKENS
+   Inspired by LUNÉA Reference: Warm Nude Silk, Crisp Porcelain, Rich Dark Espresso & Glowing Amber.
    Single authoritative source of truth for Light Mode & Dark Mode.
    ============================================================================= */
 
 @layer base {
   :root {
     /* -------------------------------------------------------------------------
-       LIGHT THEME (Default) — Medium-Light, Warm, Natural & Balanced
+       LIGHT THEME (Default) — Warm Nude Silk, Porcelain White & Dark Cocoa Accents
        ------------------------------------------------------------------------- */
-    --color-background: #F2EEE4;
-    --color-surface: #FCFAF5;
-    --color-surface-2: #F7F4EC;
+    --color-background: #FDF8F3;
+    --color-surface: #FFFFFF;
+    --color-surface-2: #F7EFE8;
     --color-surface-elevated: #FFFFFF;
-    --color-surface-muted: #EDF2EE;
-    --color-surface-pale-sage: #DCE5DF;
-    --color-header-bg: #566B60;
+    --color-surface-muted: #F2E7DC;
+    --color-surface-pale-sage: #E8DBCF;
+    --color-header-bg: #241812;
 
-    --color-text-primary: #20231F;
-    --color-text-secondary: #505A53;
-    --color-text-muted: #737D76;
-    --color-text-disabled: #A8B1AA;
-    --color-text-inverse: #F5F1E7;
-    --color-text-inverse-muted: #D8D2C6;
+    --color-text-primary: #1F1510;
+    --color-text-secondary: #695A50;
+    --color-text-muted: #96867B;
+    --color-text-disabled: #C4B6AA;
+    --color-text-inverse: #FAF4EE;
+    --color-text-inverse-muted: #D4C4B6;
 
-    --color-border: #DDD4C4;
-    --color-border-soft: #E7DFD0;
-    --color-border-strong: #CFC3B1;
-    --color-line-inverse: rgba(245, 241, 231, 0.18);
+    --color-border: #ECE1D6;
+    --color-border-soft: #F5ECE3;
+    --color-border-strong: #DACAC7;
+    --color-line-inverse: rgba(250, 244, 238, 0.16);
 
-    /* ---- Sage Family -------------------------------------------------------- */
-    --color-brand: #708477;
-    --color-brand-hover: #566B60;
-    --color-brand-medium: #82968A;
-    --color-brand-light: #A8B9AF;
-    --color-brand-soft: #DCE5DF;
-    --color-brand-surface: #EDF2EE;
-    --color-brand-dark: #566B60;
+    /* ---- Luminous Golden Amber / Warm Honey CTA ----------------------------- */
+    --color-brand: #E89535;
+    --color-brand-hover: #D48024;
+    --color-brand-medium: #F0A349;
+    --color-brand-light: #F7C07E;
+    --color-brand-soft: #FCECDA;
+    --color-brand-surface: #FFF6ED;
+    --color-brand-dark: #241812;
 
     /* ---- Controlled Yellow & Orange Accent Layer --------------------------- */
-    --color-accent-yellow: #D7A63A;
-    --color-accent-yellow-hover: #C28F27;
-    --color-accent-yellow-gold: #E2B84B;
-    --color-accent-yellow-soft: #F3E8D0;
-    --color-accent-orange: #D47A32;
-    --color-accent-orange-soft: #E9B27D;
-    --color-accent-orange-bg: #F9EBE1;
+    --color-accent-yellow: #E89535;
+    --color-accent-yellow-hover: #D48024;
+    --color-accent-yellow-gold: #F0A349;
+    --color-accent-yellow-soft: #FCECDA;
+    --color-accent-orange: #E0732A;
+    --color-accent-orange-soft: #FAD9C3;
+    --color-accent-orange-bg: #FFF3EB;
 
     /* ---- Status Feedback ---------------------------------------------------- */
-    --color-success: #5D8067;
-    --color-success-soft: #DFEAE2;
-    --color-success-bg: #DFEAE2;
-    --color-success-dark: #45624D;
+    --color-success: #4E7C59;
+    --color-success-soft: #EAF3ED;
+    --color-success-bg: #EAF3ED;
+    --color-success-dark: #375D41;
 
-    --color-error: #A9574F;
-    --color-error-soft: #F2E3E0;
-    --color-error-bg: #F2E3E0;
+    --color-error: #B84A39;
+    --color-error-soft: #FAEBE9;
+    --color-error-bg: #FAEBE9;
 
-    --color-warning: #B9792E;
-    --color-warning-soft: #F3E8D5;
-    --color-warning-bg: #F3E8D5;
+    --color-warning: #D9882B;
+    --color-warning-soft: #FDF3E7;
+    --color-warning-bg: #FDF3E7;
 
-    --color-info: #6E8078;
-    --color-info-soft: #E5ECE8;
-    --color-info-bg: #E5ECE8;
+    --color-info: #6B7A75;
+    --color-info-soft: #EBF1F0;
+    --color-info-bg: #EBF1F0;
 
     /* ---- Bhagya Named Semantic Aliases (Light Mode) ------------------------- */
-    --bhagya-black: #20231F;
-    --bhagya-charcoal: #30332F;
-    --bhagya-charcoal-soft: #373B36;
-    --bhagya-charcoal-light: #3E433D;
-    --bhagya-charcoal-border: #DDD4C4;
+    --bhagya-black: #1F1510;
+    --bhagya-charcoal: #241812;
+    --bhagya-charcoal-soft: #33241C;
+    --bhagya-charcoal-light: #423026;
+    --bhagya-charcoal-border: #ECE1D6;
 
-    --bhagya-gold: var(--color-accent-yellow);
-    --bhagya-gold-dark: var(--color-accent-yellow-hover);
-    --bhagya-gold-light: var(--color-accent-yellow-gold);
-    --bhagya-gold-soft: var(--color-accent-yellow-soft);
-    --bhagya-gold-surface: #FAF4E8;
+    --bhagya-gold: var(--color-brand);
+    --bhagya-gold-dark: var(--color-brand-hover);
+    --bhagya-gold-light: var(--color-brand-light);
+    --bhagya-gold-soft: var(--color-brand-soft);
+    --bhagya-gold-surface: var(--color-brand-surface);
 
     --bhagya-ivory: var(--color-background);
     --bhagya-cream: var(--color-surface-2);
     --bhagya-warm-white: var(--color-surface);
     --bhagya-white: var(--color-surface-elevated);
-    --bhagya-sand: #E7DFD0;
-    --bhagya-sand-light: #F7F4EC;
-    --bhagya-sand-deep: #D4C9B8;
+    --bhagya-sand: #F2E7DC;
+    --bhagya-sand-light: #F7EFE8;
+    --bhagya-sand-deep: #E8DBCF;
 
     --bhagya-border: var(--color-border);
     --bhagya-border-soft: var(--color-border-soft);
@@ -118,14 +118,14 @@
 
     --bhagya-primary: var(--color-brand);
     --bhagya-primary-hover: var(--color-brand-hover);
-    --bhagya-primary-active: #47584F;
-    --bhagya-primary-disabled: #C2CEC7;
-    --bhagya-deep: #566B60;
-    --bhagya-deep-hover: #43544B;
+    --bhagya-primary-active: #BF6F1C;
+    --bhagya-primary-disabled: #F5D3AC;
+    --bhagya-deep: #241812;
+    --bhagya-deep-hover: #170E0A;
     --bhagya-botanical: var(--color-success);
     --bhagya-soft-green: var(--color-success-bg);
-    --bhagya-soft-green-strong: #B0C9B6;
-    --bhagya-botanical-soft: #5D8067;
+    --bhagya-soft-green-strong: #A8D1B2;
+    --bhagya-botanical-soft: #4E7C59;
 
     --bhagya-ink: var(--color-text-primary);
     --bhagya-ink-soft: var(--color-text-secondary);
@@ -143,15 +143,15 @@
     --merchant-surface: var(--color-surface);
     --merchant-surface-2: var(--color-surface-2);
     --merchant-surface-elevated: var(--color-surface-elevated);
-    --merchant-header: #566B60;
+    --merchant-header: #241812;
     --merchant-border: var(--color-border);
     --merchant-border-soft: var(--color-border-soft);
     --merchant-text: var(--color-text-primary);
     --merchant-text-secondary: var(--color-text-secondary);
     --merchant-text-muted: var(--color-text-muted);
-    --merchant-gold: var(--color-accent-yellow);
-    --merchant-gold-light: var(--color-accent-yellow-gold);
-    --merchant-gold-soft: var(--color-accent-yellow-soft);
+    --merchant-gold: var(--color-brand);
+    --merchant-gold-light: var(--color-brand-light);
+    --merchant-gold-soft: var(--color-brand-soft);
     --merchant-success: var(--color-success);
     --merchant-success-soft: var(--color-success-soft);
     --merchant-error: var(--color-error);
@@ -160,8 +160,8 @@
 
     /* ---- Focus Rings -------------------------------------------------------- */
     --focus-ring: var(--color-brand);
-    --focus-ring-accent: var(--color-accent-yellow);
-    --focus-ring-inverse: #A8B9AF;
+    --focus-ring-accent: var(--color-brand);
+    --focus-ring-inverse: #F0A349;
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
 
@@ -201,9 +201,9 @@
     --radius-xl: 20px;
     --radius-pill: 9999px;
 
-    --shadow-color: 40 35 25;
+    --shadow-color: 45 30 20;
     --shadow-xs: 0 1px 2px rgb(var(--shadow-color) / 0.04);
-    --shadow-sm: 0 2px 10px rgb(var(--shadow-color) / 0.05);
+    --shadow-sm: 0 2px 10px rgb(var(--shadow-color) / 0.06);
     --shadow-md: 0 8px 24px rgb(var(--shadow-color) / 0.08);
     --shadow-lg: 0 12px 28px -6px rgb(var(--shadow-color) / 0.09), 0 4px 10px -3px rgb(var(--shadow-color) / 0.05);
     --shadow-xl: 0 20px 48px -12px rgb(var(--shadow-color) / 0.12);
@@ -240,86 +240,86 @@
 
   /* ===========================================================================
      DARK THEME (Activated via .dark, [data-theme="dark"], html.dark)
-     Soft Layered Charcoal-Green Canvas + High Contrast Light Typography.
+     Deep Espresso Cocoa Canvas + Warm Silk Typography & Luminous Honey Glow.
      =========================================================================== */
   .dark,
   [data-theme="dark"] {
-    --color-background: #252925;
-    --color-surface: #30332F;
-    --color-surface-2: #373B36;
-    --color-surface-elevated: #3E433D;
-    --color-surface-muted: #30332F;
-    --color-surface-pale-sage: #3A433D;
-    --color-header-bg: #1D211E;
+    --color-background: #1B120E;
+    --color-surface: #261B15;
+    --color-surface-2: #30231C;
+    --color-surface-elevated: #3B2C24;
+    --color-surface-muted: #2C201A;
+    --color-surface-pale-sage: #382A22;
+    --color-header-bg: #140C09;
 
-    --color-text-primary: #F5F1E7;
-    --color-text-secondary: #D8D2C6;
-    --color-text-muted: #B3ADA2;
-    --color-text-disabled: #6D746D;
-    --color-text-inverse: #20231F;
-    --color-text-inverse-muted: #505A53;
+    --color-text-primary: #FAF4EE;
+    --color-text-secondary: #D4C4B6;
+    --color-text-muted: #A6968B;
+    --color-text-disabled: #6D5F56;
+    --color-text-inverse: #1F1510;
+    --color-text-inverse-muted: #695A50;
 
-    --color-border: #4B514B;
-    --color-border-soft: #3E443E;
-    --color-border-strong: #5C625B;
-    --color-line-inverse: rgba(245, 241, 231, 0.16);
+    --color-border: #47362E;
+    --color-border-soft: #382A23;
+    --color-border-strong: #5C473D;
+    --color-line-inverse: rgba(250, 244, 238, 0.16);
 
-    /* ---- Sage Family (Dark Mode) -------------------------------------------- */
-    --color-brand: #A8B9AF;
-    --color-brand-hover: #82968A;
-    --color-brand-medium: #82968A;
-    --color-brand-light: #C2CEC7;
-    --color-brand-soft: #3A433D;
-    --color-brand-surface: #2E3630;
-    --color-brand-dark: #708477;
+    /* ---- Luminous Golden Amber / Warm Honey CTA (Dark Mode) ----------------- */
+    --color-brand: #F0A349;
+    --color-brand-hover: #E89535;
+    --color-brand-medium: #E89535;
+    --color-brand-light: #F7C07E;
+    --color-brand-soft: #422918;
+    --color-brand-surface: #362013;
+    --color-brand-dark: #D48024;
 
     /* ---- Controlled Yellow & Orange Accent Layer (Dark Mode) ---------------- */
-    --color-accent-yellow: #E2B84B;
-    --color-accent-yellow-hover: #D7A63A;
-    --color-accent-yellow-gold: #F0CE68;
-    --color-accent-yellow-soft: #4C3F25;
-    --color-accent-orange: #D47A32;
-    --color-accent-orange-soft: #E9B27D;
-    --color-accent-orange-bg: #4A3323;
+    --color-accent-yellow: #F0A349;
+    --color-accent-yellow-hover: #E89535;
+    --color-accent-yellow-gold: #F7C07E;
+    --color-accent-yellow-soft: #422918;
+    --color-accent-orange: #E0732A;
+    --color-accent-orange-soft: #FAD9C3;
+    --color-accent-orange-bg: #472614;
 
     /* ---- Status Feedback (Dark Mode) ---------------------------------------- */
-    --color-success: #78A383;
-    --color-success-soft: #294437;
-    --color-success-bg: #294437;
-    --color-success-dark: #5D8067;
+    --color-success: #6EA27B;
+    --color-success-soft: #223829;
+    --color-success-bg: #223829;
+    --color-success-dark: #4E7C59;
 
-    --color-error: #C4746B;
-    --color-error-soft: #4A2D2A;
-    --color-error-bg: #4A2D2A;
+    --color-error: #D46252;
+    --color-error-soft: #42231F;
+    --color-error-bg: #42231F;
 
-    --color-warning: #BA9964;
-    --color-warning-soft: #4A3B25;
-    --color-warning-bg: #4A3B25;
+    --color-warning: #E5A144;
+    --color-warning-soft: #452E17;
+    --color-warning-bg: #452E17;
 
-    --color-info: #93A89F;
-    --color-info-soft: #283730;
-    --color-info-bg: #283730;
+    --color-info: #8FA39D;
+    --color-info-soft: #1E2E2A;
+    --color-info-bg: #1E2E2A;
 
     /* ---- Bhagya Named Semantic Aliases (Dark Mode) -------------------------- */
-    --bhagya-black: #1D211E;
-    --bhagya-charcoal: #252925;
-    --bhagya-charcoal-soft: #30332F;
-    --bhagya-charcoal-light: #373B36;
-    --bhagya-charcoal-border: #4B514B;
+    --bhagya-black: #140C09;
+    --bhagya-charcoal: #1B120E;
+    --bhagya-charcoal-soft: #261B15;
+    --bhagya-charcoal-light: #30231C;
+    --bhagya-charcoal-border: #47362E;
 
-    --bhagya-gold: var(--color-accent-yellow);
-    --bhagya-gold-dark: #C28F27;
-    --bhagya-gold-light: var(--color-accent-yellow-gold);
-    --bhagya-gold-soft: var(--color-accent-yellow-soft);
-    --bhagya-gold-surface: #382F1D;
+    --bhagya-gold: var(--color-brand);
+    --bhagya-gold-dark: #D48024;
+    --bhagya-gold-light: var(--color-brand-light);
+    --bhagya-gold-soft: var(--color-brand-soft);
+    --bhagya-gold-surface: #382012;
 
     --bhagya-ivory: var(--color-background);
     --bhagya-cream: var(--color-surface-2);
     --bhagya-warm-white: var(--color-surface);
     --bhagya-white: var(--color-surface-elevated);
-    --bhagya-sand: #2C302B;
-    --bhagya-sand-light: #252925;
-    --bhagya-sand-deep: #373B36;
+    --bhagya-sand: #2C201A;
+    --bhagya-sand-light: #1B120E;
+    --bhagya-sand-deep: #30231C;
 
     --bhagya-border: var(--color-border);
     --bhagya-border-soft: var(--color-border-soft);
@@ -332,8 +332,8 @@
     --bhagya-text-muted: var(--color-text-muted);
     --bhagya-text-disabled: var(--color-text-disabled);
     --bhagya-text-faint: var(--color-text-disabled);
-    --bhagya-text-inverse: #20231F;
-    --bhagya-text-inverse-muted: #505A53;
+    --bhagya-text-inverse: #1F1510;
+    --bhagya-text-inverse-muted: #695A50;
 
     --bhagya-success: var(--color-success);
     --bhagya-success-soft: var(--color-success-soft);
@@ -353,54 +353,54 @@
 
     --bhagya-primary: var(--color-brand);
     --bhagya-primary-hover: var(--color-brand-hover);
-    --bhagya-primary-active: #82968A;
-    --bhagya-primary-disabled: #3E4A43;
-    --bhagya-deep: #1D211E;
-    --bhagya-deep-hover: #161A17;
+    --bhagya-primary-active: #F0A349;
+    --bhagya-primary-disabled: #5E3E26;
+    --bhagya-deep: #140C09;
+    --bhagya-deep-hover: #0D0805;
     --bhagya-botanical: var(--color-success);
     --bhagya-soft-green: var(--color-success-bg);
-    --bhagya-soft-green-strong: #385947;
+    --bhagya-soft-green-strong: #325C3E;
 
     --bhagya-ink: var(--color-text-primary);
     --bhagya-ink-soft: var(--color-text-secondary);
     --bhagya-ink-subtle: var(--color-text-muted);
     --bhagya-ink-faint: var(--color-text-disabled);
-    --bhagya-ink-inverse: #20231F;
-    --bhagya-ink-inverse-soft: #505A53;
+    --bhagya-ink-inverse: #1F1510;
+    --bhagya-ink-inverse-soft: #695A50;
 
     --bhagya-line: var(--color-border);
     --bhagya-line-strong: var(--color-border-strong);
-    --bhagya-gold-deep: var(--color-accent-yellow);
+    --bhagya-gold-deep: var(--color-brand);
 
     /* ---- Merchant Workspace Tokens (Dark Mode) ----------------------------- */
-    --merchant-bg: #252925;
-    --merchant-surface: #30332F;
-    --merchant-surface-2: #373B36;
-    --merchant-surface-elevated: #3E433D;
-    --merchant-header: #1D211E;
-    --merchant-border: #4B514B;
-    --merchant-border-soft: #3E443E;
-    --merchant-text: #F5F1E7;
-    --merchant-text-secondary: #D8D2C6;
-    --merchant-text-muted: #B3ADA2;
-    --merchant-gold: #E2B84B;
-    --merchant-gold-light: #F0CE68;
-    --merchant-gold-soft: #4C3F25;
-    --merchant-success: #78A383;
-    --merchant-success-soft: #294437;
-    --merchant-error: #C4746B;
-    --merchant-error-soft: #4A2D2A;
-    --merchant-warning: #BA9964;
+    --merchant-bg: #1B120E;
+    --merchant-surface: #261B15;
+    --merchant-surface-2: #30231C;
+    --merchant-surface-elevated: #3B2C24;
+    --merchant-header: #140C09;
+    --merchant-border: #47362E;
+    --merchant-border-soft: #382A23;
+    --merchant-text: #FAF4EE;
+    --merchant-text-secondary: #D4C4B6;
+    --merchant-text-muted: #A6968B;
+    --merchant-gold: #F0A349;
+    --merchant-gold-light: #F7C07E;
+    --merchant-gold-soft: #422918;
+    --merchant-success: #6EA27B;
+    --merchant-success-soft: #223829;
+    --merchant-error: #D46252;
+    --merchant-error-soft: #42231F;
+    --merchant-warning: #E5A144;
 
     /* ---- Focus Rings (Dark Mode) ------------------------------------------- */
     --focus-ring: var(--color-brand);
-    --focus-ring-accent: var(--color-accent-yellow);
-    --focus-ring-inverse: #DCE5DF;
+    --focus-ring-accent: var(--color-brand);
+    --focus-ring-inverse: #F7C07E;
 
     /* ---- Shadows (Dark Theme) ---------------------------------------------- */
     --shadow-color: 0 0 0;
-    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.18);
-    --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.24);
+    --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.22);
+    --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.30);
   }
 
   [data-surface="inverse"] {

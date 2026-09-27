@@ -11,21 +11,21 @@ import { siteConfig } from "@/config/site";
 /**
  * FinalCTA — the emotional close.
  *
- * Muted deep sage in light mode (#566B60), deep dark in dark mode (#1D211E),
- * with soft sage atmosphere and high contrast typography.
+ * Rich dark espresso in light mode (#241812), deep cocoa in dark mode (#140C09),
+ * with glowing amber atmosphere and warm silk typography.
  */
 export function FinalCTA() {
   return (
     <section
       data-surface="inverse"
       aria-labelledby="final-cta-heading"
-      className="relative overflow-hidden bg-[#566B60] dark:bg-[#1D211E] text-[#F5F1E7]"
+      className="relative overflow-hidden bg-[#241812] dark:bg-[#140C09] text-[#FAF4EE]"
     >
       <BhagyaGlyph
-        className="pointer-events-none absolute -right-16 -top-20 size-[26rem] text-[#DCE5DF]/15 sm:-right-10 sm:size-[30rem]"
+        className="pointer-events-none absolute -right-16 -top-20 size-[26rem] text-[#FCECDA]/15 sm:-right-10 sm:size-[30rem]"
       />
       <BhagyaGlyph
-        className="pointer-events-none absolute -bottom-24 -left-20 size-[22rem] text-[#A8B9AF]/10"
+        className="pointer-events-none absolute -bottom-24 -left-20 size-[22rem] text-[#E89535]/10"
       />
 
       <div className="container-page relative py-[var(--section-y)]">
@@ -33,7 +33,7 @@ export function FinalCTA() {
           <Reveal>
             <h2
               id="final-cta-heading"
-              className="font-display text-display-lg font-medium text-[#F5F1E7] text-balance sm:text-display-xl"
+              className="font-display text-display-lg font-medium text-[#FAF4EE] text-balance sm:text-display-xl"
             >
               Choose better.
               <br />
@@ -44,7 +44,7 @@ export function FinalCTA() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <p className="max-w-md text-body-lg text-[#D8D2C6]">
+            <p className="max-w-md text-body-lg text-[#D4C4B6]">
               One account for both sides of Bhagya — shop today, open your store
               when you are ready.
             </p>
@@ -68,7 +68,7 @@ export function FinalCTA() {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="label-text text-[#D8D2C6]/80 text-[11px] tracking-widest uppercase">{siteConfig.tagline}</p>
+            <p className="label-text text-[#D4C4B6]/80 text-[11px] tracking-widest uppercase">{siteConfig.tagline}</p>
           </Reveal>
         </div>
       </div>

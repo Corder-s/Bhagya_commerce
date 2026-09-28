@@ -28,7 +28,6 @@ export const marketingRoutes = {
   product: (slug: string) => `/products/${slug}` as Route,
 } as const;
 
-/* ---------------------------------- Auth --------------------------------- */
 export const authRoutes = {
   login: "/login",
   register: "/register",
@@ -37,7 +36,8 @@ export const authRoutes = {
   resetPassword: "/reset-password",
 } as const;
 
-/* -------------------------------- Customer ------------------------------- */
+export const inviteRoute = (token: string) => `/invite/${token}` as Route;
+
 export const accountRoutes = {
   root: "/account",
   orders: "/account/orders",
@@ -45,6 +45,8 @@ export const accountRoutes = {
   wishlist: "/account/wishlist",
   addresses: "/account/addresses",
   preferences: "/account/preferences",
+  loyalty: "/account/loyalty",
+  referrals: "/account/referrals",
 } as const;
 
 /* -------------------------------- Commerce ------------------------------- */
@@ -57,6 +59,7 @@ export const commerceRoutes = {
   notifications: "/notifications",
   order: (id: string) => `/orders/${id}` as Route,
   orderTracking: (id: string) => `/orders/${id}/tracking` as Route,
+  orderInvoice: (id: string) => `/orders/${id}/invoice` as Route,
 } as const;
 
 /* -------------------------------- Merchant ------------------------------- */
@@ -68,14 +71,22 @@ export const merchantRoutes = {
   product: (id: string) => `/merchant/products/${id}` as Route,
   orders: "/merchant/orders",
   order: (id: string) => `/merchant/orders/${id}` as Route,
+  reviews: "/merchant/reviews",
   inventory: "/merchant/inventory",
   customers: "/merchant/customers",
   analytics: "/merchant/analytics",
   marketing: "/merchant/marketing",
   ai: "/merchant/ai",
   store: "/merchant/store",
+  storefront: "/merchant/storefront",
+  storefrontDomains: "/merchant/storefront/domains",
+  billing: "/merchant/billing",
+  team: "/merchant/team",
+  loyalty: "/merchant/loyalty",
   settings: "/merchant/settings",
 } as const;
+
+export const referralRoute = (code: string) => `/ref/${code}` as Route;
 
 export const routeGroups = {
   marketing: "marketing",
@@ -96,6 +107,7 @@ export function resolveRouteGroup(pathname: string): RouteGroup {
   const path = pathname.replace(/\/+$/, "") || "/";
 
   if (path.startsWith("/merchant")) return routeGroups.merchant;
+  if (path.startsWith("/invite")) return routeGroups.auth;
   if (
     [
       authRoutes.login,

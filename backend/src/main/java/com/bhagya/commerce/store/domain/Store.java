@@ -19,6 +19,10 @@ public class Store {
 
     public Store() {}
 
+    public Store(String id, String organizationId, String name, String slug) {
+        this(id, organizationId, name, slug, "Handloom & Craft");
+    }
+
     public Store(String id, String organizationId, String name, String slug, String craftCategory) {
         this.id = id;
         this.organizationId = organizationId;

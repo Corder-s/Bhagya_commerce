@@ -6,6 +6,7 @@ import com.bhagya.commerce.order.domain.OrderItem;
 import com.bhagya.commerce.order.domain.OrderStatus;
 import com.bhagya.commerce.user.domain.Address;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,19 +74,25 @@ public class OrderRepository {
 
     public List<Order> findByUserId(String userId) {
         return orderStorage.values().stream()
-            .filter(o -> o.getUserId().equals(userId))
+            .filter(o -> o.getUserId() != null && o.getUserId().equals(userId))
             .toList();
     }
 
     public List<Order> findByStoreId(String storeId) {
         return orderStorage.values().stream()
-            .filter(o -> o.getStoreId().equals(storeId))
+            .filter(o -> o.getStoreId() != null && o.getStoreId().equals(storeId))
             .toList();
     }
 
     public Order save(Order order) {
         if (order.getId() == null) {
             order.setId("ord_" + System.currentTimeMillis());
+        }
+        if (order.getCreatedAt() == null) {
+            order.setCreatedAt(Instant.now());
+        }
+        if (order.getUpdatedAt() == null) {
+            order.setUpdatedAt(Instant.now());
         }
         orderStorage.put(order.getId(), order);
         if (order.getOrderNumber() != null) {

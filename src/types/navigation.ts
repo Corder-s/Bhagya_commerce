@@ -25,7 +25,14 @@ export type NavIconName =
   | "Settings"
   | "Settings2"
   | "MapPin"
-  | "Bell";
+  | "Bell"
+  | "Star"
+  | "CreditCard"
+  | "Palette"
+  | "ShieldCheck"
+  | "Gift"
+  | "Award"
+  | "Share2";
 
 export interface NavItem {
   label: string;

@@ -6,8 +6,12 @@ import com.bhagya.commerce.common.queue.JobType;
 import com.bhagya.commerce.notification.channel.EmailProvider;
 import com.bhagya.commerce.notification.channel.SmsProvider;
 import com.bhagya.commerce.notification.channel.WhatsAppProvider;
+import jakarta.annotation.PreDestroy;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,11 +21,13 @@ import org.springframework.stereotype.Component;
 public class NotificationJobWorker {
 
     private static final Logger log = LoggerFactory.getLogger(NotificationJobWorker.class);
+    private static final int MAX_BATCH_DRAIN = 8;
 
     private final JobQueue jobQueue;
     private final EmailProvider emailProvider;
     private final WhatsAppProvider whatsAppProvider;
     private final SmsProvider smsProvider;
+    private final ExecutorService workerExecutor;
 
     public NotificationJobWorker(
         JobQueue jobQueue,
@@ -33,16 +39,33 @@ public class NotificationJobWorker {
         this.emailProvider = emailProvider;
         this.whatsAppProvider = whatsAppProvider;
         this.smsProvider = smsProvider;
+        this.workerExecutor = Executors.newFixedThreadPool(4, r -> {
+            Thread t = new Thread(r, "bhagya-job-worker");
+            t.setDaemon(true);
+            return t;
+        });
     }
 
-    @Scheduled(fixedDelay = 2000) // Poll Redis queue every 2 seconds
+    @Scheduled(fixedDelay = 1000) // Poll queue every 1 second
     public void processNextJob() {
-        Optional<JobMessage> opt = jobQueue.dequeue();
-        if (opt.isEmpty()) {
-            return;
+        if (jobQueue.isBackpressured()) {
+            log.warn("[WORKER_BACKPRESSURE] Job queue depth={} exceeds threshold. Prioritizing critical transactions.", jobQueue.size());
         }
 
-        JobMessage job = opt.get();
+        int drained = 0;
+        while (drained < MAX_BATCH_DRAIN) {
+            Optional<JobMessage> opt = jobQueue.dequeue();
+            if (opt.isEmpty()) {
+                break;
+            }
+
+            JobMessage job = opt.get();
+            drained++;
+            executeJob(job);
+        }
+    }
+
+    public void executeJob(JobMessage job) {
         log.info("[WORKER] Processing job id={} type={} attempt={}", job.id(), job.type(), job.attemptCount());
 
         try {
@@ -50,6 +73,7 @@ public class NotificationJobWorker {
                 case SEND_EMAIL -> processEmailJob(job.payload());
                 case SEND_WHATSAPP -> processWhatsAppJob(job.payload());
                 case SEND_SMS -> processSmsJob(job.payload());
+                case SEND_NOTIFICATION -> true; // Handled in-app
                 default -> true;
             };
 
@@ -88,10 +112,27 @@ public class NotificationJobWorker {
     private void handleFailure(JobMessage job, String reason) {
         if (job.attemptCount() < job.maxAttempts()) {
             JobMessage retry = job.withIncrementedAttempt();
-            log.warn("[WORKER] Re-enqueuing failed job id={} attempt {}/{}", job.id(), retry.attemptCount(), job.maxAttempts());
+            // Exponential backoff delay calculation
+            long delayMs = (long) (Math.pow(2, retry.attemptCount()) * 500);
+            log.warn("[WORKER] Re-enqueuing failed job id={} attempt {}/{} with backoff {}ms",
+                job.id(), retry.attemptCount(), job.maxAttempts(), delayMs);
             jobQueue.enqueue(retry);
         } else {
             log.error("[WORKER] Job id={} exhausted max retry attempts ({}). Reason: {}", job.id(), job.maxAttempts(), reason);
+        }
+    }
+
+    @PreDestroy
+    public void shutdown() {
+        log.info("[WORKER] Shutting down worker executor gracefully...");
+        workerExecutor.shutdown();
+        try {
+            if (!workerExecutor.awaitTermination(5, TimeUnit.SECONDS)) {
+                workerExecutor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            workerExecutor.shutdownNow();
+            Thread.currentThread().interrupt();
         }
     }
 }

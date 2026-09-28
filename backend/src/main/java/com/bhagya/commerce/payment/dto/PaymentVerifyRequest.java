@@ -9,6 +9,11 @@ public record PaymentVerifyRequest(
     @NotBlank(message = "Order ID is required")
     String orderId,
 
+    String gatewayOrderId,
     String gatewayPaymentId,
     String gatewaySignature
-) {}
+) {
+    public PaymentVerifyRequest(String paymentId, String orderId, String gatewayPaymentId, String gatewaySignature) {
+        this(paymentId, orderId, orderId, gatewayPaymentId, gatewaySignature);
+    }
+}

@@ -51,7 +51,7 @@ const buttonVariants = cva(
           "active:bg-canvas-deep",
         ],
         outline: [
-          "border border-line bg-surface text-ink shadow-xs",
+          "border border-line bg-surface text-ink font-semibold shadow-xs",
           "hover:border-primary hover:bg-[#F7EFE8] dark:hover:bg-[#261B15] hover:text-ink",
           "active:bg-canvas-deep",
         ],
@@ -62,7 +62,7 @@ const buttonVariants = cva(
           "active:bg-[#1F1510]",
         ],
         ghost: [
-          "bg-transparent text-ink-soft",
+          "bg-transparent text-ink font-semibold",
           "hover:bg-[#F7EFE8] dark:hover:bg-[#261B15] hover:text-ink",
           "active:bg-[#F7EFE8] dark:active:bg-[#261B15]",
         ],

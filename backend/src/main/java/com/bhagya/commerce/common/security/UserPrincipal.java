@@ -34,6 +34,21 @@ public class UserPrincipal implements UserDetails {
         this.authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
     }
 
+    public UserPrincipal(
+        String id,
+        String email,
+        String name,
+        Collection<? extends GrantedAuthority> authorities
+    ) {
+        this.id = id;
+        this.phone = "";
+        this.email = email;
+        this.name = name;
+        this.storeId = "store_main";
+        this.organizationId = "org_main";
+        this.authorities = authorities != null ? authorities : List.of();
+    }
+
     public String getId() { return id; }
     public String getPhone() { return phone; }
     public String getEmail() { return email; }

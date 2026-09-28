@@ -6,5 +6,6 @@ public enum NotificationType {
     SHIPMENT,
     ACCOUNT,
     PROMOTION,
-    SECURITY
+    SECURITY,
+    SYSTEM_ALERT
 }

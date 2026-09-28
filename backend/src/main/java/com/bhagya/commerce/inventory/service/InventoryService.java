@@ -24,6 +24,11 @@ public class InventoryService {
     private final InventoryJpaRepository inventoryJpaRepository;
     // In-memory fallback map for unit tests / offline development
     private final Map<String, int[]> fallbackMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Object> productLocks = new ConcurrentHashMap<>();
+
+    public InventoryService() {
+        this(null);
+    }
 
     public InventoryService(@Autowired(required = false) InventoryJpaRepository inventoryJpaRepository) {
         this.inventoryJpaRepository = inventoryJpaRepository;
@@ -55,84 +60,93 @@ public class InventoryService {
     }
 
     @Transactional
-    public synchronized boolean reserveInventory(String productId, int quantity) {
-        if (inventoryJpaRepository != null) {
-            try {
-                Optional<InventoryEntity> opt = inventoryJpaRepository.findByProductId(productId);
-                InventoryEntity inv = opt.orElseGet(() -> new InventoryEntity(
-                    "inv_" + UUID.randomUUID().toString().substring(0, 8),
-                    "store_1",
-                    productId,
-                    null,
-                    20,
-                    0,
-                    5
-                ));
+    public boolean reserveInventory(String productId, int quantity) {
+        Object lock = productLocks.computeIfAbsent(productId, k -> new Object());
+        synchronized (lock) {
+            if (inventoryJpaRepository != null) {
+                try {
+                    Optional<InventoryEntity> opt = inventoryJpaRepository.findByProductId(productId);
+                    InventoryEntity inv = opt.orElseGet(() -> new InventoryEntity(
+                        "inv_" + UUID.randomUUID().toString().substring(0, 8),
+                        "store_1",
+                        productId,
+                        null,
+                        20,
+                        0,
+                        5
+                    ));
 
-                if (inv.getAvailableQuantity() < quantity) {
-                    return false;
+                    if (inv.getAvailableQuantity() < quantity) {
+                        return false;
+                    }
+
+                    inv.setAvailableQuantity(inv.getAvailableQuantity() - quantity);
+                    inv.setReservedQuantity(inv.getReservedQuantity() + quantity);
+                    inventoryJpaRepository.save(inv);
+                    log.info("[INVENTORY] Reserved {} units for productId={}, remaining={}", quantity, productId, inv.getAvailableQuantity());
+                    return true;
+                } catch (Exception e) {
+                    log.warn("Database inventory reservation fallback: {}", e.getMessage());
                 }
-
-                inv.setAvailableQuantity(inv.getAvailableQuantity() - quantity);
-                inv.setReservedQuantity(inv.getReservedQuantity() + quantity);
-                inventoryJpaRepository.save(inv);
-                log.info("[INVENTORY] Reserved {} units for productId={}, remaining={}", quantity, productId, inv.getAvailableQuantity());
-                return true;
-            } catch (Exception e) {
-                log.warn("Database inventory reservation fallback: {}", e.getMessage());
             }
-        }
 
-        int[] stock = fallbackMap.getOrDefault(productId, new int[]{20, 0});
-        if (stock[0] < quantity) {
-            return false;
+            int[] stock = fallbackMap.getOrDefault(productId, new int[]{20, 0});
+            if (stock[0] < quantity) {
+                return false;
+            }
+            stock[0] -= quantity;
+            stock[1] += quantity;
+            fallbackMap.put(productId, stock);
+            return true;
         }
-        stock[0] -= quantity;
-        stock[1] += quantity;
-        fallbackMap.put(productId, stock);
-        return true;
     }
 
     @Transactional
-    public synchronized void commitInventory(String productId, int quantity) {
-        if (inventoryJpaRepository != null) {
-            try {
-                inventoryJpaRepository.findByProductId(productId).ifPresent(inv -> {
-                    inv.setReservedQuantity(Math.max(0, inv.getReservedQuantity() - quantity));
-                    inventoryJpaRepository.save(inv);
-                    log.info("[INVENTORY] Committed {} units for productId={}", quantity, productId);
-                });
-                return;
-            } catch (Exception e) {
-                log.warn("Database inventory commit fallback: {}", e.getMessage());
+    public void commitInventory(String productId, int quantity) {
+        Object lock = productLocks.computeIfAbsent(productId, k -> new Object());
+        synchronized (lock) {
+            if (inventoryJpaRepository != null) {
+                try {
+                    inventoryJpaRepository.findByProductId(productId).ifPresent(inv -> {
+                        inv.setReservedQuantity(Math.max(0, inv.getReservedQuantity() - quantity));
+                        inventoryJpaRepository.save(inv);
+                        log.info("[INVENTORY] Committed {} units for productId={}", quantity, productId);
+                    });
+                    return;
+                } catch (Exception e) {
+                    log.warn("Database inventory commit fallback: {}", e.getMessage());
+                }
             }
-        }
 
-        int[] stock = fallbackMap.getOrDefault(productId, new int[]{20, 0});
-        stock[1] = Math.max(0, stock[1] - quantity);
-        fallbackMap.put(productId, stock);
+            int[] stock = fallbackMap.getOrDefault(productId, new int[]{20, 0});
+            stock[1] = Math.max(0, stock[1] - quantity);
+            fallbackMap.put(productId, stock);
+        }
     }
 
     @Transactional
-    public synchronized void releaseInventory(String productId, int quantity) {
-        if (inventoryJpaRepository != null) {
-            try {
-                inventoryJpaRepository.findByProductId(productId).ifPresent(inv -> {
-                    inv.setReservedQuantity(Math.max(0, inv.getReservedQuantity() - quantity));
-                    inv.setAvailableQuantity(inv.getAvailableQuantity() + quantity);
-                    inventoryJpaRepository.save(inv);
-                    log.info("[INVENTORY] Released {} units for productId={}", quantity, productId);
-                });
-                return;
-            } catch (Exception e) {
-                log.warn("Database inventory release fallback: {}", e.getMessage());
+    public void releaseInventory(String productId, int quantity) {
+        Object lock = productLocks.computeIfAbsent(productId, k -> new Object());
+        synchronized (lock) {
+            if (inventoryJpaRepository != null) {
+                try {
+                    inventoryJpaRepository.findByProductId(productId).ifPresent(inv -> {
+                        inv.setReservedQuantity(Math.max(0, inv.getReservedQuantity() - quantity));
+                        inv.setAvailableQuantity(inv.getAvailableQuantity() + quantity);
+                        inventoryJpaRepository.save(inv);
+                        log.info("[INVENTORY] Released {} units for productId={}", quantity, productId);
+                    });
+                    return;
+                } catch (Exception e) {
+                    log.warn("Database inventory release fallback: {}", e.getMessage());
+                }
             }
-        }
 
-        int[] stock = fallbackMap.getOrDefault(productId, new int[]{20, 0});
-        stock[1] = Math.max(0, stock[1] - quantity);
-        stock[0] += quantity;
-        fallbackMap.put(productId, stock);
+            int[] stock = fallbackMap.getOrDefault(productId, new int[]{20, 0});
+            stock[1] = Math.max(0, stock[1] - quantity);
+            stock[0] += quantity;
+            fallbackMap.put(productId, stock);
+        }
     }
 
     public int getAvailableStock(String productId) {

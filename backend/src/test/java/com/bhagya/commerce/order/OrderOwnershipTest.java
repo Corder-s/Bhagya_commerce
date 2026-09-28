@@ -11,6 +11,8 @@ import com.bhagya.commerce.order.dto.OrderResponse;
 import com.bhagya.commerce.order.repository.InMemoryOrderRepository;
 import com.bhagya.commerce.order.repository.OrderRepository;
 import com.bhagya.commerce.order.service.OrderService;
+import com.bhagya.commerce.order.domain.Order;
+import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +28,15 @@ public class OrderOwnershipTest {
         orderRepository = new InMemoryOrderRepository();
         inventoryService = new InventoryService();
         orderService = new OrderService(orderRepository, inventoryService);
+
+        Order o = new Order();
+        o.setId("ord_101");
+        o.setOrderNumber("ORD-101");
+        o.setUserId("usr_cust_1");
+        o.setCustomerName("Customer One");
+        o.setCustomerEmail("cust1@example.com");
+        o.setTotalInr(new BigDecimal("1000.00"));
+        orderRepository.save(o);
     }
 
     @Test

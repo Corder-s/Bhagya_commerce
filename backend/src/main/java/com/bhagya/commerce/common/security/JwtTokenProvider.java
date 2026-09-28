@@ -23,6 +23,10 @@ public class JwtTokenProvider {
         this.validityInMilliseconds = validityInSeconds * 1000;
     }
 
+    public JwtTokenProvider(String secret, long validityInSeconds, long refreshValidityInSeconds) {
+        this(secret, validityInSeconds);
+    }
+
     public String generateToken(UserPrincipal principal) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -66,5 +70,15 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Date getExpiration(String token) {
+        Claims claims = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+        return claims.getExpiration();
+    }
+
+    public Date getIssuedAt(String token) {
+        Claims claims = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+        return claims.getIssuedAt();
     }
 }

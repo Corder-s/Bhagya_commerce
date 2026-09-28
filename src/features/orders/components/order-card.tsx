@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, FileText, RotateCcw, ShoppingBag, Truck, XCircle } from "lucide-react";
+import { Eye, FileText, RotateCcw, ShoppingBag, Star, Truck, XCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,6 +11,7 @@ import { OrderStatusBadge } from "./order-status-badge";
 import { CancelOrderModal } from "./cancel-order-modal";
 import { ReturnOrderModal } from "./return-order-modal";
 import { InvoiceModal } from "./invoice-modal";
+import { WriteReviewModal } from "@/features/reviews/components/write-review-modal";
 import type { Order } from "@/features/orders/order-types";
 import { useCart } from "@/context/cart-context";
 import { toast } from "@/lib/toast";
@@ -25,6 +26,7 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
   const [showCancelModal, setShowCancelModal] = React.useState(false);
   const [showReturnModal, setShowReturnModal] = React.useState(false);
   const [showInvoiceModal, setShowInvoiceModal] = React.useState(false);
+  const [reviewItem, setReviewItem] = React.useState<{ id: string; name: string } | null>(null);
 
   const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
@@ -132,9 +134,21 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
                       {item.variantName && (
                         <p className="text-caption text-ink-soft">{item.variantName}</p>
                       )}
-                      <p className="text-caption text-ink-faint mt-0.5">
-                        Qty: {item.quantity} · {fmt(item.unitPrice)} each
-                      </p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <p className="text-caption text-ink-faint">
+                          Qty: {item.quantity} · {fmt(item.unitPrice)} each
+                        </p>
+                        {order.status === "delivered" && (
+                          <button
+                            type="button"
+                            onClick={() => setReviewItem({ id: item.productId, name: item.name })}
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#E89535] hover:text-[#D48024] hover:underline"
+                          >
+                            <Star className="size-3 fill-[#E89535]" />
+                            <span>Review</span>
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -253,6 +267,20 @@ export function OrderCard({ order, onRefresh }: OrderCardProps) {
         isOpen={showInvoiceModal}
         onClose={() => setShowInvoiceModal(false)}
       />
+
+      {reviewItem && (
+        <WriteReviewModal
+          isOpen={Boolean(reviewItem)}
+          onClose={() => setReviewItem(null)}
+          productId={reviewItem.id}
+          productTitle={reviewItem.name}
+          onReviewSubmitted={() => {
+            setReviewItem(null);
+            toast.success("Review Submitted", "Thank you for reviewing your purchase!");
+            onRefresh?.();
+          }}
+        />
+      )}
     </>
   );
 }

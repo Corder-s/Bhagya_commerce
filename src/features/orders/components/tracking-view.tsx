@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import {
   AlertCircle,
+  AlertTriangle,
   Building2,
   CheckCircle2,
   Clock,
@@ -14,11 +15,11 @@ import {
   RotateCw,
   ShieldCheck,
   Truck,
+  XCircle,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { OrderStatusBadge } from "./order-status-badge";
 import type { Shipment, ShipmentEvent } from "@/features/orders/shipment-types";
 import { trackingService } from "@/services/tracking.service";
 import { toast } from "@/lib/toast";
@@ -50,7 +51,7 @@ export function TrackingView({ orderId }: { orderId: string }) {
     try {
       const data = await trackingService.refreshTracking(orderId);
       setShipment(data);
-      toast.success("Tracking Refreshed", "Latest courier checkpoint data retrieved.");
+      toast.success("Tracking Refreshed", "Latest courier checkpoint scan retrieved.");
     } catch {
       toast.error("Error", "Could not refresh tracking. Please retry.");
     } finally {
@@ -67,7 +68,7 @@ export function TrackingView({ orderId }: { orderId: string }) {
   if (loading) {
     return (
       <div className="flex min-h-[350px] flex-col items-center justify-center gap-3 py-16">
-        <div className="size-8 animate-spin rounded-full border-2 border-gold/20 border-t-gold" />
+        <div className="size-8 animate-spin rounded-full border-2 border-[#4F7A5D]/20 border-t-[#2D5E3A]" />
         <p className="text-body-sm text-ink-soft">Retrieving logistics tracking updates…</p>
       </div>
     );
@@ -77,7 +78,7 @@ export function TrackingView({ orderId }: { orderId: string }) {
     return (
       <Card variant="surface" padding="lg" radius="xl" className="border-line shadow-card text-center max-w-lg mx-auto">
         <CardContent className="space-y-4 py-6">
-          <AlertCircle className="size-12 text-warning mx-auto" />
+          <AlertCircle className="size-12 text-[#A87832] mx-auto" />
           <h3 className="text-heading-lg font-semibold text-ink">Tracking Information Unavailable</h3>
           <p className="text-body-sm text-ink-soft">
             We couldn&apos;t find active logistics records for order ID <strong className="font-mono text-ink">{orderId}</strong>.
@@ -95,6 +96,9 @@ export function TrackingView({ orderId }: { orderId: string }) {
     );
   }
 
+  const isFailed = shipment.status === "failed_attempt";
+  const isRto = shipment.status === "returned_to_origin";
+
   return (
     <div className="space-y-8">
       {/* Top Tracking Summary Banner */}
@@ -105,17 +109,25 @@ export function TrackingView({ orderId }: { orderId: string }) {
               <span className="font-mono text-heading-lg font-bold text-ink">
                 {shipment.orderNumber}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-gold-soft px-3 py-1 text-xs font-semibold text-gold-dark dark:text-gold border border-gold/30">
+              <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold border transition-all duration-300 ${
+                isFailed
+                  ? "bg-rose-500/10 text-[#A9574F] border-rose-500/30"
+                  : isRto
+                  ? "bg-amber-500/10 text-[#A87832] border-amber-500/30"
+                  : shipment.status === "delivered"
+                  ? "bg-emerald-500/10 text-[#4F7A5D] border-emerald-500/30"
+                  : "bg-[#2D5E3A]/10 text-[#2D5E3A] dark:text-[#70A581] border-[#2D5E3A]/30"
+              }`}>
                 <Truck className="size-3.5" />
                 <span>{shipment.statusLabel}</span>
               </span>
             </div>
             <p className="text-caption text-ink-soft">
-              Carrier: <strong className="text-ink font-medium">{shipment.carrier || "BlueDart Express"}</strong> · Tracking No:{" "}
+              Carrier: <strong className="text-ink font-medium">{shipment.carrier || "Delhivery Express"}</strong> · Tracking No:{" "}
               <button
                 type="button"
                 onClick={() => handleCopyAwb(shipment.trackingNumber)}
-                className="font-mono font-bold text-gold-dark dark:text-gold hover:underline inline-flex items-center gap-1"
+                className="font-mono font-bold text-[#2D5E3A] dark:text-[#70A581] hover:underline inline-flex items-center gap-1 ml-1"
                 title="Click to copy AWB"
               >
                 <span>{shipment.trackingNumber}</span>
@@ -130,12 +142,12 @@ export function TrackingView({ orderId }: { orderId: string }) {
               size="sm"
               onClick={handleRefresh}
               disabled={refreshing}
-              className="gap-1.5"
+              className="gap-1.5 text-xs h-8 text-ink"
             >
-              <RotateCw className={`size-3.5 ${refreshing ? "animate-spin text-gold" : ""}`} />
-              <span>{refreshing ? "Updating…" : "Refresh"}</span>
+              <RotateCw className={`size-3.5 ${refreshing ? "animate-spin text-[#2D5E3A]" : ""}`} />
+              <span>{refreshing ? "Updating…" : "Refresh Scans"}</span>
             </Button>
-            <Button asChild variant="primary" size="sm" className="gap-1.5">
+            <Button asChild variant="primary" size="sm" className="gap-1.5 text-xs h-8 bg-[#E89535] hover:bg-[#D48024] text-[#241812] font-semibold">
               <Link href={`/orders/${orderId}`}>Order Details</Link>
             </Button>
           </div>
@@ -144,32 +156,49 @@ export function TrackingView({ orderId }: { orderId: string }) {
         {/* Route Hubs & Estimate */}
         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-line p-6 bg-surface">
           <div className="py-2 md:py-0 md:pr-6 space-y-1">
-            <span className="text-caption text-ink-faint flex items-center gap-1.5 uppercase font-medium">
-              <Building2 className="size-3.5 text-gold-dark dark:text-gold" /> Origin Hub
+            <span className="text-caption text-ink-soft flex items-center gap-1.5 uppercase font-medium">
+              <Building2 className="size-3.5 text-[#4F7A5D]" /> Origin Hub
             </span>
             <p className="text-body-sm font-semibold text-ink">{shipment.origin}</p>
           </div>
 
           <div className="py-2 md:py-0 md:px-6 space-y-1">
-            <span className="text-caption text-ink-faint flex items-center gap-1.5 uppercase font-medium">
-              <MapPin className="size-3.5 text-gold-dark dark:text-gold" /> Destination
+            <span className="text-caption text-ink-soft flex items-center gap-1.5 uppercase font-medium">
+              <MapPin className="size-3.5 text-[#4F7A5D]" /> Destination
             </span>
             <p className="text-body-sm font-semibold text-ink">{shipment.destination}</p>
           </div>
 
           <div className="py-2 md:py-0 md:pl-6 space-y-1">
-            <span className="text-caption text-ink-faint flex items-center gap-1.5 uppercase font-medium">
-              <Clock className="size-3.5 text-gold-dark dark:text-gold" /> Delivery Estimate
+            <span className="text-caption text-ink-soft flex items-center gap-1.5 uppercase font-medium">
+              <Clock className="size-3.5 text-[#4F7A5D]" /> Estimated Delivery
             </span>
-            <p className="text-body-sm font-bold text-gold-dark dark:text-gold">
+            <p className="text-body-sm font-bold text-[#2D5E3A] dark:text-[#70A581]">
               {shipment.estimatedDelivery}
             </p>
-            <span className="text-[11px] text-ink-faint block">
+            <span className="text-[11px] text-ink-soft block">
               Verified by carrier checkpoint scans
             </span>
           </div>
         </div>
       </Card>
+
+      {/* NDR / Delivery Issue Banner if applicable */}
+      {isFailed && (
+        <Card variant="surface" padding="md" radius="xl" className="border-rose-500/30 bg-rose-500/5 text-ink space-y-2">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="size-5 text-[#A9574F] shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <h4 className="font-semibold text-body-sm text-[#A9574F]">
+                Delivery Attempt Was Unsuccessful
+              </h4>
+              <p className="text-caption text-ink-soft">
+                {shipment.ndrReason || "Customer unavailable at address. Carrier will re-attempt delivery on the next business day."}
+              </p>
+            </div>
+          </div>
+        </Card>
+      )}
 
       {/* Main Timeline & Tracking Verification */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -196,26 +225,30 @@ export function TrackingView({ orderId }: { orderId: string }) {
                       {!isLast && (
                         <div
                           className={`absolute left-4 top-8 -bottom-6 w-0.5 ${
-                            isLatest ? "bg-gold" : "bg-line"
+                            isLatest ? "bg-[#4F7A5D]" : "bg-line"
                           }`}
                           aria-hidden="true"
                         />
                       )}
 
-                      {/* Checkpoint indicator */}
+                      {/* Checkpoint indicator with Section 29 palette */}
                       <div
-                        className={`grid size-8 shrink-0 place-items-center rounded-full border-2 ${
-                          isLatest
-                            ? "border-gold bg-gold-soft text-gold-dark dark:text-gold ring-4 ring-gold/15"
-                            : "border-line bg-surface text-ink-subtle"
+                        className={`grid size-8 shrink-0 place-items-center rounded-full border-2 transition-transform duration-300 ${
+                          evt.status === "delivered"
+                            ? "border-[#4F7A5D] bg-[#4F7A5D]/15 text-[#4F7A5D]"
+                            : isLatest
+                            ? "border-[#2D5E3A] bg-[#2D5E3A]/20 text-[#2D5E3A] dark:text-[#70A581] ring-4 ring-[#2D5E3A]/15 scale-105"
+                            : "border-line bg-surface text-ink-soft"
                         }`}
                       >
                         {evt.status === "delivered" ? (
-                          <CheckCircle2 className="size-4 text-success" />
+                          <CheckCircle2 className="size-4" />
+                        ) : evt.status === "failed_attempt" ? (
+                          <XCircle className="size-4 text-[#A9574F]" />
                         ) : isLatest ? (
                           <Truck className="size-4" />
                         ) : (
-                          <div className="size-2 rounded-full bg-ink-faint" />
+                          <div className="size-2 rounded-full bg-[#DDD4C4] dark:bg-stone-600" />
                         )}
                       </div>
 
@@ -225,7 +258,7 @@ export function TrackingView({ orderId }: { orderId: string }) {
                           <p className={`text-body-sm font-semibold ${isLatest ? "text-ink" : "text-ink-soft"}`}>
                             {evt.description}
                           </p>
-                          <time className="text-caption text-ink-faint whitespace-nowrap">
+                          <time className="text-caption text-ink-soft whitespace-nowrap">
                             {new Date(evt.eventTime).toLocaleDateString("en-IN", {
                               month: "short",
                               day: "numeric",
@@ -236,7 +269,7 @@ export function TrackingView({ orderId }: { orderId: string }) {
                         </div>
                         {evt.location && (
                           <p className="text-caption text-ink-soft flex items-center gap-1">
-                            <MapPin className="size-3 text-ink-faint" />
+                            <MapPin className="size-3 text-ink-soft" />
                             <span>{evt.location}</span>
                           </p>
                         )}
@@ -249,16 +282,16 @@ export function TrackingView({ orderId }: { orderId: string }) {
           </Card>
         </div>
 
-        {/* Right 1 Col: Logistics Information & Trust */}
+        {/* Right 1 Col: Logistics Information & Verification */}
         <div className="space-y-6">
           <Card variant="surface" padding="md" radius="xl" className="border-line shadow-card space-y-4">
             <CardContent className="space-y-4">
-              <div className="flex items-center gap-2.5 text-gold-dark dark:text-gold">
+              <div className="flex items-center gap-2.5 text-[#2D5E3A] dark:text-[#70A581]">
                 <ShieldCheck className="size-5" />
-                <h4 className="text-heading-sm font-semibold text-ink">Carrier Data Trust</h4>
+                <h4 className="text-heading-sm font-semibold text-ink">Verified Carrier Scan</h4>
               </div>
               <p className="text-caption text-ink-soft leading-relaxed">
-                All checkpoint updates are verified by {shipment.carrier || "BlueDart"} surface logistics scans. Bhagya never displays simulated or fabricated live GPS coordinates.
+                All checkpoint updates are verified by {shipment.carrier || "Delhivery"} courier scans. Bhagya shows verified physical scans rather than simulated GPS.
               </p>
               <div className="rounded-lg bg-surface-raised p-3.5 text-caption space-y-1.5 border border-line">
                 <div className="flex justify-between text-ink-soft">
@@ -267,7 +300,11 @@ export function TrackingView({ orderId }: { orderId: string }) {
                 </div>
                 <div className="flex justify-between text-ink-soft">
                   <span>Verification</span>
-                  <span className="text-success font-medium">Carrier Confirmed</span>
+                  <span className="text-[#4F7A5D] font-medium">Carrier Confirmed</span>
+                </div>
+                <div className="flex justify-between text-ink-soft">
+                  <span>Status Authority</span>
+                  <span className="text-ink font-mono text-[11px]">Backend Authoritative</span>
                 </div>
               </div>
             </CardContent>
@@ -284,7 +321,7 @@ export function TrackingView({ orderId }: { orderId: string }) {
               </p>
               <Link
                 href="/help#shipping"
-                className="text-body-sm text-gold-dark dark:text-gold hover:underline inline-flex items-center gap-1 font-medium pt-1"
+                className="text-body-sm text-[#2D5E3A] dark:text-[#70A581] hover:underline inline-flex items-center gap-1 font-medium pt-1"
               >
                 <span>Read Bhagya Delivery Policy</span>
                 <ExternalLink className="size-3.5" />

@@ -11,10 +11,15 @@ public class User {
     private UserRole role;
     private String storeId;
     private String organizationId;
+    private String passwordHash;
     private Instant createdAt;
     private Instant updatedAt;
 
     public User() {}
+
+    public User(String id, String phone, String email, String name) {
+        this(id, phone, email, name, UserRole.CUSTOMER);
+    }
 
     public User(String id, String phone, String email, String name, UserRole role) {
         this.id = id;
@@ -49,6 +54,9 @@ public class User {
 
     public String getOrganizationId() { return organizationId; }
     public void setOrganizationId(String organizationId) { this.organizationId = organizationId; }
+
+    public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }

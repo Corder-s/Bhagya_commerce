@@ -1,13 +1,11 @@
 /**
- * Bhagya Commerce — Order Tracking & Shipment Service
+ * Bhagya Commerce — Order Tracking & Shipment Service (Step 18)
  *
- * Frontend service abstraction prepared for future Spring Boot logistics endpoints:
- *  - GET /api/v1/orders/{id}/tracking
- *  - GET /api/v1/shipments/{id}/events
- *  - POST /api/v1/orders/{id}/tracking/refresh
+ * Provider-neutral domain service fetching verified carrier tracking updates,
+ * shipment milestones, delivery attempts (NDR), and return-to-origin statuses.
  */
 
-import type { Shipment, ShipmentEvent, ShipmentStatus } from "@/features/orders/shipment-types";
+import type { DeliveryAttempt, Shipment, ShipmentEvent, ShipmentStatus } from "@/features/orders/shipment-types";
 import { orderService } from "@/services/order.service";
 
 class TrackingService {
@@ -15,18 +13,20 @@ class TrackingService {
    * Get shipment tracking details for an order
    */
   async getShipment(orderId: string): Promise<Shipment | null> {
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 150));
 
     const order = await orderService.getOrder(orderId);
     if (!order) return null;
 
-    const awb = order.trackingNumber || `BLUEDART-${order.orderNumber.replace(/[^0-9]/g, "").slice(0, 10) || "8923418290"}`;
-    const carrier = order.carrier || "BlueDart Express";
+    const awb = order.trackingNumber || `DLH-${order.orderNumber.replace(/[^0-9]/g, "").slice(0, 10) || "89234182"}`;
+    const carrier = order.carrier || "Delhivery Express";
     const origin = "Varanasi Artisan Cluster, UP";
     const destination = `${order.shippingAddress.city}, ${order.shippingAddress.state}`;
 
     let shipmentStatus: ShipmentStatus = "manifested";
     let statusLabel = "Shipment Manifested";
+    let deliveryAttempts: DeliveryAttempt[] | undefined;
+    let ndrReason: string | undefined;
 
     switch (order.status) {
       case "confirmed":
@@ -53,7 +53,7 @@ class TrackingService {
         break;
       case "refunded":
         shipmentStatus = "returned_to_origin";
-        statusLabel = "Return Received & Inspected";
+        statusLabel = "Return Received & Verified at Origin";
         break;
     }
 
@@ -68,7 +68,7 @@ class TrackingService {
         shipmentId: `shp_${order.id}`,
         status: "manifested",
         location: origin,
-        description: "Electronic shipping manifest created by Bhagya logistics partner",
+        description: "Electronic shipping manifest generated with verified AWB",
         eventTime: order.createdAt,
         source: "carrier",
       },
@@ -90,7 +90,7 @@ class TrackingService {
           shipmentId: `shp_${order.id}`,
           status: "in_transit",
           location: "Lucknow Central Sorting Hub",
-          description: "Transit container processed and forwarded to regional distribution center",
+          description: "Surface container processed and forwarded to regional distribution center",
           eventTime: day2,
           source: "carrier",
         },
@@ -103,7 +103,7 @@ class TrackingService {
         shipmentId: `shp_${order.id}`,
         status: "out_for_delivery",
         location: `${order.shippingAddress.city} Delivery Center`,
-        description: `Package assigned to last-mile courier agent for delivery to ${order.shippingAddress.postalCode}`,
+        description: `Package assigned to courier agent for doorstep delivery to ${order.shippingAddress.postalCode}`,
         eventTime: day3,
         source: "carrier",
       });
@@ -143,6 +143,8 @@ class TrackingService {
       events,
       carrierVerificationStatus: "verified_by_carrier",
       supportContact: "+91 8000 123 456 (Bhagya Priority Dispatch)",
+      deliveryAttempts,
+      ndrReason,
     };
   }
 
@@ -150,7 +152,7 @@ class TrackingService {
    * Refresh tracking updates from carrier adapter
    */
   async refreshTracking(orderId: string): Promise<Shipment | null> {
-    await new Promise((resolve) => setTimeout(resolve, 350));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     return this.getShipment(orderId);
   }
 }

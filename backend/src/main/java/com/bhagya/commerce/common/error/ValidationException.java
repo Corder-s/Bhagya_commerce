@@ -6,4 +6,8 @@ public class ValidationException extends ApiException {
     public ValidationException(String message) {
         super(ErrorCode.VALIDATION_FAILED, message, HttpStatus.BAD_REQUEST);
     }
+
+    public ValidationException(java.util.Map<String, ?> errors) {
+        super(ErrorCode.VALIDATION_FAILED, errors != null ? errors.toString() : "Validation failed", HttpStatus.BAD_REQUEST);
+    }
 }

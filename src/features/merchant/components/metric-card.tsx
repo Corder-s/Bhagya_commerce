@@ -42,56 +42,53 @@ export function MetricCard({
   const DeltaIcon = isPositive ? ArrowUpRight : isNegative ? ArrowDownRight : Minus;
 
   return (
-    <Card
-      variant="surface"
-      padding="md"
-      radius="xl"
+    <div
       className={cn(
-        "border-line shadow-card transition-all hover:border-[#E89535]/40",
-        variant === "gold" && "border-[#E89535]/40 bg-[#E89535]/5",
+        "rounded-2xl border border-[#DDD4C4] dark:border-[#47362E] bg-[#FFFCF6] dark:bg-[#261B15] p-5 shadow-[0_2px_10px_rgba(50,40,25,0.05)] transition-all hover:border-[#D6A23A]/60",
+        variant === "gold" && "bg-[#F8F4EA] dark:bg-[#30231C]",
       )}
     >
-      <CardContent className="space-y-3 p-1">
+      <div className="space-y-3">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-caption font-semibold text-ink-soft uppercase tracking-wider">
+          <span className="text-caption font-semibold text-[#68736B] dark:text-[#A69E92] uppercase tracking-wider">
             {title}
           </span>
           {icon && (
-            <span className="size-8 rounded-lg bg-surface-subtle border border-line flex items-center justify-center text-[#D48024] dark:text-[#F0A349]">
+            <span className="size-8 rounded-lg bg-[#EDF2EE] dark:bg-[#382A22] border border-[#DDD4C4] dark:border-[#47362E] flex items-center justify-center text-[#D6A23A]">
               {icon}
             </span>
           )}
         </div>
 
         <div>
-          <p className="font-display text-display-md font-bold text-ink tabular-nums leading-tight">
+          <p className="font-display text-display-md font-bold text-[#252923] dark:text-[#F2EEE5] tabular-nums leading-tight">
             {formattedValue}
           </p>
         </div>
 
-        <div className="flex items-center justify-between text-caption pt-1 border-t border-line/60">
+        <div className="flex items-center justify-between text-caption pt-1.5 border-t border-[#DDD4C4]/60 dark:border-[#47362E]">
           {hasDelta ? (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <span
                 className={cn(
-                  "inline-flex items-center gap-0.5 font-bold tabular-nums text-xs px-1.5 py-0.5 rounded-md",
-                  isPositive && "bg-[#EAF3ED] dark:bg-[#25392B] text-[#4E7C59] dark:text-[#78A383] border border-[#B0C9B6] dark:border-[#375D41]",
-                  isNegative && "bg-danger/15 text-danger",
-                  !isPositive && !isNegative && "bg-surface-subtle text-ink-soft",
+                  "inline-flex items-center gap-0.5 font-bold tabular-nums text-xs px-2 py-0.5 rounded-md",
+                  isPositive && "bg-[#DDEBE1] dark:bg-[#1E3624] text-[#2D5E3A] dark:text-[#88C496] border border-[#B8D9C0] dark:border-[#2D5A38]",
+                  isNegative && "bg-[#FCEBE9] dark:bg-[#3D1A16] text-[#A9574F] dark:text-[#F08C80] border border-[#F2A89F] dark:border-[#6B241D]",
+                  !isPositive && !isNegative && "bg-[#EDF2EE] dark:bg-[#30231C] text-[#68736B] dark:text-[#A69E92] border border-[#DDD4C4] dark:border-[#47362E]",
                 )}
               >
                 <DeltaIcon className="size-3" strokeWidth={2.5} />
                 {formatDelta(delta)}
               </span>
-              <span className="text-ink-soft text-[11px]">{deltaLabel}</span>
+              <span className="text-[#68736B] dark:text-[#A69E92] font-medium text-[11px]">{deltaLabel}</span>
             </div>
           ) : (
-            <span className="text-ink-soft text-[11px]">
+            <span className="text-[#68736B] dark:text-[#A69E92] font-medium text-[11px]">
               {supportingText || "Real-time store data"}
             </span>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

@@ -1,9 +1,6 @@
 package com.bhagya.commerce.auth;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.bhagya.commerce.auth.dto.AuthResponse;
 import com.bhagya.commerce.auth.dto.LoginRequest;
@@ -13,55 +10,70 @@ import com.bhagya.commerce.common.error.UnauthorizedException;
 import com.bhagya.commerce.common.security.JwtTokenProvider;
 import com.bhagya.commerce.user.repository.InMemoryUserRepository;
 import com.bhagya.commerce.user.repository.UserRepository;
+import com.bhagya.commerce.user.service.UserService;
+import com.bhagya.commerce.audit.service.AuditService;
+import com.bhagya.commerce.common.redis.CacheService;
+import com.bhagya.commerce.common.security.TokenRevocationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class AuthenticationTest {
 
     private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
     private JwtTokenProvider jwtTokenProvider;
     private AuthService authService;
 
     @BeforeEach
     void setUp() {
         userRepository = new InMemoryUserRepository();
-        passwordEncoder = new BCryptPasswordEncoder();
+        UserService userService = new UserService(userRepository);
         jwtTokenProvider = new JwtTokenProvider(
             "BhagyaCommerceSuperSecureProductionJwtSecretKey2026MustBeAtLeast256BitsLong!",
             86400000L,
             604800000L
         );
-        authService = new AuthService(userRepository, passwordEncoder, jwtTokenProvider);
+        CacheService cacheService = new CacheService(null);
+        TokenRevocationService tokenRevocationService = new TokenRevocationService(cacheService);
+        AuditService auditService = new AuditService();
+        authService = new AuthService(
+            userRepository,
+            userService,
+            jwtTokenProvider,
+            new BCryptPasswordEncoder(4),
+            cacheService,
+            tokenRevocationService,
+            auditService,
+            86400L
+        );
     }
 
     @Test
-    @DisplayName("Valid credentials should authenticate and issue JWT tokens")
+    @DisplayName("Valid phone should authenticate and issue JWT tokens")
     void testValidLogin() {
-        AuthResponse response = authService.login(new LoginRequest("aarav.sharma@example.com", "Password@123"));
+        AuthResponse response = authService.login(new LoginRequest("+919876543210"));
         assertNotNull(response);
         assertNotNull(response.accessToken());
         assertNotNull(response.user());
-        assertEquals("aarav.sharma@example.com", response.user().email());
+        assertEquals("+919876543210", response.user().phone());
     }
 
     @Test
-    @DisplayName("Invalid password should throw UnauthorizedException")
-    void testInvalidPasswordThrowsUnauthorized() {
+    @DisplayName("Unregistered phone should throw UnauthorizedException")
+    void testUnregisteredPhoneThrowsUnauthorized() {
         assertThrows(UnauthorizedException.class, () -> {
-            authService.login(new LoginRequest("aarav.sharma@example.com", "WrongPassword"));
+            authService.login(new LoginRequest("+919999999999"));
         });
     }
 
     @Test
     @DisplayName("OTP verification with valid code should authenticate user")
-    void testOtpVerification() {
+    void testVerifyOtpSuccess() {
+        authService.sendOtp("+919876543210");
         AuthResponse response = authService.verifyOtp(new OtpVerifyRequest("+919876543210", "123456"));
         assertNotNull(response);
         assertNotNull(response.accessToken());
-        assertTrue(response.user().phone().contains("9876543210"));
+        assertEquals("+919876543210", response.user().phone());
     }
 }

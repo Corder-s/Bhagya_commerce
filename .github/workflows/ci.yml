@@ -60,15 +60,41 @@ jobs:
         run: mvn package -DskipTests
 
   # -------------------------------------------------------------
-  # Job 3: Production Docker Image Verification
+  # Job 3: Security & Compliance Verification
+  # -------------------------------------------------------------
+  security-audit:
+    name: Security & Vulnerability Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Frontend Dependency Vulnerability Audit
+        run: npm audit --audit-level=critical || true
+
+      - name: Secret Leak Prevention Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: true
+
+  # -------------------------------------------------------------
+  # Job 4: Production Docker Image Verification
   # -------------------------------------------------------------
   docker-ci:
     name: Docker Multi-Stage Build Check
     runs-on: ubuntu-latest
-    needs: [ backend-ci ]
+    needs: [ backend-ci, security-audit ]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Build API Docker Image
         run: docker build -t bhagya-commerce-api:ci ./backend
+

@@ -106,38 +106,38 @@ export function MerchantDashboardView() {
   return (
     <div className="space-y-8 max-w-6xl mx-auto pb-12">
       {/* 1. Header Greeting & Store Status Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border border-line bg-surface shadow-card">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[#DDD4C4] dark:border-[#47362E] bg-[#FFFCF6] dark:bg-[#261B15] shadow-[0_2px_10px_rgba(50,40,25,0.05)]">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-caption font-semibold text-[#D48024] dark:text-[#F0A349] uppercase tracking-wider">
+            <span className="text-caption font-bold text-[#D9823B] uppercase tracking-wider">
               Merchant Workspace
             </span>
-            <span className="text-ink-soft">·</span>
-            <span className="text-caption text-ink-soft">Store ID: {store?.id || "store_varanasi_silk"}</span>
+            <span className="text-[#C9BDAA]">·</span>
+            <span className="text-caption text-[#68736B] font-medium">Store ID: {store?.id || "store_varanasi_silk"}</span>
           </div>
 
-          <h1 className="font-display text-display-sm font-bold text-ink">
+          <h1 className="font-display text-display-sm font-bold text-[#252923] dark:text-[#F2EEE5]">
             Good morning, {merchantName.split(" ")[0]}
           </h1>
 
-          <div className="flex items-center gap-2 text-caption text-ink-soft pt-0.5">
+          <div className="flex items-center gap-2 text-caption text-[#4F5952] dark:text-[#CFC7BA] pt-0.5 font-medium">
             <span>Managing:</span>
-            <strong className="text-ink">{storeName}</strong>
-            <Badge tone="success" size="sm" className="ml-1">
+            <strong className="text-[#252923] dark:text-[#F2EEE5] font-bold">{storeName}</strong>
+            <span className="ml-1 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#DDEBE1] text-[#2D5E3A] border border-[#B8D9C0]">
               Store Live
-            </Badge>
+            </span>
           </div>
         </div>
 
         <div className="flex items-center gap-2.5 shrink-0">
-          <Button asChild variant="outline" size="md">
+          <Button asChild size="md" className="font-semibold text-[#252923] dark:text-[#F2EEE5] border border-[#DDD4C4] dark:border-[#47362E] bg-[#FFFCF6] dark:bg-[#261B15] hover:bg-[#F0ECE3] dark:hover:bg-[#30231C]">
             <Link href={"/merchant/store" as any}>
-              <StoreIcon className="size-4 text-[#E89535] dark:text-[#F0A349]" />
+              <StoreIcon className="size-4 text-[#D6A23A]" />
               <span>Manage Store</span>
             </Link>
           </Button>
 
-          <Button asChild variant="primary" size="md">
+          <Button asChild size="md" className="bg-[#E0A046] hover:bg-[#CC8930] text-[#241F19] font-bold border-0 shadow-xs">
             <Link href={"/shop" as any}>
               <ExternalLink className="size-4" />
               <span>View Storefront</span>

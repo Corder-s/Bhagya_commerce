@@ -32,6 +32,7 @@ import { useAI } from "@/context/ai-context";
 import { calculateDiscountPercentage, formatPrice } from "@/lib/format";
 import { toast } from "@/lib/toast";
 import { cn } from "@/lib/utils";
+import { ProductReviewsSection } from "@/features/reviews/components/product-reviews-section";
 import type { ProductDetail } from "@/types/catalogue";
 
 export interface ProductDetailClientProps {
@@ -501,100 +502,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           )}
 
           {activeTab === "reviews" && (
-            <div className="space-y-8">
-              {/* Rating Summary Bar */}
-              <div className="grid sm:grid-cols-[14rem_1fr] gap-8 items-center rounded-2xl border border-line bg-surface p-6">
-                <div className="text-center sm:text-left">
-                  <p className="text-display-lg font-bold text-ink leading-none tabular-nums">
-                    {ratingValue.toFixed(1)}
-                  </p>
-                  <div className="flex justify-center sm:justify-start gap-1 text-gold my-2">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star key={s} className="size-4 fill-gold text-gold" />
-                    ))}
-                  </div>
-                  <p className="text-caption text-ink-soft">
-                    Based on {reviewCount} verified reviews
-                  </p>
-                </div>
-
-                {/* Rating bars */}
-                <div className="space-y-2 text-caption">
-                  {[
-                    { stars: 5, pct: 85 },
-                    { stars: 4, pct: 12 },
-                    { stars: 3, pct: 3 },
-                    { stars: 2, pct: 0 },
-                    { stars: 1, pct: 0 },
-                  ].map((row) => (
-                    <div key={row.stars} className="flex items-center gap-3">
-                      <span className="w-6 text-ink-soft tabular-nums font-medium">{row.stars} ★</span>
-                      <div className="h-2 flex-1 rounded-pill bg-line overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-[#E89535] to-[#F0A349]"
-                          style={{ width: `${row.pct}%` }}
-                        />
-                      </div>
-                      <span className="w-8 text-right text-ink-soft tabular-nums">{row.pct}%</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Sample Review Cards */}
-              <div className="grid gap-4 sm:grid-cols-2">
-                {(product.reviewsList && product.reviewsList.length > 0
-                  ? product.reviewsList
-                  : [
-                      {
-                        id: "r1",
-                        author: "Aarav Sharma",
-                        rating: 5,
-                        date: "12 September 2026",
-                        title: "Outstanding artisanal quality",
-                        comment: "The craftsmanship is exceptional. You can feel the natural handmade textures right away.",
-                        verified: true,
-                      },
-                      {
-                        id: "r2",
-                        author: "Meera Iyer",
-                        rating: 5,
-                        date: "28 August 2026",
-                        title: "Truly authentic Indian craft",
-                        comment: "Shipped swiftly with eco-friendly packaging. Delighted to support authentic master makers.",
-                        verified: true,
-                      },
-                    ]
-                ).map((review) => (
-                  <div key={review.id} className="rounded-2xl border border-line bg-surface p-5 space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-gold">
-                        {[1, 2, 3, 4, 5].map((s) => (
-                          <Star
-                            key={s}
-                            className={cn(
-                              "size-3.5",
-                              s <= review.rating ? "fill-gold text-gold" : "text-line-strong",
-                            )}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-caption text-ink-soft">{review.date}</span>
-                    </div>
-                    <h5 className="font-bold text-ink text-body-sm">{review.title}</h5>
-                    <p className="text-body-sm text-ink-soft leading-relaxed">{review.comment}</p>
-                    <div className="flex items-center gap-2 pt-1">
-                      <span className="text-caption font-semibold text-ink">{review.author}</span>
-                      {review.verified && (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-success">
-                          <Check className="size-3" /> Verified Buyer
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ProductReviewsSection
+              productId={product.id}
+              productTitle={product.name}
+            />
           )}
         </div>
       </div>

@@ -14,4 +14,8 @@ public record PaymentSessionRequest(
 
     @NotNull(message = "Amount is required")
     BigDecimal amountInr
-) {}
+) {
+    public PaymentSessionRequest(String orderId, BigDecimal amountInr, PaymentMethod method) {
+        this(orderId, method, amountInr);
+    }
+}

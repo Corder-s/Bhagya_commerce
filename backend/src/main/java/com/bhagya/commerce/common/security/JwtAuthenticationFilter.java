@@ -16,9 +16,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider tokenProvider;
+    private final TokenRevocationService tokenRevocationService;
 
-    public JwtAuthenticationFilter(JwtTokenProvider tokenProvider) {
+    public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, TokenRevocationService tokenRevocationService) {
         this.tokenProvider = tokenProvider;
+        this.tokenRevocationService = tokenRevocationService;
     }
 
     @Override
@@ -30,14 +32,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = resolveToken(request);
 
         if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
-            UserPrincipal principal = tokenProvider.parseToken(token);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                principal,
-                null,
-                principal.getAuthorities()
-            );
-            auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(auth);
+            // Check if token has been revoked
+            if (!tokenRevocationService.isTokenRevoked(token)) {
+                UserPrincipal principal = tokenProvider.parseToken(token);
+                java.util.Date issuedAt = tokenProvider.getIssuedAt(token);
+                java.time.Instant issuedAtInstant = issuedAt != null ? issuedAt.toInstant() : null;
+
+                // Check if user sessions were invalidated after this token was issued
+                if (!tokenRevocationService.isSessionRevokedForUser(principal.getId(), issuedAtInstant)) {
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        principal,
+                        null,
+                        principal.getAuthorities()
+                    );
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
+            }
         }
 
         filterChain.doFilter(request, response);

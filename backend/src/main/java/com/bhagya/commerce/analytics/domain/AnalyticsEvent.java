@@ -51,6 +51,19 @@ public class AnalyticsEvent {
         this.source = source != null ? source : AnalyticsSource.WEB;
     }
 
+    public AnalyticsEvent(
+        String id,
+        String customerId,
+        String userId,
+        String storeId,
+        AnalyticsEventType eventType,
+        AnalyticsSource source,
+        Instant occurredAt,
+        Map<String, Object> properties
+    ) {
+        this(id, eventType, userId, customerId, null, storeId, null, null, null, properties, occurredAt, source);
+    }
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

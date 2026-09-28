@@ -44,6 +44,7 @@ public class PaymentService {
     private final InventoryService inventoryService;
     private final NotificationOrchestrator notificationOrchestrator;
     private final IdempotencyService idempotencyService;
+    private final com.bhagya.commerce.loyalty.service.LoyaltyService loyaltyService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final Map<String, Payment> paymentStorage = new ConcurrentHashMap<>();
@@ -55,13 +56,26 @@ public class PaymentService {
         PaymentProvider paymentProvider,
         InventoryService inventoryService,
         NotificationOrchestrator notificationOrchestrator,
-        IdempotencyService idempotencyService
+        IdempotencyService idempotencyService,
+        @org.springframework.beans.factory.annotation.Autowired(required = false)
+        com.bhagya.commerce.loyalty.service.LoyaltyService loyaltyService
     ) {
         this.orderRepository = orderRepository;
         this.paymentProvider = paymentProvider;
         this.inventoryService = inventoryService;
         this.notificationOrchestrator = notificationOrchestrator;
         this.idempotencyService = idempotencyService;
+        this.loyaltyService = loyaltyService;
+    }
+
+    public PaymentService(
+        OrderRepository orderRepository,
+        PaymentProvider paymentProvider,
+        InventoryService inventoryService,
+        NotificationOrchestrator notificationOrchestrator,
+        IdempotencyService idempotencyService
+    ) {
+        this(orderRepository, paymentProvider, inventoryService, notificationOrchestrator, idempotencyService, null);
     }
 
     public PaymentSessionResponse createPaymentSession(PaymentSessionRequest request, String idempotencyKey) {
@@ -77,9 +91,9 @@ public class PaymentService {
             .orElseThrow(() -> new ResourceNotFoundException("Order not found: " + request.orderId()));
 
         // Authoritative server-side total validation
-        if (order.getTotalAmount().compareTo(request.amountInr()) != 0) {
-            log.warn("[PAYMENT] Amount mismatch: requested={}, orderTotal={}", request.amountInr(), order.getTotalAmount());
-            throw new ValidationException(Map.of("amountInr", "Payment amount must match authoritative order total of ₹" + order.getTotalAmount()));
+        if (order.getTotalInr().compareTo(request.amountInr()) != 0) {
+            log.warn("[PAYMENT] Amount mismatch: requested={}, orderTotal={}", request.amountInr(), order.getTotalInr());
+            throw new ValidationException(Map.of("amountInr", "Payment amount must match authoritative order total of ₹" + order.getTotalInr()));
         }
 
         String paymentId = "pay_" + UUID.randomUUID().toString().substring(0, 10);
@@ -134,15 +148,25 @@ public class PaymentService {
         }
 
         // Trigger asynchronous multi-channel notification
-        String email = order.getShippingAddress() != null ? order.getShippingAddress().getEmail() : "customer@bhagya.in";
+        String email = order.getCustomerEmail() != null ? order.getCustomerEmail() : "customer@bhagya.in";
+        String phone = order.getShippingAddress() != null && order.getShippingAddress().getPhone() != null ? order.getShippingAddress().getPhone() : "+91 98765 43210";
         notificationOrchestrator.handleOrderConfirmed(
             order.getUserId(),
             order.getCustomerName(),
             email,
-            order.getCustomerPhone(),
+            phone,
             order.getOrderNumber(),
-            order.getTotalAmount()
+            order.getTotalInr()
         );
+
+        // Award server-authoritative loyalty points & qualify referral
+        if (loyaltyService != null) {
+            try {
+                loyaltyService.awardOrderPoints(order);
+            } catch (Exception e) {
+                log.warn("[LOYALTY] Could not award loyalty points for order {}: {}", order.getId(), e.getMessage());
+            }
+        }
 
         return toResponse(payment);
     }
@@ -232,6 +256,13 @@ public class PaymentService {
             order.setPaymentStatus("REFUNDED");
             orderRepository.save(order);
             notificationOrchestrator.handleRefundCompleted(order.getUserId(), order.getOrderNumber(), request.amountInr());
+            if (loyaltyService != null) {
+                try {
+                    loyaltyService.handleOrderRefund(order, request.amountInr(), response.id());
+                } catch (Exception e) {
+                    log.warn("[LOYALTY] Could not adjust points on refund: {}", e.getMessage());
+                }
+            }
         });
 
         return response;

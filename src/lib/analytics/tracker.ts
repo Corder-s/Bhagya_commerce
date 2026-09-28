@@ -98,6 +98,18 @@ export const BhagyaTracker = {
     });
   },
 
+  trackNoResults: (query: string) => {
+    trackEvent('SEARCH_NO_RESULTS', {
+      properties: { query },
+    });
+  },
+
+  trackFilterApplied: (filterType: string, value: string) => {
+    trackEvent('SEARCH_FILTER_APPLIED', {
+      properties: { filterType, value },
+    });
+  },
+
   trackCheckoutStarted: (cartId: string, total: number, storeId?: string) => {
     trackEvent('CHECKOUT_STARTED', {
       storeId,
@@ -116,3 +128,6 @@ export const BhagyaTracker = {
     });
   },
 };
+
+export const analyticsTracker = BhagyaTracker;
+

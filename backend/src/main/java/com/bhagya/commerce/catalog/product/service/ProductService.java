@@ -104,9 +104,17 @@ public class ProductService {
     }
 
     public List<ProductResponse> getStoreProducts(String storeId) {
-        return productRepository.findByStoreId(storeId).stream()
+        String cacheKey = "store_products:" + storeId;
+        Optional<com.bhagya.commerce.catalog.product.dto.ProductListWrapper> cached = cacheService.get(cacheKey, com.bhagya.commerce.catalog.product.dto.ProductListWrapper.class);
+        if (cached.isPresent()) {
+            return cached.get().products();
+        }
+
+        List<ProductResponse> list = productRepository.findByStoreId(storeId).stream()
             .map(this::toResponse)
             .toList();
+        cacheService.setWithJitter(cacheKey, new com.bhagya.commerce.catalog.product.dto.ProductListWrapper(list), Duration.ofHours(1), 0.2);
+        return list;
     }
 
     public ProductResponse createProduct(String storeId, String userId, ProductCreateRequest request) {
@@ -138,7 +146,8 @@ public class ProductService {
 
         productRepository.save(product);
 
-        // Invalidate catalog search caches
+        // Invalidate store-specific and search caches
+        cacheService.delete("store_products:" + storeId);
         cacheService.deleteByPrefix("catalog:search");
 
         return toResponse(product);
@@ -175,6 +184,7 @@ public class ProductService {
         // Explicit cache invalidation
         cacheService.delete("product:" + product.getId());
         cacheService.delete("product:" + product.getSlug());
+        cacheService.delete("store_products:" + storeId);
         cacheService.deleteByPrefix("catalog:search");
 
         return toResponse(product);
@@ -195,6 +205,7 @@ public class ProductService {
         // Invalidate caches
         cacheService.delete("product:" + product.getId());
         cacheService.delete("product:" + product.getSlug());
+        cacheService.delete("store_products:" + storeId);
         cacheService.deleteByPrefix("catalog:search");
     }
 

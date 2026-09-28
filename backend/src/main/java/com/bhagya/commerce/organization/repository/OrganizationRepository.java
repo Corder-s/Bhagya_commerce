@@ -5,6 +5,7 @@ import com.bhagya.commerce.organization.domain.OrganizationMember;
 import com.bhagya.commerce.organization.domain.OrganizationRole;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Repository;
@@ -57,6 +58,14 @@ public class OrganizationRepository {
     public List<OrganizationMember> findMembersByOrgId(String orgId) {
         return memberStorage.values().stream()
             .filter(m -> m.getOrganizationId().equals(orgId))
+            .toList();
+    }
+
+    public List<Organization> findByUserId(String userId) {
+        return memberStorage.values().stream()
+            .filter(m -> m.getUserId().equals(userId))
+            .map(m -> orgStorage.get(m.getOrganizationId()))
+            .filter(Objects::nonNull)
             .toList();
     }
 

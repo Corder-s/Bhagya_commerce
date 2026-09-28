@@ -37,6 +37,22 @@ public class UserRepository {
         return id != null ? Optional.ofNullable(userStorage.get(id)) : Optional.empty();
     }
 
+    public Optional<User> findByEmail(String email) {
+        if (email == null) return Optional.empty();
+        String cleanEmail = email.trim().toLowerCase();
+        return userStorage.values().stream()
+            .filter(u -> u.getEmail() != null && u.getEmail().trim().equalsIgnoreCase(cleanEmail))
+            .findFirst();
+    }
+
+    public Optional<User> findByEmailOrPhone(String emailOrPhone) {
+        if (emailOrPhone == null || emailOrPhone.isBlank()) return Optional.empty();
+        String clean = emailOrPhone.trim();
+        Optional<User> byPhone = findByPhone(clean);
+        if (byPhone.isPresent()) return byPhone;
+        return findByEmail(clean);
+    }
+
     public User save(User user) {
         if (user.getId() == null) {
             user.setId("usr_" + System.currentTimeMillis());

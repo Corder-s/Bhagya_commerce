@@ -846,5 +846,191 @@ export const marketingApiService = {
   },
 };
 
+// -------------------------------------------------------------
+// STEP 26: ADVANCED COMMERCE INTELLIGENCE TYPES & API SERVICE
+// -------------------------------------------------------------
+
+export interface BackendComparisonResult {
+  currentValue: number;
+  baselineValue: number;
+  absoluteChange: number;
+  percentageChange: number | null;
+  trendDirection: 'UP' | 'DOWN' | 'FLAT' | 'NEW_ACTIVITY';
+  isNewActivity: boolean;
+  formattedChangeLabel: string;
+}
+
+export interface BackendCanonicalMetric {
+  metricKey: string;
+  displayName: string;
+  description: string;
+  value: number;
+  unit: string;
+  period: string;
+  comparison: BackendComparisonResult;
+  storeId: string;
+  calculationFormula: string;
+  calculatedAt: string;
+}
+
+export interface BackendIntelligenceAlert {
+  id: string;
+  storeId: string;
+  alertType: string;
+  severity: 'INFO' | 'WARNING' | 'CRITICAL';
+  metricName: string;
+  currentValue: number;
+  baselineValue: number;
+  title: string;
+  message: string;
+  status: 'NEW' | 'ACKNOWLEDGED' | 'RESOLVED' | 'DISMISSED';
+  detectedAt: string;
+  acknowledgedAt?: string;
+  resolvedAt?: string;
+  metadata?: Record<string, any>;
+}
+
+export interface BackendIntelligenceInsight {
+  id: string;
+  storeId: string;
+  insightType: string;
+  severity: string;
+  title: string;
+  summary: string;
+  evidence: string;
+  metricName: string;
+  suggestedAction: string;
+  detectedAt: string;
+  expiresAt?: string;
+  status: string;
+}
+
+export interface BackendOpportunitySignal {
+  id: string;
+  type: string;
+  severity: string;
+  title: string;
+  signalDescription: string;
+  evidence: string;
+  suggestedAction: string;
+  entityType: string;
+  entityId: string;
+  entityName: string;
+  detectedAt: string;
+}
+
+export interface BackendForecastDataPoint {
+  date: string;
+  projectedValue: number;
+  lowerBand: number;
+  upperBand: number;
+}
+
+export interface BackendForecast {
+  storeId: string;
+  metricKey: string;
+  metricDisplayName: string;
+  horizonDays: number;
+  forecastValue: number;
+  lowerBound: number;
+  upperBound: number;
+  method: string;
+  trainingWindowDays: number;
+  meanAbsoluteError: number;
+  confidenceIntervalLabel: string;
+  limitationsNotice: string;
+  trajectory: BackendForecastDataPoint[];
+  generatedAt: string;
+}
+
+export interface BackendCustomerSegmentItem {
+  segmentKey: string;
+  displayName: string;
+  patronCount: number;
+  percentageOfBase: number;
+  totalSpendInr: number;
+  description: string;
+  actionRecommendation: string;
+}
+
+export interface BackendRfmProfile {
+  customerId: string;
+  customerNameMasked: string;
+  recencyDays: number;
+  frequencyOrders: number;
+  monetaryTotalInr: number;
+  rfmScore: string;
+  assignedSegment: string;
+}
+
+export interface BackendCustomerSegmentation {
+  storeId: string;
+  totalPatrons: number;
+  newPatrons: number;
+  returningPatrons: number;
+  repeatRate: number;
+  averageLifetimeValueInr: number;
+  segments: BackendCustomerSegmentItem[];
+  rfmProfiles: BackendRfmProfile[];
+  cohorts: Array<Record<string, any>>;
+  privacyNote: string;
+}
+
+export interface BackendCommerceOverview {
+  storeId: string;
+  storeName: string;
+  period: string;
+  dateRangeLabel: string;
+  kpiMetrics: BackendCanonicalMetric[];
+  activeAlerts: BackendIntelligenceAlert[];
+  topInsights: BackendIntelligenceInsight[];
+  opportunitySignals: BackendOpportunitySignal[];
+  primaryRevenueForecast: BackendForecast;
+  salesSummary: BackendSalesSummary;
+  orderSummary: BackendOrderSummary;
+  customerSummary: BackendCustomerSummary;
+  topProducts: BackendProductPerformance[];
+  salesTrend: BackendSalesTrend;
+  dataFreshnessLabel: string;
+}
+
+export const intelligenceApiService = {
+  getOverview: async (period = 'DAYS_30') => {
+    return await apiClient.get<BackendCommerceOverview>(`/api/v1/merchant/intelligence?period=${period}`);
+  },
+  getAlerts: async (status?: string) => {
+    const url = status ? `/api/v1/merchant/intelligence/alerts?status=${status}` : '/api/v1/merchant/intelligence/alerts';
+    return await apiClient.get<BackendIntelligenceAlert[]>(url);
+  },
+  acknowledgeAlert: async (id: string) => {
+    return await apiClient.post<BackendIntelligenceAlert>(`/api/v1/merchant/intelligence/alerts/${id}/acknowledge`);
+  },
+  dismissAlert: async (id: string) => {
+    return await apiClient.post<BackendIntelligenceAlert>(`/api/v1/merchant/intelligence/alerts/${id}/dismiss`);
+  },
+  getInsights: async () => {
+    return await apiClient.get<BackendIntelligenceInsight[]>('/api/v1/merchant/intelligence/insights');
+  },
+  getOpportunities: async () => {
+    return await apiClient.get<BackendOpportunitySignal[]>('/api/v1/merchant/intelligence/opportunities');
+  },
+  getForecast: async (horizonDays = 14) => {
+    return await apiClient.get<BackendForecast>(`/api/v1/merchant/intelligence/forecasts?horizonDays=${horizonDays}`);
+  },
+  getSegments: async () => {
+    return await apiClient.get<BackendCustomerSegmentation>('/api/v1/merchant/intelligence/segments');
+  },
+  getInventorySignals: async () => {
+    return await apiClient.get<Record<string, any>>('/api/v1/merchant/intelligence/inventory');
+  },
+  getTrends: async (period = 'DAYS_30') => {
+    return await apiClient.get<Record<string, any>>(`/api/v1/merchant/intelligence/trends?period=${period}`);
+  },
+  getCrossDomain: async () => {
+    return await apiClient.get<Record<string, any>>('/api/v1/merchant/intelligence/cross-domain');
+  },
+};
+
+
 
 

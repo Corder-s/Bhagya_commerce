@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Instant;
 import com.bhagya.commerce.auth.dto.AuthResponse;
 import com.bhagya.commerce.auth.dto.LoginRequest;
 import com.bhagya.commerce.auth.service.AuthService;
@@ -114,14 +115,38 @@ public class Step13DryRunExecutionTest {
             new MockSmsProvider()
         );
 
+        var userRepoForAuth = new InMemoryUserRepository();
         authService = new AuthService(
-            new InMemoryUserRepository(),
-            new BCryptPasswordEncoder(),
-            new JwtTokenProvider("BhagyaCommerceSuperSecureProductionJwtSecretKey2026MustBeAtLeast256BitsLong!", 86400000L, 604800000L)
+            userRepoForAuth,
+            new com.bhagya.commerce.user.service.UserService(userRepoForAuth),
+            new JwtTokenProvider("BhagyaCommerceSuperSecureProductionJwtSecretKey2026MustBeAtLeast256BitsLong!", 86400000L, 604800000L),
+            86400L
         );
 
         InMemoryOrganizationRepository orgRepo = new InMemoryOrganizationRepository();
         InMemoryStoreRepository storeRepo = new InMemoryStoreRepository();
+
+        // Seed test merchant organization and store
+        orgRepo.save(new com.bhagya.commerce.organization.domain.Organization("org_1", "Test Org", "Test Legal", "PAN123", "GST123"));
+        orgRepo.saveMember(new com.bhagya.commerce.organization.domain.OrganizationMember("mem_1", "org_1", "usr_merch_1", com.bhagya.commerce.organization.domain.OrganizationRole.STORE_OWNER));
+        com.bhagya.commerce.store.domain.Store s1 = new com.bhagya.commerce.store.domain.Store("store_1", "org_1", "Store One", "store-1");
+        storeRepo.save(s1);
+
+        // Seed ord_101 for payment and isolation tests
+        Order o101 = new Order();
+        o101.setId("ord_101");
+        o101.setOrderNumber("ORD-101");
+        o101.setUserId("usr_cust_1");
+        o101.setCustomerName("Priya Sharma");
+        o101.setCustomerEmail("priya@example.com");
+        o101.setStoreId("store_1");
+        o101.setTotalInr(BigDecimal.valueOf(12499));
+        o101.setStatus(OrderStatus.CONFIRMED);
+        o101.setPaymentStatus("PENDING");
+        o101.setCreatedAt(Instant.now());
+        o101.setUpdatedAt(Instant.now());
+        orderRepository.save(o101);
+
         StoreService storeService = new StoreService(storeRepo, orgRepo);
         productService = new ProductService(new InMemoryProductRepository(), storeRepo, orgRepo, cacheService);
         OrderService orderService = new OrderService(orderRepository, inventoryService);
@@ -144,7 +169,7 @@ public class Step13DryRunExecutionTest {
 
         // 3. Verify Payment with HMAC-SHA256 signature
         String validSig = PaymentSignatureUtil.calculateHmacSha256(session.gatewayOrderId() + "|pay_rzp_success_1", keySecret);
-        PaymentVerifyRequest verifyReq = new PaymentVerifyRequest(session.paymentId(), "pay_rzp_success_1", session.gatewayOrderId(), validSig);
+        PaymentVerifyRequest verifyReq = new PaymentVerifyRequest(session.paymentId(), session.gatewayOrderId(), "pay_rzp_success_1", validSig);
         PaymentResponse response = paymentService.verifyPayment(verifyReq);
 
         assertEquals(PaymentStatus.CAPTURED, response.status());
@@ -168,7 +193,7 @@ public class Step13DryRunExecutionTest {
         PaymentSessionResponse session = paymentService.createPaymentSession(sessionReq, "idem_session_failed");
 
         // Attempt verification with forged signature
-        PaymentVerifyRequest verifyReq = new PaymentVerifyRequest(session.paymentId(), "pay_rzp_fail_1", session.gatewayOrderId(), "forged_invalid_signature");
+        PaymentVerifyRequest verifyReq = new PaymentVerifyRequest(session.paymentId(), session.gatewayOrderId(), "pay_rzp_fail_1", "forged_invalid_signature");
         assertThrows(UnauthorizedException.class, () -> paymentService.verifyPayment(verifyReq));
 
         // Payment status must be FAILED, order must NOT be marked PAID
@@ -231,7 +256,7 @@ public class Step13DryRunExecutionTest {
         PaymentSessionRequest sessionReq = new PaymentSessionRequest(order.getId(), BigDecimal.valueOf(12499), PaymentMethod.UPI);
         PaymentSessionResponse session = paymentService.createPaymentSession(sessionReq, "idem_session_refund");
         String validSig = PaymentSignatureUtil.calculateHmacSha256(session.gatewayOrderId() + "|pay_rzp_ref_1", keySecret);
-        paymentService.verifyPayment(new PaymentVerifyRequest(session.paymentId(), "pay_rzp_ref_1", session.gatewayOrderId(), validSig));
+        paymentService.verifyPayment(new PaymentVerifyRequest(session.paymentId(), session.gatewayOrderId(), "pay_rzp_ref_1", validSig));
 
         // Execute refund
         RefundRequest refundReq = new RefundRequest(BigDecimal.valueOf(12499), "Customer cancelled handloom order");

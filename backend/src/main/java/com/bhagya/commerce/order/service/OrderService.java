@@ -33,6 +33,22 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final StoreRepository storeRepository;
     private final UserRepository userRepository;
+    private final com.bhagya.commerce.loyalty.service.LoyaltyService loyaltyService;
+
+    public OrderService(
+        OrderRepository orderRepository,
+        ProductRepository productRepository,
+        StoreRepository storeRepository,
+        UserRepository userRepository,
+        @org.springframework.beans.factory.annotation.Autowired(required = false)
+        com.bhagya.commerce.loyalty.service.LoyaltyService loyaltyService
+    ) {
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.storeRepository = storeRepository;
+        this.userRepository = userRepository;
+        this.loyaltyService = loyaltyService;
+    }
 
     public OrderService(
         OrderRepository orderRepository,
@@ -40,10 +56,14 @@ public class OrderService {
         StoreRepository storeRepository,
         UserRepository userRepository
     ) {
-        this.orderRepository = orderRepository;
-        this.productRepository = productRepository;
-        this.storeRepository = storeRepository;
-        this.userRepository = userRepository;
+        this(orderRepository, productRepository, storeRepository, userRepository, null);
+    }
+
+    public OrderService(
+        OrderRepository orderRepository,
+        com.bhagya.commerce.inventory.service.InventoryService inventoryService
+    ) {
+        this(orderRepository, new ProductRepository(), new StoreRepository(), new com.bhagya.commerce.user.repository.UserRepository(), null);
     }
 
     public List<OrderResponse> getCustomerOrders(String userId) {
@@ -73,6 +93,10 @@ public class OrderService {
         }
 
         return toResponse(order);
+    }
+
+    public OrderResponse getOrderById(String orderIdOrNumber, String userId) {
+        return getCustomerOrderById(orderIdOrNumber, userId);
     }
 
     public OrderResponse createOrder(String userId, OrderCreateRequest request) {
@@ -176,6 +200,15 @@ public class OrderService {
         ));
 
         orderRepository.save(order);
+
+        if (loyaltyService != null) {
+            try {
+                loyaltyService.handleOrderCancellation(order, reason);
+            } catch (Exception e) {
+                // Log and continue
+            }
+        }
+
         return toResponse(order);
     }
 

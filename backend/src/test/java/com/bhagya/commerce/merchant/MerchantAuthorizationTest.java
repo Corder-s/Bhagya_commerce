@@ -34,6 +34,13 @@ public class MerchantAuthorizationTest {
     void setUp() {
         organizationRepository = new InMemoryOrganizationRepository();
         storeRepository = new InMemoryStoreRepository();
+
+        organizationRepository.save(new com.bhagya.commerce.organization.domain.Organization("org_1", "Test Org", "Test Legal", "PAN123", "GST123"));
+        organizationRepository.saveMember(new com.bhagya.commerce.organization.domain.OrganizationMember("mem_1", "org_1", "usr_merch_1", com.bhagya.commerce.organization.domain.OrganizationRole.STORE_OWNER));
+
+        com.bhagya.commerce.store.domain.Store s1 = new com.bhagya.commerce.store.domain.Store("store_1", "org_1", "Store One", "store-1");
+        storeRepository.save(s1);
+
         storeService = new StoreService(storeRepository, organizationRepository);
         com.bhagya.commerce.common.redis.CacheService cacheService = new com.bhagya.commerce.common.redis.CacheService(null);
         productService = new ProductService(new InMemoryProductRepository(), storeRepository, organizationRepository, cacheService);

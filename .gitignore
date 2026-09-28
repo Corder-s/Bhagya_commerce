@@ -47,3 +47,10 @@ tsconfig.tsbuildinfo
 .env
 .env.local
 .env*.local
+
+# maven / java
+target/
+**/target/
+*.class
+.mvn/
+

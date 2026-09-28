@@ -33,14 +33,14 @@ public class RazorpaySignatureTest {
         String payload = orderId + "|" + paymentId;
         String validSignature = PaymentSignatureUtil.calculateHmacSha256(payload, testSecret);
 
-        PaymentVerifyRequest request = new PaymentVerifyRequest("pay_internal_1", paymentId, orderId, validSignature);
+        PaymentVerifyRequest request = new PaymentVerifyRequest("pay_internal_1", orderId, paymentId, validSignature);
         assertTrue(provider.verifySignature(request));
     }
 
     @Test
     @DisplayName("Should reject tampered Razorpay signature")
     void testTamperedSignatureRejected() {
-        PaymentVerifyRequest request = new PaymentVerifyRequest("pay_internal_1", "pay_rzp_112233", "order_rzp_994821", "invalid_forged_signature");
+        PaymentVerifyRequest request = new PaymentVerifyRequest("pay_internal_1", "order_rzp_994821", "pay_rzp_112233", "invalid_forged_signature");
         assertFalse(provider.verifySignature(request));
     }
 

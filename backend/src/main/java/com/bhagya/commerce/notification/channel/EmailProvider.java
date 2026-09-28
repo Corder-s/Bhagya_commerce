@@ -5,4 +5,8 @@ import java.util.Map;
 public interface EmailProvider {
     String getProviderName();
     boolean sendEmail(String toEmail, String subject, String htmlBody, Map<String, Object> metadata);
+
+    default boolean sendEmail(String toEmail, String subject, String htmlBody) {
+        return sendEmail(toEmail, subject, htmlBody, Map.of());
+    }
 }

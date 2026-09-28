@@ -82,36 +82,36 @@ public class MerchantService {
 
     public MerchantDashboardOverviewResponse getDashboardOverview(String userId) {
         Store store = getStoreForUser(userId);
-        List<ProductResponse> products = productService.getProductsByStore(store.getId());
+        List<ProductResponse> products = productService.getStoreProducts(store.getId());
         List<OrderResponse> orders = orderService.getOrdersForStore(store.getId());
 
         BigDecimal totalSales = orders.stream()
-            .map(OrderResponse::totalAmount)
+            .map(OrderResponse::totalInr)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         BigDecimal todaySales = orders.stream()
-            .filter(o -> o.createdAt().isAfter(Instant.now().minus(24, ChronoUnit.HOURS)))
-            .map(OrderResponse::totalAmount)
+            .filter(o -> o.createdAt() != null && o.createdAt().isAfter(Instant.now().minus(24, ChronoUnit.HOURS)))
+            .map(OrderResponse::totalInr)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         int pendingOrders = (int) orders.stream()
-            .filter(o -> "PROCESSING".equals(o.status()) || "PENDING".equals(o.status()) || "CONFIRMED".equals(o.status()))
+            .filter(o -> o.status() != null && ("PROCESSING".equals(o.status().name()) || "PENDING".equals(o.status().name()) || "CONFIRMED".equals(o.status().name())))
             .count();
 
         List<Map<String, Object>> recentOrders = orders.stream().limit(5).map(o -> Map.of(
-            "orderId", (Object) o.id(),
-            "orderNumber", o.orderNumber(),
-            "customerName", o.customerName(),
-            "total", o.totalAmount(),
-            "status", o.status(),
-            "itemsCount", o.items().size(),
-            "createdAt", o.createdAt().toString()
+            "orderId", (Object) (o.id() != null ? o.id() : ""),
+            "orderNumber", o.orderNumber() != null ? o.orderNumber() : "",
+            "customerName", o.customerName() != null ? o.customerName() : "",
+            "total", o.totalInr() != null ? o.totalInr() : BigDecimal.ZERO,
+            "status", o.status() != null ? o.status().name() : "PENDING",
+            "itemsCount", o.items() != null ? o.items().size() : 0,
+            "createdAt", o.createdAt() != null ? o.createdAt().toString() : Instant.now().toString()
         )).toList();
 
         List<Map<String, Object>> topSelling = products.stream().limit(3).map(p -> Map.of(
             "id", (Object) p.id(),
             "name", p.name(),
-            "price", p.price(),
+            "price", p.priceInr(),
             "unitsSold", 42
         )).toList();
 
@@ -142,15 +142,15 @@ public class MerchantService {
 
     public List<ProductResponse> getMerchantProducts(String userId) {
         Store store = getStoreForUser(userId);
-        return productService.getProductsByStore(store.getId());
+        return productService.getStoreProducts(store.getId());
     }
 
     public List<MerchantInventoryItemResponse> getMerchantInventory(String userId) {
         Store store = getStoreForUser(userId);
-        List<ProductResponse> products = productService.getProductsByStore(store.getId());
+        List<ProductResponse> products = productService.getStoreProducts(store.getId());
 
         return products.stream().map(p -> {
-            int stock = p.inventorySummary() != null ? p.inventorySummary().totalStock() : 25;
+            int stock = p.stockQuantity();
             int reserved = 2;
             int available = Math.max(0, stock - reserved);
             String status = available <= 0 ? "OUT_OF_STOCK" : (available <= 5 ? "LOW_STOCK" : "IN_STOCK");
@@ -163,7 +163,7 @@ public class MerchantService {
                 reserved,
                 available,
                 5,
-                p.price(),
+                p.priceInr(),
                 status
             );
         }).toList();
@@ -209,12 +209,12 @@ public class MerchantService {
 
     public StoreResponse getMerchantStore(String userId) {
         Store store = getStoreForUser(userId);
-        return StoreResponse.fromDomain(store);
+        return storeService.toResponse(store);
     }
 
     public StoreResponse updateMerchantStore(String userId, StoreUpdateRequest request) {
         Store store = getStoreForUser(userId);
-        return storeService.updateStore(store.getId(), request, userId);
+        return storeService.updateStore(store.getId(), userId, request);
     }
 
     public MerchantOnboardingResponse getOnboardingStatus(String userId) {
@@ -250,12 +250,12 @@ public class MerchantService {
             org = new Organization(
                 "org_" + UUID.randomUUID().toString().substring(0, 8),
                 request.businessName(),
-                request.businessName().toLowerCase().replaceAll("[^a-z0-9]", "-") + "-org",
-                userId,
-                Instant.now()
+                request.businessName(),
+                "ABCDE1234F",
+                "09ABCDE1234F1Z5"
             );
-            org.getMembers().add(new OrganizationMember("mem_" + UUID.randomUUID().toString().substring(0, 8), org.getId(), userId, OrganizationRole.OWNER, Instant.now()));
             organizationRepository.save(org);
+            organizationRepository.saveMember(new OrganizationMember("mem_" + UUID.randomUUID().toString().substring(0, 8), org.getId(), userId, OrganizationRole.STORE_OWNER));
         } else {
             org = orgs.get(0);
         }
@@ -267,13 +267,12 @@ public class MerchantService {
                 org.getId(),
                 request.businessName(),
                 request.businessName().toLowerCase().replaceAll("[^a-z0-9]", "-"),
-                "Authentic handcrafted GI-certified merchandise from " + request.businessName(),
-                "Varanasi, Uttar Pradesh",
-                "+91 98765 00000",
-                "support@" + org.getSlug() + ".bhagya.com",
-                StoreStatus.ACTIVE,
-                Instant.now()
+                "Handloom & Textiles"
             );
+            store.setStory("Authentic handcrafted GI-certified merchandise from " + request.businessName());
+            store.setContactPhone("+91 98765 00000");
+            store.setContactEmail("support@" + org.getId() + ".bhagya.com");
+            store.setStatus(StoreStatus.ACTIVE);
             storeRepository.save(store);
         }
 

@@ -2,6 +2,8 @@ package com.bhagya.commerce.store.repository;
 
 import com.bhagya.commerce.store.domain.Store;
 import com.bhagya.commerce.store.domain.StoreStatus;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -51,5 +53,15 @@ public class StoreRepository {
 
     public boolean existsBySlug(String slug) {
         return slugIndex.containsKey(slug);
+    }
+
+    public List<Store> findByOrganizationId(String orgId) {
+        return storeStorage.values().stream()
+            .filter(s -> s.getOrganizationId() != null && s.getOrganizationId().equals(orgId))
+            .toList();
+    }
+
+    public List<Store> findAll() {
+        return new ArrayList<>(storeStorage.values());
     }
 }

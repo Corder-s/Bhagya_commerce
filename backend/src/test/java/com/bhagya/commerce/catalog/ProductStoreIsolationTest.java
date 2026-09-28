@@ -25,6 +25,13 @@ public class ProductStoreIsolationTest {
     void setUp() {
         InMemoryStoreRepository storeRepo = new InMemoryStoreRepository();
         InMemoryOrganizationRepository orgRepo = new InMemoryOrganizationRepository();
+
+        orgRepo.save(new com.bhagya.commerce.organization.domain.Organization("org_1", "Test Org", "Test Legal", "PAN123", "GST123"));
+        orgRepo.saveMember(new com.bhagya.commerce.organization.domain.OrganizationMember("mem_1", "org_1", "usr_merch_1", com.bhagya.commerce.organization.domain.OrganizationRole.STORE_OWNER));
+
+        com.bhagya.commerce.store.domain.Store s1 = new com.bhagya.commerce.store.domain.Store("store_1", "org_1", "Store One", "store-1");
+        storeRepo.save(s1);
+
         com.bhagya.commerce.common.redis.CacheService cacheService = new com.bhagya.commerce.common.redis.CacheService(null);
         productService = new ProductService(
             new InMemoryProductRepository(),
@@ -39,19 +46,24 @@ public class ProductStoreIsolationTest {
     void testMerchantCanCreateProductForOwnStore() {
         ProductCreateRequest request = new ProductCreateRequest(
             "GI Handcrafted Chanderi Silk Dupatta",
-            "Chanderi silk with golden zari borders",
             "cat_1",
-            "Chanderi Heritage",
+            "Sarees",
+            "gi-chanderi-silk-dupatta",
+            "Authentic handloom",
+            "Chanderi silk with golden zari borders",
             BigDecimal.valueOf(3499),
             BigDecimal.valueOf(4999),
+            30,
+            "SKU-CHAN-1",
+            com.bhagya.commerce.catalog.product.domain.ProductStatus.PUBLISHED,
+            "https://cdn.bhagya.commerce/products/chanderi.jpg",
             List.of("GI-Certified", "Silk"),
-            List.of(),
-            List.of(),
-            30
+            "Ships in 24 hours",
+            "Dry clean only"
         );
 
         assertDoesNotThrow(() -> {
-            productService.createProduct("store_1", request, "usr_merch_1");
+            productService.createProduct("store_1", "usr_merch_1", request);
         });
     }
 
@@ -60,20 +72,25 @@ public class ProductStoreIsolationTest {
     void testMerchantCannotCreateProductForForeignStore() {
         ProductCreateRequest request = new ProductCreateRequest(
             "Counterfeit Silk Saree",
-            "Fake product",
             "cat_1",
-            "FakeBrand",
+            "Sarees",
+            "counterfeit-silk-saree",
+            "Fake product",
+            "Fake description",
             BigDecimal.valueOf(1000),
             BigDecimal.valueOf(2000),
+            10,
+            "SKU-FAKE-1",
+            com.bhagya.commerce.catalog.product.domain.ProductStatus.PUBLISHED,
+            null,
             List.of(),
-            List.of(),
-            List.of(),
-            10
+            "No shipping info",
+            "None"
         );
 
         // usr_other_user does not own store_1
         assertThrows(ForbiddenException.class, () -> {
-            productService.createProduct("store_1", request, "usr_other_user");
+            productService.createProduct("store_1", "usr_other_user", request);
         });
     }
 }

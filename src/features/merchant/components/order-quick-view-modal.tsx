@@ -5,6 +5,7 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Modal, ModalContent } from "@/components/ui/modal";
+import { FulfillmentPanel } from "@/features/merchant/components/fulfillment-panel";
 import type { MerchantOrder } from "@/features/merchant/dashboard-types";
 import { OrderStatusBadge } from "@/features/orders/components/order-status-badge";
 import { formatPrice } from "@/lib/format";
@@ -13,10 +14,12 @@ export function OrderQuickViewModal({
   order,
   isOpen,
   onClose,
+  onOrderUpdated,
 }: {
   order: MerchantOrder | null;
   isOpen: boolean;
   onClose: () => void;
+  onOrderUpdated?: () => void;
 }) {
   if (!order) return null;
 
@@ -29,9 +32,9 @@ export function OrderQuickViewModal({
           month: "short",
           year: "numeric",
         })}`}
-        size="md"
+        size="lg"
       >
-        <div className="space-y-5 pt-2">
+        <div className="space-y-5 pt-2 max-h-[80vh] overflow-y-auto pr-1">
           {/* Status & Total Header */}
           <div className="flex items-center justify-between p-3.5 rounded-xl bg-surface-subtle border border-line">
             <div>
@@ -48,6 +51,14 @@ export function OrderQuickViewModal({
               </span>
             </div>
           </div>
+
+          {/* Fulfillment & Logistics Panel (Step 18) */}
+          <FulfillmentPanel
+            order={order}
+            onOrderUpdated={() => {
+              onOrderUpdated?.();
+            }}
+          />
 
           {/* Customer & Shipping Information */}
           <div className="p-3.5 rounded-xl border border-line bg-surface space-y-2 text-caption">

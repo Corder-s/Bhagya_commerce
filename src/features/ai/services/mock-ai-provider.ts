@@ -154,10 +154,26 @@ export class MockAIProvider {
         responseContent =
           "**Bhagya Assurance & Policies:**\n\n- **7-Day Doorstep Returns:** You can return any eligible handcrafted item within 7 days of delivery.\n- **Free Shipping:** Free standard delivery applies on all orders above ₹1,499 across India.\n- **Artisan Direct:** Every piece is sourced directly from certified clusters, guaranteeing genuine handmade authenticity.\n- **Secure Payments:** 256-bit encrypted UPI, Cards, NetBanking, and Cash on Delivery.";
       }
-      // 5. Customer: General Assistant
+      // 5. Customer: Review & Rating Inquiries
+      else if (query.includes("review") || query.includes("rating") || query.includes("what do customers say")) {
+        toolCall = {
+          id: `tc_${Date.now()}`,
+          name: "getProductReviewSummary",
+          status: "running",
+          input: { productId: "p_silk_throw" },
+        };
+        onToolCall?.(toolCall);
+        await new Promise((r) => setTimeout(r, 350));
+        toolCall.status = "completed";
+        onToolCall?.(toolCall);
+
+        responseContent =
+          "Based on **verified customer purchases**, this collection holds an outstanding **4.8 ★ average rating** across published reviews. Buyers frequently praise the authentic handloom texture, breathable pure Chanderi silk weave, and prompt eco-friendly packaging.";
+      }
+      // 6. Customer: General Assistant
       else {
         responseContent =
-          "Namaste! I am your Bhagya Shopping Assistant. I can help you find authentic handcrafted sarees, brassware, wellness items, track existing orders, or explain craft techniques. What would you like to explore?";
+          "Namaste! I am your Bhagya Shopping Assistant. I can help you find authentic handcrafted sarees, brassware, wellness items, check customer reviews, track existing orders, or explain craft techniques. What would you like to explore?";
       }
     } else {
       // MERCHANT AI
@@ -269,10 +285,26 @@ export class MockAIProvider {
         responseContent =
           "Here is a ready-to-broadcast WhatsApp campaign template for your festive collection:\n\n✨ *Namaste from [Your Store Name]!* ✨\n\nWe have just refreshed our heirloom handloom collection with 12 exclusive new pieces woven by our master artisans.\n\n🎁 *Festive Offer:* Enjoy **15% off** on your next handcrafted order with code **HERITAGE15**.\n\n👉 *Explore Collection:* https://bhagya.in/stores/varanasi-heritage-silks\n\n_100% authentic craftsmanship delivered directly to your doorstep with 7-day returns._";
       }
-      // 6. Merchant: General Overview
+      // 6. Merchant: Review & Rating Feedback Insights
+      else if (query.includes("review") || query.includes("rating") || query.includes("feedback") || query.includes("customer say")) {
+        toolCall = {
+          id: `tc_${Date.now()}`,
+          name: "getStoreReviewInsights",
+          status: "running",
+          input: { storeId: "store_varanasi_silk" },
+        };
+        onToolCall?.(toolCall);
+        await new Promise((r) => setTimeout(r, 450));
+        toolCall.status = "completed";
+        onToolCall?.(toolCall);
+
+        responseContent =
+          "Here is your store review intelligence summary:\n\n- **Overall Rating:** 4.8 ★ across verified customer purchases.\n- **Frequent Positive Themes:** Authentic master handloom texture, rich natural zari borders, and protective eco-packaging.\n- **Noted Opportunities:** 1 review mentioned slight monsoon courier delay, which was swiftly addressed with an official store reply.";
+      }
+      // 7. Merchant: General Overview
       else {
         responseContent =
-          "Hello! I am your Bhagya Merchant Copilot. I can analyze today's sales, flag low-stock products, draft artisan product descriptions, write WhatsApp marketing copy, or summarize order dispatches. How can I help your store right now?";
+          "Hello! I am your Bhagya Merchant Copilot. I can analyze today's sales, flag low-stock products, summarize customer reviews, draft artisan product descriptions, write WhatsApp marketing copy, or summarize order dispatches. How can I help your store right now?";
       }
     }
 

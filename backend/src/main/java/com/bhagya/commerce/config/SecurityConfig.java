@@ -49,17 +49,26 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/v1/stores/*/public").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/stores/by-slug/*").permitAll()
 
-                // 4. Payment Webhook (Independent verification)
+                // 4. Webhooks (Subject to cryptographic signature verification)
                 .requestMatchers("/api/v1/payments/webhook").permitAll()
+                .requestMatchers("/api/v1/shipping/webhook").permitAll()
 
-                // 5. Merchant Workspace APIs
+                // 5. Admin Platform APIs
+                .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN", "PLATFORM_ADMIN")
+
+                // 6. Merchant Workspace APIs
                 .requestMatchers("/api/v1/merchant/**").hasAnyRole("STORE_OWNER", "STORE_ADMIN", "PLATFORM_ADMIN")
 
-                // 6. All Other Endpoints Require Authentication
+                // 7. All Other Endpoints Require Authentication
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public org.springframework.security.crypto.password.PasswordEncoder passwordEncoder() {
+        return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder(12);
     }
 }

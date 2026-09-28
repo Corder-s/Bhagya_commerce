@@ -1,4 +1,4 @@
-import { accountRoutes, marketingRoutes } from "@/config/routes";
+import { accountRoutes, marketingRoutes, merchantRoutes } from "@/config/routes";
 import type { NavItem } from "@/types/navigation";
 
 /**
@@ -50,22 +50,29 @@ export const mobileTabNav: readonly NavItem[] = [
 
 /** Merchant workspace rail navigation. */
 export const merchantNav: readonly NavItem[] = [
-  { label: "Overview", href: "/merchant/dashboard", icon: "LayoutDashboard" },
-  { label: "Products", href: "/merchant/products", icon: "Package" },
-  { label: "Orders", href: "/merchant/orders", icon: "ReceiptIndianRupee" },
-  { label: "Inventory", href: "/merchant/inventory", icon: "Boxes" },
-  { label: "Customers", href: "/merchant/customers", icon: "Users" },
-  { label: "Analytics", href: "/merchant/analytics", icon: "ChartLine" },
-  { label: "Marketing", href: "/merchant/marketing", icon: "Megaphone" },
-  { label: "Bhagya AI", href: "/merchant/ai", icon: "Sparkles" },
-  { label: "Store", href: "/merchant/store", icon: "Store" },
-  { label: "Settings", href: "/merchant/settings", icon: "Settings" },
+  { label: "Overview", href: merchantRoutes.dashboard, icon: "LayoutDashboard" },
+  { label: "Products", href: merchantRoutes.products, icon: "Package" },
+  { label: "Orders", href: merchantRoutes.orders, icon: "ReceiptIndianRupee" },
+  { label: "Reviews", href: merchantRoutes.reviews, icon: "Star" },
+  { label: "Inventory", href: merchantRoutes.inventory, icon: "Boxes" },
+  { label: "Customers", href: merchantRoutes.customers, icon: "Users" },
+  { label: "Analytics", href: merchantRoutes.analytics, icon: "ChartLine" },
+  { label: "Marketing", href: merchantRoutes.marketing, icon: "Megaphone" },
+  { label: "Bhagya AI", href: merchantRoutes.ai, icon: "Sparkles" },
+  { label: "Store", href: merchantRoutes.store, icon: "Store" },
+  { label: "Storefront", href: merchantRoutes.storefront, icon: "Palette" },
+  { label: "Billing", href: merchantRoutes.billing, icon: "CreditCard" },
+  { label: "Team", href: merchantRoutes.team, icon: "ShieldCheck" },
+  { label: "Loyalty & Rewards", href: merchantRoutes.loyalty as any, icon: "Award" },
+  { label: "Settings", href: merchantRoutes.settings, icon: "Settings" },
 ] as const;
 
 /** Customer account sidebar. */
 export const accountNav: readonly NavItem[] = [
   { label: "Overview", href: "/account", icon: "LayoutDashboard" },
   { label: "Orders", href: "/account/orders", icon: "Package" },
+  { label: "Loyalty & Rewards", href: accountRoutes.loyalty as any, icon: "Award" },
+  { label: "Refer & Earn", href: accountRoutes.referrals as any, icon: "Share2" },
   { label: "Notifications", href: accountRoutes.notifications as any, icon: "Bell" },
   { label: "Wishlist", href: "/account/wishlist", icon: "Heart" },
   { label: "Addresses", href: "/account/addresses", icon: "MapPin" },

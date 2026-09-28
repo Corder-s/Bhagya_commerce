@@ -28,4 +28,14 @@ public class IdempotencyService {
             cacheService.set(IDEMPOTENCY_PREFIX + idempotencyKey, result, DEFAULT_TTL);
         }
     }
+
+    public boolean acquireLock(String key, int lockSeconds) {
+        String lockKey = "lock:" + key;
+        Optional<String> existing = cacheService.get(lockKey, String.class);
+        if (existing.isPresent()) {
+            return false;
+        }
+        cacheService.set(lockKey, "LOCKED", lockSeconds);
+        return true;
+    }
 }

@@ -62,6 +62,10 @@ public class CouponRepository {
         return Optional.ofNullable(storage.get(id));
     }
 
+    public List<Coupon> findAll() {
+        return new ArrayList<>(storage.values());
+    }
+
     public Optional<Coupon> findByStoreIdAndCode(String storeId, String code) {
         if (code == null) return Optional.empty();
         String norm = code.trim().toUpperCase();

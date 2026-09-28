@@ -15,10 +15,12 @@ export function RecentOrdersTable({
   orders,
   title = "Recent Orders",
   showViewAll = true,
+  onOrderUpdated,
 }: {
   orders: MerchantOrder[];
   title?: string;
   showViewAll?: boolean;
+  onOrderUpdated?: () => void;
 }) {
   const [selectedOrder, setSelectedOrder] = React.useState<MerchantOrder | null>(null);
 
@@ -108,7 +110,7 @@ export function RecentOrdersTable({
                       className="text-xs h-7 px-2.5"
                     >
                       <Eye className="size-3" />
-                      View
+                      Fulfill & View
                     </Button>
                   </td>
                 </tr>
@@ -154,7 +156,7 @@ export function RecentOrdersTable({
                   className="text-xs h-7 px-2"
                 >
                   <Eye className="size-3" />
-                  View Details
+                  Fulfill & View
                 </Button>
               </div>
             </div>
@@ -166,6 +168,7 @@ export function RecentOrdersTable({
         order={selectedOrder}
         isOpen={Boolean(selectedOrder)}
         onClose={() => setSelectedOrder(null)}
+        onOrderUpdated={onOrderUpdated}
       />
     </>
   );

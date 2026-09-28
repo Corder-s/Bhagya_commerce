@@ -59,7 +59,7 @@ public class AnalyticsAggregationService {
 
         String cacheKey = "analytics:overview:" + storeId + ":" + period.name() + ":" + range.start.getEpochSecond();
         if (cacheService != null) {
-            MerchantAnalyticsOverviewResponse cached = cacheService.get(cacheKey, MerchantAnalyticsOverviewResponse.class);
+            MerchantAnalyticsOverviewResponse cached = cacheService.get(cacheKey, MerchantAnalyticsOverviewResponse.class).orElse(null);
             if (cached != null) {
                 return cached;
             }
@@ -187,7 +187,9 @@ public class AnalyticsAggregationService {
             : productRepository.findAll();
 
         List<Order> orders = getStoreOrders(storeId, start, end);
-        List<AnalyticsEvent> events = eventRepository.findByStoreIdAndOccurredAtBetween(storeId, start, end);
+        List<AnalyticsEvent> events = eventRepository != null
+            ? eventRepository.findByStoreIdAndOccurredAtBetween(storeId, start, end)
+            : Collections.emptyList();
 
         Map<String, Long> unitsSoldMap = new HashMap<>();
         Map<String, BigDecimal> revenueMap = new HashMap<>();
@@ -293,10 +295,10 @@ public class AnalyticsAggregationService {
     }
 
     public FunnelSummaryResponse calculateFunnelSummary(String storeId, Instant start, Instant end) {
-        long views = eventRepository.countByEventType(storeId, AnalyticsEventType.PRODUCT_VIEWED, start, end);
-        long carts = eventRepository.countByEventType(storeId, AnalyticsEventType.PRODUCT_ADDED_TO_CART, start, end);
-        long checkouts = eventRepository.countByEventType(storeId, AnalyticsEventType.CHECKOUT_STARTED, start, end);
-        long payments = eventRepository.countByEventType(storeId, AnalyticsEventType.PAYMENT_STARTED, start, end);
+        long views = eventRepository != null ? eventRepository.countByEventType(storeId, AnalyticsEventType.PRODUCT_VIEWED, start, end) : 0L;
+        long carts = eventRepository != null ? eventRepository.countByEventType(storeId, AnalyticsEventType.PRODUCT_ADDED_TO_CART, start, end) : 0L;
+        long checkouts = eventRepository != null ? eventRepository.countByEventType(storeId, AnalyticsEventType.CHECKOUT_STARTED, start, end) : 0L;
+        long payments = eventRepository != null ? eventRepository.countByEventType(storeId, AnalyticsEventType.PAYMENT_STARTED, start, end) : 0L;
         long orders = getStoreOrders(storeId, start, end).stream()
             .filter(o -> o.getStatus() != OrderStatus.CANCELLED)
             .count();
@@ -388,7 +390,9 @@ public class AnalyticsAggregationService {
     }
 
     public TrafficAttributionResponse calculateTrafficAttribution(String storeId, Instant start, Instant end) {
-        List<AnalyticsEvent> events = eventRepository.findByStoreIdAndOccurredAtBetween(storeId, start, end);
+        List<AnalyticsEvent> events = eventRepository != null
+            ? eventRepository.findByStoreIdAndOccurredAtBetween(storeId, start, end)
+            : Collections.emptyList();
         Map<String, Long> sourceSessions = new HashMap<>();
 
         for (AnalyticsEvent e : events) {
@@ -416,7 +420,7 @@ public class AnalyticsAggregationService {
         List<ProductPerformanceResponse> products = calculateProductPerformance(storeId, 50, range.start, range.end);
 
         StringBuilder csv = new StringBuilder();
-        csv.append("BHAGYA COMMERCE — MERCHANT ANALYTICS REPORT\n");
+        csv.append("BHAGYA COMMERCE ï¿½ MERCHANT ANALYTICS REPORT\n");
         csv.append("Store ID,").append(storeId).append(",Period,").append(period.name()).append("\n\n");
 
         csv.append("DAILY SALES TREND\n");

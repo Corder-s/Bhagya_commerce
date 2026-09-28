@@ -21,6 +21,10 @@ public class RateLimitService {
         this.redisTemplate = redisTemplate;
     }
 
+    public boolean allowRequest(String key, int maxRequests, int windowSeconds) {
+        return tryAcquire(key, maxRequests, Duration.ofSeconds(windowSeconds));
+    }
+
     public boolean tryAcquire(String key, int maxRequests, Duration window) {
         String rateLimitKey = "ratelimit:" + key;
         if (redisTemplate != null) {

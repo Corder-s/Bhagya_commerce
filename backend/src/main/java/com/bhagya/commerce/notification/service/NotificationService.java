@@ -63,4 +63,8 @@ public class NotificationService {
         );
         notificationRepository.save(notification);
     }
+
+    public void sendNotification(String userId, String title, String message, java.util.Map<String, ?> metadata) {
+        createNotification(userId, title, message, NotificationType.SYSTEM_ALERT, null);
+    }
 }

@@ -15,6 +15,7 @@ import {
   RotateCcw,
   ShieldCheck,
   ShoppingBag,
+  Star,
   Truck,
   XCircle,
 } from "lucide-react";
@@ -25,6 +26,7 @@ import { OrderStatusBadge } from "./order-status-badge";
 import { CancelOrderModal } from "./cancel-order-modal";
 import { ReturnOrderModal } from "./return-order-modal";
 import { InvoiceModal } from "./invoice-modal";
+import { WriteReviewModal } from "@/features/reviews/components/write-review-modal";
 import type { Order } from "@/features/orders/order-types";
 import { orderService } from "@/services/order.service";
 import { useCart } from "@/context/cart-context";
@@ -36,6 +38,7 @@ export function OrderDetailView({ orderId }: { orderId: string }) {
   const [showCancelModal, setShowCancelModal] = React.useState(false);
   const [showReturnModal, setShowReturnModal] = React.useState(false);
   const [showInvoiceModal, setShowInvoiceModal] = React.useState(false);
+  const [reviewItem, setReviewItem] = React.useState<{ id: string; name: string } | null>(null);
 
   const { addItem, openCartDrawer } = useCart();
 
@@ -267,9 +270,21 @@ export function OrderDetailView({ orderId }: { orderId: string }) {
                         Maker: {item.brandName}
                       </p>
                     )}
-                    <p className="text-caption text-ink-soft mt-1">
-                      Qty: {item.quantity} · {fmt(item.unitPrice)} each
-                    </p>
+                    <div className="flex items-center gap-3 mt-2">
+                      <p className="text-caption text-ink-soft">
+                        Qty: {item.quantity} · {fmt(item.unitPrice)} each
+                      </p>
+                      {order.status === "delivered" && (
+                        <button
+                          type="button"
+                          onClick={() => setReviewItem({ id: item.productId, name: item.name })}
+                          className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#E89535] hover:text-[#D48024] hover:underline"
+                        >
+                          <Star className="size-3 fill-[#E89535]" />
+                          <span>Write Review</span>
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <div className="text-right shrink-0">
                     <p className="text-body-sm font-bold text-ink font-mono">
@@ -426,6 +441,19 @@ export function OrderDetailView({ orderId }: { orderId: string }) {
         isOpen={showInvoiceModal}
         onClose={() => setShowInvoiceModal(false)}
       />
+
+      {reviewItem && (
+        <WriteReviewModal
+          isOpen={Boolean(reviewItem)}
+          onClose={() => setReviewItem(null)}
+          productId={reviewItem.id}
+          productTitle={reviewItem.name}
+          onReviewSubmitted={() => {
+            setReviewItem(null);
+            toast.success("Review Submitted", "Thank you for reviewing your handcrafted purchase!");
+          }}
+        />
+      )}
     </div>
   );
 }

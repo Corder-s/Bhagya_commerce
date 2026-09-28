@@ -75,6 +75,9 @@ public class Order {
     public BigDecimal getTotalInr() { return totalInr; }
     public void setTotalInr(BigDecimal totalInr) { this.totalInr = totalInr; }
 
+    public BigDecimal getTotalAmount() { return totalInr; }
+    public void setTotalAmount(BigDecimal amount) { this.totalInr = amount; }
+
     public Address getShippingAddress() { return shippingAddress; }
     public void setShippingAddress(Address shippingAddress) { this.shippingAddress = shippingAddress; }
 

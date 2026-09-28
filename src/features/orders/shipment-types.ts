@@ -1,8 +1,8 @@
 /**
- * Bhagya Commerce — Shipment & Logistics Types
+ * Bhagya Commerce — Shipment & Logistics Types (Step 18)
  *
  * Provider-neutral domain models separating Order from Shipment.
- * Prepared for future carrier webhook integration (e.g. Delhivery, Bluedart, Shiprocket).
+ * Prepared for carrier integrations (Delhivery, BlueDart, Shadowfax, etc.).
  */
 
 export type ShipmentStatus =
@@ -16,6 +16,15 @@ export type ShipmentStatus =
   | "failed_attempt"
   | "returned_to_origin";
 
+export type FulfillmentStatus =
+  | "unfulfilled"
+  | "processing"
+  | "packed"
+  | "ready_for_pickup"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
+
 export interface ShipmentEvent {
   id: string;
   shipmentId: string;
@@ -24,6 +33,77 @@ export interface ShipmentEvent {
   description: string;
   eventTime: string;
   source: "carrier" | "bhagya_predicted";
+}
+
+export interface DeliveryAttempt {
+  id: string;
+  shipmentId: string;
+  attemptNumber: number;
+  status: "failed" | "rescheduled" | "rto_initiated";
+  reason: string;
+  actionRequired?: string;
+  attemptedAt: string;
+}
+
+export interface ShippingLabel {
+  id: string;
+  shipmentId: string;
+  storageKey: string;
+  mimeType: string;
+  barcode: string;
+  downloadUrl: string;
+  createdAt: string;
+}
+
+export interface PickupRequest {
+  id: string;
+  shipmentId: string;
+  carrier: string;
+  pickupDate: string;
+  status: "scheduled" | "completed" | "rescheduled" | "cancelled";
+  referenceNumber: string;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface ShippingRate {
+  id: string;
+  provider: string;
+  serviceCode: string;
+  serviceName: string;
+  carrier: string;
+  estimatedDays: number;
+  price: number;
+  currency: string;
+  codSupported: boolean;
+  zone: string;
+}
+
+export interface ServiceabilityResult {
+  postalCode: string;
+  serviceable: boolean;
+  status: "DELIVERABLE" | "NOT_SERVICEABLE" | "LIMITED_SERVICE";
+  codAvailable: boolean;
+  estimatedDeliveryDays: number;
+  availableCarriers: string[];
+  message: string;
+}
+
+export interface Fulfillment {
+  id: string;
+  orderId: string;
+  storeId: string;
+  status: FulfillmentStatus;
+  carrier?: string;
+  trackingNumber?: string;
+  packageWeightKg: number;
+  packageDimensions: string;
+  notes?: string;
+  pickupScheduled?: boolean;
+  pickupReference?: string;
+  labelGenerated?: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Shipment {
@@ -43,4 +123,7 @@ export interface Shipment {
   events: ShipmentEvent[];
   carrierVerificationStatus: "verified_by_carrier" | "estimated_by_bhagya";
   supportContact?: string;
+  deliveryAttempts?: DeliveryAttempt[];
+  ndrReason?: string;
+  ndrActionRequired?: string;
 }

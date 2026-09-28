@@ -47,14 +47,14 @@ export function MerchantSidebar({
                   "group relative flex min-h-10 items-center gap-3 whitespace-nowrap rounded-lg px-3 text-sm font-medium",
                   "transition-all duration-150 ease-out",
                   active
-                    ? "bg-[#FCECDA] dark:bg-[#33241C] font-bold text-[#1F1510] dark:text-[#FAF4EE] border border-[#F7C07E] dark:border-[#4D382B] shadow-xs"
-                    : "text-[#4A3B32] dark:text-[#D8CCC0] hover:bg-[#F7EFE8] dark:hover:bg-[#30231C] hover:text-[#1F1510] dark:hover:text-[#FAF4EE]",
+                    ? "bg-[#4A4038] font-bold text-[#FFFFFF] border border-[#5C4E44] shadow-xs"
+                    : "text-[#CFC7BA] font-medium hover:bg-[#3D322B] hover:text-[#FFFFFF]",
                 )}
               >
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "absolute inset-y-2 left-0 w-1 rounded-r-full bg-[#E89535] dark:bg-[#F0A349] transition-opacity duration-150",
+                    "absolute inset-y-2 left-0 w-1 rounded-r-full bg-[#E0A046] transition-opacity duration-150",
                     active ? "opacity-100" : "opacity-0",
                   )}
                 />
@@ -64,12 +64,12 @@ export function MerchantSidebar({
                     className={cn(
                       "size-[1.125rem] shrink-0 transition-colors",
                       active
-                        ? "text-[#E89535] dark:text-[#F0A349]"
-                        : "text-[#695A50] dark:text-[#D8CCC0] group-hover:text-[#1F1510] dark:group-hover:text-[#FAF4EE]",
+                        ? "text-[#E0A046]"
+                        : "text-[#CFC7BA] group-hover:text-[#E0A046]",
                     )}
                   />
                 ) : null}
-                <span className="truncate font-medium">{item.label}</span>
+                <span className="truncate">{item.label}</span>
               </Link>
             </li>
           );
